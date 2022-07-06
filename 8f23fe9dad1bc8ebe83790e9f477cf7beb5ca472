@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48a0fbe6_0d74d497",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-06T08:52:48Z",
+      "side": 1,
+      "message": "Please confirm whether this file needs to be uploaded. It seems that other modules of UUI have not uploaded these two files.",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4185c57c_a89e08a2",
+        "filename": ".gitreview",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-06T08:52:48Z",
+      "side": 1,
+      "message": "Please confirm whether this file needs to be uploaded. It seems that other modules of UUI have not uploaded these two files.",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fc3447_2398a4ee",
+        "filename": "LICENSE.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-06T08:52:48Z",
+      "side": 1,
+      "message": "I suggest that the contents of the file be consistent with other modules of UUI.",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b2041c_93bee1bf",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-06T08:52:48Z",
+      "side": 1,
+      "message": "I suggest that the contents of the file be consistent with other modules of UUI",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
