@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9db16d11_9072cd58",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-06T09:32:24Z",
+      "side": 1,
+      "message": "This .gitignore file is needed which used to ignore the output file that generated during local mvn build such as target directory. It is helpful for keeping the repo clean.\nusecaseui-portal has this file. Suggest other UUI projects to add this file in the repo.",
+      "parentUuid": "48a0fbe6_0d74d497",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4185c57c_a89e08a2",
         "filename": ".gitreview",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2022-07-06T08:52:48Z",
       "side": 1,
       "message": "Please confirm whether this file needs to be uploaded. It seems that other modules of UUI have not uploaded these two files.",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24321690_cde4baa5",
+        "filename": ".gitreview",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-06T09:32:24Z",
+      "side": 1,
+      "message": "This file is used to locate the gerrit project where the code should be pushed to when exec \u0027git review\u0027.\nUUI usecaseui-portal and nlp both have this file.",
+      "parentUuid": "4185c57c_a89e08a2",
       "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9b90e8bc_d8f03585",
+        "filename": "LICENSE.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-06T09:32:24Z",
+      "side": 1,
+      "message": "UUI usecase-ui and server projects have the same License file and nlp is different.\nIs it okay to keep it the same as usecase-ui and server?",
+      "parentUuid": "30fc3447_2398a4ee",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58b2041c_93bee1bf",
         "filename": "README.md",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2022-07-06T08:52:48Z",
       "side": 1,
       "message": "I suggest that the contents of the file be consistent with other modules of UUI",
+      "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933c53ea_bf213d24",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-06T09:32:24Z",
+      "side": 1,
+      "message": "I have checked other UUI projects, they all seems to be wrong with the License in the markdown file. \nThe License should be comment out rather than as the context of the markdown file.\nWill find a right way to update this README.md",
+      "parentUuid": "58b2041c_93bee1bf",
       "revId": "8f23fe9dad1bc8ebe83790e9f477cf7beb5ca472",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
