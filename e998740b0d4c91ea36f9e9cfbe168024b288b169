@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5648862_ebeac5ae",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/bean/dto/IntentDto.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 797
+      },
+      "writtenOn": "2022-07-08T07:42:28Z",
+      "side": 1,
+      "message": "why name it as Dto? What\u0027s the relationship between Dto and Po? As my understanding , we have a set of Models names Intent, Expectation, Stage, and that\u0027s enough. And also the packagename can be ,  intentanalysis.models",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "e998740b0d4c91ea36f9e9cfbe168024b288b169",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
