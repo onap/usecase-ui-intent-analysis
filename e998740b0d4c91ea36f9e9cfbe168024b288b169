@@ -22,6 +22,23 @@
       "revId": "e998740b0d4c91ea36f9e9cfbe168024b288b169",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5503eed_28f118f5",
+        "filename": "intentanalysis/src/main/resources/application.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-09T02:44:42Z",
+      "side": 1,
+      "message": "1. The style of context-path should be consistent with that of UUI server.\n2. Is HTTPS supported now? ONAP requires that HTTPS should be supported",
+      "revId": "e998740b0d4c91ea36f9e9cfbe168024b288b169",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
