@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "504196d4_c5ea1bb9",
+        "filename": "standalone/src/main/assembly/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-09T02:49:09Z",
+      "side": 1,
+      "message": "This port number is different from that in application.yaml, please confirm.",
+      "revId": "46fb806f1c4e4059b74d317b9d3947eb07e2b215",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
