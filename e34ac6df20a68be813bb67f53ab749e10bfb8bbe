@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8e9392c_59c2c5ca",
+        "filename": "standalone/src/main/assembly/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-11T03:04:48Z",
+      "side": 1,
+      "message": "UUI server also uses port 8082. Although it is not in the same container, I still suggest that intent analysis can use other ports to avoid confusion",
+      "revId": "e34ac6df20a68be813bb67f53ab749e10bfb8bbe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
