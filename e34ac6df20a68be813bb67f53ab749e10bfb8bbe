@@ -16,6 +16,24 @@
       "revId": "e34ac6df20a68be813bb67f53ab749e10bfb8bbe",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec4cede_adb9f887",
+        "filename": "standalone/src/main/assembly/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-11T03:08:14Z",
+      "side": 1,
+      "message": "Then let\u0027s use 8083.",
+      "parentUuid": "d8e9392c_59c2c5ca",
+      "revId": "e34ac6df20a68be813bb67f53ab749e10bfb8bbe",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
