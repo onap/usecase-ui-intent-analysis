@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a04fe93_f022017f",
+        "filename": "intentanalysis/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-11T08:18:59Z",
+      "side": 1,
+      "message": "According to ONAP requirements, java11 must be used instead of java8",
+      "revId": "6e6f34ecc31ff235b2a05938295abdc284f0194a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
