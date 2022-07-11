@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70e50fd2_c34d4565",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/bean/dto/IntentDto.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-07-11T06:52:20Z",
+      "side": 1,
+      "message": "Changed DTO to models, also renamed the package name.",
+      "parentUuid": "b5648862_ebeac5ae",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "e998740b0d4c91ea36f9e9cfbe168024b288b169",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5503eed_28f118f5",
         "filename": "intentanalysis/src/main/resources/application.yaml",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "e998740b0d4c91ea36f9e9cfbe168024b288b169",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385987b2_a2b7bed4",
+        "filename": "intentanalysis/src/main/resources/application.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-07-11T06:52:20Z",
+      "side": 1,
+      "message": "1. Followed the style of UUI server.\n2. Current review is just for schema definition, in the following commits it will support HTTPS",
+      "parentUuid": "a5503eed_28f118f5",
+      "revId": "e998740b0d4c91ea36f9e9cfbe168024b288b169",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
