@@ -1,4 +1,4 @@
-package org.onap.usecaseui.intentanalysis.intentAnalysisService.intentModuleImpl;
+package org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl;
 
 import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
 import org.springframework.stereotype.Service;
