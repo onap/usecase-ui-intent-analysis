@@ -31,11 +31,11 @@ public class IntentProcessService {
     @Autowired
     IntentOperationService intentOperationService;
 
-    private Function intentOwner;
-    private Function intentHandler;
+    private IntentAnalysisFunction intentOwner;
+    private IntentAnalysisFunction intentHandler;
 
 
-    public void setIntentRole(Function intentOwner,Function intentHandler){
+    public void setIntentRole(IntentAnalysisFunction intentOwner, IntentAnalysisFunction intentHandler){
         if (intentOwner!= null){
             this.intentOwner = intentOwner;
         }

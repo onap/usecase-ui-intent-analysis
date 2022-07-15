@@ -13,23 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentAnalysisService;
+package org.onap.usecaseui.intentanalysis.intentProcessService;
 
 
 import lombok.Data;
-import org.onap.usecaseui.intentanalysis.intentAnalysisService.intentModuleImpl.ActuationModuleImpl;
-import org.onap.usecaseui.intentanalysis.intentAnalysisService.intentModuleImpl.DecisoinModuleImpl;
-import org.onap.usecaseui.intentanalysis.intentAnalysisService.intentModuleImpl.KnownledgeModuleImpl;
 import org.onap.usecaseui.intentanalysis.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
-import org.onap.usecaseui.intentanalysis.intentProcessService.Function;
 
 @Data
-public class IntentAnalysisManagementFunction extends Function {
-    private ActuationModule actuationModule  = new ActuationModuleImpl();
-    private DecisionModule decisoinModule = new DecisoinModuleImpl();
-    private KnowledgeModule knowledgeModule = new KnownledgeModuleImpl();
-
-
+public class IntentAnalysisFunction {
+    private ActuationModule actuationModule;
+    private DecisionModule decisionModule;
+    private KnowledgeModule knowledgeModule;
 }
