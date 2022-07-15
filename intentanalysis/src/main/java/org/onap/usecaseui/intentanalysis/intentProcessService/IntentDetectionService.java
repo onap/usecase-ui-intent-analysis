@@ -21,10 +21,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class IntentDetectionService {
 
-    private IntentAnalysisFunction intentHandler;
-    private IntentAnalysisFunction intentOwner;
+    private IntentManagementFunction intentHandler;
+    private IntentManagementFunction intentOwner;
 
-    public void setIntentRole(IntentAnalysisFunction intentOwner, IntentAnalysisFunction intentHandler){
+    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
         if (intentOwner!= null){
             this.intentOwner = intentOwner;
         }

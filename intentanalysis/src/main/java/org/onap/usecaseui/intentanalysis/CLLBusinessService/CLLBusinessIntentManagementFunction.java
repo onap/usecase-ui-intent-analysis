@@ -23,10 +23,10 @@ import org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl.Kno
 import org.onap.usecaseui.intentanalysis.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentAnalysisFunction;
+import org.onap.usecaseui.intentanalysis.intentProcessService.IntentManagementFunction;
 
 @Data
-public class CLLBusinessIntentManagementFunction extends IntentAnalysisFunction {
+public class CLLBusinessIntentManagementFunction extends IntentManagementFunction {
     private ActuationModule actuationModule  = new ActuationModuleImpl();
     private DecisionModule decisoinModule = new DecisoinModuleImpl();
     private KnowledgeModule knowledgeModule = new KnownledgeModuleImpl();

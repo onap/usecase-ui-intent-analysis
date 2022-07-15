@@ -22,7 +22,7 @@ import org.onap.usecaseui.intentanalysis.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
 
 @Data
-public class IntentAnalysisFunction {
+public class IntentManagementFunction {
     private ActuationModule actuationModule;
     private DecisionModule decisionModule;
     private KnowledgeModule knowledgeModule;

@@ -16,11 +16,11 @@
 package org.onap.usecaseui.intentanalysis.intentModule;
 
 
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentAnalysisFunction;
+import org.onap.usecaseui.intentanalysis.intentProcessService.IntentManagementFunction;
 
 public interface DecisionModule {
     void determineUltimateGoal();//
-    IntentAnalysisFunction exploreIntentHandlers();
+    IntentManagementFunction exploreIntentHandlers();
     void intentDefinition();
     void decideSuitableAction();
 

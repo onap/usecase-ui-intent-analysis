@@ -17,7 +17,7 @@ package org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl;
 
 
 import org.onap.usecaseui.intentanalysis.intentModule.DecisionModule;
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentAnalysisFunction;
+import org.onap.usecaseui.intentanalysis.intentProcessService.IntentManagementFunction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +26,7 @@ public class DecisoinModuleImpl implements DecisionModule {
     public void determineUltimateGoal() {}
 
     @Override
-    public IntentAnalysisFunction exploreIntentHandlers() {
+    public IntentManagementFunction exploreIntentHandlers() {
 
         return null;
 

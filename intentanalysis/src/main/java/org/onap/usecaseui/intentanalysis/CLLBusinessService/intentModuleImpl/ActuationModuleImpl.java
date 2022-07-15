@@ -17,7 +17,7 @@ package org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl;
 
 
 import org.onap.usecaseui.intentanalysis.intentModule.ActuationModule;
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentAnalysisFunction;
+import org.onap.usecaseui.intentanalysis.intentProcessService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentProcessService.IntentProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class ActuationModuleImpl implements ActuationModule {
     IntentProcessService processService;
 
     @Override
-    public void sendToIntentHandler(IntentAnalysisFunction intentHandler) {
+    public void sendToIntentHandler(IntentManagementFunction intentHandler) {
         processService.setIntentRole(intentHandler, null);
         processService.intentProcess();
     }
