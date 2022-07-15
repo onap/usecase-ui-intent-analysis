@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.CLLBusinessService;
+package org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt;
 
 
 import lombok.Data;
-import org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl.ActuationModuleImpl;
-import org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl.DecisoinModuleImpl;
-import org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl.KnownledgeModuleImpl;
-import org.onap.usecaseui.intentanalysis.intentModule.ActuationModule;
-import org.onap.usecaseui.intentanalysis.intentModule.DecisionModule;
-import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt.intentModuleImpl.ActuationModuleImpl;
+import org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt.intentModuleImpl.DecisoinModuleImpl;
+import org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt.intentModuleImpl.KnownledgeModuleImpl;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 
 @Data
 public class CLLBusinessIntentManagementFunction extends IntentManagementFunction {

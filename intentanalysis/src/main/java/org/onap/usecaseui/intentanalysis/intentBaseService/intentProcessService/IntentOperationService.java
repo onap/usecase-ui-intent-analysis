@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentProcessService;
+package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
-import org.onap.usecaseui.intentanalysis.intentModule.DecisionModule;
+
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IntentInvestigationService {
+public class IntentOperationService {
+
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
 
@@ -32,14 +36,14 @@ public class IntentInvestigationService {
         }
     }
 
-    public void investigationProcess() {
+    public void operationProcess() {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
-        intentDecisionModule.needDecompostion();
-        intentDecisionModule.intentDecomposition();
-        intentDecisionModule.intentOrchestration();
-        intentDecisionModule.decideSuitableAction();
-        intentDecisionModule.exploreIntentHandlers();//返回handler
+        ActuationModule intentActuationModule = intentOwner.getActuationModule();
+
+        intentDecisionModule.interactWithTemplateDb();
+        intentActuationModule.interactWithIntentHandle();
+        intentActuationModule.sendToIntentHandler(intentHandler);
+
+        intentActuationModule.sendToNonIntentHandler();
     }
-
-
 }

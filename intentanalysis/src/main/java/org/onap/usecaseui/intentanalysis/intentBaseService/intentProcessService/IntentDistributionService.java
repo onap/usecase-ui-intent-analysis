@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentProcessService;
+package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
-import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
+
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IntentDetectionService {
-
+public class IntentDistributionService {
+    @Autowired
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
 
@@ -33,12 +36,10 @@ public class IntentDetectionService {
         }
     }
 
-    public void detectionProcess() {
-        KnowledgeModule ownerKnowledgeModule = intentOwner.getKnowledgeModule();
-        ownerKnowledgeModule.intentResolution();
-        ownerKnowledgeModule.intentReportResolution();
-        ownerKnowledgeModule.getSystemStatus();
-        ownerKnowledgeModule.interactWithIntentOwner();
+    public void distributionProcess() {
+        ActuationModule intentActuationModule = intentHandler.getActuationModule();
 
+        intentActuationModule.sendToIntentHandler(intentHandler);
     }
+
 }

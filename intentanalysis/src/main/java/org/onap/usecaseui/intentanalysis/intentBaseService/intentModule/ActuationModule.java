@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentProcessService;
+package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 
-import lombok.Data;
-import org.onap.usecaseui.intentanalysis.intentModule.ActuationModule;
-import org.onap.usecaseui.intentanalysis.intentModule.DecisionModule;
-import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
+public interface ActuationModule {
+    //actuationModel & knownledgeModel interact
+    void sendToIntentHandler(IntentManagementFunction IntentHandler);
+    void sendToNonIntentHandler();//直接操作
+    void interactWithIntentHandle();
+    //Save intent information to the intent instance database
+    void saveIntentToDb();
 
-@Data
-public class IntentManagementFunction {
-    private ActuationModule actuationModule;
-    private DecisionModule decisionModule;
-    private KnowledgeModule knowledgeModule;
 }

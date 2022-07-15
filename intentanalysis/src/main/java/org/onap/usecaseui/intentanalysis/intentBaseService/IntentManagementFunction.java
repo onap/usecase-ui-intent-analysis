@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl;
+package org.onap.usecaseui.intentanalysis.intentBaseService;
 
-import org.onap.usecaseui.intentanalysis.intentModule.KnowledgeModule;
-import org.springframework.stereotype.Service;
 
-@Service
-public class KnownledgeModuleImpl implements KnowledgeModule {
-    @Override
-    public void intentResolution() {}
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 
-    @Override
-    public void intentReportResolution() {}
-
-    @Override
-    public void getSystemStatus() {}
-
-    @Override
-    public void interactWithIntentOwner() {
-
-    }
+@Data
+public class IntentManagementFunction {
+    private ActuationModule actuationModule;
+    private DecisionModule decisionModule;
+    private KnowledgeModule knowledgeModule;
 }

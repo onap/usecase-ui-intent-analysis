@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.CLLBusinessService.intentModuleImpl;
+package org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt.intentModuleImpl;
 
 
-import org.onap.usecaseui.intentanalysis.intentModule.ActuationModule;
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentManagementFunction;
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentProcessService;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentProcessService;
+package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

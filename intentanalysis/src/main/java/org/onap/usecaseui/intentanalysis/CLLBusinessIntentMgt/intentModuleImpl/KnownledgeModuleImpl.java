@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentModule;
+package org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt.intentModuleImpl;
 
-import org.onap.usecaseui.intentanalysis.intentProcessService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.springframework.stereotype.Service;
 
-public interface ActuationModule {
-    //actuationModel & knownledgeModel interact
-    void sendToIntentHandler(IntentManagementFunction IntentHandler);
-    void sendToNonIntentHandler();//直接操作
-    void interactWithIntentHandle();
-    //Save intent information to the intent instance database
-    void saveIntentToDb();
+@Service
+public class KnownledgeModuleImpl implements KnowledgeModule {
+    @Override
+    public void intentResolution() {}
 
+    @Override
+    public void intentReportResolution() {}
+
+    @Override
+    public void getSystemStatus() {}
+
+    @Override
+    public void interactWithIntentOwner() {
+
+    }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentModule;
+package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 public interface KnowledgeModule {
     void intentResolution();
