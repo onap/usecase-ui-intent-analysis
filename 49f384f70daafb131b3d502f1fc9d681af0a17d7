@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aaf9136_8ed400cc",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentAnalysisService/IntentAnalysisManagementFunction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-15T02:26:38Z",
+      "side": 1,
+      "message": "Please change the variable name to the same form as the actuationModule",
+      "revId": "49f384f70daafb131b3d502f1fc9d681af0a17d7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
