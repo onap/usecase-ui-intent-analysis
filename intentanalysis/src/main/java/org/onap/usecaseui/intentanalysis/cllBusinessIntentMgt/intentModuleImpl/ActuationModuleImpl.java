@@ -13,42 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt.intentModuleImpl;
+package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.intentModuleImpl;
 
 
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DecisoinModuleImpl implements DecisionModule {
-    @Override
-    public void determineUltimateGoal() {}
+public class ActuationModuleImpl implements ActuationModule {
+    @Autowired
+    IntentProcessService processService;
 
     @Override
-    public IntentManagementFunction exploreIntentHandlers() {
+    public void sendToIntentHandler(IntentManagementFunction intentHandler) {
+        processService.setIntentRole(intentHandler, null);
+        processService.intentProcess();
+    }
 
-        return null;
+    @Override
+    public void sendToNonIntentHandler() {
+    }
+
+    @Override
+    public void interactWithIntentHandle() {
 
     }
 
     @Override
-    public void intentDefinition() {}
-
-    @Override
-    public void decideSuitableAction() {}
-
-    @Override
-    public boolean needDecompostion() {
-        return false;
+    public void saveIntentToDb() {
     }
-
-    @Override
-    public void intentDecomposition() {}
-
-    @Override
-    public void intentOrchestration() {}
-
-    @Override
-    public void interactWithTemplateDb() {}
 }

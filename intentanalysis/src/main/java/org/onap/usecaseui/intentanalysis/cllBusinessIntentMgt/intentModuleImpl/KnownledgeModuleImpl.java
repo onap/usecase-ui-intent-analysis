@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.CLLBusinessIntentMgt.intentModuleImpl;
+package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.intentModuleImpl;
 
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.springframework.stereotype.Service;
