@@ -24,8 +24,10 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Actuatio
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.springframework.stereotype.Component;
 
 @Data
+@Component("CLLBusinessIntentManagementFunction")
 public class CLLBusinessIntentManagementFunction extends IntentManagementFunction {
     private ActuationModule actuationModule  = new ActuationModuleImpl();
     private DecisionModule decisoinModule = new DecisoinModuleImpl();
