@@ -70,6 +70,91 @@
     },
     {
       "key": {
+        "uuid": "fc4f43ec_0f28aa97",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-25T06:51:18Z",
+      "side": 1,
+      "message": "Better remove the white space",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f321194_4b49523d",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-25T06:51:18Z",
+      "side": 1,
+      "message": "The same as before",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d756bbbb_1e9ea78e",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-25T06:51:18Z",
+      "side": 1,
+      "message": "should it be renamed as updateIntentManageById to avoid confusion?",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e53d005_5d0254b8",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-25T06:51:18Z",
+      "side": 1,
+      "message": "typo Hanle in the function name.",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08794ab_d02b0255",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-25T06:51:18Z",
+      "side": 1,
+      "message": "What\u0027s this \u0027//\u0027 for?",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2cf7fe1_6738c26e",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentProcessService/IntentDistributionService.java",
         "patchSetId": 1
