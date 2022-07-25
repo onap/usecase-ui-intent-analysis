@@ -44,9 +44,9 @@ public class IntentFunctionManageController {
     }
 
     @PutMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateIntentById(
+    public ResponseEntity updateIntentManageById(
             @PathVariable(value = "id") String id, @RequestBody IntentManagerRegInfo intentManage) {
-        return ResponseEntity.ok(intentFunctionManageService.updateIntentById(id, intentManage));
+        return ResponseEntity.ok(intentFunctionManageService.updateIntentManageById(id, intentManage));
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
