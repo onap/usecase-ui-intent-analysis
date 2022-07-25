@@ -17,6 +17,9 @@
  */
 package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum SupportInterface {
     //CREATE,DELETE,UPDATE,SEARCH;
     CREATE(0,"CREATE"),
@@ -30,19 +33,4 @@ public enum SupportInterface {
         this.name = name;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

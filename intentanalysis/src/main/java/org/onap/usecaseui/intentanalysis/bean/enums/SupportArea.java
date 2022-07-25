@@ -17,6 +17,9 @@
  */
 package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum SupportArea {
     SLICING(0, "slicing"),
     FEMALE(1, "5g"),
@@ -24,21 +27,6 @@ public enum SupportArea {
     private  int type;
     private  String desc;
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 
     SupportArea(int type, String desc) {
         this.type = type;

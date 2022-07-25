@@ -18,6 +18,10 @@
 
 package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
 public enum IntentFunctionType {
     INTERNALFUNCTION(0,"internalFunction"),
     EXTERNALFUNCTION(1,"externalFunction");
@@ -26,22 +30,6 @@ public enum IntentFunctionType {
 
     IntentFunctionType(int type, String desc) {
         this.type = type;
-        this.desc = desc;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
         this.desc = desc;
     }
 }
