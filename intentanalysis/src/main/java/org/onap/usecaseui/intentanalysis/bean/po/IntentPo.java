@@ -35,6 +35,7 @@ public class IntentPo {
         Intent intent = new Intent();
         intent.setIntentId(this.intentPoId);
         intent.setIntentName(this.intentPoName);
+
         intent.setExpectationList(getExpectationList());
         return intent;
     }

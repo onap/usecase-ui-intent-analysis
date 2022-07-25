@@ -2,3 +2,15 @@ server:
   port: 8083
   servlet:
     context-path: /api/usecaseui-intent-analysis/v1
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:intentdb}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    schema: classpath:intent-analysis-init.sql
+    initialization-mode: always
+mybatis:
+  configuration:
+    database-id: PostgreSQL
+  mapper-locations: classpath*:mybatis/sql/*.xml

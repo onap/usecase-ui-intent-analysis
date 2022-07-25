@@ -16,9 +16,10 @@
 
 package org.onap.usecaseui.intentanalysis;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+@MapperScan("org.onap.usecaseui.intentanalysis.mapper")
 @SpringBootApplication
 public class IntentAnalysisApplication {
 
