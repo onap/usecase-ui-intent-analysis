@@ -16,6 +16,24 @@
       "revId": "100158dc47753045ce8fcbbb5c44094bc1662b85",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41f432c_9b0cd8e1",
+        "filename": "intentanalysis/src/main/resources/application.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-07-25T08:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823d213a_6a89f003",
+      "revId": "100158dc47753045ce8fcbbb5c44094bc1662b85",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
