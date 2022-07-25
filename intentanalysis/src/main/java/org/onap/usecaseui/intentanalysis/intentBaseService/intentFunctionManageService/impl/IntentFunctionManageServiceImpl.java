@@ -29,12 +29,10 @@ import java.util.List;
 
 @Service("intentFunctionManageService")
 public class IntentFunctionManageServiceImpl implements IntentFunctionManageService {
-    @Autowired 
+    @Autowired
     private ApplicationContext applicationContext;
-    
     @Override
     public int createFunctionManage(IntentManagerRegInfo intentManage)  {
-        IntentManagementFunction intentManagementFunction = (IntentManagementFunction)applicationContext.getBean("CLLBusinessIntentManagementFunction");
         return 0;
     }
 
@@ -44,7 +42,7 @@ public class IntentFunctionManageServiceImpl implements IntentFunctionManageServ
     }
 
     @Override
-    public int updateIntentById(String id, IntentManagerRegInfo intentManage) {
+    public int updateIntentManageById(String id, IntentManagerRegInfo intentManage) {
         return 0;
     }
 
@@ -53,17 +51,16 @@ public class IntentFunctionManageServiceImpl implements IntentFunctionManageServ
         return null;
     }
 
-    public List<IntentManagementFunction> filterHanleFunction(Intent intent) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String functionName ="CLLBusinessIntentManagementFunction";
+    public List<IntentManagementFunction> filterHandleFunction(IntentManagerRegInfo managementRegInfo) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        String managetFunctionRegName =managementRegInfo.getHandleName();
 
         IntentManagementFunction function =
-                (IntentManagementFunction)applicationContext.getBean(functionName);
+                (IntentManagementFunction)applicationContext.getBean(managetFunctionRegName);
 
         ActuationModule actuationModule = function.getActuationModule();
         actuationModule.sendToNonIntentHandler();
-//
         IntentManagementFunction intentManagementFunction =
-                (IntentManagementFunction) Class.forName(functionName)
+                (IntentManagementFunction) Class.forName(managetFunctionRegName)
                         .getDeclaredConstructor().newInstance();
         ActuationModule actuationModule1 = intentManagementFunction.getActuationModule();
         return null;

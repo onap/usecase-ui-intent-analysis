@@ -24,7 +24,7 @@ public interface IntentFunctionManageService {
 
     int deleteFunctionManage(String id);
 
-    int updateIntentById(String id, IntentManagerRegInfo intentManage);
+    int updateIntentManageById(String id, IntentManagerRegInfo intentManage);
 
     List<IntentManagerRegInfo> getIntentManage();
 
