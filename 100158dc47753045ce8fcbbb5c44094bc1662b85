@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "823d213a_6a89f003",
+        "filename": "intentanalysis/src/main/resources/application.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-25T03:45:16Z",
+      "side": 1,
+      "message": "The username and password here should also support getting from ENV params.",
+      "revId": "100158dc47753045ce8fcbbb5c44094bc1662b85",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
