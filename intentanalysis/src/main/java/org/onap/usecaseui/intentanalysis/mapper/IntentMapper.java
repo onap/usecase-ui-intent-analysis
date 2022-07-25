@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.mapper;
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.apache.ibatis.annotations.Mapper;
+import org.onap.usecaseui.intentanalysis.bean.po.IntentPo;
 
 import java.util.List;
 
-public interface IntentService {
-    List<Intent> getIntentList();
+@Mapper
+public interface IntentMapper {
 
-    Intent getIntentById(String intentId);
+    void insertIntent(IntentPo intentPo);
 
-    Intent createIntent(Intent intent);
+    void updateIntent(IntentPo intentPo);
 
-    Intent updateIntent(Intent intent);
+    IntentPo selectIntentById(String intentId);
+
+    List<IntentPo> selectIntents();
 
     void deleteIntentById(String intentId);
 }

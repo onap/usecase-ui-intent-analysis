@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.mapper;
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.apache.ibatis.annotations.Mapper;
+import org.onap.usecaseui.intentanalysis.bean.po.StatePo;
 
 import java.util.List;
+@Mapper
+public interface StateMapper {
 
-public interface IntentService {
-    List<Intent> getIntentList();
+    void insertState(List<StatePo> state);
 
-    Intent getIntentById(String intentId);
+    List<StatePo> selectStateByExpectation(String expectationId);
 
-    Intent createIntent(Intent intent);
-
-    Intent updateIntent(Intent intent);
-
-    void deleteIntentById(String intentId);
+    void deleteStateByExpectationId(String expectationId);
 }
