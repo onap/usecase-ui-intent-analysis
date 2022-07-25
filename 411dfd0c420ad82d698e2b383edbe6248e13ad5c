@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "90b50a70_3b3789b7",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/controller/IntentFunctionManageController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-25T08:52:43Z",
+      "side": 1,
+      "message": "Update intent manager or update intent here?",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4f43ec_0f28aa97",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
         "patchSetId": 1
@@ -104,6 +121,23 @@
     },
     {
       "key": {
+        "uuid": "1d624e2d_4b6b189a",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-25T08:52:43Z",
+      "side": 1,
+      "message": "The information of cllbusinessintentmanagementfunction needs to be deleted here",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d756bbbb_1e9ea78e",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
         "patchSetId": 1
@@ -132,6 +166,23 @@
       "writtenOn": "2022-07-25T06:51:18Z",
       "side": 1,
       "message": "typo Hanle in the function name.",
+      "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46552b1_83e173ec",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentFunctionManageService/impl/IntentFunctionManageServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2022-07-25T08:52:43Z",
+      "side": 1,
+      "message": "The information of cllbusinessintentmanagementfunction needs to be deleted here",
       "revId": "411dfd0c420ad82d698e2b383edbe6248e13ad5c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
