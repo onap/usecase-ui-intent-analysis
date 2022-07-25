@@ -29,9 +29,8 @@ import java.util.List;
 
 @Service("intentFunctionManageService")
 public class IntentFunctionManageServiceImpl implements IntentFunctionManageService {
-    @Autowired 
+    @Autowired
     private ApplicationContext applicationContext;
-    
     @Override
     public int createFunctionManage(IntentManagerRegInfo intentManage)  {
         IntentManagementFunction intentManagementFunction = (IntentManagementFunction)applicationContext.getBean("CLLBusinessIntentManagementFunction");
@@ -44,7 +43,7 @@ public class IntentFunctionManageServiceImpl implements IntentFunctionManageServ
     }
 
     @Override
-    public int updateIntentById(String id, IntentManagerRegInfo intentManage) {
+    public int updateIntentManageById(String id, IntentManagerRegInfo intentManage) {
         return 0;
     }
 
@@ -53,7 +52,7 @@ public class IntentFunctionManageServiceImpl implements IntentFunctionManageServ
         return null;
     }
 
-    public List<IntentManagementFunction> filterHanleFunction(Intent intent) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public List<IntentManagementFunction> filterHandleFunction(Intent intent) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String functionName ="CLLBusinessIntentManagementFunction";
 
         IntentManagementFunction function =
@@ -61,7 +60,7 @@ public class IntentFunctionManageServiceImpl implements IntentFunctionManageServ
 
         ActuationModule actuationModule = function.getActuationModule();
         actuationModule.sendToNonIntentHandler();
-//
+
         IntentManagementFunction intentManagementFunction =
                 (IntentManagementFunction) Class.forName(functionName)
                         .getDeclaredConstructor().newInstance();
