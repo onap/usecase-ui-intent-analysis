@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.server.mapper.IntentMapper">
+
+    <select id="selectIntentById" resultType="org.onap.usecaseui.intentanalysis.bean.po.IntentPo">
+        select intent_id intentId, intent_name intentName from intent
+        where intent_id = #{intentId}
+    </select>
+
+    <select id="selectIntents" resultType="org.onap.usecaseui.intentanalysis.bean.po.IntentPo">
+        select intent_id intentId, intent_name intentName from intent
+    </select>
+
+    <insert id="insertIntent" >
+        insert into Intent(intent_id, intent_name)
+        values(#{intentId}, #{intentName})
+    </insert>
+
+    <update id="updateIntent" parameterType="org.onap.usecaseui.intentanalysis.bean.po.IntentPo">
+        update intent
+        <trim prefix="set" suffixOverrides=",">
+            <if test="intentId != null">intent_id = #{intentId},</if>
+            <if test="intentName != null">intent_name = #{intentName},</if>
+        </trim>
+        where intent_id = #{intentId}
+    </update>
+
+    <delete id="deleteIntentById" parameterType="string">
+        delete from intent
+        where intent_id = #{intentId}
+    </delete>
+
+</mapper>

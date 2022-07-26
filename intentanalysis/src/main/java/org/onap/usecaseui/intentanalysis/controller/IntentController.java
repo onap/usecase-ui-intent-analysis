@@ -53,7 +53,7 @@ public class IntentController {
     public ResponseEntity<Intent> updateIntentById(
             @PathVariable(INTENT_ID) String intentId,
             @RequestBody Intent intent) {
-        return ResponseEntity.ok(intentService.updateIntentById(intentId, intent));
+        return ResponseEntity.ok(intentService.updateIntent(intent));
     }
 
     @DeleteMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
