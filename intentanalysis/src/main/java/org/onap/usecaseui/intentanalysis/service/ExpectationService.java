@@ -17,17 +17,17 @@
 package org.onap.usecaseui.intentanalysis.service;
 
 
-import org.onap.usecaseui.intentanalysis.bean.po.ExpectationPo;
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 
 import java.util.List;
 
 public interface ExpectationService {
 
-    void createExpectationList(List<ExpectationPo> expectationPoList, String intentId);
+    void createExpectationList(List<Expectation> expectationList, String intentId);
 
     void deleteExpectationListById(String intentId);
 
-    void updateExpectationListById(List<ExpectationPo> expectationPoList, String intentId);
+    void updateExpectationListById(List<Expectation> expectationList, String intentId);
 
-    List<ExpectationPo> getExpectationListByIntentId(String intentId);
+    List<Expectation> getExpectationListByIntentId(String intentId);
 }
