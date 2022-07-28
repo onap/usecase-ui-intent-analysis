@@ -16,18 +16,19 @@
 package org.onap.usecaseui.intentanalysis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.po.ExpectationPo;
+import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 
 import java.util.List;
 @Mapper
 public interface ExpectationMapper {
 
-    void insertExpectation(List<ExpectationPo> expectation);
+    void insertExpectation(@Param(value = "expectationList") List<Expectation> expectationList, @Param(value = "intentId") String intentId);
 
-    List<ExpectationPo> selectExpectationByIntentId(String intentId);
+    List<Expectation> selectExpectationByIntentId(String intentId);
 
     void deleteExpectationByIntentId(String intentId);
 
-    void updateExpectation(List<ExpectationPo> expectation);
+    void updateExpectation(List<Expectation> expectation);
 
 }

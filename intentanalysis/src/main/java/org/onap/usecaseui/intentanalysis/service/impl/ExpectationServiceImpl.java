@@ -17,8 +17,8 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import org.onap.usecaseui.intentanalysis.bean.po.ExpectationPo;
-import org.onap.usecaseui.intentanalysis.bean.po.StatePo;
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+import org.onap.usecaseui.intentanalysis.bean.models.State;
 import org.onap.usecaseui.intentanalysis.mapper.ExpectationMapper;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.StateService;
@@ -41,43 +41,42 @@ public class ExpectationServiceImpl implements ExpectationService {
     private StateService stateService;
 
     @Override
-    public void createExpectationList(List<ExpectationPo> expectationPoList, String intentId) {
-        for (ExpectationPo expectationPo : expectationPoList) {
-            if (null != expectationPo) {
-                expectationPo.setIntentPoId(intentId);
-                stateService.createStateList(expectationPo.getStatePoList(), expectationPo.getExpectationPoId());
+    public void createExpectationList(List<Expectation> expectationList, String intentId) {
+        for (Expectation expectation : expectationList) {
+            if (null != expectation) {
+                stateService.createStateList(expectation.getStateList(), expectation.getExpectationId());
             }
         }
-        expectationMapper.insertExpectation(expectationPoList);
+        expectationMapper.insertExpectation(expectationList, intentId);
     }
 
     @Override
-    public List<ExpectationPo> getExpectationListByIntentId(String intentId) {
-        List<ExpectationPo> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
-        for (ExpectationPo expectation : expectationList) {
-            List<StatePo> stateList =  stateService.getStateListByExpectationId(expectation.getExpectationPoId());
-            expectation.setStatePoList(stateList);
+    public List<Expectation> getExpectationListByIntentId(String intentId) {
+        List<Expectation> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
+        for (Expectation expectation : expectationList) {
+            List<State> stateList =  stateService.getStateListByExpectationId(expectation.getExpectationId());
+            expectation.setStateList(stateList);
         }
         return expectationList;
     }
 
     @Override
     public void deleteExpectationListById(String intentId) {
-        List<ExpectationPo> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
+        List<Expectation> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
         expectationMapper.deleteExpectationByIntentId(intentId);
-        for (ExpectationPo expectation : expectationList) {
-            stateService.deleteStateListByExpectationId(expectation.getExpectationPoId());
+        for (Expectation expectation : expectationList) {
+            stateService.deleteStateListByExpectationId(expectation.getExpectationId());
         }
     }
 
     @Override
-    public void updateExpectationListById(List<ExpectationPo> expectationPoList, String intentId) {
-        List<ExpectationPo> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
-        if (expectationList == null) {
+    public void updateExpectationListById(List<Expectation> expectationList, String intentId) {
+        List<Expectation> expectationDBList = expectationMapper.selectExpectationByIntentId(intentId);
+        if (expectationDBList == null) {
             LOGGER.error("Intent ID {} doesn't exist in database.", intentId);
             throw new IllegalArgumentException("This intent ID doesn't exist in database.");
         }
-        expectationMapper.updateExpectation(expectationPoList);
+        expectationMapper.updateExpectation(expectationDBList);
         LOGGER.info("Expectations are successfully updated.");
     }
 }

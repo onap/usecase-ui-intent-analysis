@@ -17,20 +17,20 @@
 package org.onap.usecaseui.intentanalysis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.po.IntentPo;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 
 import java.util.List;
 
 @Mapper
 public interface IntentMapper {
 
-    void insertIntent(IntentPo intentPo);
+    void insertIntent(Intent intent);
 
-    void updateIntent(IntentPo intentPo);
+    void updateIntent(Intent intent);
 
-    IntentPo selectIntentById(String intentId);
+    Intent selectIntentById(String intentId);
 
-    List<IntentPo> selectIntents();
+    List<Intent> selectIntents();
 
     void deleteIntentById(String intentId);
 }

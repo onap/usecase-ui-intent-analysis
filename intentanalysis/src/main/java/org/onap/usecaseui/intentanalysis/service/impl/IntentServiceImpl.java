@@ -18,7 +18,6 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.po.IntentPo;
 import org.onap.usecaseui.intentanalysis.mapper.IntentMapper;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
@@ -43,26 +42,22 @@ public class IntentServiceImpl implements IntentService {
 
     @Override
     public List<Intent> getIntentList() {
-        List<Intent> intentList = new ArrayList<>();
-        List<IntentPo> intentPoList = intentMapper.selectIntents();
-        if (intentPoList == null || intentPoList.size() <= 0) {
-            return intentList;
+        List<Intent> intentList = intentMapper.selectIntents();
+        if (intentList == null || intentList.size() <= 0) {
+            return new ArrayList<>();
         }
-        for (IntentPo intentPo : intentPoList) {
-            if (intentPo != null) {
-                intentPo.setExpectationPoList(expectationService.getExpectationListByIntentId(intentPo.getIntentPoId()));
-                intentList.add(intentPo.transferToIntent());
-            }
+        for (Intent intent : intentList) {
+            intent.setExpectationList(expectationService.getExpectationListByIntentId(intent.getIntentId()));
         }
         return intentList;
     }
 
     @Override
     public Intent getIntentById(String intentId) {
-        IntentPo intentPo = intentMapper.selectIntentById(intentId);
-        if (intentPo != null) {
-            intentPo.setExpectationPoList(expectationService.getExpectationListByIntentId(intentPo.getIntentPoId()));
-            return intentPo.transferToIntent();
+        Intent intent = intentMapper.selectIntentById(intentId);
+        if (intent != null) {
+            intent.setExpectationList(expectationService.getExpectationListByIntentId(intent.getIntentId()));
+            return intent;
         } else {
             String msg = "Intent Id requested doesn't exist in the intent database";
             LOGGER.error(msg);
@@ -73,10 +68,9 @@ public class IntentServiceImpl implements IntentService {
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Intent createIntent(Intent intent) {
-        IntentPo intentPo = intent.transferToIntentPo();
-        intentMapper.insertIntent(intentPo);
+        intentMapper.insertIntent(intent);
         // saving expectation list into expectation table
-        expectationService.createExpectationList(intentPo.getExpectationPoList(), intentPo.getIntentPoId());
+        expectationService.createExpectationList(intent.getExpectationList(), intent.getIntentId());
         LOGGER.info("Intent was successfully created.");
         return intent;
     }
@@ -84,18 +78,19 @@ public class IntentServiceImpl implements IntentService {
     @Override
     public Intent updateIntent(Intent intent) {
         String intentId = intent.getIntentId();
-        IntentPo intentPo = intentMapper.selectIntentById(intentId);
-        if (intentPo == null) {
+        Intent intentDB = intentMapper.selectIntentById(intentId);
+        if (intentDB == null) {
             LOGGER.error("intent id {} not exists in db.", intentId);
         }
-        intentMapper.updateIntent(intentPo);
+        intentMapper.updateIntent(intentDB);
         LOGGER.info("update intent successfully.");
-        return intentMapper.selectIntentById(intentId).transferToIntent();
+        return intentMapper.selectIntentById(intentId);
     }
 
     @Override
     public void deleteIntentById(String intentId) {
         intentMapper.deleteIntentById(intentId);
         expectationService.deleteExpectationListById(intentId);
+        LOGGER.info("intent has been deleted successfully.");
     }
 }

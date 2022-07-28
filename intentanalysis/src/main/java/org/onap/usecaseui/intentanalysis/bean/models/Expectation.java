@@ -15,8 +15,6 @@
  */
 package org.onap.usecaseui.intentanalysis.bean.models;
 
-import org.onap.usecaseui.intentanalysis.bean.po.ExpectationPo;
-import org.onap.usecaseui.intentanalysis.bean.po.StatePo;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -25,6 +23,7 @@ import java.util.List;
 @Data
 
 public class Expectation {
+
     private String expectationId;
 
     private String expectationName;
@@ -33,23 +32,4 @@ public class Expectation {
 
     List<State> stateList;
 
-    public ExpectationPo transferToExpectationPo() {
-        ExpectationPo expectationPo = new ExpectationPo();
-        expectationPo.setExpectationPoId(this.expectationId);
-        expectationPo.setExpectationPoName(this.expectationName);
-        expectationPo.setTargetMOI(this.targetMOI);
-        expectationPo.setStatePoList(getStatePoList());
-        return expectationPo;
-    }
-
-    private List<StatePo> getStatePoList() {
-        List<StatePo> statePoList = new ArrayList<>();
-        if (null == this.stateList) {
-            return statePoList;
-        }
-        for (State state : this.stateList) {
-            statePoList.add(state.transferToStatePo());
-        }
-        return statePoList;
-    }
 }

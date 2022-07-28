@@ -16,11 +16,11 @@
 
 package org.onap.usecaseui.intentanalysis.bean.models;
 
-import org.onap.usecaseui.intentanalysis.bean.po.StatePo;
 import lombok.Data;
 
 @Data
 public class State {
+
     private String stateId;
 
     private String stateName;
@@ -29,12 +29,4 @@ public class State {
 
     private Boolean isSatisfied;
 
-    public StatePo transferToStatePo() {
-        StatePo statePo = new StatePo();
-        statePo.setStatePoId(this.stateId);
-        statePo.setStatePoName(this.stateName);
-        statePo.setCondition(this.condition);
-        statePo.setIsSatisfied(this.isSatisfied);
-        return statePo;
-    }
 }

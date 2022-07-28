@@ -17,15 +17,16 @@
 package org.onap.usecaseui.intentanalysis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.po.StatePo;
+import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.models.State;
 
 import java.util.List;
 @Mapper
 public interface StateMapper {
 
-    void insertState(List<StatePo> state);
+    void insertState(@Param(value = "stateList") List<State> state, @Param(value = "expectationId") String expectationId);
 
-    List<StatePo> selectStateByExpectation(String expectationId);
+    List<State> selectStateByExpectation(String expectationId);
 
     void deleteStateByExpectationId(String expectationId);
 }
