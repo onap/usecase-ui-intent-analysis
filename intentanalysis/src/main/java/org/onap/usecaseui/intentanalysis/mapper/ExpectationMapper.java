@@ -29,6 +29,9 @@ public interface ExpectationMapper {
 
     void deleteExpectationByIntentId(String intentId);
 
-    void updateExpectation(List<Expectation> expectation);
+    void updateExpectation(Expectation expectation);
 
+    void insertOneExpectation(@Param(value = "expectation") Expectation expectation, @Param(value = "intentId") String intentId);
+
+    void deleteOneExpectation(String expectationId);
 }

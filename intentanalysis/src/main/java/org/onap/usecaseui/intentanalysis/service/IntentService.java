@@ -27,7 +27,7 @@ public interface IntentService {
 
     Intent createIntent(Intent intent);
 
-    Intent updateIntent(Intent intent);
+    Intent updateIntent(String intentId, Intent intent);
 
     void deleteIntentById(String intentId);
 }

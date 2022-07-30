@@ -25,4 +25,24 @@
         where intent_id = #{intentId}
     </delete>
 
+    <update id="updateExpectation">
+        update expectation
+        <trim prefix="set" suffixOverrides=",">
+            <if test="expectationName != null">expectation_name = #{expectationName},</if>
+            <if test="targetMOI != null">target_moi = #{targetMOI},</if>
+        </trim>
+        where expectation_id = #{expectationId}
+    </update>
+
+    <insert id="insertOneExpectation">
+        insert into expectation(expectation_id, expectation_name, target_moi, intent_id)
+        values (#{expectation.expectationId}, #{expectation.expectationName}, #{expectation.targetMOI}, #{intentId})
+    </insert>
+
+    <delete id="deleteOneExpectation">
+        delete
+        from expectation
+        where expectation_id = #{expectationId}
+    </delete>
+
 </mapper>

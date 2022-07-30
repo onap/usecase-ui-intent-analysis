@@ -18,6 +18,7 @@ package org.onap.usecaseui.intentanalysis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.State;
 
 import java.util.List;
@@ -29,4 +30,10 @@ public interface StateMapper {
     List<State> selectStateByExpectation(String expectationId);
 
     void deleteStateByExpectationId(String expectationId);
+
+    void updateState(State state);
+
+    void insertOneState(@Param(value = "state") State state, @Param(value = "expectationId") String expectationId);
+
+    void deleteOneState(String stateId);
 }

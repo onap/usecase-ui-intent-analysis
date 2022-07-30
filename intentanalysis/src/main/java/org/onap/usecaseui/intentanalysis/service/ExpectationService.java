@@ -30,4 +30,8 @@ public interface ExpectationService {
     void updateExpectationListById(List<Expectation> expectationList, String intentId);
 
     List<Expectation> getExpectationListByIntentId(String intentId);
+
+    void insertOneExpectation(Expectation expectation, String intentId);
+
+    void deleteOneExpectation(String expectationId);
 }

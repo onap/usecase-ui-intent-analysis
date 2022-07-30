@@ -76,13 +76,13 @@ public class IntentServiceImpl implements IntentService {
     }
 
     @Override
-    public Intent updateIntent(Intent intent) {
-        String intentId = intent.getIntentId();
+    public Intent updateIntent(String intentId, Intent intent) {
         Intent intentDB = intentMapper.selectIntentById(intentId);
         if (intentDB == null) {
             LOGGER.error("intent id {} not exists in db.", intentId);
         }
-        intentMapper.updateIntent(intentDB);
+        expectationService.updateExpectationListById(intent.getExpectationList(), intentId);
+        intentMapper.updateIntent(intent);
         LOGGER.info("update intent successfully.");
         return intentMapper.selectIntentById(intentId);
     }

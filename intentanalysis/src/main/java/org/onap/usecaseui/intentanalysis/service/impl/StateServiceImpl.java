@@ -20,20 +20,28 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 import org.onap.usecaseui.intentanalysis.bean.models.State;
 import org.onap.usecaseui.intentanalysis.mapper.StateMapper;
 import org.onap.usecaseui.intentanalysis.service.StateService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class StateServiceImpl implements StateService {
 
+    private static Logger LOGGER = LoggerFactory.getLogger(StateServiceImpl.class);
+
     @Autowired
     private StateMapper stateMapper;
 
+    @Autowired
+    private StateService stateService;
+
     @Override
     public void createStateList(List<State> stateList, String expectationId) {
-         stateMapper.insertState(stateList, expectationId);
+        stateMapper.insertState(stateList, expectationId);
     }
 
     @Override
@@ -48,7 +56,37 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public void updateStateListByExpectationId(List<State> stateList, String expectationId){
+    public void updateStateListByExpectationId(List<State> stateList, String expectationId) {
+        List<State> stateDBList = stateMapper.selectStateByExpectation(expectationId);
+        if (stateDBList == null) {
+            LOGGER.error("Expectation ID {} doesn't exist in database.", expectationId);
+            throw new IllegalArgumentException("This expectation ID doesn't exist in database.");
+        }
+        List<String> stateDBIdList = new ArrayList<>();
+        for (State stateDB : stateDBList) {
+            stateDBIdList.add(stateDB.getStateId());
+        }
+        for (State state : stateList) {
+            if (stateDBIdList.contains(state.getStateId())) {
+                stateMapper.updateState(state);
+                stateDBIdList.remove(state.getStateId());
+            } else {
+                stateService.insertOneState(state, expectationId);
+            }
+        }
+        for (String stateDBId : stateDBIdList) {
+            stateService.deleteOneState(stateDBId);
+        }
+        LOGGER.info("States are successfully updated.");
+    }
 
+    @Override
+    public void insertOneState(State state, String expectationId) {
+        stateMapper.insertOneState(state, expectationId);
+    }
+
+    @Override
+    public void deleteOneState(String stateId) {
+        stateMapper.deleteOneState(stateId);
     }
 }

@@ -29,4 +29,8 @@ public interface StateService {
     void updateStateListByExpectationId(List<State> stateList, String expectationId);
 
     List<State> getStateListByExpectationId(String expectationId);
+
+    void insertOneState(State state, String expectationId);
+
+    void deleteOneState(String stateId);
 }
