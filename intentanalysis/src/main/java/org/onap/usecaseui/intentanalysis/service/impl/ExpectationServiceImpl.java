@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +41,9 @@ public class ExpectationServiceImpl implements ExpectationService {
     @Autowired
     private StateService stateService;
 
+    @Autowired
+    private ExpectationService expectationService;
+
     @Override
     public void createExpectationList(List<Expectation> expectationList, String intentId) {
         for (Expectation expectation : expectationList) {
@@ -47,14 +51,14 @@ public class ExpectationServiceImpl implements ExpectationService {
                 stateService.createStateList(expectation.getStateList(), expectation.getExpectationId());
             }
         }
-        expectationMapper.insertExpectation(expectationList, intentId);
+        expectationMapper.insertExpectationList(expectationList, intentId);
     }
 
     @Override
     public List<Expectation> getExpectationListByIntentId(String intentId) {
         List<Expectation> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
         for (Expectation expectation : expectationList) {
-            List<State> stateList =  stateService.getStateListByExpectationId(expectation.getExpectationId());
+            List<State> stateList = stateService.getStateListByExpectationId(expectation.getExpectationId());
             expectation.setStateList(stateList);
         }
         return expectationList;
@@ -76,7 +80,33 @@ public class ExpectationServiceImpl implements ExpectationService {
             LOGGER.error("Intent ID {} doesn't exist in database.", intentId);
             throw new IllegalArgumentException("This intent ID doesn't exist in database.");
         }
-        expectationMapper.updateExpectation(expectationDBList);
+        List<String> expectationDBIdList = new ArrayList<>();
+        for (Expectation expectationDB : expectationDBList) {
+            expectationDBIdList.add(expectationDB.getExpectationId());
+        }
+
+        for (Expectation expectation : expectationList) {
+            if (expectationDBIdList.contains(expectation.getExpectationId())) {
+                stateService.updateStateListByExpectationId(expectation.getStateList(), expectation.getExpectationId());
+                expectationMapper.updateExpectation(expectation);
+                expectationDBIdList.remove(expectation.getExpectationId());
+            } else {
+                expectationService.insertExpectation(expectation, intentId);
+            }
+        }
+        for (String expectationDBId : expectationDBIdList) {
+            expectationService.deleteExpectationById(expectationDBId);
+        }
         LOGGER.info("Expectations are successfully updated.");
+    }
+
+    @Override
+    public void insertExpectation(Expectation expectation, String intentId) {
+        expectationMapper.insertExpectation(expectation, intentId);
+    }
+
+    @Override
+    public void deleteExpectationById(String expectationId) {
+        expectationMapper.deleteExpectationById(expectationId);
     }
 }
