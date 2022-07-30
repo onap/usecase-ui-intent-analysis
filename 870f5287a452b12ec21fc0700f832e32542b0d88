@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b888c4a4_6729a53e",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationMapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-30T08:07:55Z",
+      "side": 1,
+      "message": "Prefer to name it as insertExpectation directly to keep it the same format as other functions.",
+      "revId": "870f5287a452b12ec21fc0700f832e32542b0d88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49a81eb_75a3b860",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationMapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-30T08:07:55Z",
+      "side": 1,
+      "message": "Rename this kind of functions to be deleteByID will be better.",
+      "revId": "870f5287a452b12ec21fc0700f832e32542b0d88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7148cd_f59f18fb",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/IntentServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-07-30T08:07:55Z",
+      "side": 1,
+      "message": "I prefer to keep it as what it is now. The intentId could be got from the intent data, no need to input again.",
+      "revId": "870f5287a452b12ec21fc0700f832e32542b0d88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
