@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed15340c_3eccc5d2",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationMapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-01T02:05:31Z",
+      "side": 1,
+      "message": "Then the first insertExpectation could be renamed as insertExpectations or insertExpectationList.\nHere is actually the insertExpectation.",
+      "parentUuid": "c1fff9de_a961a845",
+      "revId": "870f5287a452b12ec21fc0700f832e32542b0d88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a49a81eb_75a3b860",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationMapper.java",
         "patchSetId": 1
