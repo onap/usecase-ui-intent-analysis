@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1fff9de_a961a845",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationMapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 8081
+      },
+      "writtenOn": "2022-08-01T01:56:55Z",
+      "side": 1,
+      "message": "But insertExpectation already exists and overload cannot be used in mybatis.",
+      "parentUuid": "b888c4a4_6729a53e",
+      "revId": "870f5287a452b12ec21fc0700f832e32542b0d88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a49a81eb_75a3b860",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationMapper.java",
         "patchSetId": 1
