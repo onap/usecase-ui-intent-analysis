@@ -11,7 +11,7 @@
         where expectation_id = #{expectationId}
     </select>
 
-    <insert id="insertState" parameterType="java.util.ArrayList">
+    <insert id="insertStateList" parameterType="java.util.ArrayList">
         insert into state(state_id, state_name, expectation_id, is_satisfied, condition)
         values
         <foreach collection="stateList" index="index" item="item" separator=",">
@@ -22,6 +22,27 @@
     <delete id="deleteStateByExpectationId">
         delete from state
         where expectation_id = #{expectationId}
+    </delete>
+
+    <insert id="insertState">
+        insert into state(state_id, state_name, expectation_id, is_satisfied, condition)
+        values (#{state.stateId}, #{state.stateName}, #{expectationId}, #{state.isSatisfied}, #{state.condition})
+    </insert>
+
+    <update id="updateState" parameterType="java.util.List">
+        update state
+        <trim prefix="set" suffixOverrides=",">
+            <if test="stateName != null">state_name = #{stateName},</if>
+            <if test="isSatisfied != null">is_satisfied = #{isSatisfied},</if>
+            <if test="condition != null">condition = #{condition},</if>
+        </trim>
+        where state_id = #{stateId}
+    </update>
+
+    <delete id="deleteStateById">
+        delete
+        from state
+        where state_id = #{stateId}
     </delete>
 
 </mapper>

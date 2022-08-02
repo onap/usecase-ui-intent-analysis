@@ -21,7 +21,6 @@
     <update id="updateIntent" parameterType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
         update intent
         <trim prefix="set" suffixOverrides=",">
-            <if test="intentId != null">intent_id = #{intentId},</if>
             <if test="intentName != null">intent_name = #{intentName},</if>
         </trim>
         where intent_id = #{intentId}
