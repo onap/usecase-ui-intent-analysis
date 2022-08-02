@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34543d4_3588d061",
+        "filename": "intentanalysis/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-02T02:28:51Z",
+      "side": 1,
+      "message": "Licence can be added.",
+      "revId": "40596a414f33b556831d97e73c8de8c33148bdcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24691be9_bef2b607",
+        "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/IntentServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-02T02:28:51Z",
+      "side": 1,
+      "message": "Copyright 2022.",
+      "revId": "40596a414f33b556831d97e73c8de8c33148bdcd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
