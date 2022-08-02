@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.onap.usecaseui.intentanalysis.mapper;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+package org.onap.usecaseui.intentanalysis.exception;
 
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-@Mapper
-public interface IntentMapper {
+@Getter
+@Setter
+public class ErrorMessage {
 
-    int insertIntent(Intent intent);
+    private int retCode;
 
-    int updateIntent(Intent intent);
+    private List<String> params;
 
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    public ErrorMessage(int retCode, List<String> params) {
+        this.retCode = retCode;
+        this.params = params;
+    }
 }

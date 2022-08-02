@@ -25,15 +25,15 @@ import java.util.List;
 @Mapper
 public interface StateMapper {
 
-    void insertStateList(@Param(value = "stateList") List<State> state, @Param(value = "expectationId") String expectationId);
+    int insertStateList(@Param(value = "stateList") List<State> state, @Param(value = "expectationId") String expectationId);
 
     List<State> selectStateByExpectation(String expectationId);
 
-    void deleteStateByExpectationId(String expectationId);
+    int deleteStateByExpectationId(String expectationId);
 
-    void updateState(State state);
+    int updateState(State state);
 
-    void insertState(@Param(value = "state") State state, @Param(value = "expectationId") String expectationId);
+    int insertState(@Param(value = "state") State state, @Param(value = "expectationId") String expectationId);
 
-    void deleteStateById(String stateId);
+    int deleteStateById(String stateId);
 }

@@ -18,6 +18,8 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 
 
 import org.onap.usecaseui.intentanalysis.bean.models.State;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.mapper.StateMapper;
 import org.onap.usecaseui.intentanalysis.service.StateService;
 import org.slf4j.Logger;
@@ -41,26 +43,42 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public void createStateList(List<State> stateList, String expectationId) {
-        stateMapper.insertStateList(stateList, expectationId);
+        int res = stateMapper.insertStateList(stateList, expectationId);
+        if (res < 1) {
+            String msg = "Create state to database failed.";
+            LOGGER.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        }
     }
 
     @Override
     public List<State> getStateListByExpectationId(String expectationId) {
         List<State> stateList = stateMapper.selectStateByExpectation(expectationId);
+        if (stateList == null) {
+            String msg = String.format("Expectation id %s doesn't exist in database.", expectationId);
+            LOGGER.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
         return stateList;
     }
 
     @Override
     public void deleteStateListByExpectationId(String expectationId) {
-        stateMapper.deleteStateByExpectationId(expectationId);
+        int res = stateMapper.deleteStateByExpectationId(expectationId);
+        if (res < 1) {
+            String msg = "Delete state in database failed.";
+            LOGGER.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
+        }
     }
 
     @Override
     public void updateStateListByExpectationId(List<State> stateList, String expectationId) {
         List<State> stateDBList = stateMapper.selectStateByExpectation(expectationId);
         if (stateDBList == null) {
-            LOGGER.error("Expectation ID {} doesn't exist in database.", expectationId);
-            throw new IllegalArgumentException("This expectation ID doesn't exist in database.");
+            String msg = String.format("Expectation id %s doesn't exist in database.", expectationId);
+            LOGGER.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         List<String> stateDBIdList = new ArrayList<>();
         for (State stateDB : stateDBList) {
@@ -68,7 +86,12 @@ public class StateServiceImpl implements StateService {
         }
         for (State state : stateList) {
             if (stateDBIdList.contains(state.getStateId())) {
-                stateMapper.updateState(state);
+                int res = stateMapper.updateState(state);
+                if (res < 1) {
+                    String msg = "Update state in database failed.";
+                    LOGGER.error(msg);
+                    throw new DataBaseException(msg, ResponseConsts.RET_UPDATE_DATA_FAIL);
+                }
                 stateDBIdList.remove(state.getStateId());
             } else {
                 stateService.insertState(state, expectationId);
@@ -82,11 +105,21 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public void insertState(State state, String expectationId) {
-        stateMapper.insertState(state, expectationId);
+        int res = stateMapper.insertState(state, expectationId);
+        if (res < 1) {
+            String msg = "Create state to database failed.";
+            LOGGER.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        }
     }
 
     @Override
     public void deleteStateById(String stateId) {
-        stateMapper.deleteStateById(stateId);
+        int res = stateMapper.deleteStateById(stateId);
+        if (res < 1) {
+            String msg = "Delete state in database failed.";
+            LOGGER.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
+        }
     }
 }

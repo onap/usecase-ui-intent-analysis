@@ -13,24 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.onap.usecaseui.intentanalysis.exception;
 
-package org.onap.usecaseui.intentanalysis.mapper;
+public class CommonException extends RuntimeException{
 
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+    private ErrorMessage errMsg;
 
-import java.util.List;
-
-@Mapper
-public interface IntentMapper {
-
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    public CommonException(String message, int ret) {
+        super(message);
+        errMsg = new ErrorMessage(ret, null);
+    }
 }

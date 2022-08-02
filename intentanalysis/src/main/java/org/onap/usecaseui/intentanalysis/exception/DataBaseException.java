@@ -13,24 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.onap.usecaseui.intentanalysis.exception;
 
-package org.onap.usecaseui.intentanalysis.mapper;
+public class DataBaseException extends CommonException {
 
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-
-import java.util.List;
-
-@Mapper
-public interface IntentMapper {
-
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    public DataBaseException(String message, int ret) {
+        super(message, ret);
+    }
 }

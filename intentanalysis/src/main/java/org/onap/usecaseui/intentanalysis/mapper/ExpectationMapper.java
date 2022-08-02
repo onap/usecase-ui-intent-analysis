@@ -23,15 +23,15 @@ import java.util.List;
 @Mapper
 public interface ExpectationMapper {
 
-    void insertExpectationList(@Param(value = "expectationList") List<Expectation> expectationList, @Param(value = "intentId") String intentId);
+    int insertExpectationList(@Param(value = "expectationList") List<Expectation> expectationList, @Param(value = "intentId") String intentId);
 
     List<Expectation> selectExpectationByIntentId(String intentId);
 
-    void deleteExpectationByIntentId(String intentId);
+    int deleteExpectationByIntentId(String intentId);
 
-    void updateExpectation(Expectation expectation);
+    int updateExpectation(Expectation expectation);
 
-    void insertExpectation(@Param(value = "expectation") Expectation expectation, @Param(value = "intentId") String intentId);
+    int insertExpectation(@Param(value = "expectation") Expectation expectation, @Param(value = "intentId") String intentId);
 
-    void deleteExpectationById(String expectationId);
+    int deleteExpectationById(String expectationId);
 }
