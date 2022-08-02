@@ -16,8 +16,6 @@
 
 package org.onap.usecaseui.intentanalysis.bean.models;
 
-import org.onap.usecaseui.intentanalysis.bean.po.ExpectationPo;
-import org.onap.usecaseui.intentanalysis.bean.po.IntentPo;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -32,22 +30,4 @@ public class Intent {
 
     private List<Expectation> expectationList;
 
-    public IntentPo transferToIntentPo() {
-        IntentPo intentPo = new IntentPo();
-        intentPo.setIntentPoId(this.intentId);
-        intentPo.setIntentPoName(this.intentName);
-        intentPo.setExpectationPoList(getExpectationPoList());
-        return intentPo;
-    }
-
-    private List<ExpectationPo> getExpectationPoList() {
-        List<ExpectationPo> expectationPoList = new ArrayList<>();
-        if (null == this.expectationList) {
-            return expectationPoList;
-        }
-        for (Expectation expectation : this.expectationList) {
-            expectationPoList.add(expectation.transferToExpectationPo());
-        }
-        return expectationPoList;
-    }
 }

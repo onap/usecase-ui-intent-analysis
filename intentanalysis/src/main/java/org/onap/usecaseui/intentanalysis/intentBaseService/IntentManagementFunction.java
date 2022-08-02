@@ -20,8 +20,10 @@ import lombok.Data;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.springframework.context.annotation.Configuration;
 
 @Data
+@Configuration
 public class IntentManagementFunction {
     private ActuationModule actuationModule;
     private DecisionModule decisionModule;

@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.onap.usecaseui.server.mapper.IntentMapper">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentMapper">
 
-    <select id="selectIntentById" resultType="org.onap.usecaseui.intentanalysis.bean.po.IntentPo">
+    <select id="selectIntentById" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
         select intent_id intentId, intent_name intentName from intent
         where intent_id = #{intentId}
     </select>
 
-    <select id="selectIntents" resultType="org.onap.usecaseui.intentanalysis.bean.po.IntentPo">
+    <select id="selectIntents" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
         select intent_id intentId, intent_name intentName from intent
     </select>
 
@@ -18,7 +18,7 @@
         values(#{intentId}, #{intentName})
     </insert>
 
-    <update id="updateIntent" parameterType="org.onap.usecaseui.intentanalysis.bean.po.IntentPo">
+    <update id="updateIntent" parameterType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
         update intent
         <trim prefix="set" suffixOverrides=",">
             <if test="intentId != null">intent_id = #{intentId},</if>

@@ -16,17 +16,17 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.po.StatePo;
+import org.onap.usecaseui.intentanalysis.bean.models.State;
 
 import java.util.List;
 
 public interface StateService {
 
-    void createStateList(List<StatePo> statePoList, String expectationId);
+    void createStateList(List<State> stateList, String expectationId);
 
     void deleteStateListByExpectationId(String expectationId);
 
-    void updateStateListByExpectationId(List<StatePo> statePoList, String expectationId);
+    void updateStateListByExpectationId(List<State> stateList, String expectationId);
 
-    List<StatePo> getStateListByExpectationId(String expectationId);
+    List<State> getStateListByExpectationId(String expectationId);
 }

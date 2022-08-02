@@ -17,7 +17,7 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import org.onap.usecaseui.intentanalysis.bean.po.StatePo;
+import org.onap.usecaseui.intentanalysis.bean.models.State;
 import org.onap.usecaseui.intentanalysis.mapper.StateMapper;
 import org.onap.usecaseui.intentanalysis.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +32,13 @@ public class StateServiceImpl implements StateService {
     private StateMapper stateMapper;
 
     @Override
-    public void createStateList(List<StatePo> stateList, String expectationId) {
-        for (StatePo state : stateList) {
-            state.setStatePoId(expectationId);
-        }
-         stateMapper.insertState(stateList);
+    public void createStateList(List<State> stateList, String expectationId) {
+         stateMapper.insertState(stateList, expectationId);
     }
 
     @Override
-    public List<StatePo> getStateListByExpectationId(String expectationId) {
-        List<StatePo> stateList = stateMapper.selectStateByExpectation(expectationId);
+    public List<State> getStateListByExpectationId(String expectationId) {
+        List<State> stateList = stateMapper.selectStateByExpectation(expectationId);
         return stateList;
     }
 
@@ -51,6 +48,7 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public void updateStateListByExpectationId(List<StatePo> statePoList, String expectationId){
-    };
+    public void updateStateListByExpectationId(List<State> stateList, String expectationId){
+
+    }
 }
