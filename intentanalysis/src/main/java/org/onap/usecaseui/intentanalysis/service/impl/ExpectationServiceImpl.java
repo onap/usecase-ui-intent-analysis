@@ -17,6 +17,7 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.State;
 import org.onap.usecaseui.intentanalysis.mapper.ExpectationMapper;
@@ -24,17 +25,15 @@ import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ExpectationServiceImpl implements ExpectationService {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(ExpectationServiceImpl.class);
     @Autowired
     private ExpectationMapper expectationMapper;
 
@@ -77,7 +76,7 @@ public class ExpectationServiceImpl implements ExpectationService {
     public void updateExpectationListById(List<Expectation> expectationList, String intentId) {
         List<Expectation> expectationDBList = expectationMapper.selectExpectationByIntentId(intentId);
         if (expectationDBList == null) {
-            LOGGER.error("Intent ID {} doesn't exist in database.", intentId);
+            log.error("Intent ID {} doesn't exist in database.", intentId);
             throw new IllegalArgumentException("This intent ID doesn't exist in database.");
         }
         List<String> expectationDBIdList = new ArrayList<>();
@@ -97,7 +96,7 @@ public class ExpectationServiceImpl implements ExpectationService {
         for (String expectationDBId : expectationDBIdList) {
             expectationService.deleteExpectationById(expectationDBId);
         }
-        LOGGER.info("Expectations are successfully updated.");
+        log.info("Expectations are successfully updated.");
     }
 
     @Override

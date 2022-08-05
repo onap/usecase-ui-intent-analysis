@@ -17,12 +17,11 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.mapper.IntentMapper;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class IntentServiceImpl implements IntentService {
-    private static Logger LOGGER = LoggerFactory.getLogger(IntentService.class);
-
     @Autowired
     private IntentMapper intentMapper;
 
@@ -60,7 +58,7 @@ public class IntentServiceImpl implements IntentService {
             return intent;
         } else {
             String msg = "Intent Id requested doesn't exist in the intent database";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new IllegalArgumentException(msg);
         }
     }
@@ -71,7 +69,7 @@ public class IntentServiceImpl implements IntentService {
         intentMapper.insertIntent(intent);
         // saving expectation list into expectation table
         expectationService.createExpectationList(intent.getExpectationList(), intent.getIntentId());
-        LOGGER.info("Intent was successfully created.");
+        log.info("Intent was successfully created.");
         return intent;
     }
 
@@ -79,11 +77,11 @@ public class IntentServiceImpl implements IntentService {
     public Intent updateIntent(Intent intent) {
         Intent intentDB = intentMapper.selectIntentById(intent.getIntentId());
         if (intentDB == null) {
-            LOGGER.error("intent id {} not exists in db.", intent.getIntentId());
+            log.error("intent id {} not exists in db.", intent.getIntentId());
         }
         expectationService.updateExpectationListById(intent.getExpectationList(), intent.getIntentId());
         intentMapper.updateIntent(intent);
-        LOGGER.info("update intent successfully.");
+        log.info("update intent successfully.");
         return intentMapper.selectIntentById(intent.getIntentId());
     }
 
@@ -91,6 +89,6 @@ public class IntentServiceImpl implements IntentService {
     public void deleteIntentById(String intentId) {
         intentMapper.deleteIntentById(intentId);
         expectationService.deleteExpectationListById(intentId);
-        LOGGER.info("intent has been deleted successfully.");
+        log.info("intent has been deleted successfully.");
     }
 }

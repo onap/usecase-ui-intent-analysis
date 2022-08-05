@@ -17,11 +17,10 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.State;
 import org.onap.usecaseui.intentanalysis.mapper.StateMapper;
 import org.onap.usecaseui.intentanalysis.service.StateService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class StateServiceImpl implements StateService {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(StateServiceImpl.class);
 
     @Autowired
     private StateMapper stateMapper;
@@ -59,7 +57,7 @@ public class StateServiceImpl implements StateService {
     public void updateStateListByExpectationId(List<State> stateList, String expectationId) {
         List<State> stateDBList = stateMapper.selectStateByExpectation(expectationId);
         if (stateDBList == null) {
-            LOGGER.error("Expectation ID {} doesn't exist in database.", expectationId);
+            log.error("Expectation ID {} doesn't exist in database.", expectationId);
             throw new IllegalArgumentException("This expectation ID doesn't exist in database.");
         }
         List<String> stateDBIdList = new ArrayList<>();
@@ -77,7 +75,7 @@ public class StateServiceImpl implements StateService {
         for (String stateDBId : stateDBIdList) {
             stateService.deleteStateById(stateDBId);
         }
-        LOGGER.info("States are successfully updated.");
+        log.info("States are successfully updated.");
     }
 
     @Override
