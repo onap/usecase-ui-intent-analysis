@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6213b052_8bc71f77",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "remove empty line",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46fb0de_b98881c7",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "No need to mention one funtion is successfully being executed in the end of each function. Only keep key info in logs, especially for log.info level.",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7fd5255_ee50b160",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/IntentServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "log.debug is suggested",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2ced6f_1a692719",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/IntentServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "intentDB is not proper, better use intentId",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62e348b_e8d5a87f",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/IntentServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "log.debug is suggested",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e788a5ee_57abb137",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/IntentServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "no need to mention log so frequently. If u want to keep it, better use debug level.",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adf2ae0_5d12c610",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/IntentServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af56e46f_d527d703",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/StateServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 8040
+      },
+      "writtenOn": "2022-08-05T09:25:28Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "deabba5ab27bbb6fd9c307064312ffc81177e2b0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
