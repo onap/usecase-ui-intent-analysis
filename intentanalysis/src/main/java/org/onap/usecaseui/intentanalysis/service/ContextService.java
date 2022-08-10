@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.mapper;
+package org.onap.usecaseui.intentanalysis.service;
 
 
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
+import org.onap.usecaseui.intentanalysis.bean.models.Context;
 
 
-@Mapper
-public interface IntentMapper {
+public interface ContextService {
 
-    int insertIntent(Intent intent);
+    void createContextList(List<Context> contextList, ContextParentType contextParentType, String parentId);
 
-    int updateIntent(Intent intent);
+    void insertContext(Context context, String parentId);
 
-    Intent selectIntentById(String intentId);
+    void deleteContextListByParentId(String parentId);
 
-    List<Intent> selectIntents();
+    void deleteContextById(String contextId);
 
-    int deleteIntentById(String intentId);
+    void updateContextListByParentId(List<Context> contextList, String parentId);
+
+    List<Context> getContextListByParentId(String parentId);
 }

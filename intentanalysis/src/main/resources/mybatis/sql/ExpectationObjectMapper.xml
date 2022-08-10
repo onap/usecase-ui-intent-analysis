@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ExpectationObjectMapper">
+
+
+    <insert id="insertExpectationObject">
+        insert into expectation_object(object_id, object_type, object_instance, expectation_id)
+        values
+        (#{expectationObject.objectId}, #{expectationObject.objectType}, #{expectationObject.objectInstance}, #{expectationId})
+    </insert>
+
+</mapper>

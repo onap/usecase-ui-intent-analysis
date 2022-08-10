@@ -14,24 +14,13 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.mapper;
+package org.onap.usecaseui.intentanalysis.service;
 
 
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 
 
-@Mapper
-public interface IntentMapper {
+public interface ExpectationObjectService {
 
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    void createObject(ExpectationObject expectationObject, String expectationId);
 }

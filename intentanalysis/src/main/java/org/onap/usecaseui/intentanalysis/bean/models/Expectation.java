@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.onap.usecaseui.intentanalysis.bean.models;
 
-import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
+import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
+import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
+
 
 @Data
 
@@ -28,8 +32,9 @@ public class Expectation {
 
     private String expectationName;
 
-    private String targetMOI;
+    private ExpectationType expectationType;
 
-    List<State> stateList;
+    private ExpectationObject expectationObject;
 
+    private List<ExpectationTarget> expectationTargets;
 }

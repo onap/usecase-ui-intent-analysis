@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.mapper;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+@Getter
+public enum ContextParentType {
+    INTENT(0, "intent"),
+    EXPECTATION(1, "expectation"),
+    EXPECTATION_OBJECT(2, "expectation_object"),
+    EXPECTATION_TARGET(3, "expectation_target");
 
+    private int index;
 
-@Mapper
-public interface IntentMapper {
+    private String desc;
 
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    ContextParentType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }

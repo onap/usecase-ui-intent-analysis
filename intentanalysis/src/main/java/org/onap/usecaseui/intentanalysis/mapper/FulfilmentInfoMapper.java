@@ -17,21 +17,20 @@
 package org.onap.usecaseui.intentanalysis.mapper;
 
 
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfilmentInfoParentType;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
 
 
 @Mapper
-public interface IntentMapper {
+public interface FulfilmentInfoMapper {
 
-    int insertIntent(Intent intent);
+    void insertFulfilmentInfo(@Param(value = "fulfilmentInfo") FulfilmentInfo fulfilmentInfo);
 
-    int updateIntent(Intent intent);
+    void insertFulfilmentInfoMapping(@Param(value = "fulfilmentInfoId") String fulfilmentInfoId,
+                                     @Param(value = "parentType") FulfilmentInfoParentType fulfilmentInfoParentType,
+                                     @Param(value = "parentId") String parentId);
 
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    FulfilmentInfo selectFulfilmentInfoById(String parentId);
 }
