@@ -16,10 +16,10 @@
 
 package org.onap.usecaseui.intentanalysis.bean.models;
 
+
+import java.util.List;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 
@@ -28,6 +28,10 @@ public class Intent {
 
     private String intentName;
 
-    private List<Expectation> expectationList;
+    private List<Expectation> intentExpectations;
+
+    private List<Context> intentContexts;
+
+    private FulfilmentInfo intentFulfilmentInfo;
 
 }

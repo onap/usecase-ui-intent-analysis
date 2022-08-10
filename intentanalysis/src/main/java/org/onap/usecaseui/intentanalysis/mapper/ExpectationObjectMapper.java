@@ -19,19 +19,14 @@ package org.onap.usecaseui.intentanalysis.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
+import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 
 
 @Mapper
-public interface IntentMapper {
+public interface ExpectationObjectMapper {
 
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    void insertExpectationObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
+                                 @Param(value = "expectationId") String expectationId);
 }

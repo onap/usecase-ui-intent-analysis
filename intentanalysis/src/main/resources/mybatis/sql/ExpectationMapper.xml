@@ -5,27 +5,27 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ExpectationMapper">
 
 
-    <select id="selectExpectationByIntentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
+    <insert id="insertIntentExpectations">
+        insert into expectation(expectation_id, expectation_name, expectation_type, intent_id)
+        values
+        <foreach collection="intentExpectations" index="index" item="item" separator=",">
+            (#{item.expectationId}, #{item.expectationName}, #{item.expectationType}, #{intentId})
+        </foreach>
+    </insert>
+
+    <insert id="insertIntentExpectation">
+        insert into expectation(expectation_id, expectation_name, expectation_type, intent_id)
+        values (#{expectation.expectationId}, #{expectation.expectationName}, #{expectation.expectationType}, #{intentId})
+    </insert>
+
+    <select id="selectIntentExpectationsByIntentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
         select expectation_id expectationId, expectation_name expectationName,
                target_moi targetMOI, intent_id intentId
         from expectation
         where intent_id = #{intentId}
     </select>
 
-    <insert id="insertExpectationList">
-        insert into expectation(expectation_id, expectation_name, target_moi, intent_id)
-        values
-        <foreach collection="expectationList" index="index" item="item" separator=",">
-            (#{item.expectationId}, #{item.expectationName}, #{item.targetMOI}, #{intentId})
-        </foreach>
-    </insert>
-
-    <delete id="deleteExpectationByIntentId">
-        delete from expectation
-        where intent_id = #{intentId}
-    </delete>
-
-    <update id="updateExpectation">
+    <update id="updateIntentExpectation">
         update expectation
         <trim prefix="set" suffixOverrides=",">
             <if test="expectationName != null">expectation_name = #{expectationName},</if>
@@ -34,12 +34,12 @@
         where expectation_id = #{expectationId}
     </update>
 
-    <insert id="insertExpectation">
-        insert into expectation(expectation_id, expectation_name, target_moi, intent_id)
-        values (#{expectation.expectationId}, #{expectation.expectationName}, #{expectation.targetMOI}, #{intentId})
-    </insert>
+    <delete id="deleteIntentExpectationsByIntentId">
+        delete from expectation
+        where intent_id = #{intentId}
+    </delete>
 
-    <delete id="deleteExpectationById">
+    <delete id="deleteIntentExpectationById">
         delete
         from expectation
         where expectation_id = #{expectationId}

@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.mapper;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+@Getter
+public enum ExpectationType {
+    EXPECTATION1(0, "expectationType1"),
+    EXPECTATION2(1, "expectationType2");
 
+    private int index;
 
-@Mapper
-public interface IntentMapper {
+    private String desc;
 
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    ExpectationType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }
