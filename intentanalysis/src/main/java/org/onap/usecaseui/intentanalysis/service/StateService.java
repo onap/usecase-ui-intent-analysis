@@ -16,9 +16,11 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.models.State;
 
 import java.util.List;
+
+import org.onap.usecaseui.intentanalysis.bean.models.State;
+
 
 public interface StateService {
 

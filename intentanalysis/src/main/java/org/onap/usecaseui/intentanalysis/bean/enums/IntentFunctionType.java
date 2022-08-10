@@ -23,8 +23,8 @@ import lombok.Setter;
 
 @Getter
 public enum IntentFunctionType {
-    INTERNALFUNCTION(0,"internalFunction"),
-    EXTERNALFUNCTION(1,"externalFunction");
+    INTERNALFUNCTION(0, "internalFunction"),
+    EXTERNALFUNCTION(1, "externalFunction");
     private  int type;
     private  String desc;
 

@@ -22,10 +22,10 @@ import lombok.Getter;
 @Getter
 public enum SupportInterface {
     //CREATE,DELETE,UPDATE,SEARCH;
-    CREATE(0,"CREATE"),
-    DELETE(1,"DELETE"),
-    UPDATE(2,"UPDATE"),
-    SEARCH(3,"SEARCH");
+    CREATE(0, "CREATE"),
+    DELETE(1, "DELETE"),
+    UPDATE(2, "UPDATE"),
+    SEARCH(3, "SEARCH");
     private int type;
     private String name;
     SupportInterface(int type, String name) {

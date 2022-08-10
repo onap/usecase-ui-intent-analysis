@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.bean.models;
 
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.enums.ContextType;
 
-import java.util.List;
+@Data
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+public class Context {
 
+    private String contextId;
 
-public interface IntentService {
-    List<Intent> getIntentList();
+    private String contextName;
 
-    Intent getIntentById(String intentId);
+    private ContextType contextType;
 
-    Intent createIntent(Intent intent);
+    private String contextCondition;
 
-    Intent updateIntent(Intent intent);
-
-    void deleteIntentById(String intentId);
 }

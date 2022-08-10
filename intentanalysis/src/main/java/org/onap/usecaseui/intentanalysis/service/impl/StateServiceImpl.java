@@ -23,11 +23,17 @@ import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.mapper.StateMapper;
 import org.onap.usecaseui.intentanalysis.service.StateService;
+import java.util.ArrayList;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.onap.usecaseui.intentanalysis.bean.models.State;
+import org.onap.usecaseui.intentanalysis.mapper.StateMapper;
+import org.onap.usecaseui.intentanalysis.service.StateService;
+
 
 @Service
 @Slf4j

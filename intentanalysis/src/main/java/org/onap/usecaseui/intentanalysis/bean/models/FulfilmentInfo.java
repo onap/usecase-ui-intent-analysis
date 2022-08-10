@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.bean.models;
 
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfilmentStatus;
+import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 
-import java.util.List;
+@Data
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+public class FulfilmentInfo {
 
+    private String fulfilmentInfoId;
 
-public interface IntentService {
-    List<Intent> getIntentList();
+    private FulfilmentStatus fulfilmentStatus;
 
-    Intent getIntentById(String intentId);
+    private NotFulfilledState notFulfilledState;
 
-    Intent createIntent(Intent intent);
+    private String notFulfilledReason;
 
-    Intent updateIntent(Intent intent);
-
-    void deleteIntentById(String intentId);
 }
