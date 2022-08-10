@@ -16,9 +16,10 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 
 import java.util.List;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+
 
 public interface IntentService {
     List<Intent> getIntentList();

@@ -8,8 +8,6 @@ spring:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
-    schema: classpath:intent-analysis-init.sql
-    initialization-mode: always
 mybatis:
   configuration:
     database-id: PostgreSQL

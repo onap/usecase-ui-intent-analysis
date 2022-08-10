@@ -16,22 +16,18 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfilmentInfoParentType;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
 
-import java.util.List;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+public interface FulfilmentInfoService {
 
+    void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo,
+                              FulfilmentInfoParentType fulfilmentInfoParentType,
+                              String parentId);
 
-public interface ExpectationService {
+    void deleteFulfilmentInfoByParentId(String parentId);
 
-    void createIntentExpectations(List<Expectation> intentExpectations, String intentId);
+    void updateFulfilmentInfoByParentId(FulfilmentInfo fulfilmentInfo, String parentId);
 
-    void insertIntentExpectation(Expectation expectation, String intentId);
-
-    void deleteIntentExpectationsByIntentId(String intentId);
-
-    void deleteIntentExpectationById(String expectationId);
-
-    void updateIntentExpectationsByIntentId(List<Expectation> intentExpectations, String intentId);
-
-    List<Expectation> getIntentExpectationsByIntentId(String intentId);
+    FulfilmentInfo getFulfilmentInfoByParentId(String parentId);
 }

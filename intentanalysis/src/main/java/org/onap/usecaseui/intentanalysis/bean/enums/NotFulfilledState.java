@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.mapper;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+@Getter
+public enum NotFulfilledState {
+    ACKNOWLEDGED(0, "acknowledge"),
+    COMPLIANT(1, "compliant"),
+    DEGRADED(2, "degraded"),
+    SUSPENDED(3, "suspended"),
+    TERMINATED(4, "terminated"),
+    FULFILMENTFAILED(5, "fulfilmentfailed");
 
+    private int index;
 
-@Mapper
-public interface IntentMapper {
+    private String desc;
 
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    NotFulfilledState(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }
