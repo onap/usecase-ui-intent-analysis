@@ -19,17 +19,21 @@ package org.onap.usecaseui.intentanalysis.service;
 
 import java.util.List;
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
+import org.onap.usecaseui.intentanalysis.bean.models.Context;
 
 
-public interface IntentService {
-    List<Intent> getIntentList();
+public interface ContextService {
 
-    Intent getIntentById(String intentId);
+    void createContextList(List<Context> contextList, ContextParentType contextParentType, String parentId);
 
-    Intent createIntent(Intent intent);
+    void insertContext(Context context, String parentId);
 
-    Intent updateIntent(Intent intent);
+    void deleteContextListByParentId(String parentId);
 
-    void deleteIntentById(String intentId);
+    void deleteContextById(String contextId);
+
+    void updateContextListByParentId(List<Context> contextList, String parentId);
+
+    List<Context> getContextListByParentId(String parentId);
 }

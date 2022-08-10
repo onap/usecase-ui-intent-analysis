@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+@Getter
+public enum ContextParentType {
+    INTENT(0, "intent"),
+    EXPECTATION(1, "expectation"),
+    EXPECTATION_OBJECT(2, "expectation_object"),
+    EXPECTATION_TARGET(3, "expectation_target");
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+    private int index;
 
+    private String desc;
 
-public interface IntentService {
-    List<Intent> getIntentList();
-
-    Intent getIntentById(String intentId);
-
-    Intent createIntent(Intent intent);
-
-    Intent updateIntent(Intent intent);
-
-    void deleteIntentById(String intentId);
+    ContextParentType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }

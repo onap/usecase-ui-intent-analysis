@@ -19,20 +19,20 @@ package org.onap.usecaseui.intentanalysis.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
+import org.onap.usecaseui.intentanalysis.bean.models.Context;
 
 
 @Mapper
-public interface IntentMapper {
+public interface ContextMapper {
 
-    int insertIntent(Intent intent);
+    void insertContextList(@Param(value = "contextList") List<Context> contextList);
 
-    int updateIntent(Intent intent);
+    void insertContextParentList(@Param(value = "contextList") List<Context> contextList,
+                                 @Param(value = "parentType") ContextParentType contextParentType,
+                                 @Param(value = "parentId") String parentId);
 
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    List<Context> selectContextByParentId(String parentId);
 }

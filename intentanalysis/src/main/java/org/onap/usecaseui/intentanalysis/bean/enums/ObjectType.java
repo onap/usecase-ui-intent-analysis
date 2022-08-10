@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+@Getter
+public enum ObjectType {
+    OBJECT1(0, "objectType1"),
+    OBJECT2(1, "objectType2");
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+    private int index;
 
+    private String desc;
 
-public interface IntentService {
-    List<Intent> getIntentList();
-
-    Intent getIntentById(String intentId);
-
-    Intent createIntent(Intent intent);
-
-    Intent updateIntent(Intent intent);
-
-    void deleteIntentById(String intentId);
+    ObjectType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }

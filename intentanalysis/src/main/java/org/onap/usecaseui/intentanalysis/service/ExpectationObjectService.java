@@ -17,19 +17,10 @@
 package org.onap.usecaseui.intentanalysis.service;
 
 
-import java.util.List;
-
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 
 
-public interface IntentService {
-    List<Intent> getIntentList();
+public interface ExpectationObjectService {
 
-    Intent getIntentById(String intentId);
-
-    Intent createIntent(Intent intent);
-
-    Intent updateIntent(Intent intent);
-
-    void deleteIntentById(String intentId);
+    void createObject(ExpectationObject expectationObject, String expectationId);
 }

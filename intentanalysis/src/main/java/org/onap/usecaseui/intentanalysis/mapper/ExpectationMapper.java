@@ -13,25 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.onap.usecaseui.intentanalysis.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+
+
 @Mapper
 public interface ExpectationMapper {
 
-    int insertExpectationList(@Param(value = "expectationList") List<Expectation> expectationList, @Param(value = "intentId") String intentId);
+    int insertIntentExpectations(@Param(value = "intentExpectations") List<Expectation> intentExpectations,
+                                 @Param(value = "intentId") String intentId);
 
-    List<Expectation> selectExpectationByIntentId(String intentId);
+    int insertIntentExpectation(@Param(value = "expectation") Expectation expectation,
+                                 @Param(value = "intentId") String intentId);
 
-    int deleteExpectationByIntentId(String intentId);
+    int deleteIntentExpectationsByIntentId(String intentId);
 
-    int updateExpectation(Expectation expectation);
+    int updateIntentExpectation(Expectation expectation);
 
-    int insertExpectation(@Param(value = "expectation") Expectation expectation, @Param(value = "intentId") String intentId);
+    int deleteIntentExpectationById(String expectationId);
 
-    int deleteExpectationById(String expectationId);
+    List<Expectation> selectIntentExpectationsByIntentId(String intentId);
 }
