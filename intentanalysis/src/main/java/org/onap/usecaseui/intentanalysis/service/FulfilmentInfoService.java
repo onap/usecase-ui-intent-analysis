@@ -14,24 +14,17 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.mapper;
+package org.onap.usecaseui.intentanalysis.service;
 
+import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+public interface FulfilmentInfoService {
 
+    void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
 
-@Mapper
-public interface IntentMapper {
+    void deleteFulfilmentInfoByParentId(String parentId);
 
-    int insertIntent(Intent intent);
+    void updateFulfilmentInfoByParentId(FulfilmentInfo fulfilmentInfo, String parentId);
 
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
+    FulfilmentInfo getFulfilmentInfoByParentId(String parentId);
 }

@@ -14,24 +14,21 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.mapper;
+package org.onap.usecaseui.intentanalysis.bean.models;
 
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.enums.ContextType;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+@Data
 
+public class Context {
 
-@Mapper
-public interface IntentMapper {
+    private String contextId;
 
-    int insertIntent(Intent intent);
+    private String contextName;
 
-    int updateIntent(Intent intent);
+    private ContextType contextType;
 
-    Intent selectIntentById(String intentId);
+    private String contextCondition;
 
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
 }

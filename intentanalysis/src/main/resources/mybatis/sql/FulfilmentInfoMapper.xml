@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.FulfilmentInfoMapper">
+
+
+    <insert id="insertFulfilmentInfo">
+        insert into fulfilment_info(fulfilment_info_id, fulfilment_info_status, not_fulfilled_state, not_fulfilled_reason)
+        values (#{parentId}, #{fulfilmentInfo.fulfilmentStatus}, #{fulfilmentInfo.notFulfilledState}, #{fulfilmentInfo.notFulfilledReason})
+    </insert>
+
+    <select id="selectFulfilmentInfoById" resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo">
+        select fulfilment_info_status fulfilmentStatus, not_fulfilled_state notFulfilledState,
+              not_fulfilled_reason notFulfilledReason from fulfilment_info
+        where parent_id = #{parentId}
+    </select>
+
+</mapper>
