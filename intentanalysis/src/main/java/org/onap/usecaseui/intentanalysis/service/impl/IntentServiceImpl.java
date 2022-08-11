@@ -17,12 +17,11 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.mapper.IntentMapper;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class IntentServiceImpl implements IntentService {
-    private static Logger LOGGER = LoggerFactory.getLogger(IntentService.class);
 
     @Autowired
     private IntentMapper intentMapper;
@@ -47,7 +46,7 @@ public class IntentServiceImpl implements IntentService {
         List<Intent> intentList = intentMapper.selectIntents();
         if (intentList == null || intentList.size() <= 0) {
             String msg = "Intent list doesn't exist in the intent database.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         for (Intent intent : intentList) {
@@ -64,7 +63,7 @@ public class IntentServiceImpl implements IntentService {
             return intent;
         } else {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
     }
@@ -75,12 +74,12 @@ public class IntentServiceImpl implements IntentService {
         int res = intentMapper.insertIntent(intent);
         if (res < 1) {
             String msg = "Create intent to database failed.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
         // saving expectation list into expectation table
         expectationService.createExpectationList(intent.getExpectationList(), intent.getIntentId());
-        LOGGER.info("Intent was successfully created.");
+        log.debug("Intent was successfully created.");
         return intent;
     }
 
@@ -89,17 +88,17 @@ public class IntentServiceImpl implements IntentService {
         Intent intentDB = intentMapper.selectIntentById(intent.getIntentId());
         if (intentDB == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intent.getIntentId());
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         expectationService.updateExpectationListById(intent.getExpectationList(), intent.getIntentId());
         int res = intentMapper.updateIntent(intent);
         if (res < 1) {
             String msg = "Update intent in database failed.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_UPDATE_DATA_FAIL);
         }
-        LOGGER.info("Update intent successfully.");
+        log.debug("Update intent successfully.");
         return intentMapper.selectIntentById(intent.getIntentId());
     }
 
@@ -108,10 +107,10 @@ public class IntentServiceImpl implements IntentService {
         int res = intentMapper.deleteIntentById(intentId);
         if (res < 1) {
             String msg = "Delete intent in database failed.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
         }
         expectationService.deleteExpectationListById(intentId);
-        LOGGER.info("Intent has been deleted successfully.");
+        log.debug("Intent has been deleted successfully.");
     }
 }

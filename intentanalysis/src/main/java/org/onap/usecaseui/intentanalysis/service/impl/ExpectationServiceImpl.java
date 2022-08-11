@@ -17,6 +17,7 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.State;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
@@ -25,8 +26,6 @@ import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.StateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 
 
@@ -34,9 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ExpectationServiceImpl implements ExpectationService {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(ExpectationServiceImpl.class);
     @Autowired
     private ExpectationMapper expectationMapper;
 
@@ -56,7 +55,7 @@ public class ExpectationServiceImpl implements ExpectationService {
         int res = expectationMapper.insertExpectationList(expectationList, intentId);
         if (res < 1) {
             String msg = "Create expectation to database failed.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
     }
@@ -66,7 +65,7 @@ public class ExpectationServiceImpl implements ExpectationService {
         List<Expectation> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
         if (expectationList == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         for (Expectation expectation : expectationList) {
@@ -81,13 +80,13 @@ public class ExpectationServiceImpl implements ExpectationService {
         List<Expectation> expectationList = expectationMapper.selectExpectationByIntentId(intentId);
         if (expectationList == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         int res = expectationMapper.deleteExpectationByIntentId(intentId);
         if (res < 1) {
             String msg = "Delete expectation in database failed.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
         }
         for (Expectation expectation : expectationList) {
@@ -100,7 +99,7 @@ public class ExpectationServiceImpl implements ExpectationService {
         List<Expectation> expectationDBList = expectationMapper.selectExpectationByIntentId(intentId);
         if (expectationDBList == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         List<String> expectationDBIdList = new ArrayList<>();
@@ -114,7 +113,7 @@ public class ExpectationServiceImpl implements ExpectationService {
                 int res = expectationMapper.updateExpectation(expectation);
                 if (res < 1) {
                     String msg = "Update expectation in database failed.";
-                    LOGGER.error(msg);
+                    log.error(msg);
                     throw new DataBaseException(msg, ResponseConsts.RET_UPDATE_DATA_FAIL);
                 }
                 expectationDBIdList.remove(expectation.getExpectationId());
@@ -125,7 +124,7 @@ public class ExpectationServiceImpl implements ExpectationService {
         for (String expectationDBId : expectationDBIdList) {
             expectationService.deleteExpectationById(expectationDBId);
         }
-        LOGGER.info("Expectations are successfully updated.");
+        log.info("Expectations are successfully updated.");
     }
 
     @Override
@@ -133,7 +132,7 @@ public class ExpectationServiceImpl implements ExpectationService {
         int res = expectationMapper.insertExpectation(expectation, intentId);
         if (res < 1) {
             String msg = "Create expectation to database failed.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
     }
@@ -143,7 +142,7 @@ public class ExpectationServiceImpl implements ExpectationService {
         int res = expectationMapper.deleteExpectationById(expectationId);
         if (res < 1) {
             String msg = "Delete expectation in database failed.";
-            LOGGER.error(msg);
+            log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
         }
     }
