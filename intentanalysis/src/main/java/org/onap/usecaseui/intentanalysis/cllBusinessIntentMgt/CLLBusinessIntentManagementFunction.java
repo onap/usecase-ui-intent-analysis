@@ -17,21 +17,21 @@ package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt;
 
 
 import lombok.Data;
-import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.intentModuleImpl.ActuationModuleImpl;
-import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.intentModuleImpl.DecisoinModuleImpl;
-import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.intentModuleImpl.KnownledgeModuleImpl;
+import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule.CLLBusinessActuationModule;
+import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule.CLLBusinessDecisionModule;
+import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule.CLLBusinessKnowledgeModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
-import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.springframework.stereotype.Component;
 
 @Data
 @Component("CLLBusinessIntentManagementFunction")
 public class CLLBusinessIntentManagementFunction extends IntentManagementFunction {
-    private ActuationModule actuationModule  = new ActuationModuleImpl();
-    private DecisionModule decisoinModule = new DecisoinModuleImpl();
-    private KnowledgeModule knowledgeModule = new KnownledgeModuleImpl();
+    private ActuationModule actuationModule  = new CLLBusinessActuationModule();
+    private DecisionModule decisoinModule = new CLLBusinessDecisionModule();
+    private KnowledgeModule knowledgeModule = new CLLBusinessKnowledgeModule();
 
 
 }

@@ -15,17 +15,17 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService;
 
-import org.onap.usecaseui.intentanalysis.bean.models.IntentManagerRegInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 
 import java.util.List;
 
 public interface IntentFunctionManageService {
-    int createFunctionManage(IntentManagerRegInfo intentManage) ;
+    int createFunctionManage(IntentManagementFunctionRegInfo intentManage) ;
 
     int deleteFunctionManage(String id);
 
-    int updateIntentManageById(String id, IntentManagerRegInfo intentManage);
+    int updateIntentManageById(String id, IntentManagementFunctionRegInfo intentManage);
 
-    List<IntentManagerRegInfo> getIntentManage();
+    List<IntentManagementFunctionRegInfo> getIntentManage();
 
 }

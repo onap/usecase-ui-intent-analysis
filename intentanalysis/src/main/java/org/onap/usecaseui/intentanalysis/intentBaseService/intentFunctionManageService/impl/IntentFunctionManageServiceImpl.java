@@ -15,8 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.impl;
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentManagerRegInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IntentFunctionManageService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
@@ -32,7 +31,7 @@ public class IntentFunctionManageServiceImpl implements IntentFunctionManageServ
     @Autowired
     private ApplicationContext applicationContext;
     @Override
-    public int createFunctionManage(IntentManagerRegInfo intentManage)  {
+    public int createFunctionManage(IntentManagementFunctionRegInfo intentManage)  {
         return 0;
     }
 
@@ -42,16 +41,16 @@ public class IntentFunctionManageServiceImpl implements IntentFunctionManageServ
     }
 
     @Override
-    public int updateIntentManageById(String id, IntentManagerRegInfo intentManage) {
+    public int updateIntentManageById(String id, IntentManagementFunctionRegInfo intentManage) {
         return 0;
     }
 
     @Override
-    public List<IntentManagerRegInfo> getIntentManage() {
+    public List<IntentManagementFunctionRegInfo> getIntentManage() {
         return null;
     }
 
-    public List<IntentManagementFunction> filterHandleFunction(IntentManagerRegInfo managementRegInfo) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public List<IntentManagementFunction> filterHandleFunction(IntentManagementFunctionRegInfo managementRegInfo) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String managetFunctionRegName =managementRegInfo.getHandleName();
 
         IntentManagementFunction function =

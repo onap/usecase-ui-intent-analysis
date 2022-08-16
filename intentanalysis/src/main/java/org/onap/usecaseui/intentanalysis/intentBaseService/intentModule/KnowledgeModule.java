@@ -15,10 +15,9 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+
 public interface KnowledgeModule {
-    void intentResolution();
-    void intentReportResolution();
-    void getSystemStatus();
-    void interactWithIntentOwner();
-    //actuationModel & knownledgeModel interact
+    //Parse, decompose, orchestrate the original intent
+    Intent intentCognition(Intent intent);
 }
