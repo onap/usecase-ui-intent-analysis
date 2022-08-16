@@ -23,7 +23,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 
 public interface ExpectationService {
 
-    void createIntentExpectations(List<Expectation> intentExpectations, String intentId);
+    void createIntentExpectationList(List<Expectation> intentExpectations, String intentId);
 
     void insertIntentExpectation(Expectation expectation, String intentId);
 

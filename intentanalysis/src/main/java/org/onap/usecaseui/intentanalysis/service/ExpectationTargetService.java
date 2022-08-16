@@ -18,12 +18,17 @@ package org.onap.usecaseui.intentanalysis.service;
 
 
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 
 
 public interface ExpectationTargetService {
 
-    void createTarget(ExpectationTarget expectationTarget, String expectationId);
+    void createExpectationTarget(@Param(value = "expectationTarget") ExpectationTarget expectationTarget,
+                                 @Param(value = "expectationId") String expectationId);
 
-    void createTargets(List<ExpectationTarget> expectationTargets, String expectationId);
+    void createExpectationTargetList(@Param(value = "expectationTargets") List<ExpectationTarget> expectationTargets,
+                                     @Param(value = "expectationId") String expectationId);
+
+    List<ExpectationTarget> getExpectationTargetListByExpectationId(@Param(value = "expectationId") String expectationId);
 }

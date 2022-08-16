@@ -11,4 +11,10 @@
         (#{expectationId}, #{expectationObject.objectType}, #{expectationObject.objectInstance})
     </insert>
 
+    <select id="selectIntentExpectationObjectByExpectationId" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject">
+        select object_type objectType, object_instance objectInstance
+        from expectation_object
+        where expectation_id = #{expectationId}
+    </select>
+
 </mapper>
