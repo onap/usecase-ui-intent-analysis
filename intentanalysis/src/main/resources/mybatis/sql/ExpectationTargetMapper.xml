@@ -6,9 +6,17 @@
 
 
     <insert id="insertExpectationTarget">
-        insert into expectation_target(target_id, target_name, expectation_id)
-        values
-        (#{expectationTarget.targetId}, #{expectationTarget.targetName},  #{expectationId})
+        <if test="expectationTarget != null">
+            insert into expectation_target(target_id, target_name, target_condition, expectation_id)
+            values
+            (#{expectationTarget.targetId}, #{expectationTarget.targetName}, #{expectationTarget.targetCondition}, #{expectationId})
+        </if>
     </insert>
+
+    <select id="selectIntentExpectationTargetListByExpectationId" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget">
+        select target_id targetId, target_name targetName, target_condition targetCondition
+        from expectation_target
+        where expectation_id = #{expectationId}
+    </select>
 
 </mapper>

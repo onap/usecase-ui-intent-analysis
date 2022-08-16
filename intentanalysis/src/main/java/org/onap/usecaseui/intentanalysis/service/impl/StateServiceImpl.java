@@ -53,7 +53,7 @@ public class StateServiceImpl implements StateService {
     public List<State> getStateListByExpectationId(String expectationId) {
         List<State> stateList = stateMapper.selectStateByExpectation(expectationId);
         if (stateList == null) {
-            String msg = String.format("Expectation id %s doesn't exist in database.", expectationId);
+            String msg = String.format("State: Expectation id %s doesn't exist in database.", expectationId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
@@ -62,8 +62,7 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public void deleteStateListByExpectationId(String expectationId) {
-        int res = stateMapper.deleteStateByExpectationId(expectationId);
-        if (res < 1) {
+        if (stateMapper.deleteStateByExpectationId(expectationId) < 1) {
             String msg = "Delete state in database failed.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
@@ -92,7 +91,7 @@ public class StateServiceImpl implements StateService {
                 }
                 stateDBIdList.remove(state.getStateId());
             } else {
-                stateService.insertState(state, expectationId);
+                stateService.createState(state, expectationId);
             }
         }
         for (String stateDBId : stateDBIdList) {
@@ -102,9 +101,8 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public void insertState(State state, String expectationId) {
-        int res = stateMapper.insertState(state, expectationId);
-        if (res < 1) {
+    public void createState(State state, String expectationId) {
+        if (stateMapper.insertState(state, expectationId) < 1) {
             String msg = "Create state to database failed.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
@@ -113,8 +111,7 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public void deleteStateById(String stateId) {
-        int res = stateMapper.deleteStateById(stateId);
-        if (res < 1) {
+        if (stateMapper.deleteStateById(stateId) < 1) {
             String msg = "Delete state in database failed.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);

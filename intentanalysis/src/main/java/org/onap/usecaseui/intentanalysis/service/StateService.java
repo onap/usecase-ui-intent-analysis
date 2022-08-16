@@ -31,7 +31,7 @@ public interface StateService {
 
     List<State> getStateListByExpectationId(String expectationId);
 
-    void insertState(State state, String expectationId);
+    void createState(State state, String expectationId);
 
     void deleteStateById(String stateId);
 }
