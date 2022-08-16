@@ -53,7 +53,7 @@ public class StateServiceImpl implements StateService {
     public List<State> getStateListByExpectationId(String expectationId) {
         List<State> stateList = stateMapper.selectStateByExpectation(expectationId);
         if (stateList == null) {
-            String msg = String.format("Expectation id %s doesn't exist in database.", expectationId);
+            String msg = String.format("State: Expectation id %s doesn't exist in database.", expectationId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
