@@ -23,7 +23,7 @@ import org.onap.usecaseui.intentanalysis.bean.enums.SupportInterface;
 import java.util.List;
 
 @Data
-public class IntentManagerRegInfo {
+public class IntentManagementFunctionRegInfo {
     private String id;
     private String description;
     private List<SupportArea> supportArea;
