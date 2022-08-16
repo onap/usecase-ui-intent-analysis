@@ -22,9 +22,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
-import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.mapper.ExpectationMapper;
@@ -57,33 +55,30 @@ public class ExpectationServiceImpl implements ExpectationService {
     @Autowired
     private FulfilmentInfoService fulfilmentInfoService;
 
-    private ContextParentType contextParentType;
-
     @Override
-    public void createIntentExpectations(List<Expectation> intentExpectations, String intentId) {
-        for (Expectation expectation : intentExpectations) {
-            if (null != expectation) {
-                expectationObjectService.createObject(expectation.getExpectationObject(),
-                                                      expectation.getExpectationId());
-                expectationTargetService.createTargets(expectation.getExpectationTargets(),
-                                                       expectation.getExpectationId());
-                contextService.createContextList(expectation.getExpectationContexts(),
-                                                 contextParentType.EXPECTATION,
-                                                 expectation.getExpectationId());
-                fulfilmentInfoService.createFulfilmentInfo(expectation.getExpectationFulfilmentInfo(),
-                                                           expectation.getExpectationId());
-            }
-        }
-        int res = expectationMapper.insertIntentExpectations(intentExpectations, intentId);
+    public void createIntentExpectationList(List<Expectation> intentExpectationList, String intentId) {
+        int res = expectationMapper.insertIntentExpectationList(intentExpectationList, intentId);
         if (res < 1) {
             String msg = "Create expectation to database failed.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
+        for (Expectation expectation : intentExpectationList) {
+            if (expectation != null) {
+                String expectationId = expectation.getExpectationId();
+                expectationObjectService.createExpectationObject(expectation.getExpectationObject(),
+                    expectationId);
+                expectationTargetService.createExpectationTargetList(expectation.getExpectationTargets(),
+                    expectationId);
+                contextService.createContextList(expectation.getExpectationContexts(), expectationId);
+                fulfilmentInfoService.createFulfilmentInfo(expectation.getExpectationFulfilmentInfo(),
+                    expectationId);
+            }
+        }
     }
 
     @Override
-    public void insertIntentExpectation(Expectation expectation, String intentId) {
+    public void createIntentExpectation(Expectation expectation, String intentId) {
         int res = expectationMapper.insertIntentExpectation(expectation, intentId);
         if (res < 1) {
             String msg = "Create expectation to database failed.";
@@ -93,25 +88,28 @@ public class ExpectationServiceImpl implements ExpectationService {
     }
 
     @Override
-    public List<Expectation> getIntentExpectationsByIntentId(String intentId) {
-        List<Expectation> expectationList = expectationMapper.selectIntentExpectationsByIntentId(intentId);
+    public List<Expectation> getIntentExpectationListByIntentId(String intentId) {
+        List<Expectation> expectationList = expectationMapper.selectIntentExpectationListByIntentId(intentId);
         if (expectationList == null) {
-            String msg = String.format("Intent id %s doesn't exist in database.", intentId);
+            String msg = String.format("Expectation: Intent id %s doesn't exist in database.", intentId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
-        int res = expectationMapper.deleteIntentExpectationsByIntentId(intentId);
-        if (res < 1) {
-            String msg = "Delete expectation in database failed.";
-            log.error(msg);
-            throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
+        for (Expectation expectation : expectationList) {
+            if (expectation != null) {
+                String expectationId = expectation.getExpectationId();
+                expectation.setExpectationObject(expectationObjectService.getExpectationObjectByExpectationId(expectationId));
+                expectation.setExpectationTargets(expectationTargetService.getExpectationTargetListByExpectationId(expectationId));
+                expectation.setExpectationContexts(contextService.getContextListByParentId(expectationId));
+                expectation.setExpectationFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(expectationId));
+            }
         }
         return expectationList;
     }
 
     @Override
-    public void updateIntentExpectationsByIntentId(List<Expectation> intentExpectations, String intentId) {
-        List<Expectation> expectationDBList = expectationMapper.selectIntentExpectationsByIntentId(intentId);
+    public void updateIntentExpectationListByIntentId(List<Expectation> intentExpectationList, String intentId) {
+        List<Expectation> expectationDBList = expectationMapper.selectIntentExpectationListByIntentId(intentId);
         if (expectationDBList == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
             log.error(msg);
@@ -122,7 +120,7 @@ public class ExpectationServiceImpl implements ExpectationService {
             expectationDBIdList.add(expectationDB.getExpectationId());
         }
 
-        for (Expectation expectation : intentExpectations) {
+        for (Expectation expectation : intentExpectationList) {
             if (expectationDBIdList.contains(expectation.getExpectationId())) {
                 int res = expectationMapper.updateIntentExpectation(expectation);
                 if (res < 1) {
@@ -132,7 +130,7 @@ public class ExpectationServiceImpl implements ExpectationService {
                 }
                 expectationDBIdList.remove(expectation.getExpectationId());
             } else {
-                expectationService.insertIntentExpectation(expectation, intentId);
+                expectationService.createIntentExpectation(expectation, intentId);
             }
         }
         for (String expectationDBId : expectationDBIdList) {
@@ -152,14 +150,14 @@ public class ExpectationServiceImpl implements ExpectationService {
     }
 
     @Override
-    public void deleteIntentExpectationsByIntentId(String intentId) {
-        List<Expectation> expectationList = expectationMapper.selectIntentExpectationsByIntentId(intentId);
+    public void deleteIntentExpectationListByIntentId(String intentId) {
+        List<Expectation> expectationList = expectationMapper.selectIntentExpectationListByIntentId(intentId);
         if (expectationList == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
-        int res = expectationMapper.deleteIntentExpectationsByIntentId(intentId);
+        int res = expectationMapper.deleteIntentExpectationListByIntentId(intentId);
         if (res < 1) {
             String msg = "Delete expectation in database failed.";
             log.error(msg);

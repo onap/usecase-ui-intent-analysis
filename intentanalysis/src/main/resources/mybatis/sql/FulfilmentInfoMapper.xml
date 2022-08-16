@@ -6,14 +6,17 @@
 
 
     <insert id="insertFulfilmentInfo">
-        insert into fulfilment_info(fulfilment_info_id, fulfilment_info_status, not_fulfilled_state, not_fulfilled_reason)
-        values (#{parentId}, #{fulfilmentInfo.fulfilmentStatus}, #{fulfilmentInfo.notFulfilledState}, #{fulfilmentInfo.notFulfilledReason})
+        <if test="fulfilmentInfo != null">
+            insert into fulfilment_info(fulfilment_info_id, fulfilment_info_status, not_fulfilled_state, not_fulfilled_reason)
+            values (#{parentId}, #{fulfilmentInfo.fulfilmentStatus}, #{fulfilmentInfo.notFulfilledState}, #{fulfilmentInfo.notFulfilledReason})
+        </if>
     </insert>
 
     <select id="selectFulfilmentInfoById" resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo">
         select fulfilment_info_status fulfilmentStatus, not_fulfilled_state notFulfilledState,
-              not_fulfilled_reason notFulfilledReason from fulfilment_info
-        where parent_id = #{parentId}
+        not_fulfilled_reason notFulfilledReason
+        from fulfilment_info
+        where fulfilment_info_id = #{parentId}
     </select>
 
 </mapper>
