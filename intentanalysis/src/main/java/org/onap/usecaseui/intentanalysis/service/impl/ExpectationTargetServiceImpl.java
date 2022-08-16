@@ -19,8 +19,9 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
@@ -32,9 +33,8 @@ import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
 
 
 @Service
+@Slf4j
 public class ExpectationTargetServiceImpl implements ExpectationTargetService {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(ExpectationTargetServiceImpl.class);
 
     private ContextParentType contextParentType;
 
@@ -67,5 +67,22 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
                 expectationTargetService.createTarget(expectationTarget, expectationId);
             }
         }
+    }
+
+    @Override
+    public List<ExpectationTarget> getTargets(String expectationId) {
+        List<ExpectationTarget> expectationTargetList = expectationTargetMapper.selectIntentExpectationTargetsByExpectationId(expectationId);
+        if (expectationTargetList == null) {
+            String msg = String.format("Target: expectation id %s doesn't exist in database.", expectationId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        for (ExpectationTarget expectationTarget : expectationTargetList) {
+            if (null != expectationTarget) {
+                expectationTarget.setTargetContexts(contextService.getContextListByParentId(expectationId));
+                expectationTarget.setTargetFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(expectationId));
+            }
+        }
+        return expectationTargetList;
     }
 }

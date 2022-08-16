@@ -77,7 +77,7 @@ public class IntentServiceImpl implements IntentService {
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         for (Intent intent : intentList) {
-            intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intent.getIntentId()));
+            getIntentById(intent.getIntentId());
         }
         return intentList;
     }
@@ -85,14 +85,16 @@ public class IntentServiceImpl implements IntentService {
     @Override
     public Intent getIntentById(String intentId) {
         Intent intent = intentMapper.selectIntentById(intentId);
-        if (intent != null) {
-            intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intent.getIntentId()));
-            return intent;
-        } else {
+        if (intent == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
+        intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intentId));
+        intent.setIntentContexts(contextService.getContextListByParentId(intentId));
+        intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(intentId));
+        log.debug("Intent was successfully found");
+        return intent;
     }
 
     @Override

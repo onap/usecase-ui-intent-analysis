@@ -29,4 +29,5 @@ public interface ExpectationObjectMapper {
 
     void insertExpectationObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
                                  @Param(value = "expectationId") String expectationId);
+    ExpectationObject selectIntentExpectationsByIntentId(@Param(value = "expectationId") String expectationId);
 }

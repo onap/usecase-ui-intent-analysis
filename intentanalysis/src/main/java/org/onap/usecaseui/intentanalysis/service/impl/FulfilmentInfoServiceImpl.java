@@ -17,8 +17,9 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
@@ -27,9 +28,8 @@ import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
 
 
 @Service
+@Slf4j
 public class FulfilmentInfoServiceImpl implements FulfilmentInfoService {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(FulfilmentInfoServiceImpl.class);
 
     @Autowired
     private FulfilmentInfoMapper fulfilmentInfoMapper;
@@ -39,7 +39,12 @@ public class FulfilmentInfoServiceImpl implements FulfilmentInfoService {
 
     @Override
     public void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId) {
-        fulfilmentInfoMapper.insertFulfilmentInfo(fulfilmentInfo, parentId);
+        int res = fulfilmentInfoMapper.insertFulfilmentInfo(fulfilmentInfo, parentId);
+        if (res < 1) {
+            String msg = "Create fulfilmentInfoMapper to database failed.";
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        }
     }
 
     @Override
@@ -52,6 +57,12 @@ public class FulfilmentInfoServiceImpl implements FulfilmentInfoService {
 
     @Override
     public FulfilmentInfo getFulfilmentInfoByParentId(String parentId) {
-        return fulfilmentInfoMapper.selectFulfilmentInfoById(parentId);
+        FulfilmentInfo fulfilmentInfo = fulfilmentInfoMapper.selectFulfilmentInfoById(parentId);
+        if (null == fulfilmentInfo) {
+            String msg = String.format("FulfilmentInfo: Parent id %s doesn't exist in database.", parentId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        return fulfilmentInfo;
     }
 }

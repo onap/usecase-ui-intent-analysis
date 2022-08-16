@@ -17,10 +17,14 @@
 package org.onap.usecaseui.intentanalysis.service;
 
 
+import org.apache.ibatis.annotations.Param;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 
 
 public interface ExpectationObjectService {
 
-    void createObject(ExpectationObject expectationObject, String expectationId);
+    void createObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
+                      @Param(value = "expectationId") String expectationId);
+    ExpectationObject getObject(@Param(value = "expectationId") String expectationId);
+
 }

@@ -28,11 +28,6 @@ create table if not exists context(
     context_name varchar(255),
     context_type varchar(255),
     context_condition varchar(255)
-);
-
-create table if not exists context_mapping(
-    context_id varchar(255) primary key,
-    parent_type varchar(255),
     parent_id varchar(255)
 );
 
