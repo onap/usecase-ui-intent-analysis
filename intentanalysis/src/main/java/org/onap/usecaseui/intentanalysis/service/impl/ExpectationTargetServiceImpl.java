@@ -17,10 +17,10 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
@@ -32,9 +32,8 @@ import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
 
 
 @Service
+@Slf4j
 public class ExpectationTargetServiceImpl implements ExpectationTargetService {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(ExpectationTargetServiceImpl.class);
 
     private ContextParentType contextParentType;
 
@@ -51,21 +50,38 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
     private ContextService contextService;
 
     @Override
-    public void createTarget(ExpectationTarget expectationTarget, String expectationId) {
+    public void createExpectationTarget(ExpectationTarget expectationTarget, String expectationId) {
         expectationTargetMapper.insertExpectationTarget(expectationTarget, expectationId);
-        contextService.createContextList(expectationTarget.getTargetContexts(),
-                                         contextParentType.EXPECTATION_TARGET,
-                                         expectationTarget.getTargetId());
+        contextService.createContextList(expectationTarget.getTargetContexts(), expectationTarget.getTargetId());
         fulfilmentInfoService.createFulfilmentInfo(expectationTarget.getTargetFulfilmentInfo(),
                                                    expectationTarget.getTargetId());
     }
 
     @Override
-    public void createTargets(List<ExpectationTarget> expectationTargets, String expectationId) {
-        for (ExpectationTarget expectationTarget : expectationTargets) {
-            if (null != expectationTarget) {
-                expectationTargetService.createTarget(expectationTarget, expectationId);
+    public void createExpectationTargetList(List<ExpectationTarget> expectationTargetList, String expectationId) {
+        for (ExpectationTarget expectationTarget : expectationTargetList) {
+            if (expectationTarget != null) {
+                expectationTargetService.createExpectationTarget(expectationTarget, expectationId);
             }
         }
     }
+
+    @Override
+    public List<ExpectationTarget> getExpectationTargetListByExpectationId(String expectationId) {
+        List<ExpectationTarget> expectationTargetList = expectationTargetMapper.selectIntentExpectationTargetListByExpectationId(expectationId);
+        if (expectationTargetList == null) {
+            String msg = String.format("Target: Expectation id %s doesn't exist in database.", expectationId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        for (ExpectationTarget expectationTarget : expectationTargetList) {
+            if (expectationTarget != null) {
+                String targetId = expectationTarget.getTargetId();
+                expectationTarget.setTargetContexts(contextService.getContextListByParentId(targetId));
+                expectationTarget.setTargetFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(targetId));
+            }
+        }
+        return expectationTargetList;
+    }
+
 }
