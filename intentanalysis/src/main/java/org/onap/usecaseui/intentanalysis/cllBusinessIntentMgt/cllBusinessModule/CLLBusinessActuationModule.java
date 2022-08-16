@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.intentModuleImpl;
+package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
 
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentHandleService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
@@ -23,18 +25,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ActuationModuleImpl implements ActuationModule {
+public class CLLBusinessActuationModule implements ActuationModule {
     @Autowired
     IntentProcessService processService;
+    @Autowired
+    IntentHandleService intentHandleService;
+
 
     @Override
-    public void sendToIntentHandler(IntentManagementFunction intentHandler) {
-        processService.setIntentRole(intentHandler, null);
-        processService.intentProcess();
+    public void sendToIntentHandler(IntentManagementFunction IntentHandler) {
+
     }
 
     @Override
     public void sendToNonIntentHandler() {
+
     }
 
     @Override
@@ -44,5 +49,6 @@ public class ActuationModuleImpl implements ActuationModule {
 
     @Override
     public void saveIntentToDb() {
+
     }
 }

@@ -19,6 +19,8 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunct
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IntentInvestigationService {
     private IntentManagementFunction intentHandler;
@@ -33,13 +35,14 @@ public class IntentInvestigationService {
         }
     }
 
-    public void investigationProcess() {
+    public List<IntentManagementFunction> investigationProcess() {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
         intentDecisionModule.needDecompostion();
         intentDecisionModule.intentDecomposition();
         intentDecisionModule.intentOrchestration();
         intentDecisionModule.decideSuitableAction();
         intentDecisionModule.exploreIntentHandlers();//返回handler
+        return null;
     }
 
 

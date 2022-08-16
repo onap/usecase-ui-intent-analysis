@@ -18,7 +18,7 @@
 
 package org.onap.usecaseui.intentanalysis.controller;
 
-import org.onap.usecaseui.intentanalysis.bean.models.IntentManagerRegInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IntentFunctionManageService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class IntentFunctionManageController {
     IntentFunctionManageService intentFunctionManageService;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createIntentManage(@RequestBody IntentManagerRegInfo intentManage) {
+    public ResponseEntity createIntentManage(@RequestBody IntentManagementFunctionRegInfo intentManage) {
         return ResponseEntity.ok(intentFunctionManageService.createFunctionManage(intentManage));
     }
 
@@ -45,12 +45,12 @@ public class IntentFunctionManageController {
 
     @PutMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateIntentManageById(
-            @PathVariable(value = "id") String id, @RequestBody IntentManagerRegInfo intentManage) {
+            @PathVariable(value = "id") String id, @RequestBody IntentManagementFunctionRegInfo intentManage) {
         return ResponseEntity.ok(intentFunctionManageService.updateIntentManageById(id, intentManage));
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<IntentManagerRegInfo>> getIntentManageByID() {
+    public ResponseEntity<List<IntentManagementFunctionRegInfo>> getIntentManageByID() {
         return ResponseEntity.ok(intentFunctionManageService.getIntentManage());
     }
 

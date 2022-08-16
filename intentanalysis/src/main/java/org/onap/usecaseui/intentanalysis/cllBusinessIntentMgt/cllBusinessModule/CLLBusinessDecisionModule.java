@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.intentModuleImpl;
+package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
 
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
@@ -21,7 +21,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunct
 import org.springframework.stereotype.Service;
 
 @Service
-public class DecisoinModuleImpl implements DecisionModule {
+public class CLLBusinessDecisionModule implements DecisionModule {
     @Override
     public void determineUltimateGoal() {}
 

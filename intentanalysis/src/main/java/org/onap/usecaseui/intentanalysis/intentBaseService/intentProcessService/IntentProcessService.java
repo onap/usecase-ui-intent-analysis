@@ -15,14 +15,17 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IntentProcessService {
     @Autowired
-    IntentDetectionService intentDetectionServiceImpl;
+    IntentDetectionService intentDetectionService;
     @Autowired
     IntentInvestigationService intentInvestigationService;
     @Autowired
@@ -44,25 +47,28 @@ public class IntentProcessService {
             this.intentHandler= intentHandler;
         }
     }
-    public void intentProcess() {
-        intentDetectionServiceImpl.setIntentRole(intentOwner,intentHandler);
-        intentDetectionServiceImpl.detectionProcess();
+    public void intentProcess(Intent intent) {
+        intentDetectionService.setIntentRole(intentOwner,intentHandler);
+        Intent detectIntent = intentDetectionService.detectionProcess(intent);
 
         //investigation process
         intentInvestigationService.setIntentRole(intentOwner,intentHandler);
-        intentInvestigationService.investigationProcess();//List<handler>?
+        List<IntentManagementFunction> intentManagementFunctions =
+                intentInvestigationService.investigationProcess();//List<handler>?
 
-        //definition process
-        intentDefinitionService.setIntentRole(intentOwner,intentHandler);
-        intentDefinitionService.definitionPorcess();
+        for (IntentManagementFunction intentHandler : intentManagementFunctions) {
+            //definition process
+            intentDefinitionService.setIntentRole(intentOwner,intentHandler);
+            intentDefinitionService.definitionPorcess();
 
-        //distribution process
-        intentDistributionService.setIntentRole(intentOwner,intentHandler);
-        intentDistributionService.distributionProcess();
+            //distribution process
+            intentDistributionService.setIntentRole(intentOwner,intentHandler);
+            intentDistributionService.distributionProcess();
 
-        //operation process
-        intentOperationService.setIntentRole(intentOwner,intentHandler);
-        intentOperationService.operationProcess();
+            //operation process
+            intentOperationService.setIntentRole(intentOwner,intentHandler);
+            intentOperationService.operationProcess();
+        }
     }
 
 
