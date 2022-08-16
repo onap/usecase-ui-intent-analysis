@@ -17,14 +17,17 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.enums.ConditionParentType;
-import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
+import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.mapper.ContextMapper;
 import org.onap.usecaseui.intentanalysis.service.ConditionService;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +35,11 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class ContextServiceImpl implements ContextService {
 
-    static Logger LOGGER = LoggerFactory.getLogger(ContextServiceImpl.class);
-
     private ConditionParentType conditionParentType;
+
     @Autowired
     private ContextMapper contextMapper;
 
@@ -47,22 +50,20 @@ public class ContextServiceImpl implements ContextService {
     private ConditionService conditionService;
 
     @Override
-    public void createContextList(List<Context> contextList, ContextParentType contextParentType, String parentId) {
-        contextMapper.insertContextList(contextList);
-
-        for (Context context: contextList) {
-            conditionService.createConditionList(context.getContextConditions(),conditionParentType.CONTEXT,context.getContextId());
+    public void createContextList(List<Context> contextList, String parentId) {
+        if (contextMapper.insertContextList(contextList, parentId) < 1) {
+            String msg = "Create context list to database failed.";
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
-
-        contextMapper.insertContextParentList(contextList, contextParentType, parentId);
+        for (Context context : contextList) {
+            conditionService.createConditionList(context.getContextConditions(), conditionParentType.CONTEXT,
+                                                 context.getContextId());
+        }
     }
 
     @Override
-    public void insertContext(Context context, String parentId) {
-    }
-
-    @Override
-    public void deleteContextListByParentId(String parentId) {
+    public void createContext(Context context, String parentId) {
     }
 
     @Override
@@ -75,6 +76,12 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public List<Context> getContextListByParentId(String parentId) {
-        return contextMapper.selectContextByParentId(parentId);
+        List<Context> contextList = contextMapper.selectContextByParentId(parentId);
+        if (contextList == null) {
+            String msg = String.format("Context: Intent id %s doesn't exist in database.", parentId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        return contextList;
     }
 }

@@ -5,19 +5,23 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ConditionMapper">
 
     <insert id="insertConditionList">
-        insert into condition(condition_id, condition_name, operator_type, condition_value)
-        values
-        <foreach collection="contextList" index="index" item="item" separator=",">
-            (#{item.conditionId}, #{item.conditionName}, #{item.operatorType}, #{item.conditionValue})
-        </foreach>
+        <if test="conditionList != null">
+            insert into condition(condition_id, condition_name, operator_type, condition_value)
+            values
+            <foreach collection="conditionList" index="index" item="item" separator=",">
+                (#{item.conditionId}, #{item.conditionName}, #{item.operatorType}, #{item.conditionValue})
+            </foreach>
+        </if>
     </insert>
 
     <insert id="insertConditionParentList">
-        insert into condition_mapping(condition_id, parent_type, parent_id)
-        values
-        <foreach collection="conditionList" index="index" item="item" separator=",">
-            (#{item.conditionId}, #{parentType}, #{parentId})
-        </foreach>
+        <if test="conditionList != null">
+            insert into condition_mapping(condition_id, parent_type, parent_id)
+            values
+            <foreach collection="conditionList" index="index" item="item" separator=",">
+                (#{item.conditionId}, #{parentType}, #{parentId})
+            </foreach>
+        </if>
     </insert>
 
 <!--    这里的查询有问题-->

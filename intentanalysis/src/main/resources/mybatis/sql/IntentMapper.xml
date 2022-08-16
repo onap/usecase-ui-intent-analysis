@@ -5,17 +5,19 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentMapper">
 
     <select id="selectIntentById" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName from intent
+        select intent_id intentId, intent_name intentName
+        from intent
         where intent_id = #{intentId}
     </select>
 
-    <select id="selectIntents" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName from intent
+    <select id="selectIntentList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
+        select intent_id intentId, intent_name intentName
+        from intent
     </select>
 
     <insert id="insertIntent" >
         insert into Intent(intent_id, intent_name)
-        values(#{intentId}, #{intentName})
+        values(#{intent.intentId}, #{intent.intentName})
     </insert>
 
     <update id="updateIntent" parameterType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
@@ -27,7 +29,8 @@
     </update>
 
     <delete id="deleteIntentById" parameterType="string">
-        delete from intent
+        delete
+        from intent
         where intent_id = #{intentId}
     </delete>
 
