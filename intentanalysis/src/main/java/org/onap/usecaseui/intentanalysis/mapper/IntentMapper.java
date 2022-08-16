@@ -31,7 +31,7 @@ public interface IntentMapper {
 
     Intent selectIntentById(String intentId);
 
-    List<Intent> selectIntents();
+    List<Intent> selectIntentList();
 
     int deleteIntentById(String intentId);
 }
