@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e3476e_5ab08a5a",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationObjectService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-16T09:55:10Z",
+      "side": 1,
+      "message": "Add a blank line in front of this function.",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22e711c_347bbdf5",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-16T09:55:10Z",
+      "side": 1,
+      "message": "Add a blank line in front of this function.",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69304685_f5b2030f",
+        "filename": "intentanalysis/src/main/resources/mybatis/sql/ExpectationMapper.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-16T09:55:10Z",
+      "side": 1,
+      "message": "Forgot expectation_type",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c637212_743c1fb3",
+        "filename": "intentanalysis/src/main/resources/mybatis/sql/ExpectationTargetMapper.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-16T09:55:10Z",
+      "side": 1,
+      "message": "This should be Target Model",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
