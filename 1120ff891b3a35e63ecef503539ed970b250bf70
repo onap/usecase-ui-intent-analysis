@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c98f8690_84fb5497",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationObjectService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 8081
+      },
+      "writtenOn": "2022-08-16T10:03:48Z",
+      "side": 1,
+      "message": "I think it is not necessary to use param in service.",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4e3476e_5ab08a5a",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationObjectService.java",
         "patchSetId": 1
