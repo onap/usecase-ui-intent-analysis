@@ -28,4 +28,6 @@ public interface ExpectationTargetMapper {
 
     void insertExpectationTarget(@Param(value = "expectationTarget") ExpectationTarget expectationTarget,
                                  @Param(value = "expectationId") String expectationId);
+    List<ExpectationTarget> selectIntentExpectationTargetsByExpectationId(
+        @Param(value = "expectationId") String expectationId);
 }

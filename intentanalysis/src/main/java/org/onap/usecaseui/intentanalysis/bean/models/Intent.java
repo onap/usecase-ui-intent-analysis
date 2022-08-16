@@ -30,7 +30,7 @@ public class Intent {
 
     private List<Expectation> intentExpectations;
 
-    private List<Context> intentContexts;
+    private List<Context> intentContextList;
 
     private FulfilmentInfo intentFulfilmentInfo;
 

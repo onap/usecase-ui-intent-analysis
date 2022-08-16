@@ -5,8 +5,8 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.StateMapper">
 
     <select id="selectStateByExpectation" resultType="org.onap.usecaseui.intentanalysis.bean.models.State">
-        select state_id stateId, state_name stateName, expectation_id expectationId,
-               is_satisfied isSatisfied, condition
+        select state_id stateId, state_name stateName, condition,
+               is_satisfied isSatisfied
         from state
         where expectation_id = #{expectationId}
     </select>
@@ -20,7 +20,8 @@
     </insert>
 
     <delete id="deleteStateByExpectationId">
-        delete from state
+        delete
+        from state
         where expectation_id = #{expectationId}
     </delete>
 

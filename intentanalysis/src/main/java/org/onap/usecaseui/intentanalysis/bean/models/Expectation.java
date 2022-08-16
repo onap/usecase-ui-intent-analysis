@@ -20,8 +20,6 @@ package org.onap.usecaseui.intentanalysis.bean.models;
 import java.util.List;
 import lombok.Data;
 import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
-import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
-import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 
 
 @Data
@@ -36,9 +34,9 @@ public class Expectation {
 
     private ExpectationObject expectationObject;
 
-    private List<ExpectationTarget> expectationTargets;
+    private List<ExpectationTarget> expectationTargetList;
 
-    private List<Context> expectationContexts;
+    private List<Context> expectationContextList;
 
     private FulfilmentInfo expectationFulfilmentInfo;
 }
