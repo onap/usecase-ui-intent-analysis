@@ -17,14 +17,11 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
-import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 import org.onap.usecaseui.intentanalysis.mapper.ExpectationObjectMapper;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
@@ -32,11 +29,8 @@ import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 
 
 @Service
+@Slf4j
 public class ExpectationObjectServiceImpl implements ExpectationObjectService {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(ExpectationObjectServiceImpl.class);
-
-    private ContextParentType contextParentType;
 
     @Autowired
     private ExpectationObjectMapper expectationObjectMapper;
@@ -48,9 +42,26 @@ public class ExpectationObjectServiceImpl implements ExpectationObjectService {
     private ContextService contextService;
 
     @Override
-    public void createObject(ExpectationObject expectationObject, String expectationId) {
-        expectationObjectMapper.insertExpectationObject(expectationObject, expectationId);
+    public void createExpectationObject(ExpectationObject expectationObject, String expectationId) {
+        if (expectationObjectMapper.insertExpectationObject(expectationObject, expectationId) < 1) {
+            String msg = "Create expectation object to database failed.";
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        }
         contextService.createContextList(expectationObject.getObjectContexts(),
-                                         contextParentType.EXPECTATION_OBJECT, expectationId);
+            expectationObjectMapper.selectExpectationObjectId(expectationId));
+    }
+
+    @Override
+    public ExpectationObject getExpectationObjectByExpectationId(String expectationId) {
+        ExpectationObject expectationObject = expectationObjectMapper.selectExpectationObjectByExpectationId(expectationId);
+        if (expectationObject == null) {
+            String msg = String.format("ExpectationObject: expectation id %s doesn't exist in database.", expectationId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        expectationObject.setObjectContexts(contextService.getContextListByParentId(expectationObjectMapper.selectExpectationObjectId(expectationId)));
+
+        return expectationObject;
     }
 }

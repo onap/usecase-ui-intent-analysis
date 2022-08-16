@@ -15,12 +15,11 @@
  */
 package org.onap.usecaseui.intentanalysis.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.enums.ConditionParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.mapper.ConditionMapper;
 import org.onap.usecaseui.intentanalysis.service.ConditionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +27,8 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class ConditionServiceImpl implements ConditionService {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(ContextServiceImpl.class);
 
     @Autowired
     private ConditionMapper conditionMapper;
@@ -41,7 +39,7 @@ public class ConditionServiceImpl implements ConditionService {
     @Override
     public void createConditionList(List<Condition> conditionList, ConditionParentType conditionParentType, String parentId) {
         conditionMapper.insertConditionList(conditionList);
-        conditionMapper.insertConditionParentList(conditionList,conditionParentType,parentId);
+        conditionMapper.insertConditionParentList(conditionList, conditionParentType, parentId);
     }
 
     @Override

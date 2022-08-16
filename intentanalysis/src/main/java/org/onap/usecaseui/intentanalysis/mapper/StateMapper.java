@@ -31,13 +31,13 @@ public interface StateMapper {
     int insertStateList(@Param(value = "stateList") List<State> state,
                         @Param(value = "expectationId") String expectationId);
 
-    List<State> selectStateByExpectation(String expectationId);
+    List<State> selectStateByExpectation(@Param(value = "expectationId") String expectationId);
 
-    int deleteStateByExpectationId(String expectationId);
+    int deleteStateByExpectationId(@Param(value = "expectationId") String expectationId);
 
-    int updateState(State state);
+    int updateState(@Param(value = "state") State state);
 
     int insertState(@Param(value = "state") State state, @Param(value = "expectationId") String expectationId);
 
-    int deleteStateById(String stateId);
+    int deleteStateById(@Param(value = "stateId") String stateId);
 }

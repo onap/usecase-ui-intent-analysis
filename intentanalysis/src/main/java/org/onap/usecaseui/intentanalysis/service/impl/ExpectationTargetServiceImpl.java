@@ -17,16 +17,15 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.onap.usecaseui.intentanalysis.bean.enums.ConditionParentType;
 import org.onap.usecaseui.intentanalysis.service.ConditionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.mapper.ExpectationTargetMapper;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
@@ -35,13 +34,11 @@ import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
 
 
 @Service
+@Slf4j
 public class ExpectationTargetServiceImpl implements ExpectationTargetService {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(ExpectationTargetServiceImpl.class);
-
-    private ContextParentType contextParentType;
-
     private ConditionParentType conditionParentType;
+
     @Autowired
     private ExpectationTargetMapper expectationTargetMapper;
 
@@ -57,23 +54,45 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
 
     @Autowired
     private ConditionService conditionService;
+
     @Override
-    public void createTarget(ExpectationTarget expectationTarget, String expectationId) {
-        expectationTargetMapper.insertExpectationTarget(expectationTarget, expectationId);
-        contextService.createContextList(expectationTarget.getTargetContexts(),
-                                         contextParentType.EXPECTATION_TARGET,
-                                         expectationTarget.getTargetId());
+    public void createExpectationTarget(ExpectationTarget expectationTarget, String expectationId) {
+        if (expectationTargetMapper.insertExpectationTarget(expectationTarget, expectationId) < 1) {
+            String msg = "Create expectation to database failed.";
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        }
+        contextService.createContextList(expectationTarget.getTargetContexts(), expectationTarget.getTargetId());
         fulfilmentInfoService.createFulfilmentInfo(expectationTarget.getTargetFulfilmentInfo(),
                                                    expectationTarget.getTargetId());
-        conditionService.createConditionList(expectationTarget.getTargetConditions(),conditionParentType.EXPECTATION_TARGET,expectationId);
+        conditionService.createConditionList(expectationTarget.getTargetConditions(),
+                                             conditionParentType.EXPECTATION_TARGET, expectationId);
     }
 
     @Override
-    public void createTargets(List<ExpectationTarget> expectationTargets, String expectationId) {
-        for (ExpectationTarget expectationTarget : expectationTargets) {
-            if (null != expectationTarget) {
-                expectationTargetService.createTarget(expectationTarget, expectationId);
+    public void createExpectationTargetList(List<ExpectationTarget> expectationTargetList, String expectationId) {
+        for (ExpectationTarget expectationTarget : expectationTargetList) {
+            if (expectationTarget != null) {
+                expectationTargetService.createExpectationTarget(expectationTarget, expectationId);
             }
         }
+    }
+
+    @Override
+    public List<ExpectationTarget> getExpectationTargetListByExpectationId(String expectationId) {
+        List<ExpectationTarget> expectationTargetList = expectationTargetMapper.selectExpectationTargetListByExpectationId(expectationId);
+        if (expectationTargetList == null) {
+            String msg = String.format("Target: Expectation id %s doesn't exist in database.", expectationId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        for (ExpectationTarget expectationTarget : expectationTargetList) {
+            if (expectationTarget != null) {
+                String targetId = expectationTarget.getTargetId();
+                expectationTarget.setTargetContexts(contextService.getContextListByParentId(targetId));
+                expectationTarget.setTargetFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(targetId));
+            }
+        }
+        return expectationTargetList;
     }
 }

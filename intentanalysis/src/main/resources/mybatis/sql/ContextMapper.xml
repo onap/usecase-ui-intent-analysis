@@ -6,25 +6,20 @@
 
 
     <insert id="insertContextList">
-        insert into context(context_id, context_name)
-        values
-        <foreach collection="contextList" index="index" item="item" separator=",">
-            (#{item.contextId}, #{item.contextName})
-        </foreach>
-    </insert>
-
-    <insert id="insertContextParentList">
-        insert into context_mapping(context_id, parent_type, parent_id)
-        values
-        <foreach collection="contextList" index="index" item="item" separator=",">
-            (#{item.contextId}, #{parentType}, #{parentId})
-        </foreach>
+        <if test="contextList != null">
+            insert into context(context_id, context_name, context_type, context_condition, parent_id)
+            values
+            <foreach collection="contextList" index="index" item="item" separator=",">
+                (#{item.contextId}, #{item.contextName}, #{item.contextType}, #{item.contextCondition}, #{parentId})
+            </foreach>
+        </if>
     </insert>
 
     <select id="selectContextByParentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Context">
-        select context_id contextId, context_name contextName
+        select context_id contextId, context_name contextName, context_type contextType,
+        context_condition contextCondition
         from context
-        where intent_id = #{parentId}
+        where parent_id = #{parentId}
     </select>
 
 </mapper>

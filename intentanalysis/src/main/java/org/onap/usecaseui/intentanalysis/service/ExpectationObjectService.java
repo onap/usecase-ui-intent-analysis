@@ -22,5 +22,8 @@ import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 
 public interface ExpectationObjectService {
 
-    void createObject(ExpectationObject expectationObject, String expectationId);
+    void createExpectationObject(ExpectationObject expectationObject, String expectationId);
+
+    ExpectationObject getExpectationObjectByExpectationId(String expectationId);
+
 }

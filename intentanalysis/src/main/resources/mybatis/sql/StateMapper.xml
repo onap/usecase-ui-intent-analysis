@@ -5,28 +5,33 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.StateMapper">
 
     <select id="selectStateByExpectation" resultType="org.onap.usecaseui.intentanalysis.bean.models.State">
-        select state_id stateId, state_name stateName, expectation_id expectationId,
-               is_satisfied isSatisfied, condition
+        select state_id stateId, state_name stateName, condition,
+               is_satisfied isSatisfied
         from state
         where expectation_id = #{expectationId}
     </select>
 
     <insert id="insertStateList" parameterType="java.util.ArrayList">
-        insert into state(state_id, state_name, expectation_id, is_satisfied, condition)
-        values
-        <foreach collection="stateList" index="index" item="item" separator=",">
-            (#{item.stateId}, #{item.stateName}, #{expectationId}, #{item.isSatisfied}, #{item.condition})
-        </foreach>
+        <if test="stateList != null">
+            insert into state(state_id, state_name, expectation_id, is_satisfied, condition)
+            values
+            <foreach collection="stateList" index="index" item="item" separator=",">
+                (#{item.stateId}, #{item.stateName}, #{expectationId}, #{item.isSatisfied}, #{item.condition})
+            </foreach>
+        </if>
     </insert>
 
     <delete id="deleteStateByExpectationId">
-        delete from state
+        delete
+        from state
         where expectation_id = #{expectationId}
     </delete>
 
     <insert id="insertState">
-        insert into state(state_id, state_name, expectation_id, is_satisfied, condition)
-        values (#{state.stateId}, #{state.stateName}, #{expectationId}, #{state.isSatisfied}, #{state.condition})
+        <if test="state != null">
+            insert into state(state_id, state_name, expectation_id, is_satisfied, condition)
+            values (#{state.stateId}, #{state.stateName}, #{expectationId}, #{state.isSatisfied}, #{state.condition})
+        </if>
     </insert>
 
     <update id="updateState" parameterType="java.util.List">
