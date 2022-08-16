@@ -5,7 +5,7 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ExpectationMapper">
 
 
-    <insert id="insertIntentExpectations">
+    <insert id="insertIntentExpectationList">
         insert into expectation(expectation_id, expectation_name, expectation_type, intent_id)
         values
         <foreach collection="intentExpectations" index="index" item="item" separator=",">
@@ -18,9 +18,9 @@
         values (#{expectation.expectationId}, #{expectation.expectationName}, #{expectation.expectationType}, #{intentId})
     </insert>
 
-    <select id="selectIntentExpectationsByIntentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
-        select expectation_id expectationId, expectation_name expectationName,
-               target_moi targetMOI, intent_id intentId
+    <select id="selectIntentExpectationListByIntentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
+        select expectation_id expectationId, expectation_name expectationName, expectation_type expectationType,
+        intent_id intentId
         from expectation
         where intent_id = #{intentId}
     </select>
@@ -29,13 +29,13 @@
         update expectation
         <trim prefix="set" suffixOverrides=",">
             <if test="expectationName != null">expectation_name = #{expectationName},</if>
-            <if test="targetMOI != null">target_moi = #{targetMOI},</if>
         </trim>
         where expectation_id = #{expectationId}
     </update>
 
-    <delete id="deleteIntentExpectationsByIntentId">
-        delete from expectation
+    <delete id="deleteIntentExpectationListByIntentId">
+        delete
+        from expectation
         where intent_id = #{intentId}
     </delete>
 

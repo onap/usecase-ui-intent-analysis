@@ -24,7 +24,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.Context;
 
 public interface ContextService {
 
-    void createContextList(List<Context> contextList, ContextParentType contextParentType, String parentId);
+    void createContextList(List<Context> contextList, String parentId);
 
     void insertContext(Context context, String parentId);
 

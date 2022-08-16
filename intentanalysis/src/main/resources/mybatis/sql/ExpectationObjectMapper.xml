@@ -6,9 +6,21 @@
 
 
     <insert id="insertExpectationObject">
-        insert into expectation_object(expectation_id, object_type, object_instance)
+        insert into expectation_object(object_id, object_type, object_instance, expectation_id)
         values
-        (#{expectationId}, #{expectationObject.objectType}, #{expectationObject.objectInstance})
+        (uuid(), #{expectationObject.objectType}, #{expectationObject.objectInstance}, #{expectationId})
     </insert>
+
+    <select id="selectIntentExpectationObjectByExpectationId" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject">
+        select object_type objectType, object_instance objectInstance
+        from expectation_object
+        where expectation_id = #{expectationId}
+    </select>
+
+    <select id="selectExpectationObjectId" resultType="String">
+        select object_id
+        from expectation_object
+        where expectation_id = #{expectationId}
+    </select>
 
 </mapper>

@@ -26,17 +26,17 @@ import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 @Mapper
 public interface ExpectationMapper {
 
-    int insertIntentExpectations(@Param(value = "intentExpectations") List<Expectation> intentExpectations,
-                                 @Param(value = "intentId") String intentId);
+    int insertIntentExpectationList(@Param(value = "intentExpectationList") List<Expectation> intentExpectationList,
+                                    @Param(value = "intentId") String intentId);
 
     int insertIntentExpectation(@Param(value = "expectation") Expectation expectation,
                                 @Param(value = "intentId") String intentId);
 
-    int deleteIntentExpectationsByIntentId(String intentId);
+    int deleteIntentExpectationListByIntentId(String intentId);
 
     int updateIntentExpectation(Expectation expectation);
 
     int deleteIntentExpectationById(String expectationId);
 
-    List<Expectation> selectIntentExpectationsByIntentId(String intentId);
+    List<Expectation> selectIntentExpectationListByIntentId(String intentId);
 }

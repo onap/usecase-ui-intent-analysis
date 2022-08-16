@@ -17,7 +17,6 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,8 +60,8 @@ public class IntentServiceImpl implements IntentService {
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
-        expectationService.createIntentExpectations(intent.getIntentExpectations(), intent.getIntentId());
-        contextService.createContextList(intent.getIntentContexts(), contextParentType.INTENT, intent.getIntentId());
+        expectationService.createIntentExpectationList(intent.getIntentExpectations(), intent.getIntentId());
+        contextService.createContextList(intent.getIntentContexts(), intent.getIntentId());
         fulfilmentInfoService.createFulfilmentInfo(intent.getIntentFulfilmentInfo(), intent.getIntentId());
         log.debug("Intent was successfully created.");
         return intent;
@@ -70,14 +69,20 @@ public class IntentServiceImpl implements IntentService {
 
     @Override
     public List<Intent> getIntentList() {
-        List<Intent> intentList = intentMapper.selectIntents();
+        List<Intent> intentList = intentMapper.selectIntentList();
         if (intentList == null || intentList.size() <= 0) {
             String msg = "Intent list doesn't exist in the intent database.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         for (Intent intent : intentList) {
-            intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intent.getIntentId()));
+            if (null != intent) {
+                String intentId = intent.getIntentId();
+                intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intentId));
+                intent.setIntentContexts(contextService.getContextListByParentId(intentId));
+                intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(intentId));
+                log.debug("Intent %s was successfully found", intentId);
+            }
         }
         return intentList;
     }
@@ -85,14 +90,16 @@ public class IntentServiceImpl implements IntentService {
     @Override
     public Intent getIntentById(String intentId) {
         Intent intent = intentMapper.selectIntentById(intentId);
-        if (intent != null) {
-            intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intent.getIntentId()));
-            return intent;
-        } else {
+        if (intent == null) {
             String msg = String.format("Intent id %s doesn't exist in database.", intentId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
+        intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intentId));
+        intent.setIntentContexts(contextService.getContextListByParentId(intentId));
+        intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(intentId));
+        log.debug("Intent was successfully found");
+        return intent;
     }
 
     @Override
@@ -122,7 +129,7 @@ public class IntentServiceImpl implements IntentService {
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
         }
-        expectationService.deleteIntentExpectationsByIntentId(intentId);
+        expectationService.deleteIntentExpectationListByIntentId(intentId);
         log.debug("Intent has been deleted successfully.");
     }
 }

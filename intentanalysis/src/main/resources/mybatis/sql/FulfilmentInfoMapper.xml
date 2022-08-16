@@ -12,7 +12,8 @@
 
     <select id="selectFulfilmentInfoById" resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo">
         select fulfilment_info_status fulfilmentStatus, not_fulfilled_state notFulfilledState,
-              not_fulfilled_reason notFulfilledReason from fulfilment_info
+              not_fulfilled_reason notFulfilledReason
+        from fulfilment_info
         where parent_id = #{parentId}
     </select>
 
