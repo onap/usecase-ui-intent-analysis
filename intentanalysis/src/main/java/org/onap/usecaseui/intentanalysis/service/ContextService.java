@@ -18,13 +18,12 @@ package org.onap.usecaseui.intentanalysis.service;
 
 
 import java.util.List;
-import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
 
 
 public interface ContextService {
 
-    void createContextList(List<Context> contextList, ContextParentType contextParentType, String parentId);
+    void createContextList(List<Context> contextList, String parentId);
 
     void insertContext(Context context, String parentId);
 

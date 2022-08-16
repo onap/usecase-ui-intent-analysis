@@ -19,8 +19,9 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
@@ -30,9 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Service
+@Slf4j
 public class ContextServiceImpl implements ContextService {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(ContextServiceImpl.class);
 
     @Autowired
     private ContextMapper contextMapper;
@@ -41,9 +41,13 @@ public class ContextServiceImpl implements ContextService {
     private ContextService contextService;
 
     @Override
-    public void createContextList(List<Context> contextList, ContextParentType contextParentType, String parentId) {
-        contextMapper.insertContextList(contextList);
-        contextMapper.insertContextParentList(contextList, contextParentType, parentId);
+    public void createContextList(List<Context> contextList, String parentId) {
+        int res = contextMapper.insertContextList(contextList, parentId);
+        if (res < 1) {
+            String msg = "Create contextMapper to database failed.";
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        }
     }
 
     @Override
@@ -64,6 +68,12 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public List<Context> getContextListByParentId(String parentId) {
-        return contextMapper.selectContextByParentId(parentId);
+        List<Context> contextList = contextMapper.selectContextByParentId(parentId);
+        if (null == contextList) {
+            String msg = String.format("Context: Intent id %s doesn't exist in database.", parentId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        return contextList;
     }
 }
