@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92b160a7_3b52c0a9",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationObjectMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "rephrase  selectIntentExpectationsByIntentId to selectIntentExpectationsByExpectationId",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b22654_c70e50c3",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationObjectService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "rephrase to getObjectByExpecationId",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 86
+      },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778108a2_a02cef26",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "createTarget建议改成  createExpectationTarget",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb535f4_895b63e1",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "同上",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b380b05_ea0c930d",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "同上，与类名service保持一致",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e765aafa_6c846b8d",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ContextServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "Failed to insert context list into database.",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4e0d2d_14bd97af",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationObjectServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "rephrase object as \"expectationObject\". Sync with return type",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0e6d53_c83ee372",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-17T03:21:23Z",
+      "side": 1,
+      "message": "expectation.getExpectationId() 多次使用要先cache出来",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
