@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9b60b19_a52c3cdd",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationTargetServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-17T06:54:20Z",
+      "side": 1,
+      "message": "Here should retrive by the targetId instead of the expectationId. And the same as TargetFulfilment",
+      "revId": "5fc3ab3ee62d4f7d1b5cd9eb85a530682509466a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
