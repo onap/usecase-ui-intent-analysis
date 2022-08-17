@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "318d0b64_4e2bde9e",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ContextMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-17T05:00:30Z",
+      "side": 1,
+      "message": "Here need an extra parentId param as context mapping table has been removed as well as all functions using this mapper.",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92b160a7_3b52c0a9",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationObjectMapper.java",
         "patchSetId": 2
@@ -13,6 +30,23 @@
       "writtenOn": "2022-08-17T03:21:23Z",
       "side": 1,
       "message": "rephrase  selectIntentExpectationsByIntentId to selectIntentExpectationsByExpectationId",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd2cc65_8ce1e36d",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationObjectMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-17T05:00:30Z",
+      "side": 1,
+      "message": "Wrong function name.",
       "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -156,6 +190,40 @@
         "endLine": 67,
         "endChar": 20
       },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44c7b21_a3d8bdab",
+        "filename": "intentanalysis/src/main/resources/intent-analysis-init.sql",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-17T05:00:30Z",
+      "side": 1,
+      "message": "Missing a \u0027,\u0027 at the end of this line",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d0e89d_95e09ca0",
+        "filename": "intentanalysis/src/main/resources/mybatis/sql/ContextMapper.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5029
+      },
+      "writtenOn": "2022-08-17T05:00:30Z",
+      "side": 1,
+      "message": "here should be parent_id",
       "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
