@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Huawei Technologies Co., Ltd.
+ * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
-package org.onap.usecaseui.intentanalysis.mapper;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+public enum ContextParentType {
+    INTENT(0, "intent"),
+    EXPECTATION(1, "expectation"),
+    EXPECTATION_OBJECT(2, "expectation_object"),
+    EXPECTATION_TARGET(3, "expectation_target");
 
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+    private int index;
 
+    private String desc;
 
-@Mapper
-public interface IntentMapper {
-
-    int insertIntent(Intent intent);
-
-    int updateIntent(Intent intent);
-
-    Intent selectIntentById(String intentId);
-
-    List<Intent> selectIntents();
-
-    int deleteIntentById(String intentId);
-
-    List<Intent> getIntentByName(String name);
+    ContextParentType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }

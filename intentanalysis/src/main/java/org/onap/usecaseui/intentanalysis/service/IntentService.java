@@ -31,4 +31,6 @@ public interface IntentService {
     Intent updateIntent(Intent intent);
 
     void deleteIntentById(String intentId);
+
+    List<Intent> getIntentByName(String name);
 }

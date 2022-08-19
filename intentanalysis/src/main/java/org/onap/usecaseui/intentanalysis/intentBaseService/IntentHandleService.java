@@ -32,7 +32,7 @@ public class IntentHandleService {
      * @param intent
      */
     public void handleOriginalIntent(Intent intent){
-        IntentManagementFunction intentOwner = selectIntentManagementFunction(intent);
+        IntentManagementFunction intentOwner = getOtigalIMF(intent);
         handleIntent(intent,intentOwner);
     }
 
@@ -53,6 +53,11 @@ public class IntentHandleService {
         //select the IntentManagementFunctionRegInfo Based on the IMFRegistry information.
         //Both internalFunction and externalFunction support.
         //This is used to get he IntentManagementFunction for a subIntent decomposition.
+        return null;
+    }
+	
+    public IntentManagementFunction getOtigalIMF(Intent intent){
+        //select IntentManagementFunction based on intent  name
         return null;
     }
 }

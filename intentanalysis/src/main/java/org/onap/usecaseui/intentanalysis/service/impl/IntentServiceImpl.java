@@ -20,6 +20,7 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,5 +125,20 @@ public class IntentServiceImpl implements IntentService {
         }
         expectationService.deleteIntentExpectationsByIntentId(intentId);
         log.debug("Intent has been deleted successfully.");
+    }
+
+    @Override
+    public List<Intent> getIntentByName(String name) {
+        List<Intent> intentList = intentMapper.getIntentByName(name);
+        if (CollectionUtils.isNotEmpty(intentList)) {
+            for (Intent intent:intentList) {
+                intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intent.getIntentId()));
+            }
+            return intentList;
+        } else {
+            String msg = String.format("Intent name contain %s doesn't exist in database.", name);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
     }
 }

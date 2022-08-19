@@ -13,23 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.onap.usecaseui.intentanalysis.bean.models;
 
-import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentFunctionType;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportInterface;
 
 import java.util.List;
+import lombok.Data;
+
 
 @Data
-public class IntentManagementFunctionRegInfo {
-    private String id;
-    private String description;
-    private List<SupportArea> supportArea;  //通过intentname   cll  通过intentName
-    private String supportModel; // expectation  expectationtarget  targetCondition  value
-    private List<SupportInterface> supportInterfaces; //
-    private String handleName;
-    private IntentFunctionType intentFunctionType;//out  or  in
 
+public class ExpectationTarget {
+
+    private String targetId;
+
+    private String targetName;
+
+    private String targetCondition;
+
+    private List<Context> targetContexts;
+
+    private FulfilmentInfo targetFulfilmentInfo;
 }

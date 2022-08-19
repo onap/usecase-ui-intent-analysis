@@ -31,4 +31,9 @@
         where intent_id = #{intentId}
     </delete>
 
+    <select id="getIntentByName" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
+        select intent_id intentId, intent_name intentName from intent
+        where intent_name like  "%"#{intentName}"%"
+    </select>
+
 </mapper>
