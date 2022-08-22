@@ -6,10 +6,10 @@
 
 
     <insert id="insertContextList">
-        insert into context(context_id, context_name, context_type, context_condition)
+        insert into context(context_id, context_name)
         values
         <foreach collection="contextList" index="index" item="item" separator=",">
-            (#{item.contextId}, #{item.contextName}, #{item.contextType}, #{item.contextCondition})
+            (#{item.contextId}, #{item.contextName})
         </foreach>
     </insert>
 
@@ -22,7 +22,7 @@
     </insert>
 
     <select id="selectContextByParentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Context">
-        select context_id contextId, context_name contextName, context_type contextType, context_condition contextCondition
+        select context_id contextId, context_name contextName
         from context
         where intent_id = #{parentId}
     </select>

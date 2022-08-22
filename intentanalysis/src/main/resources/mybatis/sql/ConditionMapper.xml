@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ConditionMapper">
+
+    <insert id="insertConditionList">
+        insert into condition(condition_id, condition_name, operator_type, condition_value)
+        values
+        <foreach collection="contextList" index="index" item="item" separator=",">
+            (#{item.conditionId}, #{item.conditionName}, #{item.operatorType}, #{item.conditionValue})
+        </foreach>
+    </insert>
+
+    <insert id="insertConditionParentList">
+        insert into condition_mapping(condition_id, parent_type, parent_id)
+        values
+        <foreach collection="conditionList" index="index" item="item" separator=",">
+            (#{item.conditionId}, #{parentType}, #{parentId})
+        </foreach>
+    </insert>
+
+<!--    这里的查询有问题-->
+    <select id="selectConditionByParentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Context">
+        select condition_id conditionId, condition_name conditiontName, operator_type operatorType
+        from condition
+        where condition_id = #{parentId}
+    </select>
+
+</mapper>

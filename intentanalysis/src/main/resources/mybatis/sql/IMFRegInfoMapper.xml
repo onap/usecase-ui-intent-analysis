@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IMFRegInfoMapper">
+
+    <insert id="insertIMFRegInfoRegInfo">
+        insert into intent_management_function_reg_info(imfr_info_id, imfr_info_description, support_model,handle_name,intent_function_type)
+        values
+            (#{imfregInfo.id}, #{imfregInfo.description},  #{imfregInfo.supportArea},#{imfregInfo.handleName},#{imfregInfo.intentFunctionType})
+    </insert>
+
+</mapper>
