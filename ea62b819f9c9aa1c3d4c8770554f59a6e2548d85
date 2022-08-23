@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea94263_eb6956f8",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationObjectMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-23T01:51:13Z",
+      "side": 1,
+      "message": "Rephrase selectIntentExpectationObjectByExpectationId to selectExpectationObjectByExpectationId",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "ea62b819f9c9aa1c3d4c8770554f59a6e2548d85",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}

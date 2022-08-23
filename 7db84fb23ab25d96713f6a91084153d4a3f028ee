@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6839031_3b161e5e",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ContextServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-23T01:51:13Z",
+      "side": 1,
+      "message": "\"res\" has only been used once. Don\u0027t need to cache",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eac86d9_29699ceb",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ContextServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-23T01:51:13Z",
+      "side": 1,
+      "message": "Not creating contextMapper. Grammar glitches as well, changed to: Failed to create context list in database",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070c39f0_7794dcc9",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationObjectServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-23T01:51:13Z",
+      "side": 1,
+      "message": "Same as context list",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7880c9a_dfed277b",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationObjectServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-23T01:51:13Z",
+      "side": 1,
+      "message": "Same as context list",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6fc7cf_375ec1ba",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-23T01:51:13Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f976af_16e1ccf5",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 8087
+      },
+      "writtenOn": "2022-08-23T01:51:13Z",
+      "side": 1,
+      "message": "Why expecationDB?",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
