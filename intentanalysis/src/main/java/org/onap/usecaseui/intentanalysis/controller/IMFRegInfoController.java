@@ -19,7 +19,7 @@
 package org.onap.usecaseui.intentanalysis.controller;
 
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IntentFunctionManageService;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IMFRegInfoService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,29 +29,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/intentFunctionManage")
-public class IntentFunctionManageController {
+public class IMFRegInfoController {
     @Resource(name = "intentFunctionManageService")
-    IntentFunctionManageService intentFunctionManageService;
+    IMFRegInfoService IMFRegInfoService;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createIntentManage(@RequestBody IntentManagementFunctionRegInfo intentManage) {
-        return ResponseEntity.ok(intentFunctionManageService.createFunctionManage(intentManage));
+        return ResponseEntity.ok(IMFRegInfoService.createFunctionManage(intentManage));
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteIntentManage(@PathVariable(value = "id") String id) {
-        return ResponseEntity.ok(intentFunctionManageService.deleteFunctionManage(id));
+        return ResponseEntity.ok(IMFRegInfoService.deleteFunctionManage(id));
     }
 
     @PutMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateIntentManageById(
             @PathVariable(value = "id") String id, @RequestBody IntentManagementFunctionRegInfo intentManage) {
-        return ResponseEntity.ok(intentFunctionManageService.updateIntentManageById(id, intentManage));
+        return ResponseEntity.ok(IMFRegInfoService.updateIntentManageById(id, intentManage));
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<IntentManagementFunctionRegInfo>> getIntentManageByID() {
-        return ResponseEntity.ok(intentFunctionManageService.getIntentManage());
+        return ResponseEntity.ok(IMFRegInfoService.getIntentManage());
     }
 
 }

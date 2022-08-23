@@ -20,6 +20,7 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
@@ -28,11 +29,6 @@ import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.mapper.ExpectationMapper;
-import org.onap.usecaseui.intentanalysis.service.ContextService;
-import org.onap.usecaseui.intentanalysis.service.ExpectationService;
-import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
-import org.onap.usecaseui.intentanalysis.service.ExpectationTargetService;
-import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
 
 
 @Service
@@ -53,6 +49,7 @@ public class ExpectationServiceImpl implements ExpectationService {
 
     @Autowired
     private ContextService contextService;
+
 
     @Autowired
     private FulfilmentInfoService fulfilmentInfoService;

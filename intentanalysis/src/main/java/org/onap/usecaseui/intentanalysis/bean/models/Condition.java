@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService;
 
-import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
+package org.onap.usecaseui.intentanalysis.bean.models;
+
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 
 import java.util.List;
 
-public interface IntentFunctionManageService {
-    int createFunctionManage(IntentManagementFunctionRegInfo intentManage) ;
+@Data
+public class Condition {
+    private String conditionId;
 
-    int deleteFunctionManage(String id);
+    private String conditionName;
 
-    int updateIntentManageById(String id, IntentManagementFunctionRegInfo intentManage);
+    private OperatorType operator;
 
-    List<IntentManagementFunctionRegInfo> getIntentManage();
+    private String conditionValue;
 
+    private List<Condition> conditionList;
 }

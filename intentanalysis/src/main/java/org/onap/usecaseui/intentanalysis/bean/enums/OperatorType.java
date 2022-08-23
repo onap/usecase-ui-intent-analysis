@@ -14,24 +14,32 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.bean.models;
+package org.onap.usecaseui.intentanalysis.bean.enums;
+
+import lombok.Getter;
+
+@Getter
+public enum OperatorType {
+    OR(0,"or"),
+    GATHERTHAN(1,"gather than"),
+    EQUALTO(2,"equal to"),
+    LESSTHAN(3,"less than"),
+    NOTEQUALTO(4,"not euqal to"),
+    ONEOF(5,"one of"),
+    SOMEOF(6,"some of"),
+    MAXIMUMVALUE(7,"maximum value"),
+    MINIMUMVALUE(8,"minimum value"),
+    MEDIAN(9,"median"),
+    CREDIBILITY(10,"credibility"),
+    AND(11,"and");
 
 
-import java.util.List;
-import lombok.Data;
+    private int index;
 
+    private String desc;
 
-@Data
-
-public class ExpectationTarget {
-
-    private String targetId;
-
-    private String targetName;
-
-    private List<Condition> targetConditions;
-
-    private List<Context> targetContexts;
-
-    private FulfilmentInfo targetFulfilmentInfo;
+    OperatorType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }

@@ -14,24 +14,13 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.bean.models;
+package org.onap.usecaseui.intentanalysis.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 
-import java.util.List;
-import lombok.Data;
-
-
-@Data
-
-public class ExpectationTarget {
-
-    private String targetId;
-
-    private String targetName;
-
-    private List<Condition> targetConditions;
-
-    private List<Context> targetContexts;
-
-    private FulfilmentInfo targetFulfilmentInfo;
+@Mapper
+public interface IMFRegInfoMapper {
+    void insertIMFRegInfoRegInfo(@Param(value = "fulfilmentInfo") IntentManagementFunctionRegInfo imfregInfo);
 }

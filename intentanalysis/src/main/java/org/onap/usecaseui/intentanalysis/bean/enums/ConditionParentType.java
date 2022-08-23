@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.bean.models;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
+public enum ConditionParentType {
+    CONDITION(0, "condition"),
+    CONTEXT(1,"context"),
+    EXPECTATION_TARGET(2, "expectation_target");
 
-import java.util.List;
-import lombok.Data;
+    private int index;
 
+    private String desc;
 
-@Data
-
-public class ExpectationTarget {
-
-    private String targetId;
-
-    private String targetName;
-
-    private List<Condition> targetConditions;
-
-    private List<Context> targetContexts;
-
-    private FulfilmentInfo targetFulfilmentInfo;
+    ConditionParentType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }

@@ -17,8 +17,9 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManage
 
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IntentFunctionManageService;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IMFRegInfoService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.mapper.IMFRegInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @Service("intentFunctionManageService")
-public class IntentFunctionManageServiceImpl implements IntentFunctionManageService {
+public class IMFRegInfoServiceImpl implements IMFRegInfoService {
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private IMFRegInfoMapper imfRegInfoMapper;
     @Override
     public int createFunctionManage(IntentManagementFunctionRegInfo intentManage)  {
         return 0;

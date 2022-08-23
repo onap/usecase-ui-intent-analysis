@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService;
 
-package org.onap.usecaseui.intentanalysis.bean.models;
-
+import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 
 import java.util.List;
-import lombok.Data;
 
+public interface IMFRegInfoService {
+    int createFunctionManage(IntentManagementFunctionRegInfo intentManage) ;
 
-@Data
+    int deleteFunctionManage(String id);
 
-public class ExpectationTarget {
+    int updateIntentManageById(String id, IntentManagementFunctionRegInfo intentManage);
 
-    private String targetId;
+    List<IntentManagementFunctionRegInfo> getIntentManage();
 
-    private String targetName;
-
-    private List<Condition> targetConditions;
-
-    private List<Context> targetContexts;
-
-    private FulfilmentInfo targetFulfilmentInfo;
 }

@@ -19,6 +19,9 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.onap.usecaseui.intentanalysis.bean.enums.ConditionParentType;
+import org.onap.usecaseui.intentanalysis.service.ConditionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +41,13 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
 
     private ContextParentType contextParentType;
 
+    private ConditionParentType conditionParentType;
     @Autowired
     private ExpectationTargetMapper expectationTargetMapper;
 
     @Autowired
     private ExpectationTargetService expectationTargetService;
+
 
     @Autowired
     private FulfilmentInfoService fulfilmentInfoService;
@@ -50,6 +55,8 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
     @Autowired
     private ContextService contextService;
 
+    @Autowired
+    private ConditionService conditionService;
     @Override
     public void createTarget(ExpectationTarget expectationTarget, String expectationId) {
         expectationTargetMapper.insertExpectationTarget(expectationTarget, expectationId);
@@ -58,6 +65,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
                                          expectationTarget.getTargetId());
         fulfilmentInfoService.createFulfilmentInfo(expectationTarget.getTargetFulfilmentInfo(),
                                                    expectationTarget.getTargetId());
+        conditionService.createConditionList(expectationTarget.getTargetConditions(),conditionParentType.EXPECTATION_TARGET,expectationId);
     }
 
     @Override
