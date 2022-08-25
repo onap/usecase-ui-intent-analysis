@@ -16,8 +16,9 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 
 public interface KnowledgeModule {
     //Parse, decompose, orchestrate the original intent
-    Intent intentCognition(Intent intent);
+    IntentGoalBean intentCognition(Intent intent);
 }

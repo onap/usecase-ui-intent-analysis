@@ -15,25 +15,38 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
+import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+@Slf4j
 @Service
 public class IntentHandleService {
     @Autowired
     private IntentProcessService processService;
+    @Autowired
+    private ImfRegInfoService imfRegInfoService;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /**
      * Process the original intent and find the corresponding IntentManagementFunction
+     *
      * @param intent
      */
-    public void handleOriginalIntent(Intent intent){
-        IntentManagementFunction intentOwner = getOtigalIMF(intent);
-        handleIntent(intent,intentOwner);
+    public void handleOriginalIntent(Intent intent) {
+        IntentManagementFunction intentOwner = getOriginalIMF(intent);
+        handleIntent(intent, intentOwner);
     }
 
     public void handleIntent(Intent intent, IntentManagementFunction intentOwner) {
@@ -55,9 +68,17 @@ public class IntentHandleService {
         //This is used to get he IntentManagementFunction for a subIntent decomposition.
         return null;
     }
-	
-    public IntentManagementFunction getOtigalIMF(Intent intent){
+
+    public IntentManagementFunction getOriginalIMF(Intent intent) {
         //select IntentManagementFunction based on intent  name
-        return null;
+        String intentName = intent.getIntentName();
+        List<IntentManagementFunctionRegInfo> imfRegInfoList = imfRegInfoService.getImfRegInfoList();
+        List<IntentManagementFunctionRegInfo> list = imfRegInfoList.stream().filter(x -> x.getSupportArea().contains(intentName)).collect(Collectors.toList());
+        if (!Optional.ofNullable(list).isPresent()) {
+            String msg = String.format("Intent name %s doesn't exist IntentManagementFunction in database.", intent.getIntentName());
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        return (IntentManagementFunction) applicationContext.getBean(list.get(0).getHandleName());
     }
 }

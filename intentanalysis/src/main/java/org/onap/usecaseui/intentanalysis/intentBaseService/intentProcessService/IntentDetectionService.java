@@ -16,6 +16,7 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class IntentDetectionService {
         }
     }
 
-    public Intent detectionProcess(Intent intent) {
+    public IntentGoalBean detectionProcess(Intent intent) {
         KnowledgeModule ownerKnowledgeModule = intentOwner.getKnowledgeModule();
 
         return ownerKnowledgeModule.intentCognition(intent);

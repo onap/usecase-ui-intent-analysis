@@ -133,6 +133,8 @@ public class IntentServiceImpl implements IntentService {
         if (CollectionUtils.isNotEmpty(intentList)) {
             for (Intent intent:intentList) {
                 intent.setIntentExpectations(expectationService.getIntentExpectationsByIntentId(intent.getIntentId()));
+              //  intent.setIntentContexts();
+                //
             }
             return intentList;
         } else {

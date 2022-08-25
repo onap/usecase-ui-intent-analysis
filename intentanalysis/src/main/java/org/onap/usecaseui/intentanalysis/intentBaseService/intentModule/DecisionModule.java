@@ -16,23 +16,22 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 
+import java.util.List;
+import java.util.Map;
+
 public interface DecisionModule {
-    void determineUltimateGoal();//
-    IntentManagementFunction exploreIntentHandlers();
+    void determineUltimateGoal();
+
+    IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
+
     void intentDefinition();
+
     void decideSuitableAction();
 
-    //confirm whether the intent needs to be decomposed and orchestrated
-    public boolean needDecompostion();
-
-    //call decomposition module
-    public void intentDecomposition();
-
-    //call orchestration module
-    public void intentOrchestration();
-
-
     public void interactWithTemplateDb();
+
+    public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean);
 }

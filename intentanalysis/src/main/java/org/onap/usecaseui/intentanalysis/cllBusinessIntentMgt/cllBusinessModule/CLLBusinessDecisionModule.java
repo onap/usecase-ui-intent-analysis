@@ -16,39 +16,145 @@
 package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
 
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import lombok.extern.log4j.Log4j2;
+import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
+import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Log4j2
 @Service
 public class CLLBusinessDecisionModule implements DecisionModule {
-    @Override
-    public void determineUltimateGoal() {}
+    @Autowired
+    private ImfRegInfoService imfRegInfoService;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Override
-    public IntentManagementFunction exploreIntentHandlers() {
-
-        return null;
-
+    public void determineUltimateGoal() {
     }
 
     @Override
-    public void intentDefinition() {}
+    public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
+        //  db  filter imf  supportArea;
+        //SupportInterface> supportInterfaces;
+        IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
+        String intentName = intentGoalBean.getIntent().getIntentName();
+        List<IntentManagementFunctionRegInfo> imfRegInfoList = imfRegInfoService.getImfRegInfoList();
+        //todo
+        List<IntentManagementFunctionRegInfo> imfList = imfRegInfoList.stream().
+                filter(x -> x.getSupportArea().contains(intentName)
+                        && x.getSupportInterfaces().contains(intentGoalType)).collect(Collectors.toList());
+        if (!Optional.ofNullable(imfList).isPresent()) {
+            log.info("The intent name is %s not find the corresponding IntentManagementFunction", intentName);
+        }
+        return (IntentManagementFunction) applicationContext.getBean(imfList.get(0).getHandleName());
+    }
 
     @Override
-    public void decideSuitableAction() {}
+    public void intentDefinition() {
+    }
 
     @Override
-    public boolean needDecompostion() {
+    public void decideSuitableAction() {
+    }
+
+
+    public boolean needDecompostion(IntentGoalBean intentGoalBean) {
+        //different expectationType need decompostion  ExpectationType>1 or objtype>1
+        if (intentGoalBean.getIntentGoalType().equals(IntentGoalType.CREATE)) {
+            List<Expectation> intentExpectations = intentGoalBean.getIntent().getIntentExpectations();
+            List<ExpectationType> expectationTypeList = intentExpectations.stream()
+                    .map(Expectation::getExpectationType).distinct().collect(Collectors.toList());
+            if (expectationTypeList.size() > 1) {
+                return true;
+            } else {
+                List<ObjectType> objectTypeList = intentExpectations.stream().map(x ->
+                        x.getExpectationObject().getObjectType()).collect(Collectors.toList());
+                if (objectTypeList.size() > 1) {
+                    return  true;
+                }
+            }
+        }
         return false;
     }
 
-    @Override
-    public void intentDecomposition() {}
+    public List<IntentGoalBean> intentDecomposition(IntentGoalBean intentGoalBean) {
+        //ExpectationType   expectation.ExpectationObject.objtype
+        Map<ExpectationType, List<Expectation>> expectationTypeListMap = intentGoalBean.getIntent().getIntentExpectations()
+                .stream().collect(Collectors.groupingBy(x -> x.getExpectationType()));
+        List<IntentGoalBean> subIntentGoalList = new ArrayList<>();
+        IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
+        for (Map.Entry<ExpectationType, List<Expectation>> entry : expectationTypeListMap.entrySet()) {
+
+            Map<ObjectType, List<Expectation>> objTypeMap = entry.getValue().stream()
+                    .collect(Collectors.groupingBy(x -> x.getExpectationObject().getObjectType()));
+            for (Map.Entry<ObjectType, List<Expectation>> objEntry : objTypeMap.entrySet()) {
+                IntentGoalBean subIntentGoalBean = new IntentGoalBean();
+                Intent subIntent = new Intent();
+                subIntent.setIntentId(CommonUtil.getUUid());
+                subIntent.setIntentName(objEntry.getValue().get(0).getExpectationName().replace("Expectation", "Intent"));
+                subIntent.setIntentExpectations(objEntry.getValue());
+                //TODO      intentFulfilmentInfo intentContexts
+                subIntentGoalBean.setIntentGoalType(intentGoalType);
+                subIntentGoalBean.setIntent(subIntent);
+                subIntentGoalList.add(subIntentGoalBean);
+            }
+        }
+        return subIntentGoalList;
+    }
+
+    public List<IntentGoalBean> intentOrchestration(List<IntentGoalBean> subIntentGoalList) {
+        List<IntentGoalBean> sortList = new ArrayList<>();
+        List<IntentGoalBean> deliveryGoalList = subIntentGoalList.stream().filter(x -> x.getIntent().getIntentName()
+                .equalsIgnoreCase("delivery")).collect(Collectors.toList());
+        List<IntentGoalBean> assuranceGoalList = subIntentGoalList.stream().filter(x -> x.getIntent().getIntentName()
+                .equalsIgnoreCase("assurance")).collect(Collectors.toList());
+        List<IntentGoalBean> otherGoalList = subIntentGoalList.stream().filter(x -> !x.getIntent().getIntentName()
+                .equalsIgnoreCase("assurance") && !x.getIntent().getIntentName()
+                .equalsIgnoreCase("delivery")).collect(Collectors.toList());
+        sortList.addAll(deliveryGoalList);
+        sortList.addAll(assuranceGoalList);
+        sortList.addAll(otherGoalList);
+        return sortList;
+    }
 
     @Override
-    public void intentOrchestration() {}
+    public void interactWithTemplateDb() {
+    }
 
     @Override
-    public void interactWithTemplateDb() {}
+    public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean) {
+        boolean needDecompostion = needDecompostion(intentGoalBean);
+        List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList = new ArrayList<>();
+        if (needDecompostion) {
+            List<IntentGoalBean> subIntentGoalList = intentDecomposition(intentGoalBean);
+            List<IntentGoalBean> sortList = intentOrchestration(subIntentGoalList);
+            for (IntentGoalBean subIntentGoal : sortList) {
+                Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
+                IntentManagementFunction imf = exploreIntentHandlers(subIntentGoal);
+                //TODO call probe  interface  if fail  intentFulfilmentInfo throw exception
+                map.put(subIntentGoal, imf);
+                intentMapList.add(map);
+            }
+        } else {
+            Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
+            map.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
+            intentMapList.add(map);
+        }
+        return intentMapList;
+    }
 }

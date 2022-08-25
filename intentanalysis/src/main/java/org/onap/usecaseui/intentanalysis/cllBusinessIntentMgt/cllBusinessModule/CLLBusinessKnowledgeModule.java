@@ -16,8 +16,8 @@
 package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.onap.usecaseui.intentanalysis.bean.enums.DetectionGoalType;
-import org.onap.usecaseui.intentanalysis.bean.models.DetectionGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
@@ -40,11 +40,10 @@ public class CLLBusinessKnowledgeModule implements KnowledgeModule {
     IntentService intentService;
 
     @Override
-    public Intent intentCognition(Intent intent) {
+    public IntentGoalBean intentCognition(Intent intent) {
         List<String> intendIdList = intentResolution(intent);
         getSystemStatus();
-        determineDetectionGoal(intent, intendIdList);
-        return null;
+        return determineDetectionGoal(intent, intendIdList);
     }
 
     /**
@@ -54,11 +53,8 @@ public class CLLBusinessKnowledgeModule implements KnowledgeModule {
      */
 
     public List<String> intentResolution(Intent intent) {
-        //dc contain original intent
-        String intentName = intent.getIntentName();
-        List<Intent> intentList = intentService.getIntentList();
-        List<Intent> sameNameIntentList = intentList.stream().filter(x -> x.getIntentName()
-                .contains(intentName)).collect(Collectors.toList());
+        //db contain original intent
+        List<Intent> sameNameIntentList = intentService.getIntentByName(intent.getIntentName());
         List<String> intentIdList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(sameNameIntentList)) {
             List<Expectation> expectationList = intent.getIntentExpectations();
@@ -110,12 +106,12 @@ public class CLLBusinessKnowledgeModule implements KnowledgeModule {
     /**
      * Determine add, delete, modify according to theobject,target and context of the expectation
      */
-    DetectionGoalBean determineDetectionGoal(Intent intent, List<String> intentIdList) {
+    public IntentGoalBean determineDetectionGoal(Intent intent, List<String> intentIdList) {
         int size = intentIdList.size();
         if (size == 0) {
-            return new DetectionGoalBean(intent, DetectionGoalType.ADD);
+            return new IntentGoalBean(intent, IntentGoalType.CREATE);
         } else {
-            return new DetectionGoalBean(intent, DetectionGoalType.UPDATE);
+            return new IntentGoalBean(intent, IntentGoalType.UPDATE);
         }
     }
 

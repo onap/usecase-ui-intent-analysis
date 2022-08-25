@@ -17,12 +17,11 @@
 package org.onap.usecaseui.intentanalysis.bean.enums;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum ExpectationType {
-    EXPECTATION1(0, "expectationType1"),
-    EXPECTATION2(1, "expectationType2");
+    DELIVERY(0, "delivery"),
+    ASSURANCE(1, "assurance");
 
     private int index;
 

@@ -22,8 +22,9 @@ import lombok.Getter;
 @Getter
 public enum SupportArea {
     SLICING(0, "slicing"),
-    FEMALE(1, "5g"),
-    MALE(2, "4g");
+    CLLBUSINESS(1, "cllbusiness"),
+    DELIVERY(2, "delivery"),
+    ASSURANCE(3, "assurance");
     private  int type;
     private  String desc;
 

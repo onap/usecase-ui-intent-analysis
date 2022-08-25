@@ -16,11 +16,13 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class IntentProcessService {
@@ -49,14 +51,15 @@ public class IntentProcessService {
     }
     public void intentProcess(Intent intent) {
         intentDetectionService.setIntentRole(intentOwner,intentHandler);
-        Intent detectIntent = intentDetectionService.detectionProcess(intent);
+        IntentGoalBean intentGoalBean = intentDetectionService.detectionProcess(intent);
 
         //investigation process
         intentInvestigationService.setIntentRole(intentOwner,intentHandler);
-        List<IntentManagementFunction> intentManagementFunctions =
-                intentInvestigationService.investigationProcess();//List<handler>?
+        List<Map<IntentGoalBean,IntentManagementFunction>> intentListMap =
+                intentInvestigationService.investigationProcess(intentGoalBean);
 
-        for (IntentManagementFunction intentHandler : intentManagementFunctions) {
+
+        for (Map<IntentGoalBean,IntentManagementFunction> map : intentListMap) {
             //definition process
             intentDefinitionService.setIntentRole(intentOwner,intentHandler);
             intentDefinitionService.definitionPorcess();

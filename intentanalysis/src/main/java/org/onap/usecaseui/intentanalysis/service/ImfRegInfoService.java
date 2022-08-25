@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.bean.models;
+package org.onap.usecaseui.intentanalysis.service;
 
-import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.DetectionGoalType;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 
-@Data
-public class DetectionGoalBean {
-    private Intent intent;
-    private DetectionGoalType detectionGoalType;
+import java.util.List;
 
-    public DetectionGoalBean(Intent intent, DetectionGoalType detectionGoalType) {
-        this.intent = intent;
-        this.detectionGoalType = detectionGoalType;
-    }
+public interface ImfRegInfoService {
+
+    int insertIMFRegInfoRegInfo(IntentManagementFunctionRegInfo regInfo);
+    List<IntentManagementFunctionRegInfo>  getImfRegInfoList();
 }

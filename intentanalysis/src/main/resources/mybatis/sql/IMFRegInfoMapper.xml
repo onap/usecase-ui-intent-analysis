@@ -10,4 +10,8 @@
             (#{imfregInfo.id}, #{imfregInfo.description},  #{imfregInfo.supportArea},#{imfregInfo.handleName},#{imfregInfo.intentFunctionType})
     </insert>
 
+    <select id="getImfRegInfoList" resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo">
+        select *  from intent_management_function_reg_info
+    </select>
+
 </mapper>

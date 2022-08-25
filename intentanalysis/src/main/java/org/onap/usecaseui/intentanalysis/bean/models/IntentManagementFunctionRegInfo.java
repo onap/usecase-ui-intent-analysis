@@ -30,5 +30,7 @@ public class IntentManagementFunctionRegInfo {
     private String supportModel;
     private List<SupportInterface> supportInterfaces;
     private String handleName;
-    private IntentFunctionType intentFunctionType;//out  or  in
+    //distinguish internal or external function
+    private IntentFunctionType intentFunctionType;
+
 }

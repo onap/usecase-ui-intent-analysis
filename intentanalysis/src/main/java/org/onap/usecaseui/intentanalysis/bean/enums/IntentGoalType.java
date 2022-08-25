@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
-import java.util.List;
-@Mapper
-public interface IMFRegInfoMapper {
-    int insertIMFRegInfoRegInfo(IntentManagementFunctionRegInfo info);
+import lombok.Getter;
 
-    List<IntentManagementFunctionRegInfo> getImfRegInfoList();
+@Getter
+public enum IntentGoalType {
+    CREATE(0, "create"),
+    UPDATE(1, "update"),
+    DELETE(2, "delete");
+
+    private int index;
+
+    private String desc;
+
+    IntentGoalType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
+
 }

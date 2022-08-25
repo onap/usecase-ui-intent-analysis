@@ -13,24 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.onap.usecaseui.intentanalysis.util;
 
-package org.onap.usecaseui.intentanalysis.bean.enums;
+import java.util.UUID;
 
-import lombok.Getter;
-
-@Getter
-public enum DetectionGoalType {
-    ADD(0, "add"),
-    UPDATE(1, "update"),
-    DELETE(2, "delete");
-
-    private int index;
-
-    private String desc;
-
-    DetectionGoalType(int index, String desc) {
-        this.index = index;
-        this.desc = desc;
+public class CommonUtil {
+    public static String getUUid() {
+        return UUID.randomUUID().toString().trim().replaceAll("-", "");
     }
-
 }

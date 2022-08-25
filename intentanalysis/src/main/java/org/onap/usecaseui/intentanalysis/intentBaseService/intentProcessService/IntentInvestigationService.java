@@ -15,11 +15,16 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class IntentInvestigationService {
@@ -35,15 +40,8 @@ public class IntentInvestigationService {
         }
     }
 
-    public List<IntentManagementFunction> investigationProcess() {
+    public List<Map<IntentGoalBean,IntentManagementFunction>>  investigationProcess(IntentGoalBean intentGoalBean) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
-        intentDecisionModule.needDecompostion();
-        intentDecisionModule.intentDecomposition();
-        intentDecisionModule.intentOrchestration();
-        intentDecisionModule.decideSuitableAction();
-        intentDecisionModule.exploreIntentHandlers();//返回handler
-        return null;
+       return intentDecisionModule.findHandler(intentGoalBean);
     }
-
-
 }

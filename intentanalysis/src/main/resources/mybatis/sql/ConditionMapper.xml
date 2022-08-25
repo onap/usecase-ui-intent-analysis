@@ -21,7 +21,7 @@
     </insert>
 
 <!--    这里的查询有问题-->
-    <select id="selectConditionByParentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Context">
+    <select id="selectConditionByParentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Condition">
         select condition_id conditionId, condition_name conditiontName, operator_type operatorType
         from condition
         where condition_id = #{parentId}

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.utils;
+package org.onap.usecaseui.intentanalysis.util;
 
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.CertificateException;
