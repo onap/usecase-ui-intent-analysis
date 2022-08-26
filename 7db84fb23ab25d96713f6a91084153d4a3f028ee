@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba73ede7_780c9e26",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ContextServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6839031_3b161e5e",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eac86d9_29699ceb",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ContextServiceImpl.java",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83103a08_2baf766d",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ContextServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eac86d9_29699ceb",
+      "revId": "7db84fb23ab25d96713f6a91084153d4a3f028ee",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6800d0b6_84162ece",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ContextMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "YES!!! Params of context mapping in other methods also need to remove. (′▽`ʃ♡ƪ)",
+      "parentUuid": "318d0b64_4e2bde9e",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92b160a7_3b52c0a9",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationObjectMapper.java",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "b5d1397e_e115eb83",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/ExpectationObjectMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bd2cc65_8ce1e36d",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b22654_c70e50c3",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationObjectService.java",
         "patchSetId": 2
@@ -64,6 +100,30 @@
       "writtenOn": "2022-08-17T03:21:23Z",
       "side": 1,
       "message": "rephrase to getObjectByExpecationId",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 86
+      },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d6d8a9_ec92fe95",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationObjectService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "conflict to another comment. Maybe rephrase to getExpectationObjectByExpecationId.",
+      "parentUuid": "a4b22654_c70e50c3",
       "range": {
         "startLine": 29,
         "startChar": 0,
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "f7213360_bc9367cf",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "778108a2_a02cef26",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb535f4_895b63e1",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
         "patchSetId": 2
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "0b632446_8d7dcb4e",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb535f4_895b63e1",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b380b05_ea0c930d",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
         "patchSetId": 2
@@ -130,6 +232,24 @@
       "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a47e060_272b0a36",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b380b05_ea0c930d",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +316,30 @@
     },
     {
       "key": {
+        "uuid": "0940f0ac_219b76e9",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/ExpectationServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0e6d53_c83ee372",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 20
+      },
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e44c7b21_a3d8bdab",
         "filename": "intentanalysis/src/main/resources/intent-analysis-init.sql",
         "patchSetId": 2
@@ -213,6 +357,24 @@
     },
     {
       "key": {
+        "uuid": "6894a5b7_da79aeb6",
+        "filename": "intentanalysis/src/main/resources/intent-analysis-init.sql",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e44c7b21_a3d8bdab",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94d0e89d_95e09ca0",
         "filename": "intentanalysis/src/main/resources/mybatis/sql/ContextMapper.xml",
         "patchSetId": 2
@@ -227,6 +389,24 @@
       "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04547390_d56ae5e3",
+        "filename": "intentanalysis/src/main/resources/mybatis/sql/ContextMapper.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d0e89d_95e09ca0",
+      "revId": "93a48c9ea05ad8b951087dc9c80a7f96abef2b34",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }

@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "dc499a21_8d0112de",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationObjectService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4e3476e_5ab08a5a",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f22e711c_347bbdf5",
         "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
         "patchSetId": 1
@@ -86,6 +104,24 @@
         "id": 5029
       },
       "writtenOn": "2022-08-17T05:00:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f22e711c_347bbdf5",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21961102_439d9059",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/ExpectationTargetService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "f22e711c_347bbdf5",
@@ -130,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "7ccc8c3b_f13f0a70",
+        "filename": "intentanalysis/src/main/resources/mybatis/sql/ExpectationMapper.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69304685_f5b2030f",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c637212_743c1fb3",
         "filename": "intentanalysis/src/main/resources/mybatis/sql/ExpectationTargetMapper.xml",
         "patchSetId": 1
@@ -156,6 +210,24 @@
         "id": 5029
       },
       "writtenOn": "2022-08-17T05:00:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c637212_743c1fb3",
+      "revId": "1120ff891b3a35e63ecef503539ed970b250bf70",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da4519cb_24757536",
+        "filename": "intentanalysis/src/main/resources/mybatis/sql/ExpectationTargetMapper.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-08-26T08:35:08Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "3c637212_743c1fb3",
