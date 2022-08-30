@@ -17,14 +17,16 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
-import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
 import org.onap.usecaseui.intentanalysis.mapper.FulfilmentInfoMapper;
 import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Service
@@ -39,28 +41,51 @@ public class FulfilmentInfoServiceImpl implements FulfilmentInfoService {
 
     @Override
     public void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId) {
-        if (fulfilmentInfoMapper.insertFulfilmentInfo(fulfilmentInfo, parentId) < 1) {
-            String msg = "Create fulfilmentInfoMapper to database failed.";
-            log.error(msg);
-            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        if (fulfilmentInfo != null) {
+            if (fulfilmentInfoMapper.insertFulfilmentInfo(fulfilmentInfo, parentId) < 1) {
+                String msg = "Failed to create fulfilment info to database.";
+                log.error(msg);
+                throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+            }
+            log.info("Successfully created fulfilment info to database.");
         }
     }
 
     @Override
-    public void deleteFulfilmentInfoByParentId(String parentId) {
+    public void deleteFulfilmentInfo(String parentId) {
+        if (fulfilmentInfoService.getFulfilmentInfo(parentId) != null) {
+            if (fulfilmentInfoMapper.deleteFulfilmentInfo(parentId) < 1) {
+                String msg = "Failed to delete fulfilment info to database.";
+                log.error(msg);
+                throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
+            }
+            log.info("Successfully deleted fulfilment info to database.");
+        }
     }
 
     @Override
-    public void updateFulfilmentInfoByParentId(FulfilmentInfo fulfilmentInfo, String parentId) {
+    public void updateFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId) {
+
+        FulfilmentInfo fulfillmentInfoDB = fulfilmentInfoService.getFulfilmentInfo(parentId);
+        if (fulfillmentInfoDB == null && fulfilmentInfo != null) {
+            fulfilmentInfoService.createFulfilmentInfo(fulfilmentInfo, parentId);
+        } else if (fulfillmentInfoDB != null && fulfilmentInfo == null) {
+            fulfilmentInfoService.deleteFulfilmentInfo(parentId);
+        } else if (fulfillmentInfoDB != null) {
+            if (fulfilmentInfoMapper.updateFulfilmentInfo(fulfilmentInfo, parentId) < 1) {
+                String msg = "Failed to update fulfilment info to database.";
+                log.error(msg);
+                throw new DataBaseException(msg, ResponseConsts.RET_UPDATE_DATA_FAIL);
+            }
+            log.info("Successfully updated fulfilment info to database.");
+        }
     }
 
     @Override
-    public FulfilmentInfo getFulfilmentInfoByParentId(String parentId) {
-        FulfilmentInfo fulfilmentInfo = fulfilmentInfoMapper.selectFulfilmentInfoById(parentId);
+    public FulfilmentInfo getFulfilmentInfo(String parentId) {
+        FulfilmentInfo fulfilmentInfo = fulfilmentInfoMapper.selectFulfilmentInfo(parentId);
         if (fulfilmentInfo == null) {
-            String msg = String.format("FulfilmentInfo: Parent id %s doesn't exist in database.", parentId);
-            log.error(msg);
-            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+            log.info(String.format("FulfilmentInfo is null, parentId = %s", parentId));
         }
         return fulfilmentInfo;
     }

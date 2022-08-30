@@ -5,30 +5,55 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ConditionMapper">
 
     <insert id="insertConditionList">
-        <if test="conditionList != null">
-            insert into condition(condition_id, condition_name, operator_type, condition_value)
-            values
-            <foreach collection="conditionList" index="index" item="item" separator=",">
-                (#{item.conditionId}, #{item.conditionName}, #{item.operatorType}, #{item.conditionValue})
-            </foreach>
-        </if>
+        insert into condition(condition_id, condition_name, operator_type, condition_value, parent_id)
+        values
+        <foreach collection="conditionList" index="index" item="item" separator=",">
+            (#{item.conditionId}, #{item.conditionName}, #{item.operator}, #{item.conditionValue}, #{parentId})
+        </foreach>
     </insert>
 
     <insert id="insertConditionParentList">
-        <if test="conditionList != null">
-            insert into condition_mapping(condition_id, parent_type, parent_id)
-            values
-            <foreach collection="conditionList" index="index" item="item" separator=",">
-                (#{item.conditionId}, #{parentType}, #{parentId})
-            </foreach>
-        </if>
+        insert into condition_mapping(condition_id, parent_type, parent_id)
+        values
+        <foreach collection="conditionList" index="index" item="item" separator=",">
+            (#{item.conditionId}, #{parentType}, #{parentId})
+        </foreach>
     </insert>
 
-<!--    这里的查询有问题-->
-    <select id="selectConditionByParentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Condition">
-        select condition_id conditionId, condition_name conditiontName, operator_type operatorType
+    <insert id="insertCondition">
+        insert into condition(condition_id, condition_name, operator_type, condition_value, parent_id)
+        values
+            (#{condition.conditionId}, #{condition.conditionName}, #{condition.operator}, #{condition.conditionValue}, #{parentId})
+    </insert>
+    <!--    这里的查询有问题-->
+    <select id="selectConditionList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Condition">
+        select condition_id conditionId, condition_name conditionName, operator_type operator, condition_value conditionValue
         from condition
-        where condition_id = #{parentId}
+        where parent_id = #{parentId}
     </select>
+
+    <select id="selectCondition" resultType="org.onap.usecaseui.intentanalysis.bean.models.Condition">
+        select condition_id conditionId, condition_name conditionName, operator_type operator, condition_value conditionValue
+        from condition
+        where condition_id = #{conditionId}
+    </select>
+
+    <update id="updateCondition">
+        update condition
+        <trim prefix="set" suffixOverrides=",">
+            <if test="condition.conditionName != null">condition_name = #{condition.conditionName},</if>
+            <if test="condition.operator != null">operator_type = #{condition.operator},</if>
+            <if test="condition.conditionValue != null">condition_value = #{condition.conditionValue},</if>
+        </trim>
+        where condition_id = #{condition.conditionId}
+    </update>
+
+    <delete id="deleteCondition">
+        DELETE FROM condition WHERE condition_id = #{condition.conditionId}
+    </delete>
+
+    <delete id="deleteConditionList">
+        DELETE FROM condition WHERE parent_id = #{parentId}
+    </delete>
 
 </mapper>

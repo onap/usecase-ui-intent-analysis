@@ -26,7 +26,12 @@ import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
 public interface FulfilmentInfoMapper {
 
     int insertFulfilmentInfo(@Param(value = "fulfilmentInfo") FulfilmentInfo fulfilmentInfo,
+                              @Param(value = "parentId") String parentId);
+
+    FulfilmentInfo selectFulfilmentInfo(@Param(value = "parentId") String parentId);
+
+    int updateFulfilmentInfo(@Param(value = "fulfilmentInfo") FulfilmentInfo fulfilmentInfo,
                              @Param(value = "parentId") String parentId);
 
-    FulfilmentInfo selectFulfilmentInfoById(@Param(value = "parentId") String parentId);
+    int deleteFulfilmentInfo(@Param(value = "parentId") String parentId);
 }

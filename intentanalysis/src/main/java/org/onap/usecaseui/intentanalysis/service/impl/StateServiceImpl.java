@@ -23,8 +23,10 @@ import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.mapper.StateMapper;
 import org.onap.usecaseui.intentanalysis.service.StateService;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,7 +99,7 @@ public class StateServiceImpl implements StateService {
         for (String stateDBId : stateDBIdList) {
             stateService.deleteStateById(stateDBId);
         }
-        log.debug("States are successfully updated.");
+        log.info("States are successfully updated.");
     }
 
     @Override

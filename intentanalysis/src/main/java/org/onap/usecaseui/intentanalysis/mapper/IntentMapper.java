@@ -20,6 +20,7 @@ package org.onap.usecaseui.intentanalysis.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 
 
@@ -30,11 +31,11 @@ public interface IntentMapper {
 
     int updateIntent(@Param(value = "intent") Intent intent);
 
-    Intent selectIntentById(@Param(value = "intentId") String intentId);
+    Intent selectIntent(@Param(value = "intentId") String intentId);
 
     List<Intent> selectIntentList();
 
-    int deleteIntentById(@Param(value = "intentId") String intentId);
+    int deleteIntent(@Param(value = "intentId") String intentId);
 
     List<Intent> getIntentByName(@Param(value = "name") String name);
 }
