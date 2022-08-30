@@ -15,7 +15,11 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ActuationModule {
     //actuationModel & knownledgeModel interact
@@ -23,6 +27,6 @@ public interface ActuationModule {
     void sendToNonIntentHandler();//直接操作
     void interactWithIntentHandle();
     //Save intent information to the intent instance database
-    void saveIntentToDb();
+    void saveIntentToDb(List<Map<IntentGoalBean,IntentManagementFunction>> intentMapList);
 
 }

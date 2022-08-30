@@ -16,10 +16,15 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class IntentDefinitionService {
@@ -36,10 +41,10 @@ public class IntentDefinitionService {
         }
     }
 
-    public void definitionPorcess() {
+    public void definitionPorcess(List<Map<IntentGoalBean,IntentManagementFunction>> intentMapList) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
         ActuationModule intentActuationModule = intentOwner.getActuationModule();
         intentDecisionModule.intentDefinition();
-        intentActuationModule.saveIntentToDb();
+        intentActuationModule.saveIntentToDb(intentMapList);//id  type
     }
 }

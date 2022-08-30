@@ -17,12 +17,20 @@ package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule
 
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentHandleService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CLLBusinessActuationModule implements ActuationModule {
@@ -30,11 +38,12 @@ public class CLLBusinessActuationModule implements ActuationModule {
     IntentProcessService processService;
     @Autowired
     IntentHandleService intentHandleService;
+    @Autowired
+    IntentService intentService;
 
 
     @Override
     public void sendToIntentHandler(IntentManagementFunction IntentHandler) {
-
     }
 
     @Override
@@ -48,7 +57,16 @@ public class CLLBusinessActuationModule implements ActuationModule {
     }
 
     @Override
-    public void saveIntentToDb() {
+    public void saveIntentToDb(List<Map<IntentGoalBean,IntentManagementFunction>> intentMapList) {
+        List<IntentGoalBean> subIntentGoalLit = new ArrayList<>();
+        for (Map<IntentGoalBean,IntentManagementFunction> map:intentMapList) {
+            subIntentGoalLit.addAll(map.keySet());
+        }
+        List<Intent> subIntentList = subIntentGoalLit.stream().map(IntentGoalBean::getIntent)
+                .collect(Collectors.toList());
+        for (Intent subIntent:subIntentList) {
+            intentService.createIntent(subIntent);
+        }
 
     }
 }

@@ -60,9 +60,9 @@ public class IntentProcessService {
 
 
         for (Map<IntentGoalBean,IntentManagementFunction> map : intentListMap) {
-            //definition process
+            //definition process  save subintent
             intentDefinitionService.setIntentRole(intentOwner,intentHandler);
-            intentDefinitionService.definitionPorcess();
+            intentDefinitionService.definitionPorcess(intentListMap);
 
             //distribution process
             intentDistributionService.setIntentRole(intentOwner,intentHandler);

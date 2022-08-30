@@ -38,9 +38,9 @@ public class IntentOperationService {
 
     public void operationProcess() {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
-        ActuationModule intentActuationModule = intentOwner.getActuationModule();
+        ActuationModule intentActuationModule = intentHandler.getActuationModule();
 
-        intentDecisionModule.interactWithTemplateDb();
+        //intentDecisionModule.interactWithTemplateDb();
         intentActuationModule.interactWithIntentHandle();
         intentActuationModule.sendToIntentHandler(intentHandler);
 
