@@ -16,9 +16,7 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.enums.ConditionParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
-import org.springframework.stereotype.Service;
 
 
 import java.util.List;
@@ -26,16 +24,18 @@ import java.util.List;
 
 public interface ConditionService {
 
-    void createConditionList(List<Condition> cnditionList, ConditionParentType conditionParentType, String parentId);
+    void createConditionList(List<Condition> conditionList, String parentId);
 
-    void insertCondition(Condition condition, String parentId);
+    void createCondition(Condition condition, String parentId);
 
-    void deleteConditionListByParentId(String parentId);
+    void deleteConditionList(String parentId);
 
-    void deleteConditionById(String conditionId);
+    void deleteCondition(String conditionId);
 
-    void updateConditionListByParentId(List<Condition> conditionList, String parentId);
+    void updateConditionList(List<Condition> conditionList, String parentId);
 
-    List<Condition> getConditionListByParentId(String parentId);
+    List<Condition> getConditionList(String parentId);
+
+    Condition getCondition(String conditionId);
 
 }

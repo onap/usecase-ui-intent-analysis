@@ -26,11 +26,23 @@ import java.util.List;
 @Mapper
 public interface ConditionMapper {
 
-    void insertConditionList(@Param(value = "conditionList") List<Condition> conditionList);
+    int insertConditionList(@Param(value = "conditionList") List<Condition> conditionList,
+                             @Param(value = "parentId") String parentId);
+
+    int insertCondition(@Param(value = "condition")Condition condition,
+                        @Param(value = "parentId") String parentId);
 
     void insertConditionParentList(@Param(value = "conditionList") List<Condition> conditionList,
-                                 @Param(value = "parentType") ConditionParentType conditionParentType,
-                                 @Param(value = "parentId") String parentId);
+                                   @Param(value = "parentType") ConditionParentType conditionParentType,
+                                   @Param(value = "parentId") String parentId);
 
-    List<Condition> selectConditionByParentId(String parentId);
+    List<Condition> selectConditionList(@Param(value = "parentId") String parentId);
+
+    Condition selectCondition(@Param(value = "conditionId") String conditionId);
+
+    int updateCondition(@Param(value = "condition")Condition condition);
+
+    int deleteCondition(@Param(value = "conditionId") String conditionId);
+
+    int deleteConditionList(@Param(value = "parentId") String parentId);
 }

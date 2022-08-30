@@ -18,11 +18,13 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 
 
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
@@ -46,103 +48,103 @@ public class IntentServiceImpl implements IntentService {
     @Autowired
     private ContextService contextService;
 
+    private ContextParentType contextParentType;
+
     @Autowired
     private FulfilmentInfoService fulfilmentInfoService;
+
+    @Autowired
+    private IntentService intentService;
 
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Intent createIntent(Intent intent) {
         if (intentMapper.insertIntent(intent) < 1) {
-            String msg = "Create intent to database failed.";
+            String msg = "Failed to create intent to database.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
         expectationService.createIntentExpectationList(intent.getIntentExpectations(), intent.getIntentId());
         contextService.createContextList(intent.getIntentContexts(), intent.getIntentId());
         fulfilmentInfoService.createFulfilmentInfo(intent.getIntentFulfilmentInfo(), intent.getIntentId());
-        log.debug("Intent was successfully created.");
+        log.info("Successfully created intent to database.");
         return intent;
     }
 
     @Override
     public List<Intent> getIntentList() {
         List<Intent> intentList = intentMapper.selectIntentList();
-        if (intentList == null || intentList.size() <= 0) {
-            String msg = "Intent list doesn't exist in the intent database.";
-            log.error(msg);
-            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        if (CollectionUtils.isEmpty(intentList)) {
+            log.info("Intent list is null");
         }
         for (Intent intent : intentList) {
-            if (null != intent) {
-                String intentId = intent.getIntentId();
-                intent.setIntentExpectations(expectationService.getIntentExpectationListByIntentId(intentId));
-                intent.setIntentContexts(contextService.getContextListByParentId(intentId));
-                intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(intentId));
-                log.debug("Intent %s was successfully found", intentId);
-            }
+            intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
         }
         return intentList;
     }
 
     @Override
-    public Intent getIntentById(String intentId) {
-        Intent intent = intentMapper.selectIntentById(intentId);
-        if (intent == null) {
-            String msg = String.format("Intent id %s doesn't exist in database.", intentId);
-            log.error(msg);
-            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+    public Intent getIntent(String intentId) {
+        Intent intent = intentMapper.selectIntent(intentId);
+        if (intent != null) {
+            intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
+        } else {
+            log.info(String.format("Intent is null, intentId = %s", intentId));
         }
-        intent.setIntentExpectations(expectationService.getIntentExpectationListByIntentId(intentId));
-        intent.setIntentContexts(contextService.getContextListByParentId(intentId));
-        intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfoByParentId(intentId));
-        log.debug("Intent was successfully found");
         return intent;
     }
 
     @Override
     public Intent updateIntent(Intent intent) {
-        Intent intentDB = intentMapper.selectIntentById(intent.getIntentId());
-        if (intentDB == null) {
-            String msg = String.format("Intent id %s doesn't exist in database.", intent.getIntentId());
+        String intentId = intent.getIntentId();
+        Intent intentFromDB = intentService.getIntent(intentId);
+        if (intentFromDB == null) {
+            String msg = String.format("Intent id %s doesn't exist in database.", intentId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
-        expectationService.updateIntentExpectationListByIntentId(intent.getIntentExpectations(), intent.getIntentId());
-        int res = intentMapper.updateIntent(intent);
-        if (res < 1) {
-            String msg = "Update intent in database failed.";
+        expectationService.updateIntentExpectationList(intent.getIntentExpectations(), intentId);
+        contextService.updateContextList(intent.getIntentContexts(), intentId);
+        fulfilmentInfoService.updateFulfilmentInfo(intent.getIntentFulfilmentInfo(), intentId);
+        if (intentMapper.updateIntent(intent) < 1) {
+            String msg = "Failed to update intent to database.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_UPDATE_DATA_FAIL);
         }
-        log.debug("Update intent successfully.");
-        return intentMapper.selectIntentById(intent.getIntentId());
+        log.info("Successfully updated intent to database.");
+        return intentService.getIntent(intentId);
     }
 
     @Override
-    public void deleteIntentById(String intentId) {
-        if (intentMapper.deleteIntentById(intentId) < 1) {
-            String msg = "Delete intent in database failed.";
-            log.error(msg);
-            throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
-        }
-        expectationService.deleteIntentExpectationListByIntentId(intentId);
-        log.debug("Intent has been deleted successfully.");
-    }
-
-    @Override
-    public List<Intent> getIntentByName(String name) {
-        List<Intent> intentList = intentMapper.getIntentByName(name);
-        if (CollectionUtils.isNotEmpty(intentList)) {
-            for (Intent intent:intentList) {
-                //  intent.setIntentContexts();
-                //
-                intent.setIntentExpectations(expectationService.getIntentExpectationListByIntentId(intent.getIntentId()));
-            }
-            return intentList;
-        } else {
-            String msg = String.format("Intent name contain %s doesn't exist in database.", name);
+    public void deleteIntent(String intentId) {
+        Intent intent = intentService.getIntent(intentId);
+        if (intent == null) {
+            String msg = String.format("Intent id %s doesn't exist in database.", intentId);
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
+        fulfilmentInfoService.deleteFulfilmentInfo(intentId);
+        contextService.deleteContextList(intentId);
+        expectationService.deleteIntentExpectationList(intentId);
+        if (intentMapper.deleteIntent(intentId) < 1) {
+            String msg = "Failed to delete intent to database.";
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
+        }
+        log.info("Successfully deleted intent to database.");
+    }
+
+    @Override
+    public List<Intent> getIntentListByName(String intentName) {
+        List<Intent> intentList = intentMapper.getIntentByName(intentName);
+        if (!CollectionUtils.isEmpty(intentList)) {
+            for (Intent intent : intentList) {
+                intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
+            }
+
+        } else {
+            log.info(String.format("Intent list is null, intentName = %s", intentName));
+        }
+        return intentList;
     }
 }
