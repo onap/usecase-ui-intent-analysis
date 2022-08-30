@@ -21,14 +21,14 @@ import lombok.Getter;
 @Getter
 public enum OperatorType {
     OR(0,"or"),
-    GATHERTHAN(1,"gather than"),
-    EQUALTO(2,"equal to"),
-    LESSTHAN(3,"less than"),
-    NOTEQUALTO(4,"not euqal to"),
-    ONEOF(5,"one of"),
-    SOMEOF(6,"some of"),
-    MAXIMUMVALUE(7,"maximum value"),
-    MINIMUMVALUE(8,"minimum value"),
+    GATHER_THAN(1,"gather than"),
+    EQUAL_TO(2,"equal to"),
+    LESS_THAN(3,"less than"),
+    NOT_EQUAL_TO(4,"not euqal to"),
+    ONE_OF(5,"one of"),
+    SOME_OF(6,"some of"),
+    MAXIMUM_VALUE(7,"maximum value"),
+    MINIMUM_VALUE(8,"minimum value"),
     MEDIAN(9,"median"),
     CREDIBILITY(10,"credibility"),
     AND(11,"and");

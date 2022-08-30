@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
+ * Copyright 2022 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package org.onap.usecaseui.intentanalysis.bean.models;
 
 import lombok.Data;
-
 import java.util.List;
 
 @Data

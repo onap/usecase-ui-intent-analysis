@@ -22,9 +22,9 @@ public interface FulfilmentInfoService {
 
     void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
 
-    void deleteFulfilmentInfoByParentId(String parentId);
+    void deleteFulfilmentInfo(String parentId);
 
-    void updateFulfilmentInfoByParentId(FulfilmentInfo fulfilmentInfo, String parentId);
+    void updateFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
 
-    FulfilmentInfo getFulfilmentInfoByParentId(String parentId);
+    FulfilmentInfo getFulfilmentInfo(String parentId);
 }

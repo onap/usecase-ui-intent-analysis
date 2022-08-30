@@ -4,18 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentMapper">
 
-    <select id="selectIntentById" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName
-        from intent
+    <select id="selectIntent" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
+        select intent_id intentId, intent_name intentName from intent
         where intent_id = #{intentId}
     </select>
 
     <select id="selectIntentList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName
-        from intent
+        select intent_id intentId, intent_name intentName from intent
     </select>
 
-    <insert id="insertIntent" >
+    <insert id="insertIntent">
         insert into Intent(intent_id, intent_name)
         values(#{intent.intentId}, #{intent.intentName})
     </insert>
@@ -23,12 +21,12 @@
     <update id="updateIntent" parameterType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
         update intent
         <trim prefix="set" suffixOverrides=",">
-            <if test="intentName != null">intent_name = #{intentName},</if>
+            <if test="intent.intentName != null">intent_name = #{intent.intentName},</if>
         </trim>
-        where intent_id = #{intentId}
+        where intent_id = #{intent.intentId}
     </update>
 
-    <delete id="deleteIntentById" parameterType="string">
+    <delete id="deleteIntent" parameterType="string">
         delete
         from intent
         where intent_id = #{intentId}
@@ -36,7 +34,7 @@
 
     <select id="getIntentByName" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
         select intent_id intentId, intent_name intentName from intent
-        where intent_name like  "%"#{intentName}"%"
+        where intent_name like  "%"#{intent.intentName}"%"
     </select>
 
 </mapper>

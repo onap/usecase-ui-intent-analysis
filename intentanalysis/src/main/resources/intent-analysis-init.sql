@@ -23,14 +23,18 @@ create table if not exists expectation_object(
 create table if not exists expectation_target(
     target_id varchar(255) primary key,
     target_name varchar(255),
-    target_condition varchar(255),
     expectation_id varchar(255)
 );
 
 create table if not exists context(
     context_id varchar(255) primary key,
     context_name varchar(255),
-    context_condition varchar(255),
+    parent_id varchar(255)
+);
+
+create table if not exists context_mapping(
+    context_id varchar(255) primary key,
+    parent_type varchar(255),
     parent_id varchar(255)
 );
 
@@ -53,12 +57,7 @@ create table if not exists condition(
     condition_id varchar(255) primary key,
     condition_name varchar(255),
     operator_type varchar(255),
-    condition_value varchar(255)
-);
-
-create table if not exists condition_mapping(
-    condition_id varchar(255) primary key,
-    parent_type varchar(255),
+    condition_value varchar(255),
     parent_id varchar(255)
     );
 

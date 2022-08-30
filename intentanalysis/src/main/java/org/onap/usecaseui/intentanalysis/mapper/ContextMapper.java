@@ -20,6 +20,7 @@ package org.onap.usecaseui.intentanalysis.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
 
 
@@ -29,6 +30,19 @@ public interface ContextMapper {
     int insertContextList(@Param(value = "contextList") List<Context> contextList,
                           @Param(value = "parentId") String parentId);
 
-    List<Context> selectContextByParentId(@Param(value = "parentId") String parentId);
-}
+    int insertContextParentList(@Param(value = "contextList") List<Context> contextList,
+                                @Param(value = "parentId") String parentId);
 
+    List<Context> selectContextList(@Param(value = "parentId") String parentId);
+
+    Context selectContext(@Param(value = "contextId") String contextId);
+
+    int insertContext(@Param(value = "context") Context context,
+                      @Param(value = "parentId") String parentId);
+
+    int updateContext(@Param(value = "context") Context context);
+
+    int deleteContext(@Param(value = "contextId") String contextId);
+
+    int deleteContextList(@Param(value = "parentId") String parentId);
+}

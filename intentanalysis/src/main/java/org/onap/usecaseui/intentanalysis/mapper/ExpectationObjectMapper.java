@@ -26,9 +26,14 @@ import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 public interface ExpectationObjectMapper {
 
     int insertExpectationObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
-                                @Param(value = "expectationId") String expectationId);
+                                 @Param(value = "expectationId") String expectationId);
 
-    ExpectationObject selectExpectationObjectByExpectationId(@Param(value = "expectationId") String expectationId);
+    ExpectationObject selectExpectationObject(@Param(value = "expectationId") String expectationId);
 
     String selectExpectationObjectId(@Param(value = "expectationId") String expectationId);
+
+    int updateExpectationObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
+                                @Param(value = "expectationId") String expectationId);
+
+    int deleteExpectationObject(@Param(value = "expectationId") String expectationId);
 }

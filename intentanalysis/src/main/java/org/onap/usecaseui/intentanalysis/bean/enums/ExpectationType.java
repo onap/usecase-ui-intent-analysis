@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
+ * Copyright 2022 Huawei Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@
 package org.onap.usecaseui.intentanalysis.bean.enums;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public enum ExpectationType {
-    DELIVERY(0, "delivery"),
-    ASSURANCE(1, "assurance");
+    CLLService(0, "expectationType1"),
+    CLLAssurance(1, "expectationType2");
 
     private int index;
 

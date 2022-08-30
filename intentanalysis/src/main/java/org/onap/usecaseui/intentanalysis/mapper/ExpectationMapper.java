@@ -29,14 +29,16 @@ public interface ExpectationMapper {
     int insertIntentExpectationList(@Param(value = "intentExpectationList") List<Expectation> intentExpectationList,
                                     @Param(value = "intentId") String intentId);
 
-    int insertIntentExpectation(@Param(value = "expectation") Expectation expectation,
+    int insertIntentExpectation(@Param(value = "intentExpectation") Expectation intentExpectation,
                                 @Param(value = "intentId") String intentId);
 
-    int deleteIntentExpectationListByIntentId(@Param(value = "intentId") String intentId);
+    int deleteIntentExpectationList(@Param(value = "intentId") String intentId);
 
-    int updateIntentExpectation(@Param(value = "expectation") Expectation expectation);
+    int updateIntentExpectation(@Param(value = "intentExpectation") Expectation intentExpectation);
 
-    int deleteIntentExpectationById(@Param(value = "expectationId") String expectationId);
+    int deleteIntentExpectation(@Param(value = "expectationId") String expectationId);
 
-    List<Expectation> selectIntentExpectationListByIntentId(@Param(value = "intentId") String intentId);
+    List<Expectation> selectIntentExpectationList(@Param(value = "intentId") String intentId);
+
+    Expectation selectIntentExpectation(@Param(value = "expectationId") String expectationId);
 }
