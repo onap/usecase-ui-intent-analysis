@@ -48,7 +48,7 @@ public class IntentController {
     @GetMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Intent> getIntentById(
             @PathVariable(INTENT_ID) String intentId) {
-        return ResponseEntity.ok(intentService.getIntentById(intentId));
+        return ResponseEntity.ok(intentService.getIntent(intentId));
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -65,7 +65,7 @@ public class IntentController {
 
     @DeleteMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void removeIntentById(@PathVariable(INTENT_ID) String intentId) {
-        intentService.deleteIntentById(intentId);
+        intentService.deleteIntent(intentId);
     }
 
     @PostMapping(value="/handleIntent",produces = MediaType.APPLICATION_JSON_VALUE)

@@ -6,17 +6,47 @@
 
 
     <insert id="insertExpectationTarget">
-        <if test="expectationTarget != null">
-            insert into expectation_target(target_id, target_name, target_condition, expectation_id)
-            values
-            (#{expectationTarget.targetId}, #{expectationTarget.targetName}, #{expectationTarget.targetCondition}, #{expectationId})
-        </if>
+        insert into expectation_target(target_id, target_name, expectation_id)
+        values
+            (#{expectationTarget.targetId}, #{expectationTarget.targetName},  #{expectationId})
     </insert>
 
-    <select id="selectIntentExpectationTargetListByExpectationId" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget">
-        select target_id targetId, target_name targetName, target_condition targetCondition
+    <insert id="insertExpectationTargetList">
+        insert into expectation_target(target_id, target_name, expectation_id)
+        values
+        <foreach collection="expectationTargetList" index="index" item="item" separator=",">
+            (#{item.targetId}, #{item.targetName}, #{expectationId})
+        </foreach>
+    </insert>
+
+    <select id="selectExpectationTargetList" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget">
+        select target_id targetId, target_name targetName
         from expectation_target
         where expectation_id = #{expectationId}
     </select>
+
+    <select id="selectExpectationTarget" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget">
+        select target_id targetId, target_name targetName
+        from expectation_target
+        where target_id = #{expectationTargetId}
+    </select>
+
+    <update id="updateExpectationTarget">
+        update expectation_target
+        <trim prefix="set" suffixOverrides=",">
+            <if test="expectationTarget.targetName != null">target_name = #{expectationTarget.targetName},</if>
+        </trim>
+        where target_id = #{expectationTargetId}
+    </update>
+
+    <delete id="deleteExpectationTarget">
+        delete from expectation_target
+        where target_id = #{expectationTargetId}
+    </delete>
+
+    <delete id="deleteExpectationTargetList">
+        delete from expectation_target
+        where expectation_id= #{expectationId}
+    </delete>
 
 </mapper>

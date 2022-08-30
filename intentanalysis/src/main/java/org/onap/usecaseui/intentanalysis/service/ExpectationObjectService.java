@@ -24,6 +24,10 @@ public interface ExpectationObjectService {
 
     void createExpectationObject(ExpectationObject expectationObject, String expectationId);
 
-    ExpectationObject getExpectationObjectByExpectationId(String expectationId);
+    ExpectationObject getExpectationObject(String expectationId);
+
+    void updateExpectationObject(ExpectationObject expectationObject, String expectationId);
+
+    void deleteExpectationObject(String expectationId);
 
 }

@@ -24,13 +24,13 @@ import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 public interface IntentService {
     List<Intent> getIntentList();
 
-    Intent getIntentById(String intentId);
+    Intent getIntent(String intentId);
 
     Intent createIntent(Intent intent);
 
     Intent updateIntent(Intent intent);
 
-    void deleteIntentById(String intentId);
+    void deleteIntent(String intentId);
 
     List<Intent> getIntentByName(String name);
 }
