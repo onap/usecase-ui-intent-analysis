@@ -21,8 +21,8 @@ import lombok.Setter;
 
 @Getter
 public enum ExpectationType {
-    EXPECTATION1(0, "expectationType1"),
-    EXPECTATION2(1, "expectationType2");
+    CLLService(0, "expectationType1"),
+    CLLAssurance(1, "expectationType2");
 
     private int index;
 

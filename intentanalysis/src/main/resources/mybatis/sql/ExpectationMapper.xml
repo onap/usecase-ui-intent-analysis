@@ -5,41 +5,51 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ExpectationMapper">
 
 
-    <insert id="insertIntentExpectations">
-        insert into expectation(expectation_id, expectation_name, expectation_type, intent_id)
-        values
-        <foreach collection="intentExpectations" index="index" item="item" separator=",">
-            (#{item.expectationId}, #{item.expectationName}, #{item.expectationType}, #{intentId})
-        </foreach>
+    <insert id="insertIntentExpectationList">
+        <if test="intentExpectationList != null">
+            insert into expectation(expectation_id, expectation_name, expectation_type, intent_id)
+            values
+            <foreach collection="intentExpectationList" index="index" item="item" separator=",">
+                (#{item.expectationId}, #{item.expectationName}, #{item.expectationType}, #{intentId})
+            </foreach>
+        </if>
     </insert>
 
     <insert id="insertIntentExpectation">
         insert into expectation(expectation_id, expectation_name, expectation_type, intent_id)
-        values (#{expectation.expectationId}, #{expectation.expectationName}, #{expectation.expectationType}, #{intentId})
+        values (#{intentExpectation.expectationId}, #{intentExpectation.expectationName}, #{intentExpectation.expectationType}, #{intentId})
     </insert>
 
-    <select id="selectIntentExpectationsByIntentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
-        select expectation_id expectationId, expectation_name expectationName,
-               target_moi targetMOI, intent_id intentId
+    <select id="selectIntentExpectationList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
+        select expectation_id expectationId, expectation_name expectationName, expectation_type expectationType,
+               intent_id intentId
         from expectation
         where intent_id = #{intentId}
+    </select>
+
+    <select id="selectIntentExpectation" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
+        select expectation_id expectationId, expectation_name expectationName, expectation_type expectationType,
+               intent_id intentId
+        from expectation
+        where expectation_id = #{expectationId}
     </select>
 
     <update id="updateIntentExpectation">
         update expectation
         <trim prefix="set" suffixOverrides=",">
-            <if test="expectationName != null">expectation_name = #{expectationName},</if>
-            <if test="targetMOI != null">target_moi = #{targetMOI},</if>
+            <if test="intentExpectation.expectationName != null">expectation_name = #{intentExpectation.expectationName},</if>
+            <if test="intentExpectation.expectationType != null">expectation_type = #{intentExpectation.expectationType},</if>
         </trim>
-        where expectation_id = #{expectationId}
+        where expectation_id = #{intentExpectation.expectationId}
     </update>
 
-    <delete id="deleteIntentExpectationsByIntentId">
-        delete from expectation
+    <delete id="deleteIntentExpectationList">
+        delete
+        from expectation
         where intent_id = #{intentId}
     </delete>
 
-    <delete id="deleteIntentExpectationById">
+    <delete id="deleteIntentExpectation">
         delete
         from expectation
         where expectation_id = #{expectationId}

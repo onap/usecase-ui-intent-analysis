@@ -17,7 +17,7 @@
 package org.onap.usecaseui.intentanalysis.bean.models;
 
 import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.ContextType;
+import java.util.List;
 
 @Data
 
@@ -27,8 +27,6 @@ public class Context {
 
     private String contextName;
 
-    private ContextType contextType;
-
-    private String contextCondition;
+    private List<Condition> contextConditions;
 
 }

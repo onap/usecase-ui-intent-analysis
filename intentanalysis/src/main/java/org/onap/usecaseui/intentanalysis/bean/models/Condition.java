@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Huawei Technologies Co., Ltd.
+ * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.bean.models;
 
-import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 
-public interface FulfilmentInfoService {
+import java.util.List;
 
-    void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
+@Data
+public class Condition {
+    private String conditionId;
 
-    void deleteFulfilmentInfo(String parentId);
+    private String conditionName;
 
-    void updateFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
+    private OperatorType operator;
 
-    FulfilmentInfo getFulfilmentInfo(String parentId);
+    private String conditionValue;
+
+    private List<Condition> conditionList;
 }

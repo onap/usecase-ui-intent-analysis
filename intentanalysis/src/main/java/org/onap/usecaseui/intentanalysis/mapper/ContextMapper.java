@@ -27,11 +27,22 @@ import org.onap.usecaseui.intentanalysis.bean.models.Context;
 @Mapper
 public interface ContextMapper {
 
-    void insertContextList(@Param(value = "contextList") List<Context> contextList);
+    int insertContextList(@Param(value = "contextList") List<Context> contextList,
+                          @Param(value = "parentId") String parentId);
 
-    void insertContextParentList(@Param(value = "contextList") List<Context> contextList,
-                                 @Param(value = "parentType") ContextParentType contextParentType,
-                                 @Param(value = "parentId") String parentId);
+    int insertContextParentList(@Param(value = "contextList") List<Context> contextList,
+                                @Param(value = "parentId") String parentId);
 
-    List<Context> selectContextByParentId(String parentId);
+    List<Context> selectContextList(@Param(value = "parentId") String parentId);
+
+    Context selectContext(@Param(value = "contextId") String contextId);
+
+    int insertContext(@Param(value = "context") Context context,
+                      @Param(value = "parentId") String parentId);
+
+    int updateContext(@Param(value = "context") Context context);
+
+    int deleteContext(@Param(value = "contextId") String contextId);
+
+    int deleteContextList(@Param(value = "parentId") String parentId);
 }

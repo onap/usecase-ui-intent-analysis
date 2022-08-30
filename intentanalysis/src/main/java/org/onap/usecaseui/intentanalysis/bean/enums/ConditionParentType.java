@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Huawei Technologies Co., Ltd.
+ * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
-import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
+public enum ConditionParentType {
+    CONDITION(0, "condition"),
+    CONTEXT(1,"context"),
+    EXPECTATION_TARGET(2, "expectation_target");
 
-public interface FulfilmentInfoService {
+    private int index;
 
-    void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
+    private String desc;
 
-    void deleteFulfilmentInfo(String parentId);
-
-    void updateFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
-
-    FulfilmentInfo getFulfilmentInfo(String parentId);
+    ConditionParentType(int index, String desc) {
+        this.index = index;
+        this.desc = desc;
+    }
 }

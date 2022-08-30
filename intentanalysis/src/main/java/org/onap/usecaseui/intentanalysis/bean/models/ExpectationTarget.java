@@ -29,7 +29,7 @@ public class ExpectationTarget {
 
     private String targetName;
 
-    private String targetCondition;
+    private List<Condition> targetConditions;
 
     private List<Context> targetContexts;
 

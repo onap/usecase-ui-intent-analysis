@@ -17,16 +17,23 @@
 package org.onap.usecaseui.intentanalysis.mapper;
 
 
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 
 
 @Mapper
 public interface ExpectationObjectMapper {
 
-    void insertExpectationObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
+    int insertExpectationObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
                                  @Param(value = "expectationId") String expectationId);
+
+    ExpectationObject selectExpectationObject(@Param(value = "expectationId") String expectationId);
+
+    String selectExpectationObjectId(@Param(value = "expectationId") String expectationId);
+
+    int updateExpectationObject(@Param(value = "expectationObject") ExpectationObject expectationObject,
+                                @Param(value = "expectationId") String expectationId);
+
+    int deleteExpectationObject(@Param(value = "expectationId") String expectationId);
 }

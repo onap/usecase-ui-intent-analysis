@@ -10,10 +10,25 @@
         values (#{parentId}, #{fulfilmentInfo.fulfilmentStatus}, #{fulfilmentInfo.notFulfilledState}, #{fulfilmentInfo.notFulfilledReason})
     </insert>
 
-    <select id="selectFulfilmentInfoById" resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo">
+    <select id="selectFulfilmentInfo" resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo">
         select fulfilment_info_status fulfilmentStatus, not_fulfilled_state notFulfilledState,
-              not_fulfilled_reason notFulfilledReason from fulfilment_info
-        where parent_id = #{parentId}
+               not_fulfilled_reason notFulfilledReason
+        from fulfilment_info
+        where fulfilment_info_id = #{parentId}
     </select>
 
+    <update id="updateFulfilmentInfo">
+        update fulfilment_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="fulfilmentInfo.fulfilmentStatus != null">fulfilment_info_status = #{fulfilmentInfo.fulfilmentStatus},</if>
+            <if test="fulfilmentInfo.notFulfilledState != null">not_fulfilled_state = #{fulfilmentInfo.notFulfilledState},</if>
+            <if test="fulfilmentInfo.notFulfilledReason != null">not_fulfilled_reason = #{fulfilmentInfo.notFulfilledReason},</if>
+        </trim>
+        where fulfilment_info_id = #{parentId}
+    </update>
+
+    <delete id="deleteFulfilmentInfo" parameterType="string">
+        delete from fulfilment_info
+        where fulfilment_info_id = #{parentId}
+    </delete>
 </mapper>

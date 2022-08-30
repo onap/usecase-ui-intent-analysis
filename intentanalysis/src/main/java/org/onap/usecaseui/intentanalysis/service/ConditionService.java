@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Huawei Technologies Co., Ltd.
+ * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,26 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 
-public interface FulfilmentInfoService {
 
-    void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
+import java.util.List;
 
-    void deleteFulfilmentInfo(String parentId);
 
-    void updateFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
+public interface ConditionService {
 
-    FulfilmentInfo getFulfilmentInfo(String parentId);
+    void createConditionList(List<Condition> conditionList, String parentId);
+
+    void createCondition(Condition condition, String parentId);
+
+    void deleteConditionList(String parentId);
+
+    void deleteCondition(String conditionId);
+
+    void updateConditionList(List<Condition> conditionList, String parentId);
+
+    List<Condition> getConditionList(String parentId);
+
+    Condition getCondition(String conditionId);
+
 }

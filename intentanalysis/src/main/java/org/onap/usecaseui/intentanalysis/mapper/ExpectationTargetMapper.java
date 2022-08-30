@@ -26,6 +26,21 @@ import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 @Mapper
 public interface ExpectationTargetMapper {
 
-    void insertExpectationTarget(@Param(value = "expectationTarget") ExpectationTarget expectationTarget,
+    int insertExpectationTarget(@Param(value = "expectationTarget") ExpectationTarget expectationTarget,
                                  @Param(value = "expectationId") String expectationId);
+
+    int insertExpectationTargetList(@Param(value = "expectationTargetList") List<ExpectationTarget> expectationTargetList,
+                                @Param(value = "expectationId") String expectationId);
+
+    List<ExpectationTarget> selectExpectationTargetList(
+            @Param(value = "expectationId") String expectationId);
+
+    ExpectationTarget selectExpectationTarget(@Param(value = "expectationTargetId") String expectationTargetId);
+
+    int updateExpectationTarget(@Param(value = "expectationTarget") ExpectationTarget expectationTarget,
+                                @Param(value = "expectationTargetId") String expectationTargetId);
+
+    int deleteExpectationTarget(@Param(value = "expectationTargetId") String expectationTargetId);
+
+    int deleteExpectationTargetList(@Param(value = "expectationId") String expectationId);
 }
