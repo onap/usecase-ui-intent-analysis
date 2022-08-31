@@ -26,9 +26,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.io.Resources;
 import org.onap.usecaseui.intentanalysis.adapters.policy.PolicyService;
 import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
+import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAuthConfig;
 import org.onap.usecaseui.intentanalysis.util.RestfulServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
@@ -39,8 +41,15 @@ public class PolicyServiceImpl implements PolicyService {
 
     private PolicyAPICall policyAPICall;
 
-    public PolicyServiceImpl() {
-        this.policyAPICall = RestfulServices.create(PolicyAPICall.class);
+    @Autowired
+    PolicyAuthConfig policyAuthConfig;
+
+    public PolicyAPICall getPolicyAPICall() {
+        if (null == policyAPICall) {
+            this.policyAPICall = RestfulServices.create(PolicyAPICall.class, policyAuthConfig.getUserName(),
+                policyAuthConfig.getPassword());
+        }
+        return this.policyAPICall;
     }
 
     @Override
@@ -51,7 +60,7 @@ public class PolicyServiceImpl implements PolicyService {
             String policyBody = FileUtils.readFileToString(policyFile, StandardCharsets.UTF_8);
             logger.info(String.format("Create policy, request body: %s", policyBody));
             RequestBody policyReq = RequestBody.create(MediaType.parse("application/json"), policyBody.toString());
-            Response<ResponseBody> policyResponse = policyAPICall.createPolicy(ModifyCLLPolicyConstants.policyType,
+            Response<ResponseBody> policyResponse = getPolicyAPICall().createPolicy(ModifyCLLPolicyConstants.policyType,
                 ModifyCLLPolicyConstants.policyTypeVersion, policyReq).execute();
             logger.info(
                 String.format("Create policy result, code: %d body: %s", policyResponse.code(), policyResponse.body()));
@@ -66,7 +75,7 @@ public class PolicyServiceImpl implements PolicyService {
             logger.info(String.format("Deploy policy, request body: %s", deployPolicyBody));
             RequestBody deployPolicyReq = RequestBody.create(MediaType.parse("application/json"),
                 deployPolicyBody.toString());
-            Response<ResponseBody> deployPolicyResponse = policyAPICall.deployPolicy(deployPolicyReq).execute();
+            Response<ResponseBody> deployPolicyResponse = getPolicyAPICall().deployPolicy(deployPolicyReq).execute();
             logger.info(String.format("Deploy policy result, code: %d body: %s", deployPolicyResponse.code(),
                 deployPolicyResponse.body()));
             if (!deployPolicyResponse.isSuccessful()) {
@@ -125,7 +134,7 @@ public class PolicyServiceImpl implements PolicyService {
             logger.info(String.format("Create policy type, request body: %s", policyTypeBody));
             RequestBody policyTypeReq = RequestBody.create(MediaType.parse("application/json"),
                 policyTypeBody.toString());
-            Response<ResponseBody> response = policyAPICall.createPolicyType(policyTypeReq).execute();
+            Response<ResponseBody> response = getPolicyAPICall().createPolicyType(policyTypeReq).execute();
             logger.info(
                 String.format("Create policy type result, code: %d body: %s", response.code(), response.body()));
             if (!response.isSuccessful()) {
@@ -140,7 +149,7 @@ public class PolicyServiceImpl implements PolicyService {
                 .replace("${ORIGINAL_BW}", originalBW);
             logger.info(String.format("Create policy, request body: %s", policyBody));
             RequestBody policyReq = RequestBody.create(MediaType.parse("application/json"), policyBody.toString());
-            Response<ResponseBody> policyResponse = policyAPICall.createPolicy(IntentConfigPolicyConstants.policyType,
+            Response<ResponseBody> policyResponse = getPolicyAPICall().createPolicy(IntentConfigPolicyConstants.policyType,
                 IntentConfigPolicyConstants.policyTypeVersion, policyReq).execute();
             logger.info(
                 String.format("Create policy result, code: %d body: %s", policyResponse.code(), policyResponse.body()));
@@ -155,7 +164,7 @@ public class PolicyServiceImpl implements PolicyService {
             logger.info(String.format("Deploy policy, request body: %s", deployPolicyBody));
             RequestBody deployPolicyReq = RequestBody.create(MediaType.parse("application/json"),
                 deployPolicyBody.toString());
-            Response<ResponseBody> deployPolicyResponse = policyAPICall.deployPolicy(deployPolicyReq).execute();
+            Response<ResponseBody> deployPolicyResponse = getPolicyAPICall().deployPolicy(deployPolicyReq).execute();
             logger.info(String.format("Deploy policy result, code: %d body: %s", deployPolicyResponse.code(),
                 deployPolicyResponse.body()));
             if (!deployPolicyResponse.isSuccessful()) {
@@ -179,17 +188,17 @@ public class PolicyServiceImpl implements PolicyService {
         String policyVersion) {
         try {
             //check if the policy exists
-            Response<ResponseBody> response = policyAPICall.getPolicy(policyType, policyTypeVersion, policyName,
+            Response<ResponseBody> response = getPolicyAPICall().getPolicy(policyType, policyTypeVersion, policyName,
                 policyVersion).execute();
             logger.info(String.format("The policy query result, code: %d body: %s", response.code(), response.body()));
             // remove the policy if exists.
             if (response.isSuccessful()) {
                 logger.info("The policy exists, start to undeploy.");
-                Response<ResponseBody> undeployResponse = policyAPICall.undeployPolicy(policyName).execute();
+                Response<ResponseBody> undeployResponse = getPolicyAPICall().undeployPolicy(policyName).execute();
                 logger.info(String.format("Undeploy policy result. code: %d body: %s", undeployResponse.code(),
                     undeployResponse.body()));
                 logger.info("Start to remove the policy.");
-                Response<ResponseBody> removeResponse = policyAPICall.removePolicy(policyName, policyVersion).execute();
+                Response<ResponseBody> removeResponse = getPolicyAPICall().removePolicy(policyName, policyVersion).execute();
                 logger.info(String.format("Remove policy result. code: %d body: %s", removeResponse.code(),
                     removeResponse.body()));
                 return true;

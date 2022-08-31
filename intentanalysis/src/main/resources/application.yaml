@@ -16,3 +16,14 @@ mybatis:
   configuration:
     database-id: PostgreSQL
   mapper-locations: classpath*:mybatis/sql/*.xml
+
+rest:
+  policy:
+    username: policyadmin
+    password: zb!XztG34
+  so:
+    username: InfraPortalClient
+    password: password1$
+  aai:
+    username: AAI
+    password: AAI
