@@ -13,7 +13,7 @@
         </if>
     </insert>
 
-    <select id="selectIntentExpectationObjectByExpectationId" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject">
+    <select id="selectExpectationObject" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject">
         select object_type objectType, object_instance objectInstance
         from expectation_object
         where expectation_id = #{expectationId}
@@ -25,4 +25,17 @@
         where expectation_id = #{expectationId}
     </select>
 
+    <update id="updateExpectationObject">
+        update expectation_object
+        <trim prefix="set" suffixOverrides=",">
+            <if test="expectationObject.objectType != null">object_type = #{expectationObject.objectType},</if>
+            <if test="expectationObject.objectInstance != null">object_instance = #{expectationObject.objectInstance},</if>
+        </trim>
+        where expectation_id = #{expectationId}
+    </update>
+
+    <delete id="deleteExpectationObject">
+        delete from expectation_object
+        where expectation_id = #{expectationId}
+    </delete>
 </mapper>

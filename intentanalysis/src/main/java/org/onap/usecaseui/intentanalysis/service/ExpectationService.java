@@ -27,11 +27,13 @@ public interface ExpectationService {
 
     void createIntentExpectation(Expectation expectation, String intentId);
 
-    void deleteIntentExpectationListByIntentId(String intentId);
+    void deleteIntentExpectationList(String intentId);
 
-    void deleteIntentExpectationById(String expectationId);
+    void deleteIntentExpectation(String expectationId);
 
-    void updateIntentExpectationListByIntentId(List<Expectation> intentExpectationList, String intentId);
+    void updateIntentExpectationList(List<Expectation> intentExpectationList, String intentId);
 
-    List<Expectation> getIntentExpectationListByIntentId(String intentId);
+    List<Expectation> getIntentExpectationList(String intentId);
+
+    Expectation getIntentExpectation(String expectationId);
 }

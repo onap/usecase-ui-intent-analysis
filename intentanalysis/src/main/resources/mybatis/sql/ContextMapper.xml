@@ -6,19 +6,44 @@
 
 
     <insert id="insertContextList">
-        <if test="contextList != null">
-            insert into context(context_id, context_name, parent_id)
-            values
-            <foreach collection="contextList" index="index" item="item" separator=",">
-                (#{item.contextId}, #{item.contextName}, #{parentId})
-            </foreach>
-        </if>
+        insert into context(context_id, context_name, parent_id)
+        values
+        <foreach collection="contextList" index="index" item="item" separator=",">
+            (#{item.contextId}, #{item.contextName}, #{parentId})
+        </foreach>
     </insert>
 
-    <select id="selectContextByParentId" resultType="org.onap.usecaseui.intentanalysis.bean.models.Context">
-        select context_id contextId, context_name contextName, context_condition contextCondition
+    <select id="selectContextList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Context">
+        select context_id contextId, context_name contextName
         from context
         where parent_id = #{parentId}
     </select>
 
+    <select id="selectContext" resultType="org.onap.usecaseui.intentanalysis.bean.models.Context">
+        select context_id contextId, context_name contextName
+        from context
+        where context_id = #{contextId}
+    </select>
+
+    <insert id="insertContext">
+        insert into context(context_id, context_name, parent_id)
+        values
+            (#{context.contextId}, #{context.contextName}, #{parentId})
+    </insert>
+
+    <update id="updateContext">
+        update context
+        <trim prefix="set" suffixOverrides=",">
+            <if test="context.contextName != null">context_name = #{context.contextName},</if>
+        </trim>
+        where context_id = #{context.contextId}
+    </update>
+
+    <delete id="deleteContext">
+        DELETE FROM context WHERE context_id = #{context.contextId}
+    </delete>
+
+    <delete id="deleteContextList">
+        DELETE FROM context WHERE parent_id = #{parentId}
+    </delete>
 </mapper>
