@@ -16,12 +16,15 @@
 package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
 
+import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentHandleService;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +32,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +42,8 @@ public class CLLBusinessActuationModule implements ActuationModule {
     IntentHandleService intentHandleService;
     @Autowired
     IntentService intentService;
+    @Autowired
+    IntentInterfaceService intentInterfaceService;
 
 
     @Override
@@ -57,16 +61,31 @@ public class CLLBusinessActuationModule implements ActuationModule {
     }
 
     @Override
-    public void saveIntentToDb(List<Map<IntentGoalBean,IntentManagementFunction>> intentMapList) {
+    public void saveIntentToDb(List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList) {
         List<IntentGoalBean> subIntentGoalLit = new ArrayList<>();
-        for (Map<IntentGoalBean,IntentManagementFunction> map:intentMapList) {
+        for (Map<IntentGoalBean, IntentManagementFunction> map : intentMapList) {
             subIntentGoalLit.addAll(map.keySet());
         }
         List<Intent> subIntentList = subIntentGoalLit.stream().map(IntentGoalBean::getIntent)
                 .collect(Collectors.toList());
-        for (Intent subIntent:subIntentList) {
+        for (Intent subIntent : subIntentList) {
             intentService.createIntent(subIntent);
         }
 
+    }
+
+    @Override
+    public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
+        for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : intentMap.entrySet()) {
+            IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
+            if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
+                return intentInterfaceService.createInterface(entry.getKey().getIntent(), entry.getValue());
+            } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
+                return intentInterfaceService.updateInterface(entry.getKey().getIntent(), entry.getValue());
+            } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
+                return intentInterfaceService.deleteInterface(entry.getKey().getIntent(), entry.getValue());
+            }
+        }
+        return false;
     }
 }

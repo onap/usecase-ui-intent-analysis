@@ -13,27 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
-
+package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 
 import java.util.List;
 import java.util.Map;
 
-public interface DecisionModule {
-    void determineUltimateGoal();
+public class FormatIntentInputActuationModule implements ActuationModule {
+    @Override
+    public void sendToIntentHandler(IntentManagementFunction IntentHandler) {
+    }
 
-    // find intentManageFunction
-    IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
+    @Override
+    public void sendToNonIntentHandler() {
+    }
 
-    void intentDefinition();
+    @Override
+    public void interactWithIntentHandle() {
+    }
 
-    void decideSuitableAction();
+    @Override
+    public void saveIntentToDb(List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList) {
+       //
+    }
 
-    public void interactWithTemplateDb();
-
-    public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean);
-
+    @Override
+    public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
+        return false;
+    }
 }

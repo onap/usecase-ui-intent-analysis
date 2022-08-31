@@ -15,24 +15,34 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
+import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IntentDetectionService {
 
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
+    @Autowired
+    IntentService intentService;
 
-    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
-        if (intentOwner!= null){
+    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler) {
+        if (intentOwner != null) {
             this.intentOwner = intentOwner;
         }
-        if (intentHandler!= null){
-            this.intentHandler= intentHandler;
+        if (intentHandler != null) {
+            this.intentHandler = intentHandler;
         }
     }
 
@@ -40,5 +50,74 @@ public class IntentDetectionService {
         KnowledgeModule ownerKnowledgeModule = intentOwner.getKnowledgeModule();
 
         return ownerKnowledgeModule.intentCognition(intent);
+    }
+
+    public List<String> intentResolution(Intent intent) {
+        //db contain original intent
+        List<Intent> sameNameIntentList = intentService.getIntentByName(intent.getIntentName());
+        List<String> intentIdList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(sameNameIntentList)) {
+            //remove context.condition  ownerName = formatIntentInputManagementFunction
+            List<Intent> filterIntentList = filterIntent(sameNameIntentList);
+            List<Expectation> expectationList = intent.getIntentExpectations();
+            for (Intent dbIntent : filterIntentList) {
+                String intentId = dbIntent.getIntentId();
+                int count = 0;
+                for (Expectation expectation : expectationList) {//original expectations
+                    //Determine if there is the same ObjectType
+                    List<Expectation> sameObjTypeList = dbIntent.getIntentExpectations().stream()
+                            .filter(x -> x.getExpectationObject().getObjectType().equals(expectation.getExpectationObject().getObjectType()))
+                            .collect(Collectors.toList());
+                    if (CollectionUtils.isNotEmpty(sameObjTypeList)) {
+                        //Determine the targetName of the Expectation which hava same ObjectType
+                        List<String> targetNameList = expectation.getExpectationTargets()
+                                .stream().map(ExpectationTarget::getTargetName).collect(Collectors.toList());
+                        for (Expectation dbExpectation : sameObjTypeList) {
+                            List<String> dbTargetNameList = dbExpectation.getExpectationTargets()
+                                    .stream().map(ExpectationTarget::getTargetName).collect(Collectors.toList());
+                            //todo name compare need ai
+                            if (dbTargetNameList.containsAll(targetNameList)) {
+                                count++;
+                                break;
+                            }
+                        }
+                    }
+                    if (count == expectationList.size()) {
+                        intentIdList.add(intentId);
+                        break;
+                    }
+                }
+            }
+        }
+        return intentIdList;
+    }
+
+    public List<Intent> filterIntent(List<Intent> list) {
+        //// condition   ownerName = foramtIntentInput
+        List<Intent> fiterList = new ArrayList<>();
+        for (Intent intent : list) {
+            List<Context> ownerInfo = intent.getIntentContexts().stream().filter(x ->
+                    StringUtils.equalsIgnoreCase(x.getContextName(), "ownerInfo")).collect(Collectors.toList());
+            if (CollectionUtils.isNotEmpty(ownerInfo)) {
+                for (Context context : ownerInfo) {
+                    List<Condition> contextConditions = context.getContextConditions();
+                    boolean equals = false;
+                    for (Condition condition : contextConditions) {
+                        String conditionstr = "ownerName = formatIntentInputManagementFunction";
+                        String concatStr = condition.getConditionName() + condition.getOperator() + condition.getConditionValue();
+                        if (StringUtils.equalsIgnoreCase(concatStr.trim(), conditionstr.trim())) {
+                            fiterList.add(intent);
+                            equals = true;
+                            break;
+                        }
+                    }
+                    if (equals==true) {
+                        break;
+                    }
+                }
+            }
+        }
+        list.removeAll(fiterList);
+        return list;
     }
 }

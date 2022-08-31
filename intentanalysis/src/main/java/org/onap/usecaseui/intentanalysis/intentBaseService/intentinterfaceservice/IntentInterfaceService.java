@@ -13,27 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
+package org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice;
 
-
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 
-import java.util.List;
-import java.util.Map;
+public interface IntentInterfaceService {
+    public boolean createInterface(Intent intent, IntentManagementFunction imf);
 
-public interface DecisionModule {
-    void determineUltimateGoal();
+    public boolean updateInterface(Intent intent, IntentManagementFunction imf);
 
-    // find intentManageFunction
-    IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
-
-    void intentDefinition();
-
-    void decideSuitableAction();
-
-    public void interactWithTemplateDb();
-
-    public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean);
-
+    public boolean deleteInterface(Intent intent, IntentManagementFunction imf);
 }

@@ -66,7 +66,7 @@ public class IntentProcessService {
 
             //distribution process
             intentDistributionService.setIntentRole(intentOwner,intentHandler);
-            intentDistributionService.distributionProcess();
+            intentDistributionService.distributionProcess(map);
 
             //operation process
             intentOperationService.setIntentRole(intentOwner,intentHandler);

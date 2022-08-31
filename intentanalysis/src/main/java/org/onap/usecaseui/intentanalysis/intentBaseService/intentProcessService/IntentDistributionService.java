@@ -16,29 +16,54 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 
+import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class IntentDistributionService {
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
 
-    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
-        if (intentOwner!= null){
+    @Autowired
+    IntentInterfaceService intentInterfaceService;
+
+    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler) {
+        if (intentOwner != null) {
             this.intentOwner = intentOwner;
         }
-        if (intentHandler!= null){
-            this.intentHandler= intentHandler;
+        if (intentHandler != null) {
+            this.intentHandler = intentHandler;
         }
     }
 
-    public void distributionProcess() {
-        ActuationModule intentActuationModule = intentHandler.getActuationModule();
+    public boolean distributionProcess(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
 
-        intentActuationModule.sendToIntentHandler(intentHandler);
+        intentOwner.getActuationModule().distrubuteIntentToHandler(intentMap);
+        return false;
     }
 
+    public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
+
+        for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : intentMap.entrySet()) {
+            IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
+            if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
+                return intentInterfaceService.createInterface(entry.getKey().getIntent(), entry.getValue());
+            } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
+                return intentInterfaceService.updateInterface(entry.getKey().getIntent(), entry.getValue());
+            } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
+                return intentInterfaceService.deleteInterface(entry.getKey().getIntent(), entry.getValue());
+            }
+        }
+        return false;
+    }
 }
+

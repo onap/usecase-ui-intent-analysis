@@ -13,32 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
+package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
-import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentDetectionService;
-import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
-public class CLLBusinessKnowledgeModule implements KnowledgeModule {
-    private static Logger LOGGER = LoggerFactory.getLogger(CLLBusinessKnowledgeModule.class);
-
-    @Autowired
-    IntentService intentService;
+public class FormatIntentInputKnowledgeModule implements KnowledgeModule {
     @Autowired
     IntentDetectionService intentDetectionService;
 
@@ -64,22 +50,9 @@ public class CLLBusinessKnowledgeModule implements KnowledgeModule {
         return false;
     }
 
-    void intentReportResolution() {
+    public void getSystemStatus() {
     }
 
-    /**
-     * query the implementation of intent requirements in the system
-     */
-    void getSystemStatus() {
-    }
-
-
-    void interactWithIntentOwner() {
-    }
-
-    /**
-     * Determine add, delete, modify according to theobject,target and context of the expectation
-     */
     public IntentGoalBean determineDetectionGoal(Intent intent, List<String> intentIdList) {
         int size = intentIdList.size();
         if (size == 0) {
@@ -88,5 +61,4 @@ public class CLLBusinessKnowledgeModule implements KnowledgeModule {
             return new IntentGoalBean(intent, IntentGoalType.UPDATE);
         }
     }
-
 }

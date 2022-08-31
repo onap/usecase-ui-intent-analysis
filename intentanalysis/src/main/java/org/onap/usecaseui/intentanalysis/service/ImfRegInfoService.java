@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.service;
 
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 
 import java.util.List;
@@ -23,4 +24,7 @@ public interface ImfRegInfoService {
 
     int insertIMFRegInfoRegInfo(IntentManagementFunctionRegInfo regInfo);
     List<IntentManagementFunctionRegInfo>  getImfRegInfoList();
+    IntentManagementFunctionRegInfo getImfRegInfoList(IntentGoalBean intentGoalBean);
+
+
 }

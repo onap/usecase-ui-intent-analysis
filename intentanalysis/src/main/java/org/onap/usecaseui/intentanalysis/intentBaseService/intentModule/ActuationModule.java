@@ -28,5 +28,6 @@ public interface ActuationModule {
     void interactWithIntentHandle();
     //Save intent information to the intent instance database
     void saveIntentToDb(List<Map<IntentGoalBean,IntentManagementFunction>> intentMapList);
+    boolean distrubuteIntentToHandler(Map<IntentGoalBean,IntentManagementFunction> intentMap);
 
 }

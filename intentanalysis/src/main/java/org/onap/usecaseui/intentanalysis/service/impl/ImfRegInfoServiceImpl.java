@@ -16,6 +16,8 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.mapper.IMFRegInfoMapper;
 import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
@@ -23,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -39,4 +43,22 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
     public List<IntentManagementFunctionRegInfo> getImfRegInfoList() {
         return imfRegInfoMapper.getImfRegInfoList();
     }
+
+    @Override
+    public IntentManagementFunctionRegInfo getImfRegInfoList(IntentGoalBean intentGoalBean) {
+        String intentName = intentGoalBean.getIntent().getIntentName();
+        IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
+        List<IntentManagementFunctionRegInfo> imfRegInfoList = imfRegInfoMapper.getImfRegInfoList();
+
+        List<IntentManagementFunctionRegInfo> imfList = imfRegInfoList.stream().
+                filter(x -> x.getSupportArea().contains(intentName)
+                        && x.getSupportInterfaces().contains(intentGoalType)).collect(Collectors.toList());
+        if (!Optional.ofNullable(imfList).isPresent()) {
+            log.info("The intent name is %s not find the corresponding IntentManagementFunction", intentName);
+        }
+        //TODO call probe  interface  if fail  intentFulfilmentInfo throw exception
+
+        return imfList.get(0);
+    }
+
 }

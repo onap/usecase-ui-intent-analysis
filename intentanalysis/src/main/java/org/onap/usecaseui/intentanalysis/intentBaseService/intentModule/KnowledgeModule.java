@@ -21,4 +21,9 @@ import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 public interface KnowledgeModule {
     //Parse, decompose, orchestrate the original intent
     IntentGoalBean intentCognition(Intent intent);
+
+    // in distribution, ask permission from imf
+    boolean recieveCreateIntent();// ·Ö¿ªÐ´
+    boolean recieveUpdateIntent();
+    boolean recieveDeleteIntent();
 }

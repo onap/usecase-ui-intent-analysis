@@ -51,17 +51,8 @@ public class CLLBusinessDecisionModule implements DecisionModule {
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         //  db  filter imf  supportArea;
         //SupportInterface> supportInterfaces;
-        IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
-        String intentName = intentGoalBean.getIntent().getIntentName();
-        List<IntentManagementFunctionRegInfo> imfRegInfoList = imfRegInfoService.getImfRegInfoList();
-        //todo
-        List<IntentManagementFunctionRegInfo> imfList = imfRegInfoList.stream().
-                filter(x -> x.getSupportArea().contains(intentName)
-                        && x.getSupportInterfaces().contains(intentGoalType)).collect(Collectors.toList());
-        if (!Optional.ofNullable(imfList).isPresent()) {
-            log.info("The intent name is %s not find the corresponding IntentManagementFunction", intentName);
-        }
-        return (IntentManagementFunction) applicationContext.getBean(imfList.get(0).getHandleName());
+        IntentManagementFunctionRegInfo imfRegInfo = imfRegInfoService.getImfRegInfoList(intentGoalBean);
+        return (IntentManagementFunction) applicationContext.getBean(imfRegInfo.getHandleName());
     }
 
     @Override
@@ -146,7 +137,6 @@ public class CLLBusinessDecisionModule implements DecisionModule {
             for (IntentGoalBean subIntentGoal : sortList) {
                 Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
                 IntentManagementFunction imf = exploreIntentHandlers(subIntentGoal);
-                //TODO call probe  interface  if fail  intentFulfilmentInfo throw exception
                 map.put(subIntentGoal, imf);
                 intentMapList.add(map);
             }
@@ -157,4 +147,5 @@ public class CLLBusinessDecisionModule implements DecisionModule {
         }
         return intentMapList;
     }
+
 }
