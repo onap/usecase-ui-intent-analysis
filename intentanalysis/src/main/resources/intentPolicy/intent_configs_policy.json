@@ -12,9 +12,9 @@
             "policy-version": 1
           },
           "properties": {
-			"cllId": "cll-01",
-			"closedLoopStatus": "on",
-			"originalBw": "1000"
+            "cllId": "${CLL_ID}",
+            "closedLoopStatus": "${CLOSED_LOOP_STATUS}",
+            "originalBw": "${ORIGINAL_BW}"
           }
         }
       }

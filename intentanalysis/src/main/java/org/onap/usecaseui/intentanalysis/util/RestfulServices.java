@@ -34,6 +34,11 @@ public class RestfulServices {
 
     private static final Logger logger = LoggerFactory.getLogger(RestfulServices.class);
 
+    private static final String DEFAULT_MSB_IAG_ADDRESS = "msb-iag.onap:443";
+    private static final String ENV_MSB_IAG_SERVICE_HOST = "MSB_IAG_SERVICE_HOST";
+    private static final String ENV_MSB_IAG_SERVICE_PORT = "MSB_IAG_SERVICE_PORT";
+
+
     public static <T> T create(String baseUrl, Class<T> clazz) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -52,7 +57,7 @@ public class RestfulServices {
                 .hostnameVerifier(getHostnameVerifier())
                 .build();
 
-        String msbUrl = getMsbAddress();
+        String msbUrl = getMSBIAGAddress();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://" + msbUrl + "/")
                 .client(okHttpClient)
@@ -62,13 +67,15 @@ public class RestfulServices {
         return retrofit.create(clazz);
     }
 
-    public static String getMsbAddress() {
-        String msbAddress = System.getenv("MSB_ADDR");
-        if (msbAddress == null) {
-            return "";
+    public static String getMSBIAGAddress(){
+        String iagAddress = System.getenv(ENV_MSB_IAG_SERVICE_HOST);
+        String iagPort = System.getenv(ENV_MSB_IAG_SERVICE_PORT);
+        if(iagAddress == null  || iagPort == null){
+            return DEFAULT_MSB_IAG_ADDRESS;
         }
-        return msbAddress;
+        return iagAddress + ":" + iagPort;
     }
+
 
     public static RequestBody extractBody(HttpServletRequest request) throws IOException {
         BufferedReader br = null;

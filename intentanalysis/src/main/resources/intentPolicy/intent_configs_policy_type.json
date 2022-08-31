@@ -3,7 +3,7 @@
   "policy_types": {
     "onap.policies.monitoring.docker.slicems.app": {
       "version": "1.0.0",
-      "description": "son handler policy type",
+      "description": "slice micro-service policy type",
       "derived_from": "onap.policies.Monitoring:1.0.0",
 	    "description": "Runtime Configuration of Slice MS",
       "properties": {
