@@ -1,0 +1,28 @@
+{
+  "tosca_definitions_version": "tosca_simple_yaml_1_1_0",
+  "policy_types": {
+    "onap.policies.monitoring.docker.slicems.app": {
+      "version": "1.0.0",
+      "description": "son handler policy type",
+      "derived_from": "onap.policies.Monitoring:1.0.0",
+	    "description": "Runtime Configuration of Slice MS",
+      "properties": {
+        "cllId": {
+          "type": "string",
+          "required": true,
+          "description": "cll id"
+        },
+		 "closedLoopStatus": {
+          "type": "string",
+          "required": true,
+          "description": "whether provide closed loop assurance for one cll"
+        },
+        "originalBw": {
+          "type": "string",
+          "required": true,
+          "description": "original bw of one cll"
+        }
+      }
+    }
+  }
+}

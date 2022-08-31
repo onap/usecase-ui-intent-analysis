@@ -1,0 +1,50 @@
+{
+
+    "tosca_definitions_version": "tosca_simple_yaml_1_1_0",
+    "topology_template": {
+        "policies": [
+            {
+                "operational.modifycll": {
+                    "type": "onap.policies.controlloop.operational.common.Drools",
+                    "type_version": "1.0.0",
+                    "version": "1.0.0",
+                    "name": "operational.modifycll",
+                    "metadata": {
+                        "policy_id": "operational.modifycll"
+                    },
+                    "properties": {
+                        "id": "ControlLoop-CCVPN-CLL-227e8b00-dbeb-4d03-8719-d0a658fb846c",
+                        "timeout": 1200,
+                        "abatement": false,
+                        "trigger": "unique-policy-id-1-modify-cll",
+                        "operations": [
+                            {
+                                "id": "unique-policy-id-1-modify-cll",
+                                "description": "Modify resource allocation for a slice subnet instance",
+                                "operation": {
+                                    "actor": "SO",
+                                    "operation": "ModifyCloudLeasedLine",
+                                    "target": {
+                                        "targetType": "VNF"
+                                    }
+                                },
+                                "timeout": 1200,
+                                "retries": 0,
+                                "success": "final_success",
+                                "failure": "final_failure",
+                                "failure_timeout": "final_failure_timeout",
+                                "failure_retries": "final_failure_retires",
+                                "failure_exception": "final_failure_exception",
+                                "failure_guard": "final_failure_guard"
+                            }
+                        ],
+                        "controllerName": "usecases"
+                    }
+
+                }
+
+            }
+        ]
+    }
+
+}
