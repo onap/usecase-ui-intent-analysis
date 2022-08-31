@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.adapters.so;
+package org.onap.usecaseui.intentanalysis.adapters.aai.apicall;
 
-import org.onap.usecaseui.intentanalysis.bean.models.CCVPNInstance;
+import com.alibaba.fastjson.JSONObject;
+import retrofit2.Call;
+import retrofit2.http.GET;
 
-public interface SOService {
-
-    int createCCVPNInstance(CCVPNInstance instance);
-
-    void deleteIntentInstance(String instanceId);
-
+public interface AAIAPICall {
+    @GET("/aai/v24/network/network-routes")
+    Call<JSONObject> queryNetworkRoute();
 }
