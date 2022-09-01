@@ -15,26 +15,19 @@
  */
 package org.onap.usecaseui.intentanalysis.adapters.so.apicall;
 
-import com.alibaba.fastjson.JSONObject;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.http.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-public interface SOAPICall {
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
-    @POST("/so/infra/serviceIntent/v1/create")
-    Call<JSONObject> createIntentInstance(@Body RequestBody body);
+@Component
+@Getter
+@Setter
+public class SOAuthConfig {
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: application/json"
-    })
-    @HTTP(method="DELETE", path="/so/infra/serviceIntent/v1/delete", hasBody = true)
-    Call<JSONObject> deleteIntentInstance(@Body RequestBody body);
+    @Value("${rest.so.username}")
+    private String userName;
 
-
-
+    @Value("${rest.so.password}")
+    private String password;
 }

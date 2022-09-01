@@ -18,11 +18,18 @@ package org.onap.usecaseui.intentanalysis.adapters.so.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAPICall;
+import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAuthConfig;
+import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
+import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAuthConfig;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAPICall;
+import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAuthConfig;
 import org.onap.usecaseui.intentanalysis.bean.models.CCVPNInstance;
+import org.onap.usecaseui.intentanalysis.util.RestfulServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import retrofit2.Response;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +43,30 @@ public class SOServiceImpl implements SOService {
 
 
     private SOAPICall soapiCall;
+
+    private AAIAPICall aaiapiCall;
+
+    @Autowired
+    SOAuthConfig soAuthConfig;
+
+    @Autowired
+    AAIAuthConfig aaiAuthConfig;
+
+    public SOAPICall getSoApiCall() {
+        if (null == soapiCall) {
+            this.soapiCall = RestfulServices.create(SOAPICall.class, soAuthConfig.getUserName(),
+                    soAuthConfig.getPassword());
+        }
+        return this.soapiCall;
+    }
+
+    public AAIAPICall getAaiApiCall() {
+        if (null == aaiapiCall) {
+            this.aaiapiCall = RestfulServices.create(AAIAPICall.class, aaiAuthConfig.getUserName(),
+                    aaiAuthConfig.getPassword());
+        }
+        return this.aaiapiCall;
+    }
 
     @Override
     public int createCCVPNInstance(CCVPNInstance ccvpnInstance) {
@@ -81,7 +112,7 @@ public class SOServiceImpl implements SOService {
         Map<String, Object> params = paramsSetUp(ccvpnInstance);
         params.put("additionalProperties",additionalPropertiesSetUp(ccvpnInstance));
         okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), JSON.toJSONString(params));
-        Response<JSONObject> response = soapiCall.createIntentInstance(requestBody).execute();
+        Response<JSONObject> response = getSoApiCall().createIntentInstance(requestBody).execute();
         if (response.isSuccessful()) {
             return response.body().getString("jobId");
         }
@@ -98,14 +129,14 @@ public class SOServiceImpl implements SOService {
         additionalProperties.put("enableSdnc", "true");
         params.put("additionalProperties", additionalProperties);
         okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), JSON.toJSONString(params));
-        soapiCall.deleteIntentInstance(requestBody).execute();
+        getSoApiCall().deleteIntentInstance(requestBody).execute();
     }
 
     private int getCreateStatus(CCVPNInstance ccvpnInstance) throws IOException {
         if (ccvpnInstance == null || ccvpnInstance.getResourceInstanceId() == null) {
             return -1;
         }
-        Response<JSONObject> response = soapiCall.getInstanceInfo(ccvpnInstance.getResourceInstanceId()).execute();
+        Response<JSONObject> response = getAaiApiCall().getInstanceInfo(ccvpnInstance.getResourceInstanceId()).execute();
         logger.debug(response.toString());
         if (response.isSuccessful()) {
             String status = response.body().getString("orchestration-status");

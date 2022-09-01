@@ -18,8 +18,19 @@ package org.onap.usecaseui.intentanalysis.adapters.aai.apicall;
 import com.alibaba.fastjson.JSONObject;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.Path;
 
 public interface AAIAPICall {
     @GET("/aai/v24/network/network-routes")
     Call<JSONObject> queryNetworkRoute();
+
+    @Headers({
+            "X-TransactionId: 9999",
+            "X-FromAppId: MSO",
+            "Content-Type: application/json",
+            "Accept: application/json"
+    })
+    @GET("/aai/v24/business/customers/customer/IBNCustomer/service-subscriptions/service-subscription/IBN/service-instances/service-instance/{resource-service-id}")
+    Call<JSONObject> getInstanceInfo(@Path("resource-service-id") String resourceServiceId);
 }
