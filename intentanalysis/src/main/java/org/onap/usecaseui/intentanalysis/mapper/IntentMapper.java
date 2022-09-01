@@ -37,5 +37,5 @@ public interface IntentMapper {
 
     int deleteIntent(@Param(value = "intentId") String intentId);
 
-    List<Intent> getIntentByName(@Param(value = "name") String name);
+    List<Intent> getIntentByName(@Param(value = "intentName") String name);
 }
