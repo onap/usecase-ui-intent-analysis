@@ -29,10 +29,12 @@ spring:
     username:
     password:
     driver-class-name: org.h2.Driver
-    schema: classpath:intentdb-test-init.sql
-    data: classpath:intentdb-test-data.sql
   main:
     allow-bean-definition-overriding: true
+  sql:
+    init:
+      schema-locations: classpath:intentdb-test-init.sql
+      data-locations: classpath:intentdb-test-data.sql
 
 ###mybtis####
 mybatis:

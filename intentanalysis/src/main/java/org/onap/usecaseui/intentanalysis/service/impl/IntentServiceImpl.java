@@ -87,7 +87,9 @@ public class IntentServiceImpl implements IntentService {
     public Intent getIntent(String intentId) {
         Intent intent = intentMapper.selectIntent(intentId);
         if (intent != null) {
-            intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
+            intent.setIntentExpectations(expectationService.getIntentExpectationList(intentId));
+            intent.setIntentContexts(contextService.getContextList(intentId));
+            intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(intentId));
         } else {
             log.info(String.format("Intent is null, intentId = %s", intentId));
         }
@@ -140,6 +142,8 @@ public class IntentServiceImpl implements IntentService {
         if (!CollectionUtils.isEmpty(intentList)) {
             for (Intent intent : intentList) {
                 intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
+                intent.setIntentContexts(contextService.getContextList(intent.getIntentId()));
+                intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(intent.getIntentId()));
             }
 
         } else {
