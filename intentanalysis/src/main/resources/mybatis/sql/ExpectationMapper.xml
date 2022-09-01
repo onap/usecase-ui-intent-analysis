@@ -21,15 +21,13 @@
     </insert>
 
     <select id="selectIntentExpectationList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
-        select expectation_id expectationId, expectation_name expectationName, expectation_type expectationType,
-               intent_id intentId
+        select expectation_id expectationId, expectation_name expectationName, expectation_type expectationType
         from expectation
         where intent_id = #{intentId}
     </select>
 
     <select id="selectIntentExpectation" resultType="org.onap.usecaseui.intentanalysis.bean.models.Expectation">
-        select expectation_id expectationId, expectation_name expectationName, expectation_type expectationType,
-               intent_id intentId
+        select expectation_id expectationId, expectation_name expectationName, expectation_type expectationType
         from expectation
         where expectation_id = #{expectationId}
     </select>
