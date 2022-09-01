@@ -13,22 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.bean.enums;
+package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt;
 
-import lombok.Getter;
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 
-@Getter
-public enum SupportInterface {
-    //CREATE,DELETE,UPDATE,SEARCH;
-    CREATE(0, "CREATE"),
-    DELETE(1, "DELETE"),
-    UPDATE(2, "UPDATE"),
-    SEARCH(3, "SEARCH");
-    private int type;
-    private String name;
-    SupportInterface(int type, String name) {
-        this.type = type;
-        this.name = name;
-    }
-
+public class CLLAssuranceIntentManagementFunction extends IntentManagementFunction {
 }

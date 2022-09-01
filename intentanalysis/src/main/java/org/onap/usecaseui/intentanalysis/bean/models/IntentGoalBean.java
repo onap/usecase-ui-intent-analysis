@@ -16,7 +16,6 @@
 package org.onap.usecaseui.intentanalysis.bean.models;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 
 @Data
