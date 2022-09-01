@@ -33,18 +33,15 @@ import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.onap.usecaseui.intentanalysis.test.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.util.SpringContextUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.CollectionUtils;
 
 @SpringBootTest(classes = IntentAnalysisApplicationTests.class)
 @RunWith(SpringRunner.class)
 public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(IntentServiceTest.class);
 
     private static final String TEST_INTENT_ID_1 = "intentId1";
 
@@ -109,7 +106,7 @@ public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void testGetIntentListSuccess() {
         List<Intent> intentList = intentService.getIntentList();
-        Assert.assertNotNull(intentList);
+        Assert.assertFalse(CollectionUtils.isEmpty(intentList));
     }
 
     @Test
@@ -148,7 +145,7 @@ public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
         expectationTarget.setTargetName("new target name");
         List<Condition> targetConditionList = expectationTarget.getTargetConditions();
         Condition targetCondition = targetConditionList.get(0);
-        targetCondition.setConditionName("new conditon name");
+        targetCondition.setConditionName("new condition name");
         targetConditionList.set(0, targetCondition);
         expectationTarget.setTargetConditions(targetConditionList);
         expectationTargetList.remove(2);
