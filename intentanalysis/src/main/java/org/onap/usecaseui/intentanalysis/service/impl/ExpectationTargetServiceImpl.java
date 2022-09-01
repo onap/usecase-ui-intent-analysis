@@ -151,7 +151,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
                     }
                     expectationTargetIdListFromDB.remove(expectationTargetId);
                 } else {
-                    expectationTargetService.createExpectationTarget(expectationTarget, expectationTargetId);
+                    expectationTargetService.createExpectationTarget(expectationTarget, expectationId);
                 }
             }
             for (String expectationTargetIdFromDB : expectationTargetIdListFromDB) {
