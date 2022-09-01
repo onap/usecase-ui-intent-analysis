@@ -22,6 +22,8 @@ MERGE INTO intent (intent_id, intent_name) KEY (intent_id)
 values ('intentId1', 'CLL Business intent');
 MERGE INTO intent (intent_id, intent_name) KEY (intent_id)
 values ('intentId2', 'CLL Business intent');
+MERGE INTO intent (intent_id, intent_name) KEY (intent_id)
+values ('intent without affiliate', 'CLL Business intent');
 
 -- ----------------------------
 -- Records of expectation
@@ -32,6 +34,12 @@ MERGE INTO expectation (expectation_id, expectation_name, expectation_type, inte
 values ('expectationId2', 'CLL Assurance Expectation', 'ASSURANCE', 'intentId1');
 MERGE INTO expectation (expectation_id, expectation_name, expectation_type, intent_id) KEY (expectation_id)
 values ('expectationId3', 'CLL Service Expectation', 'DELIVERY', 'intentId2');
+MERGE INTO expectation (expectation_id, expectation_name, expectation_type, intent_id) KEY (expectation_id)
+values ('expectationId4', 'CLL Service Expectation', 'DELIVERY', 'intentId2');
+MERGE INTO expectation (expectation_id, expectation_name, expectation_type, intent_id) KEY (expectation_id)
+values ('expectation without affiliate', 'CLL Assurance Expectation', 'DELIVERY', 'intentId2');
+MERGE INTO expectation (expectation_id, expectation_name, expectation_type, intent_id) KEY (expectation_id)
+values ('expectation without affiliate 2', 'CLL Assurance Expectation', 'ASSURANCE', 'intentId2');
 
 -- ----------------------------
 -- Records of expectation_object
@@ -55,7 +63,13 @@ values ('target1-3', 'bandwidth', 'expectationId1');
 MERGE INTO expectation_target (target_id, target_name, expectation_id) KEY (target_id)
 values ('target2-1', 'bandwidthAssurance', 'expectationId2');
 MERGE INTO expectation_target (target_id, target_name, expectation_id) KEY (target_id)
+values ('target2-2', 'bandwidthAssurance', 'expectationId2');
+MERGE INTO expectation_target (target_id, target_name, expectation_id) KEY (target_id)
+values ('target2-3', 'bandwidthAssurance', 'expectationId2');
+MERGE INTO expectation_target (target_id, target_name, expectation_id) KEY (target_id)
 values ('target3-1', 'source', 'expectationId3');
+MERGE INTO expectation_target (target_id, target_name, expectation_id) KEY (target_id)
+values ('target4-1', 'source', 'expectationId4');
 
 -- ----------------------------
 -- Records of condition

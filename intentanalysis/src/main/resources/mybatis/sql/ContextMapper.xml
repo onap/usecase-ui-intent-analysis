@@ -40,10 +40,14 @@
     </update>
 
     <delete id="deleteContext">
-        DELETE FROM context WHERE context_id = #{context.contextId}
+        DELETE
+        FROM context
+        WHERE context_id = #{contextId}
     </delete>
 
     <delete id="deleteContextList">
-        DELETE FROM context WHERE parent_id = #{parentId}
+        DELETE
+        FROM context
+        WHERE parent_id = #{parentId}
     </delete>
 </mapper>
