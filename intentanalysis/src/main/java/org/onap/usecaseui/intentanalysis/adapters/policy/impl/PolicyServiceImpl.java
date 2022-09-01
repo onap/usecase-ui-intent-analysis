@@ -52,6 +52,10 @@ public class PolicyServiceImpl implements PolicyService {
         return this.policyAPICall;
     }
 
+    public void setPolicyAPICall(PolicyAPICall policyAPICall) {
+        this.policyAPICall = policyAPICall;
+    }
+
     @Override
     public boolean createAndDeployModifyCLLPolicy() {
         try {
@@ -62,8 +66,8 @@ public class PolicyServiceImpl implements PolicyService {
             RequestBody policyReq = RequestBody.create(MediaType.parse("application/json"), policyBody.toString());
             Response<ResponseBody> policyResponse = getPolicyAPICall().createPolicy(ModifyCLLPolicyConstants.policyType,
                 ModifyCLLPolicyConstants.policyTypeVersion, policyReq).execute();
-            logger.info(
-                String.format("Create policy result, code: %d body: %s", policyResponse.code(), policyResponse.body()));
+            logger.info(String.format("Create policy result, code: %d body: %s", policyResponse.code(),
+                getResponseBodyStr(policyResponse)));
             if (!policyResponse.isSuccessful()) {
                 logger.error("Create modify cll policy failed.");
                 return false;
@@ -77,7 +81,7 @@ public class PolicyServiceImpl implements PolicyService {
                 deployPolicyBody.toString());
             Response<ResponseBody> deployPolicyResponse = getPolicyAPICall().deployPolicy(deployPolicyReq).execute();
             logger.info(String.format("Deploy policy result, code: %d body: %s", deployPolicyResponse.code(),
-                deployPolicyResponse.body()));
+                getResponseBodyStr(deployPolicyResponse)));
             if (!deployPolicyResponse.isSuccessful()) {
                 logger.error("Deploy modify cll policy failed.");
                 return false;
@@ -135,8 +139,8 @@ public class PolicyServiceImpl implements PolicyService {
             RequestBody policyTypeReq = RequestBody.create(MediaType.parse("application/json"),
                 policyTypeBody.toString());
             Response<ResponseBody> response = getPolicyAPICall().createPolicyType(policyTypeReq).execute();
-            logger.info(
-                String.format("Create policy type result, code: %d body: %s", response.code(), response.body()));
+            logger.info(String.format("Create policy type result, code: %d body: %s", response.code(),
+                getResponseBodyStr(response)));
             if (!response.isSuccessful()) {
                 logger.error("Create intent configuration policy type failed.");
                 return false;
@@ -149,10 +153,11 @@ public class PolicyServiceImpl implements PolicyService {
                 .replace("${ORIGINAL_BW}", originalBW);
             logger.info(String.format("Create policy, request body: %s", policyBody));
             RequestBody policyReq = RequestBody.create(MediaType.parse("application/json"), policyBody.toString());
-            Response<ResponseBody> policyResponse = getPolicyAPICall().createPolicy(IntentConfigPolicyConstants.policyType,
-                IntentConfigPolicyConstants.policyTypeVersion, policyReq).execute();
-            logger.info(
-                String.format("Create policy result, code: %d body: %s", policyResponse.code(), policyResponse.body()));
+            Response<ResponseBody> policyResponse = getPolicyAPICall().createPolicy(
+                    IntentConfigPolicyConstants.policyType, IntentConfigPolicyConstants.policyTypeVersion, policyReq)
+                .execute();
+            logger.info(String.format("Create policy result, code: %d body: %s", policyResponse.code(),
+                getResponseBodyStr(policyResponse)));
             if (!policyResponse.isSuccessful()) {
                 logger.error("Create intent configuration policy failed.");
                 return false;
@@ -166,7 +171,7 @@ public class PolicyServiceImpl implements PolicyService {
                 deployPolicyBody.toString());
             Response<ResponseBody> deployPolicyResponse = getPolicyAPICall().deployPolicy(deployPolicyReq).execute();
             logger.info(String.format("Deploy policy result, code: %d body: %s", deployPolicyResponse.code(),
-                deployPolicyResponse.body()));
+                getResponseBodyStr(deployPolicyResponse)));
             if (!deployPolicyResponse.isSuccessful()) {
                 logger.error("Deploy intent configuration policy failed.");
                 return false;
@@ -190,17 +195,19 @@ public class PolicyServiceImpl implements PolicyService {
             //check if the policy exists
             Response<ResponseBody> response = getPolicyAPICall().getPolicy(policyType, policyTypeVersion, policyName,
                 policyVersion).execute();
-            logger.info(String.format("The policy query result, code: %d body: %s", response.code(), response.body()));
+            logger.info(String.format("The policy query result, code: %d body: %s", response.code(),
+                getResponseBodyStr(response)));
             // remove the policy if exists.
             if (response.isSuccessful()) {
                 logger.info("The policy exists, start to undeploy.");
                 Response<ResponseBody> undeployResponse = getPolicyAPICall().undeployPolicy(policyName).execute();
                 logger.info(String.format("Undeploy policy result. code: %d body: %s", undeployResponse.code(),
-                    undeployResponse.body()));
+                    getResponseBodyStr(undeployResponse)));
                 logger.info("Start to remove the policy.");
-                Response<ResponseBody> removeResponse = getPolicyAPICall().removePolicy(policyName, policyVersion).execute();
+                Response<ResponseBody> removeResponse = getPolicyAPICall().removePolicy(policyName, policyVersion)
+                    .execute();
                 logger.info(String.format("Remove policy result. code: %d body: %s", removeResponse.code(),
-                    removeResponse.body()));
+                    getResponseBodyStr(removeResponse)));
                 return true;
             }
             return true;
@@ -210,5 +217,12 @@ public class PolicyServiceImpl implements PolicyService {
             return false;
         }
 
+    }
+
+    private String getResponseBodyStr(Response<ResponseBody> response) throws IOException {
+        if (response.body() != null) {
+            return response.body().string();
+        }
+        return null;
     }
 }
