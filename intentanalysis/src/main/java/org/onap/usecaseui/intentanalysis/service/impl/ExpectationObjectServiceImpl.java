@@ -51,6 +51,11 @@ public class ExpectationObjectServiceImpl implements ExpectationObjectService {
 
     @Override
     public void createExpectationObject(ExpectationObject expectationObject, String expectationId) {
+        if (expectationObjectService.getExpectationObject(expectationId) != null) {
+            String msg = String.format("It already exists an object for the expectation %s, update might work.", expectationId);
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
+        }
         contextService.createContextList(expectationObject.getObjectContexts(),
                 expectationObjectMapper.selectExpectationObjectId(expectationId));
         if (expectationObjectMapper.insertExpectationObject(expectationObject, expectationId) < 1) {
