@@ -24,13 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class FormatIntentInputKnowledgeModule implements KnowledgeModule {
+public class FormatIntentInputKnowledgeModule extends KnowledgeModule {
     @Autowired
     IntentDetectionService intentDetectionService;
 
     @Override
     public IntentGoalBean intentCognition(Intent intent) {
-        List<String> intendIdList = intentDetectionService.intentResolution(intent);
+        List<String> intendIdList = intentResolution(intent);
         getSystemStatus();
         return determineDetectionGoal(intent, intendIdList);
     }

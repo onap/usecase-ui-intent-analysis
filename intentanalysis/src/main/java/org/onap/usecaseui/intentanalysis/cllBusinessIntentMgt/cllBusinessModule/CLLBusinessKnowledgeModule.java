@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CLLBusinessKnowledgeModule implements KnowledgeModule {
+public class CLLBusinessKnowledgeModule extends KnowledgeModule {
     private static Logger LOGGER = LoggerFactory.getLogger(CLLBusinessKnowledgeModule.class);
 
     @Autowired
@@ -44,7 +44,7 @@ public class CLLBusinessKnowledgeModule implements KnowledgeModule {
 
     @Override
     public IntentGoalBean intentCognition(Intent intent) {
-        List<String> intendIdList = intentDetectionService.intentResolution(intent);
+        List<String> intendIdList = intentResolution(intent);
         getSystemStatus();
         return determineDetectionGoal(intent, intendIdList);
     }

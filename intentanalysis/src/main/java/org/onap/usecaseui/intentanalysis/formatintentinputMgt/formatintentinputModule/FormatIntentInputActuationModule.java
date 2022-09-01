@@ -22,7 +22,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Actuatio
 import java.util.List;
 import java.util.Map;
 
-public class FormatIntentInputActuationModule implements ActuationModule {
+public class FormatIntentInputActuationModule extends ActuationModule {
     @Override
     public void sendToIntentHandler(IntentManagementFunction IntentHandler) {
     }

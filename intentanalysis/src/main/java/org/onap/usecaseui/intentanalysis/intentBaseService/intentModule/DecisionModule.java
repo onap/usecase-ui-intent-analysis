@@ -22,18 +22,18 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunct
 import java.util.List;
 import java.util.Map;
 
-public interface DecisionModule {
-    void determineUltimateGoal();
+public abstract class DecisionModule {
+    public abstract void determineUltimateGoal();
 
     // find intentManageFunction
-    IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
+    public abstract IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
 
-    void intentDefinition();
+    public abstract void intentDefinition();
 
-    void decideSuitableAction();
+    public abstract void decideSuitableAction();
 
-    public void interactWithTemplateDb();
+    public abstract  void interactWithTemplateDb();
 
-    public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean);
+    public abstract List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean);
 
 }

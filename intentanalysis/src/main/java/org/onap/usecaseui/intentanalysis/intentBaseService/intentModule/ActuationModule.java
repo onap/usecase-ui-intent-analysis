@@ -15,19 +15,41 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
+import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
 
-public interface ActuationModule {
-    //actuationModel & knownledgeModel interact
-    void sendToIntentHandler(IntentManagementFunction IntentHandler);
-    void sendToNonIntentHandler();//直接操作
-    void interactWithIntentHandle();
-    //Save intent information to the intent instance database
-    void saveIntentToDb(List<Map<IntentGoalBean,IntentManagementFunction>> intentMapList);
-    boolean distrubuteIntentToHandler(Map<IntentGoalBean,IntentManagementFunction> intentMap);
+public abstract class ActuationModule {
+    @Autowired
+    IntentInterfaceService intentInterfaceService;
 
+    //actuationModel & knownledgeModel interact
+    public abstract void sendToIntentHandler(IntentManagementFunction IntentHandler);
+
+    public abstract void sendToNonIntentHandler();//直接操作
+
+    public abstract void interactWithIntentHandle();
+
+    //Save intent information to the intent instance database
+    public abstract void saveIntentToDb(List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList);
+
+    public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
+        for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : intentMap.entrySet()) {
+            IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
+            if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
+                return intentInterfaceService.createInterface(entry.getKey().getIntent(), entry.getValue());
+            } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
+                return intentInterfaceService.updateInterface(entry.getKey().getIntent(), entry.getValue());
+            } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
+                return intentInterfaceService.deleteInterface(entry.getKey().getIntent(), entry.getValue());
+            }
+        }
+        return false;
+    }
 }

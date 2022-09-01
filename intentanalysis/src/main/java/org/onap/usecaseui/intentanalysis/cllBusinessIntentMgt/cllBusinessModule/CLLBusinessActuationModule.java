@@ -20,7 +20,6 @@ import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
-import org.onap.usecaseui.intentanalysis.intentBaseService.IntentHandleService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
@@ -35,11 +34,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class CLLBusinessActuationModule implements ActuationModule {
+public class CLLBusinessActuationModule extends ActuationModule {
     @Autowired
     IntentProcessService processService;
-    @Autowired
-    IntentHandleService intentHandleService;
     @Autowired
     IntentService intentService;
     @Autowired
@@ -72,20 +69,5 @@ public class CLLBusinessActuationModule implements ActuationModule {
             intentService.createIntent(subIntent);
         }
 
-    }
-
-    @Override
-    public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
-        for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : intentMap.entrySet()) {
-            IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
-            if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
-                return intentInterfaceService.createInterface(entry.getKey().getIntent(), entry.getValue());
-            } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
-                return intentInterfaceService.updateInterface(entry.getKey().getIntent(), entry.getValue());
-            } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
-                return intentInterfaceService.deleteInterface(entry.getKey().getIntent(), entry.getValue());
-            }
-        }
-        return false;
     }
 }

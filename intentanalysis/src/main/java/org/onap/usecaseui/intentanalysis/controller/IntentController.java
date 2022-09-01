@@ -19,7 +19,8 @@ package org.onap.usecaseui.intentanalysis.controller;
 
 import java.util.List;
 
-import org.onap.usecaseui.intentanalysis.intentBaseService.IntentHandleService;
+import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class IntentController {
     private IntentService intentService;
 
     @Autowired
-    private IntentHandleService intentHandleService;
+    private IntentProcessService processService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Intent>> getIntentList() {
@@ -70,7 +71,8 @@ public class IntentController {
 
     @PostMapping(value="/handleIntent",produces = MediaType.APPLICATION_JSON_VALUE)
     public void handleIntent(@RequestBody Intent intent) {
-        intentHandleService.handleOriginalIntent(intent);
+        processService.setIntentRole(new FormatIntentInputManagementFunction(), null);
+        processService.intentProcess(intent);
 
     }
 }

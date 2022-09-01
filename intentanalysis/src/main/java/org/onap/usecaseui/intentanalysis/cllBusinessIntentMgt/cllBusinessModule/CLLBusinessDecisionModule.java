@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @Service
-public class CLLBusinessDecisionModule implements DecisionModule {
+public class CLLBusinessDecisionModule extends DecisionModule {
     @Autowired
     private ImfRegInfoService imfRegInfoService;
     @Autowired
