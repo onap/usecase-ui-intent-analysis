@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ba3ba2f_1406677b",
+        "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-09-02T09:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75404870_c5557aa7",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "6e9bf5868d4d6a55fae5482c421dad780a28f972",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7697ef6e_50de0b5e",
         "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c13f2e9c_f4d76a78",
+        "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-09-02T09:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7697ef6e_50de0b5e",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 39
+      },
+      "revId": "6e9bf5868d4d6a55fae5482c421dad780a28f972",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "300f86f9_ece22d5e",
         "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "6e9bf5868d4d6a55fae5482c421dad780a28f972",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb1e6ce_da4d983c",
+        "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 8117
+      },
+      "writtenOn": "2022-09-02T09:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "300f86f9_ece22d5e",
+      "range": {
+        "startLine": 113,
+        "startChar": 67,
+        "endLine": 113,
+        "endChar": 76
+      },
+      "revId": "6e9bf5868d4d6a55fae5482c421dad780a28f972",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
