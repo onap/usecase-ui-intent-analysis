@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75404870_c5557aa7",
+        "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 8081
+      },
+      "writtenOn": "2022-09-02T02:21:01Z",
+      "side": 1,
+      "message": "contextId should be different in case the insert data fails.",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "6e9bf5868d4d6a55fae5482c421dad780a28f972",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7697ef6e_50de0b5e",
+        "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 8081
+      },
+      "writtenOn": "2022-09-02T02:21:01Z",
+      "side": 1,
+      "message": "Do not use underscores in class name.",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 39
+      },
+      "revId": "6e9bf5868d4d6a55fae5482c421dad780a28f972",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300f86f9_ece22d5e",
+        "filename": "intentanalysis/src/test/java/org/onap/usecaseui/intentanalysis/test/service/ContextServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 8081
+      },
+      "writtenOn": "2022-09-02T02:21:01Z",
+      "side": 1,
+      "message": "Use TEST_INTENT_ID_1 instead of \"intentId1\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 67,
+        "endLine": 113,
+        "endChar": 76
+      },
+      "revId": "6e9bf5868d4d6a55fae5482c421dad780a28f972",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
