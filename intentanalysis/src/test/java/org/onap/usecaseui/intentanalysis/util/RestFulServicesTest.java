@@ -12,37 +12,17 @@
  * the License.
  */
 
-package org.onap.usecaseui.intentanalysis.test.util;
+package org.onap.usecaseui.intentanalysis.util;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
-import javax.servlet.AsyncContext;
-import javax.servlet.DispatcherType;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpUpgradeHandler;
-import javax.servlet.http.Part;
+
 import okhttp3.RequestBody;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
-import org.onap.usecaseui.intentanalysis.test.IntentAnalysisApplicationTests;
-import org.onap.usecaseui.intentanalysis.util.RestfulServices;
+import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;

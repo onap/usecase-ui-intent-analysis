@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.onap.usecaseui.intentanalysis.test.adapters.policy;
+package org.onap.usecaseui.intentanalysis.adapters.policy;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -29,8 +29,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.policy.impl.PolicyServiceImpl;
-import org.onap.usecaseui.intentanalysis.test.IntentAnalysisApplicationTests;
-import org.onap.usecaseui.intentanalysis.test.util.TestCall;
+import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
+import org.onap.usecaseui.intentanalysis.util.TestCall;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.onap.usecaseui.intentanalysis.test.service;
+package org.onap.usecaseui.intentanalysis.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,8 +30,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
-import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.onap.usecaseui.intentanalysis.test.IntentAnalysisApplicationTests;
+import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

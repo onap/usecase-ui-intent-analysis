@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.onap.usecaseui.intentanalysis.test.util;
+package org.onap.usecaseui.intentanalysis.util;
 
 import java.io.IOException;
 import okhttp3.MediaType;
