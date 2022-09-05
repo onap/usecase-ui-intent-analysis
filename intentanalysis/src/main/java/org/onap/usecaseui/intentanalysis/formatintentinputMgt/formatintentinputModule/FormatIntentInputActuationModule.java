@@ -18,10 +18,11 @@ package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinput
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-
+@Component
 public class FormatIntentInputActuationModule extends ActuationModule {
     @Override
     public void sendToIntentHandler(IntentManagementFunction IntentHandler) {

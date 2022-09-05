@@ -21,11 +21,13 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Actuatio
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @Data
 @Configuration
+@Component
 public class IntentManagementFunction {
-    private ActuationModule actuationModule;
-    private DecisionModule decisionModule;
-    private KnowledgeModule knowledgeModule;
+    protected ActuationModule actuationModule;
+    protected DecisionModule decisionModule;
+    protected KnowledgeModule knowledgeModule;
 }

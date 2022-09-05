@@ -30,13 +30,16 @@ import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
 import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Log4j2
-@Service
+@Component
 public class CLLBusinessDecisionModule extends DecisionModule {
     @Autowired
     private ImfRegInfoService imfRegInfoService;

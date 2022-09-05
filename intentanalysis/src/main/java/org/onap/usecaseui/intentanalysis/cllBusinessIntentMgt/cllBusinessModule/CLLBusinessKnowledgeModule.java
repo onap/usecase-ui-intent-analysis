@@ -15,25 +15,20 @@
  */
 package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
-import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentDetectionService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
+@Component
 public class CLLBusinessKnowledgeModule extends KnowledgeModule {
     private static Logger LOGGER = LoggerFactory.getLogger(CLLBusinessKnowledgeModule.class);
 

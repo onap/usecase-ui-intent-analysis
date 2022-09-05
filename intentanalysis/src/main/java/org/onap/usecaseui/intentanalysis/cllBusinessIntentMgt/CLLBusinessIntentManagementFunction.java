@@ -26,12 +26,23 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Decision
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 @Data
 @Component("CLLBusinessIntentManagementFunction")
 public class CLLBusinessIntentManagementFunction extends IntentManagementFunction {
-    private ActuationModule actuationModule  = new CLLBusinessActuationModule();
-    private DecisionModule decisoinModule = new CLLBusinessDecisionModule();
-    private KnowledgeModule knowledgeModule = new CLLBusinessKnowledgeModule();
 
+    @Resource(name= "CLLBusinessActuationModule")
+    public void setActuationModule(ActuationModule actuationModule) {
+        this.actuationModule=actuationModule;
+    }
+    @Resource(name= "CLLBusinessKnowledgeModule")
+    public void setKnowledgeModule(KnowledgeModule knowledgeModule) {
+        this.knowledgeModule=knowledgeModule;
+    }
+    @Resource(name= "CLLBusinessDecisionModule")
+    public void setDecisionModule(DecisionModule decisionModule) {
+        this.decisionModule=decisionModule;
+    }
 
 }

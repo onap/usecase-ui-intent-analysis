@@ -15,27 +15,17 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
-import org.onap.usecaseui.intentanalysis.bean.models.*;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
-import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class IntentDetectionService {
 
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
-    @Autowired
-    IntentService intentService;
 
     public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler) {
         if (intentOwner != null) {

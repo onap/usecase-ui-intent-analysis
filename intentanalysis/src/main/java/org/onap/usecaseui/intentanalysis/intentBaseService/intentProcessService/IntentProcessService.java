@@ -18,6 +18,7 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,8 @@ public class IntentProcessService {
     IntentDistributionService intentDistributionService;
     @Autowired
     IntentOperationService intentOperationService;
-
+@Autowired
+    IntentService intentService;
     private IntentManagementFunction intentOwner;
     private IntentManagementFunction intentHandler;
 

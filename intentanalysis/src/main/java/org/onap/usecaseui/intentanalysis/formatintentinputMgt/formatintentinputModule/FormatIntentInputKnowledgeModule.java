@@ -20,13 +20,18 @@ import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentDetectionService;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class FormatIntentInputKnowledgeModule extends KnowledgeModule {
     @Autowired
     IntentDetectionService intentDetectionService;
+    @Autowired
+    IntentService intentService;
 
     @Override
     public IntentGoalBean intentCognition(Intent intent) {

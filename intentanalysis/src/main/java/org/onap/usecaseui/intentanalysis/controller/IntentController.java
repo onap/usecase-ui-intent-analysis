@@ -40,6 +40,8 @@ public class IntentController {
 
     @Autowired
     private IntentProcessService processService;
+    @Autowired
+    FormatIntentInputManagementFunction formatIntentInputManagementFunction;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Intent>> getIntentList() {
@@ -71,8 +73,7 @@ public class IntentController {
 
     @PostMapping(value="/handleIntent",produces = MediaType.APPLICATION_JSON_VALUE)
     public void handleIntent(@RequestBody Intent intent) {
-        processService.setIntentRole(new FormatIntentInputManagementFunction(), null);
+        processService.setIntentRole(formatIntentInputManagementFunction, null);
         processService.intentProcess(intent);
-
     }
 }
