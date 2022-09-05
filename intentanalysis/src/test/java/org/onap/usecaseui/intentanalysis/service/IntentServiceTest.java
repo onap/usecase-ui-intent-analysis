@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.onap.usecaseui.intentanalysis.test.service;
+package org.onap.usecaseui.intentanalysis.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,8 +30,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
-import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.onap.usecaseui.intentanalysis.test.IntentAnalysisApplicationTests;
+import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,10 +150,34 @@ public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
         targetCondition.setConditionName("new conditon name");
         targetConditionList.set(0, targetCondition);
         expectationTarget.setTargetConditions(targetConditionList);
-        expectationTargetList.remove(2);
         expectationTargetList.set(0, expectationTarget);
         expectation.setExpectationTargets(expectationTargetList);
         expectationList.set(0, expectation);
+        expectationList.remove(1);
+
+        Condition targetCondition1 = new Condition();
+        Expectation expectation1 = new Expectation();
+        ExpectationTarget target1 = new ExpectationTarget();
+        ExpectationObject object1 = new ExpectationObject();
+        targetCondition1.setConditionId("conditionId3");
+        targetCondition1.setConditionName("conditionName");
+        targetCondition1.setOperator(OperatorType.valueOf("EQUALTO"));
+        targetCondition1.setConditionValue("conditionValue");
+        List<Condition> targetConditionList1 = new ArrayList<>();
+        targetConditionList1.add(targetCondition1);
+        target1.setTargetId("targetId3");
+        target1.setTargetName("targetName");
+        target1.setTargetConditions(targetConditionList1);
+        List<ExpectationTarget> expectationTargetList1 = new ArrayList<>();
+        expectationTargetList1.add(target1);
+        object1.setObjectType(ObjectType.valueOf("OBJECT1"));
+        object1.setObjectInstance("objectInstance");
+        expectation1.setExpectationId("expectationId3");
+        expectation1.setExpectationName("expectationName");
+        expectation1.setExpectationType(ExpectationType.valueOf("DELIVERY"));
+        expectation1.setExpectationObject(object1);
+        expectation1.setExpectationTargets(expectationTargetList1);
+        expectationList.add(expectation1);
         intent.setIntentExpectations(expectationList);
 
         Intent updatedIntent = intentService.updateIntent(intent);

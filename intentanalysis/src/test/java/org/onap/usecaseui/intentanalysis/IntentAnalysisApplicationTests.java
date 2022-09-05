@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.onap.usecaseui.intentanalysis.test;
+package org.onap.usecaseui.intentanalysis;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;
