@@ -17,27 +17,38 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public abstract class ActuationModule {
     @Autowired
     IntentInterfaceService intentInterfaceService;
+    @Autowired
+    IntentService intentService;
 
     //actuationModel & knownledgeModel interact
-    public abstract void sendToIntentHandler(IntentManagementFunction IntentHandler);
+    public abstract void sendToIntentHandler(Intent intent, IntentManagementFunction IntentHandler);
 
     public abstract void sendToNonIntentHandler();//直接操作
 
     public abstract void interactWithIntentHandle();
 
     //Save intent information to the intent instance database
-    public abstract void saveIntentToDb(List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList);
+    public void saveIntentToDb(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
+        List<Intent> subIntentList = intentMap.keySet().stream().map(IntentGoalBean::getIntent)
+                .collect(Collectors.toList());
+        for (Intent subIntent : subIntentList) {
+            intentService.createIntent(subIntent);
+        }
+    }
 
     public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
         for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : intentMap.entrySet()) {

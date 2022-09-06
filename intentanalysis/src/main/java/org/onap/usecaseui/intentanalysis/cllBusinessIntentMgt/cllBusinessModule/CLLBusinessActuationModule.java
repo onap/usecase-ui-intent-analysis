@@ -42,7 +42,9 @@ public class CLLBusinessActuationModule extends ActuationModule {
 
 
     @Override
-    public void sendToIntentHandler(IntentManagementFunction IntentHandler) {
+    public void sendToIntentHandler(Intent intent,IntentManagementFunction IntentHandler) {
+        processService.setIntentRole(IntentHandler, null);
+        processService.intentProcess(intent);
     }
 
     @Override
@@ -52,20 +54,6 @@ public class CLLBusinessActuationModule extends ActuationModule {
 
     @Override
     public void interactWithIntentHandle() {
-
-    }
-
-    @Override
-    public void saveIntentToDb(List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList) {
-        List<IntentGoalBean> subIntentGoalLit = new ArrayList<>();
-        for (Map<IntentGoalBean, IntentManagementFunction> map : intentMapList) {
-            subIntentGoalLit.addAll(map.keySet());
-        }
-        List<Intent> subIntentList = subIntentGoalLit.stream().map(IntentGoalBean::getIntent)
-                .collect(Collectors.toList());
-        for (Intent subIntent : subIntentList) {
-            intentService.createIntent(subIntent);
-        }
 
     }
 }

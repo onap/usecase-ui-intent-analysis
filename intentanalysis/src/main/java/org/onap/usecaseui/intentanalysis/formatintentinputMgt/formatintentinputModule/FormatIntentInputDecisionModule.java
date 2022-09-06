@@ -25,8 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 @Component
 public class FormatIntentInputDecisionModule extends DecisionModule {
@@ -40,8 +39,8 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     @Override
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         // if intentName contain cll  return
-        if (StringUtils.equalsIgnoreCase(intentGoalBean.getIntent().getIntentName(), "cll")) {
-            return (IntentManagementFunction) applicationContext.getBean(CLLBusinessIntentManagementFunction.class.getName());
+        if (intentGoalBean.getIntent().getIntentName().toLowerCase(Locale.ROOT).contains("cll")) {
+        return (IntentManagementFunction) applicationContext.getBean(CLLBusinessIntentManagementFunction.class.getSimpleName());
         }
         return null;
     }
@@ -60,12 +59,16 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
 
     @Override
     public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean) {
+        List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList = new ArrayList<>();
         boolean needDecompostion = needDecompostion(intentGoalBean);
         if (needDecompostion) {
             intentDecomposition(intentGoalBean);
+        }else{
+            Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
+            map.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
+            intentMapList.add(map);
         }
-        exploreIntentHandlers(intentGoalBean);
-        return null;
+        return intentMapList;
     }
 
     public boolean needDecompostion(IntentGoalBean intentGoalBean) {
