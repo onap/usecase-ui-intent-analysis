@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2022 Huawei Technologies Co., Ltd. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ -->
+<configuration>
+
+    <variable name="LOG_HOME" value="/log/usecaseui/intent-analysis" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} %5p ${PID} --- [%15.15t] %-40.40c{40} : %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${user.dir}/${LOG_HOME}/ERROR.log</file>
+        <append>true</append>
+        <!-- set immediateFlush to false for much higher logging throughput -->
+        <immediateFlush>true</immediateFlush>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} %5p ${PID} --- [%15.15t] %-40.40c{40} : %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/${LOG_HOME}/%d{yyyy-MM}-DEBUG.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>>%d{yyyy-MM-dd HH:mm:ss:SSS} %5p ${PID} --- [%15.15t] %-40.40c{40} : %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.onap.usecaseui.intentanalysis" level="error">
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="org.onap.usecaseui.intentanalysis" level="debug">
+        <appender-ref ref="ROLLING-FILE" />
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
