@@ -15,17 +15,20 @@
  */
 package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Map;
 @Component
 public class FormatIntentInputActuationModule extends ActuationModule {
+    @Autowired
+    IntentProcessService processService;
     @Override
-    public void sendToIntentHandler(IntentManagementFunction IntentHandler) {
+    public void sendToIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
+        processService.setIntentRole(IntentHandler, null);
+        processService.intentProcess(intent);
     }
 
     @Override
@@ -34,15 +37,5 @@ public class FormatIntentInputActuationModule extends ActuationModule {
 
     @Override
     public void interactWithIntentHandle() {
-    }
-
-    @Override
-    public void saveIntentToDb(List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList) {
-       //
-    }
-
-    @Override
-    public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
-        return false;
     }
 }

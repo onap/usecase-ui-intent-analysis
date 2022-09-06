@@ -16,16 +16,12 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 
-import org.apache.commons.lang.StringUtils;
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -47,8 +43,8 @@ public class IntentDistributionService {
 
     public boolean distributionProcess(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
 
-        intentOwner.getActuationModule().distrubuteIntentToHandler(intentMap);
-        return false;
+        return intentOwner.getActuationModule().distrubuteIntentToHandler(intentMap);
+
     }
 
 }

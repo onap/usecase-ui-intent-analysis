@@ -64,15 +64,18 @@ public class IntentProcessService {
         for (Map<IntentGoalBean,IntentManagementFunction> map : intentListMap) {
             //definition process  save subintent
             intentDefinitionService.setIntentRole(intentOwner,intentHandler);
-            intentDefinitionService.definitionPorcess(intentListMap);
+            intentDefinitionService.definitionPorcess(map);
 
             //distribution process
             intentDistributionService.setIntentRole(intentOwner,intentHandler);
             intentDistributionService.distributionProcess(map);
 
-            //operation process
-            intentOperationService.setIntentRole(intentOwner,intentHandler);
-            intentOperationService.operationProcess();
+            //operation process     enery entry only have one key-value
+            for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : map.entrySet()) {
+                intentOperationService.setIntentRole(intentOwner,entry.getValue());
+                intentOperationService.operationProcess(entry.getKey().getIntent());
+            }
+
         }
     }
 

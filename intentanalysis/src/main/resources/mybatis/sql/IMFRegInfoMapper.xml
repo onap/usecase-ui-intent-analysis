@@ -7,7 +7,7 @@
     <insert id="insertIMFRegInfoRegInfo">
         insert into intent_management_function_reg_info(imfr_info_id, imfr_info_description, support_model,handle_name,intent_function_type)
         values
-            (#{imfregInfo.id}, #{imfregInfo.description},  #{imfregInfo.supportArea},#{imfregInfo.handleName},#{imfregInfo.intentFunctionType})
+            (#{imfregInfo.id}, #{imfregInfo.description},  #{imfregInfo.supportModel},#{imfregInfo.handleName},#{imfregInfo.intentFunctionType})
     </insert>
 
     <select id="getImfRegInfoList" resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo">

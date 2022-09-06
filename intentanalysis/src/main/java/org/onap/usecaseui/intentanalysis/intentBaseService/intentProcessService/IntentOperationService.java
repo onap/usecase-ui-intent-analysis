@@ -16,6 +16,7 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
@@ -36,13 +37,14 @@ public class IntentOperationService {
         }
     }
 
-    public void operationProcess() {
+    public void operationProcess(Intent intent) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
-        ActuationModule intentActuationModule = intentHandler.getActuationModule();
+        ActuationModule intentActuationModule = intentOwner.getActuationModule();
 
         //intentDecisionModule.interactWithTemplateDb();
         intentActuationModule.interactWithIntentHandle();
-        intentActuationModule.sendToIntentHandler(intentHandler);
+
+        intentActuationModule.sendToIntentHandler(intent,intentHandler);
 
         intentActuationModule.sendToNonIntentHandler();
     }
