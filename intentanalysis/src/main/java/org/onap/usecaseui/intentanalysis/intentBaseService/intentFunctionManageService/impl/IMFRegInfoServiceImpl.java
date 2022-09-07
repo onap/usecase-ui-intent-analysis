@@ -61,7 +61,7 @@ public class IMFRegInfoServiceImpl implements IMFRegInfoService {
                 (IntentManagementFunction)applicationContext.getBean(managetFunctionRegName);
 
         ActuationModule actuationModule = function.getActuationModule();
-        actuationModule.sendToNonIntentHandler();
+        actuationModule.directOperation();
         IntentManagementFunction intentManagementFunction =
                 (IntentManagementFunction) Class.forName(managetFunctionRegName)
                         .getDeclaredConstructor().newInstance();

@@ -28,24 +28,22 @@ public class IntentOperationService {
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
 
-    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
-        if (intentOwner!= null){
+    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler) {
+        if (intentOwner != null) {
             this.intentOwner = intentOwner;
         }
-        if (intentHandler!= null){
-            this.intentHandler= intentHandler;
+        if (intentHandler != null) {
+            this.intentHandler = intentHandler;
         }
     }
 
     public void operationProcess(Intent intent) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
-        ActuationModule intentActuationModule = intentOwner.getActuationModule();
+        ActuationModule intentActuationModule = intentHandler.getActuationModule();
 
         //intentDecisionModule.interactWithTemplateDb();
         intentActuationModule.interactWithIntentHandle();
-
-        intentActuationModule.sendToIntentHandler(intent,intentHandler);
-
-        intentActuationModule.sendToNonIntentHandler();
+        //determine whether to operate directly or send to next intent handler
+        intentActuationModule.fulfillIntent(intent, intentHandler);
     }
 }

@@ -15,5 +15,30 @@
  */
 package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt.cllassurancemodule;
 
-public class CLLAssuranceActuationModule {
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CLLAssuranceActuationModule extends ActuationModule {
+    @Override
+    public void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
+
+    }
+
+    @Override
+    public void directOperation() {
+
+    }
+
+    @Override
+    public void interactWithIntentHandle() {
+
+    }
+
+    @Override
+    public void fulfillIntent(Intent intent, IntentManagementFunction intentHandler) {
+        directOperation();
+    }
 }

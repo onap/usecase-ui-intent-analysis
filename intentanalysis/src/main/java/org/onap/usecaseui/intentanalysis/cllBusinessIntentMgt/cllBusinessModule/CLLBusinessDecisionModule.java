@@ -32,10 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -131,9 +128,9 @@ public class CLLBusinessDecisionModule extends DecisionModule {
     }
 
     @Override
-    public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean) {
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
         boolean needDecompostion = needDecompostion(intentGoalBean);
-        List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList = new ArrayList<>();
+        LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
         if (needDecompostion) {
             List<IntentGoalBean> subIntentGoalList = intentDecomposition(intentGoalBean);
             List<IntentGoalBean> sortList = intentOrchestration(subIntentGoalList);
@@ -141,14 +138,11 @@ public class CLLBusinessDecisionModule extends DecisionModule {
                 Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
                 IntentManagementFunction imf = exploreIntentHandlers(subIntentGoal);
                 map.put(subIntentGoal, imf);
-                intentMapList.add(map);
             }
         } else {
-            Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
-            map.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
-            intentMapList.add(map);
+            intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
         }
-        return intentMapList;
+        return intentMap;
     }
 
 }

@@ -15,27 +15,32 @@
  */
 package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
+import lombok.extern.log4j.Log4j2;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+@Log4j2
 @Component
 public class FormatIntentInputActuationModule extends ActuationModule {
     @Autowired
     IntentProcessService processService;
     @Override
-    public void sendToIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
-        processService.setIntentRole(IntentHandler, null);
-        processService.intentProcess(intent);
+    public void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
+        log.info("do nothing");
     }
 
     @Override
-    public void sendToNonIntentHandler() {
+    public void directOperation() {
     }
 
     @Override
     public void interactWithIntentHandle() {
+    }
+
+    @Override
+    public void fulfillIntent(Intent intent, IntentManagementFunction intentHandler) {
     }
 }

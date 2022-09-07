@@ -15,5 +15,41 @@
  */
 package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt.cllassurancemodule;
 
-public class CLLAssuranceDecisionModule {
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.springframework.stereotype.Component;
+
+import java.util.LinkedHashMap;
+@Component
+public class CLLAssuranceDecisionModule extends DecisionModule {
+    @Override
+    public void determineUltimateGoal() {
+
+    }
+
+    @Override
+    public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
+        return null;
+    }
+
+    @Override
+    public void intentDefinition() {
+
+    }
+
+    @Override
+    public void decideSuitableAction() {
+
+    }
+
+    @Override
+    public void interactWithTemplateDb() {
+
+    }
+
+    @Override
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
+        return null;
+    }
 }

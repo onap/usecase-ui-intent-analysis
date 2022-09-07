@@ -21,10 +21,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunct
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class IntentInvestigationService {
@@ -40,7 +37,7 @@ public class IntentInvestigationService {
         }
     }
 
-    public List<Map<IntentGoalBean,IntentManagementFunction>>  investigationProcess(IntentGoalBean intentGoalBean) {
+    public LinkedHashMap<IntentGoalBean,IntentManagementFunction>  investigationProcess(IntentGoalBean intentGoalBean) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
        return intentDecisionModule.findHandler(intentGoalBean);
     }

@@ -41,10 +41,10 @@ public class IntentDefinitionService {
         }
     }
 
-    public void definitionPorcess(Map<IntentGoalBean,IntentManagementFunction> intentMap) {
+    public void definitionPorcess(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
         ActuationModule intentActuationModule = intentOwner.getActuationModule();
         intentDecisionModule.intentDefinition();
-        intentActuationModule.saveIntentToDb(intentMap);//id  type
+        intentActuationModule.saveIntentToDb(entry.getKey().getIntent());//id  type
     }
 }

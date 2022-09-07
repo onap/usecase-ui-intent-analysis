@@ -58,17 +58,15 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     }
 
     @Override
-    public List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean) {
-        List<Map<IntentGoalBean, IntentManagementFunction>> intentMapList = new ArrayList<>();
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
+        LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
         boolean needDecompostion = needDecompostion(intentGoalBean);
         if (needDecompostion) {
             intentDecomposition(intentGoalBean);
         }else{
-            Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
-            map.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
-            intentMapList.add(map);
+            intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
         }
-        return intentMapList;
+        return intentMap;
     }
 
     public boolean needDecompostion(IntentGoalBean intentGoalBean) {

@@ -19,8 +19,7 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 
-import java.util.List;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public abstract class DecisionModule {
     public abstract void determineUltimateGoal();
@@ -34,6 +33,6 @@ public abstract class DecisionModule {
 
     public abstract  void interactWithTemplateDb();
 
-    public abstract List<Map<IntentGoalBean, IntentManagementFunction>> findHandler(IntentGoalBean intentGoalBean);
 
+    public abstract LinkedHashMap<IntentGoalBean,IntentManagementFunction>  findHandler(IntentGoalBean intentGoalBean);
 }

@@ -24,9 +24,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservic
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public abstract class ActuationModule {
     @Autowired
@@ -34,33 +32,31 @@ public abstract class ActuationModule {
     @Autowired
     IntentService intentService;
 
-    //actuationModel & knownledgeModel interact
-    public abstract void sendToIntentHandler(Intent intent, IntentManagementFunction IntentHandler);
+    //send to the next level intent handler
+    public abstract void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler);
 
-    public abstract void sendToNonIntentHandler();//直接操作
+    //Direct operation
+    public abstract void directOperation();
 
     public abstract void interactWithIntentHandle();
 
     //Save intent information to the intent instance database
-    public void saveIntentToDb(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
-        List<Intent> subIntentList = intentMap.keySet().stream().map(IntentGoalBean::getIntent)
-                .collect(Collectors.toList());
-        for (Intent subIntent : subIntentList) {
-            intentService.createIntent(subIntent);
-        }
+    public void saveIntentToDb(Intent intent) {
+            intentService.createIntent(intent);
     }
 
-    public boolean distrubuteIntentToHandler(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
-        for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : intentMap.entrySet()) {
-            IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
-            if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
-                return intentInterfaceService.createInterface(entry.getKey().getIntent(), entry.getValue());
-            } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
-                return intentInterfaceService.updateInterface(entry.getKey().getIntent(), entry.getValue());
-            } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
-                return intentInterfaceService.deleteInterface(entry.getKey().getIntent(), entry.getValue());
-            }
+    public boolean distrubuteIntentToHandler(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
+        IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
+        if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
+            return intentInterfaceService.createInterface(entry.getKey().getIntent(), entry.getValue());
+        } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
+            return intentInterfaceService.updateInterface(entry.getKey().getIntent(), entry.getValue());
+        } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
+            return intentInterfaceService.deleteInterface(entry.getKey().getIntent(), entry.getValue());
         }
         return false;
     }
+
+    //determine if the intent is to be processed directly or sent to the next-level processor
+    public abstract void fulfillIntent(Intent intent, IntentManagementFunction intentHandler);
 }

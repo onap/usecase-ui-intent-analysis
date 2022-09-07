@@ -17,7 +17,6 @@ package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule
 
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
@@ -25,11 +24,6 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservic
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 public class CLLBusinessActuationModule extends ActuationModule {
@@ -42,18 +36,23 @@ public class CLLBusinessActuationModule extends ActuationModule {
 
 
     @Override
-    public void sendToIntentHandler(Intent intent,IntentManagementFunction IntentHandler) {
+    public void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
         processService.setIntentRole(IntentHandler, null);
         processService.intentProcess(intent);
     }
 
     @Override
-    public void sendToNonIntentHandler() {
+    public void directOperation() {
 
     }
 
     @Override
     public void interactWithIntentHandle() {
 
+    }
+
+    @Override
+    public void fulfillIntent(Intent intent, IntentManagementFunction intentHandler) {
+        toNextIntentHandler(intent,intentHandler);
     }
 }

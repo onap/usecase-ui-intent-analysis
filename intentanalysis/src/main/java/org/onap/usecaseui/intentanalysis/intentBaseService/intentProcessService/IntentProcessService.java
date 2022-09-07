@@ -22,7 +22,8 @@ import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
@@ -37,47 +38,44 @@ public class IntentProcessService {
     IntentDistributionService intentDistributionService;
     @Autowired
     IntentOperationService intentOperationService;
-@Autowired
+    @Autowired
     IntentService intentService;
     private IntentManagementFunction intentOwner;
     private IntentManagementFunction intentHandler;
 
 
-    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
-        if (intentOwner!= null){
+    public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler) {
+        if (intentOwner != null) {
             this.intentOwner = intentOwner;
         }
-        if (intentHandler!= null){
-            this.intentHandler= intentHandler;
+        if (intentHandler != null) {
+            this.intentHandler = intentHandler;
         }
     }
+
     public void intentProcess(Intent intent) {
-        intentDetectionService.setIntentRole(intentOwner,intentHandler);
+        intentDetectionService.setIntentRole(intentOwner, intentHandler);
         IntentGoalBean intentGoalBean = intentDetectionService.detectionProcess(intent);
 
         //investigation process
-        intentInvestigationService.setIntentRole(intentOwner,intentHandler);
-        List<Map<IntentGoalBean,IntentManagementFunction>> intentListMap =
+        intentInvestigationService.setIntentRole(intentOwner, intentHandler);
+        LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap =
                 intentInvestigationService.investigationProcess(intentGoalBean);
 
-
-        for (Map<IntentGoalBean,IntentManagementFunction> map : intentListMap) {
+        Iterator<Map.Entry<IntentGoalBean, IntentManagementFunction>> iterator = intentMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<IntentGoalBean, IntentManagementFunction> next = iterator.next();
             //definition process  save subintent
-            intentDefinitionService.setIntentRole(intentOwner,intentHandler);
-            intentDefinitionService.definitionPorcess(map);
+            intentDefinitionService.setIntentRole(intentOwner, intentHandler);
+            intentDefinitionService.definitionPorcess(next);
 
             //distribution process
-            intentDistributionService.setIntentRole(intentOwner,intentHandler);
-            intentDistributionService.distributionProcess(map);
+            intentDistributionService.setIntentRole(intentOwner, intentHandler);
+            intentDistributionService.distributionProcess(next);
 
-            //operation process     enery entry only have one key-value
-            for (Map.Entry<IntentGoalBean, IntentManagementFunction> entry : map.entrySet()) {
-                intentOperationService.setIntentRole(intentOwner,entry.getValue());
-                intentOperationService.operationProcess(entry.getKey().getIntent());
-            }
-
+            intentOperationService.setIntentRole(intentOwner, next.getValue());
+            intentOperationService.operationProcess(next.getKey().getIntent());
         }
     }
-
 
 }

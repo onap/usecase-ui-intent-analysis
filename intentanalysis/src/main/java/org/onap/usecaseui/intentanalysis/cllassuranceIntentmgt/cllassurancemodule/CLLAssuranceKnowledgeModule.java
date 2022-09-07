@@ -15,5 +15,30 @@
  */
 package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt.cllassurancemodule;
 
-public class CLLAssuranceKnowledgeModule {
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CLLAssuranceKnowledgeModule extends KnowledgeModule {
+    @Override
+    public IntentGoalBean intentCognition(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public boolean recieveCreateIntent() {
+        return false;
+    }
+
+    @Override
+    public boolean recieveUpdateIntent() {
+        return false;
+    }
+
+    @Override
+    public boolean recieveDeleteIntent() {
+        return false;
+    }
 }

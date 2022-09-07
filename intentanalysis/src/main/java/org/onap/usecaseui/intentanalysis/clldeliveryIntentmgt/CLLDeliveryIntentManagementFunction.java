@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt;
+package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt;
 
 import lombok.Data;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -24,19 +24,19 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 @Data
-@Component("CLLAssuranceIntentManagementFunction")
-public class CLLAssuranceIntentManagementFunction extends IntentManagementFunction {
-    @Resource(name = "CLLAssuranceActuationModule")
+@Component("CLLDeliveryIntentManagementFunction")
+public class CLLDeliveryIntentManagementFunction extends IntentManagementFunction {
+    @Resource(name = "CLLDeliveryActuationModule")
     public void setActuationModule(ActuationModule actuationModule) {
         this.actuationModule = actuationModule;
     }
 
-    @Resource(name = "CLLAssuranceKnowledgeModule")
+    @Resource(name = "CLLDeliveryKnowledgeModule")
     public void setKnowledgeModule(KnowledgeModule knowledgeModule) {
         this.knowledgeModule = knowledgeModule;
     }
 
-    @Resource(name = "CLLAssuranceDecisionModule")
+    @Resource(name = "CLLDeliveryDecisionModule")
     public void setDecisionModule(DecisionModule decisionModule) {
         this.decisionModule = decisionModule;
     }

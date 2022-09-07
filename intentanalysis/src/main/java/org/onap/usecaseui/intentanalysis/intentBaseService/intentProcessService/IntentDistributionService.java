@@ -41,9 +41,9 @@ public class IntentDistributionService {
         }
     }
 
-    public boolean distributionProcess(Map<IntentGoalBean, IntentManagementFunction> intentMap) {
+    public boolean distributionProcess(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
 
-        return intentOwner.getActuationModule().distrubuteIntentToHandler(intentMap);
+        return intentOwner.getActuationModule().distrubuteIntentToHandler(entry);
 
     }
 
