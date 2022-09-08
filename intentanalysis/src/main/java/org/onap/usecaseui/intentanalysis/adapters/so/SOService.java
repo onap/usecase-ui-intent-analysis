@@ -21,6 +21,6 @@ public interface SOService {
 
     int createCCVPNInstance(CCVPNInstance instance);
 
-    void deleteIntentInstance(String instanceId);
+    int deleteIntentInstance(String instanceId);
 
 }

@@ -20,8 +20,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAuthConfig;
-import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
-import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAuthConfig;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAuthConfig;
@@ -40,7 +38,6 @@ import java.util.Map;
 public class SOServiceImpl implements SOService {
 
     private static final Logger logger = LoggerFactory.getLogger(SOServiceImpl.class);
-
 
     private SOAPICall soapiCall;
 
@@ -100,17 +97,20 @@ public class SOServiceImpl implements SOService {
     }
 
     @Override
-    public void deleteIntentInstance(String serviceInstanceId) {
+    public int deleteIntentInstance(String serviceInstanceId) {
         try {
             deleteInstanceToSO(serviceInstanceId);
         }catch (Exception e) {
             logger.error("delete instance to SO error :" + e);
+            return 0;
         }
+        return 1;
     }
 
     public String createIntentInstanceToSO(CCVPNInstance ccvpnInstance) throws IOException {
         Map<String, Object> params = paramsSetUp(ccvpnInstance);
         params.put("additionalProperties",additionalPropertiesSetUp(ccvpnInstance));
+        //make sure params are in conformity with format
         okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), JSON.toJSONString(params));
         Response<JSONObject> response = getSoApiCall().createIntentInstance(requestBody).execute();
         if (response.isSuccessful()) {
