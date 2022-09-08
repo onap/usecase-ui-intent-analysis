@@ -21,7 +21,6 @@ import com.alibaba.fastjson.JSONObject;
 import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAuthConfig;
 import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
-import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAuthConfig;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAuthConfig;
@@ -30,17 +29,18 @@ import org.onap.usecaseui.intentanalysis.util.RestfulServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import retrofit2.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+@Service
 
 public class SOServiceImpl implements SOService {
 
     private static final Logger logger = LoggerFactory.getLogger(SOServiceImpl.class);
-
 
     private SOAPICall soapiCall;
 
@@ -68,8 +68,12 @@ public class SOServiceImpl implements SOService {
         return this.aaiapiCall;
     }
 
+    public void setSoApiCall(SOAPICall soApiCall) {
+        this.soapiCall = soApiCall;
+    }
+
     @Override
-    public int createCCVPNInstance(CCVPNInstance ccvpnInstance) {
+    public int  createCCVPNInstance(CCVPNInstance ccvpnInstance) {
         try{
             if (null == ccvpnInstance){
                 logger.error("CCVPN instance is null!");
@@ -100,17 +104,20 @@ public class SOServiceImpl implements SOService {
     }
 
     @Override
-    public void deleteIntentInstance(String serviceInstanceId) {
+    public int deleteIntentInstance(String serviceInstanceId) {
         try {
             deleteInstanceToSO(serviceInstanceId);
         }catch (Exception e) {
             logger.error("delete instance to SO error :" + e);
+            return 0;
         }
+        return 1;
     }
 
     public String createIntentInstanceToSO(CCVPNInstance ccvpnInstance) throws IOException {
         Map<String, Object> params = paramsSetUp(ccvpnInstance);
         params.put("additionalProperties",additionalPropertiesSetUp(ccvpnInstance));
+        //make sure params are in conformity with format
         okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), JSON.toJSONString(params));
         Response<JSONObject> response = getSoApiCall().createIntentInstance(requestBody).execute();
         if (response.isSuccessful()) {
