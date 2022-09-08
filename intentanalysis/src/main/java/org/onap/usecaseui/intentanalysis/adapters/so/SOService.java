@@ -16,11 +16,12 @@
 package org.onap.usecaseui.intentanalysis.adapters.so;
 
 import org.onap.usecaseui.intentanalysis.bean.models.CCVPNInstance;
+import org.springframework.stereotype.Service;
 
 public interface SOService {
 
     int createCCVPNInstance(CCVPNInstance instance);
 
-    void deleteIntentInstance(String instanceId);
+    int deleteIntentInstance(String instanceId);
 
 }
