@@ -75,8 +75,8 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         List<String> expectationNameList = intentExpectations.stream().map(Expectation::getExpectationName)
                 .distinct().collect(Collectors.toList());
         if (expectationNameList.size() > 1) {
-            List<String> cllList = expectationNameList.stream().filter(x -> StringUtils.equalsIgnoreCase(x, "cll")).collect(Collectors.toList());
-            List<String> slicingList = expectationNameList.stream().filter(x -> StringUtils.equalsIgnoreCase(x, "slicing")).collect(Collectors.toList());
+            List<String> cllList = expectationNameList.stream().filter(x -> StringUtils.containsIgnoreCase(x, "cll")).collect(Collectors.toList());
+            List<String> slicingList = expectationNameList.stream().filter(x -> StringUtils.containsIgnoreCase(x, "slicing")).collect(Collectors.toList());
             if (cllList.size() > 0 && slicingList.size() > 0) {
                 return true;
             }
