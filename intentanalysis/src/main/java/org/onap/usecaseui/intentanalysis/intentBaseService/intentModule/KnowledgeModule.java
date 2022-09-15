@@ -17,8 +17,11 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
+import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -86,9 +89,9 @@ public abstract class KnowledgeModule {
                     List<Condition> contextConditions = context.getContextConditions();
                     boolean equals = false;
                     for (Condition condition : contextConditions) {
-                        String conditionstr = "ownerName = formatIntentInputManagementFunction";
-                        String concatStr = condition.getConditionName() + condition.getOperator() + condition.getConditionValue();
-                        if (StringUtils.equalsIgnoreCase(concatStr.trim(), conditionstr.trim())) {
+                        String conditionstr = "ownerName equal to formatIntentInputManagementFunction";
+                        String concatStr = condition.getConditionName() + condition.getOperator().name() + condition.getConditionValue();
+                        if (StringUtils.equalsIgnoreCase(concatStr.trim(), conditionstr.replaceAll(" ",""))) {
                             fiterList.add(intent);
                             equals = true;
                             break;
