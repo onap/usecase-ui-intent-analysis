@@ -74,7 +74,7 @@ public class IntentProcessService {
             intentDistributionService.distributionProcess(next);
 
             intentOperationService.setIntentRole(intentOwner, next.getValue());
-            intentOperationService.operationProcess(next.getKey().getIntent());
+            intentOperationService.operationProcess(next.getKey());
         }
     }
 

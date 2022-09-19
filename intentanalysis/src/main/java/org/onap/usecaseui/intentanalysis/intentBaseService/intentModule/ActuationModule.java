@@ -58,5 +58,5 @@ public abstract class ActuationModule {
     }
 
     //determine if the intent is to be processed directly or sent to the next-level processor
-    public abstract void fulfillIntent(Intent intent, IntentManagementFunction intentHandler);
+    public abstract void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler);
 }

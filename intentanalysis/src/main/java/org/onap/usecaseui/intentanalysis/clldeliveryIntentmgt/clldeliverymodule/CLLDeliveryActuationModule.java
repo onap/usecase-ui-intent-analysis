@@ -16,6 +16,7 @@
 package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt.clldeliverymodule;
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ public class CLLDeliveryActuationModule extends ActuationModule {
     }
 
     @Override
-    public void fulfillIntent(Intent intent, IntentManagementFunction intentHandler) {
+    public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
         this.directOperation();
     }
 }

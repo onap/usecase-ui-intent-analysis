@@ -17,11 +17,8 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
-import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;

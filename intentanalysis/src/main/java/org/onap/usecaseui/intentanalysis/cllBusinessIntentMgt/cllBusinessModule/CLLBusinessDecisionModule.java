@@ -17,6 +17,7 @@ package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule
 
 
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
@@ -74,9 +75,9 @@ public class CLLBusinessDecisionModule extends DecisionModule {
                 return true;
             } else {
                 List<ObjectType> objectTypeList = intentExpectations.stream().map(x ->
-                        x.getExpectationObject().getObjectType()).collect(Collectors.toList());
+                        x.getExpectationObject().getObjectType()).distinct().collect(Collectors.toList());
                 if (objectTypeList.size() > 1) {
-                    return  true;
+                    return true;
                 }
             }
         }
@@ -110,13 +111,13 @@ public class CLLBusinessDecisionModule extends DecisionModule {
 
     public List<IntentGoalBean> intentOrchestration(List<IntentGoalBean> subIntentGoalList) {
         List<IntentGoalBean> sortList = new ArrayList<>();
-        List<IntentGoalBean> deliveryGoalList = subIntentGoalList.stream().filter(x -> x.getIntent().getIntentName()
-                .equalsIgnoreCase("delivery")).collect(Collectors.toList());
-        List<IntentGoalBean> assuranceGoalList = subIntentGoalList.stream().filter(x -> x.getIntent().getIntentName()
-                .equalsIgnoreCase("assurance")).collect(Collectors.toList());
-        List<IntentGoalBean> otherGoalList = subIntentGoalList.stream().filter(x -> !x.getIntent().getIntentName()
-                .equalsIgnoreCase("assurance") && !x.getIntent().getIntentName()
-                .equalsIgnoreCase("delivery")).collect(Collectors.toList());
+        List<IntentGoalBean> deliveryGoalList = subIntentGoalList.stream().filter(x ->
+                StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "delivery")).collect(Collectors.toList());
+        List<IntentGoalBean> assuranceGoalList = subIntentGoalList.stream().filter(x ->
+                StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "assurance")).collect(Collectors.toList());
+        List<IntentGoalBean> otherGoalList = subIntentGoalList.stream().filter(x ->
+                !StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "delivery")
+                && !StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "assurance")).collect(Collectors.toList());
         sortList.addAll(deliveryGoalList);
         sortList.addAll(assuranceGoalList);
         sortList.addAll(otherGoalList);

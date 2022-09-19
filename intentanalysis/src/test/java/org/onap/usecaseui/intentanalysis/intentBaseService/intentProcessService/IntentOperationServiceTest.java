@@ -83,7 +83,8 @@ public class IntentOperationServiceTest {
     @Test
     public void testIntentOperation() {
         intentOperationService.setIntentRole(intentOwner, formatIntentInputManagementFunction);
-        intentOperationService.operationProcess(intent);
+        IntentGoalBean intentGoalBean = new IntentGoalBean(intent,IntentGoalType.CREATE);
+        intentOperationService.operationProcess(intentGoalBean);
         Assert.assertTrue(true);
     }
 }

@@ -17,6 +17,7 @@ package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule
 
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
@@ -52,7 +53,7 @@ public class CLLBusinessActuationModule extends ActuationModule {
     }
 
     @Override
-    public void fulfillIntent(Intent intent, IntentManagementFunction intentHandler) {
-        toNextIntentHandler(intent,intentHandler);
+    public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
+        toNextIntentHandler(intentGoalBean.getIntent(),intentHandler);
     }
 }

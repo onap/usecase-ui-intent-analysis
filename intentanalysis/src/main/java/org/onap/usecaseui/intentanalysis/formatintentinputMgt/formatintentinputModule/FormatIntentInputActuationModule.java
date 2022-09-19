@@ -22,6 +22,7 @@ import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
@@ -55,7 +56,7 @@ public class FormatIntentInputActuationModule extends ActuationModule {
     }
 
     @Override
-    public void fulfillIntent(Intent intent, IntentManagementFunction intentHandler) {
+    public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
     }
     @Override
     public void saveIntentToDb(Intent intent){
