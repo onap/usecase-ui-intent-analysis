@@ -23,8 +23,8 @@ import java.util.List;
 public interface ImfRegInfoService {
 
     int insertIMFRegInfoRegInfo(IntentManagementFunctionRegInfo regInfo);
-    List<IntentManagementFunctionRegInfo>  getImfRegInfoList();
-    IntentManagementFunctionRegInfo getImfRegInfoList(IntentGoalBean intentGoalBean);
+    List<IntentManagementFunctionRegInfo> getImfRegInfoList();
+    IntentManagementFunctionRegInfo getImfRegInfo(IntentGoalBean intentGoalBean);
 
 
 }

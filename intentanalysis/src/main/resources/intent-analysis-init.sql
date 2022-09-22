@@ -64,7 +64,9 @@ create table if not exists condition(
 create table if not exists intent_management_function_reg_info(
     imfr_info_id varchar(255) primary key,
     imfr_info_description varchar(255),
+    support_area text ARRAY,
     support_model varchar(255),
+    support_interfaces text ARRAY,
     handle_name varchar(255),
     intent_function_type varchar(255)
     );

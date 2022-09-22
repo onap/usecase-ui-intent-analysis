@@ -52,7 +52,7 @@ public class CLLBusinessDecisionModule extends DecisionModule {
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         //  db  filter imf  supportArea;
         //SupportInterface> supportInterfaces;
-        IntentManagementFunctionRegInfo imfRegInfo = imfRegInfoService.getImfRegInfoList(intentGoalBean);
+        IntentManagementFunctionRegInfo imfRegInfo = imfRegInfoService.getImfRegInfo(intentGoalBean);
         return (IntentManagementFunction) applicationContext.getBean(imfRegInfo.getHandleName());
     }
 
