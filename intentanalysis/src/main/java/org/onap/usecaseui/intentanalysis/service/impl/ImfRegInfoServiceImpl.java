@@ -16,7 +16,10 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
+import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
+import org.onap.usecaseui.intentanalysis.bean.enums.SupportInterface;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.mapper.IMFRegInfoMapper;
@@ -24,6 +27,7 @@ import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +39,7 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
     private IMFRegInfoMapper imfRegInfoMapper;
 
     @Override
-    public int insertIMFRegInfoRegInfo(org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo regInfo) {
+    public int insertIMFRegInfoRegInfo(IntentManagementFunctionRegInfo regInfo) {
         return imfRegInfoMapper.insertIMFRegInfoRegInfo(regInfo);
     }
 
@@ -45,20 +49,35 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
     }
 
     @Override
-    public IntentManagementFunctionRegInfo getImfRegInfoList(IntentGoalBean intentGoalBean) {
+    public IntentManagementFunctionRegInfo getImfRegInfo(IntentGoalBean intentGoalBean) {
         String intentName = intentGoalBean.getIntent().getIntentName();
         IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
         List<IntentManagementFunctionRegInfo> imfRegInfoList = imfRegInfoMapper.getImfRegInfoList();
 
-        List<IntentManagementFunctionRegInfo> imfList = imfRegInfoList.stream().
-                filter(x -> x.getSupportArea().contains(intentName)
-                        && x.getSupportInterfaces().contains(intentGoalType)).collect(Collectors.toList());
+        List<IntentManagementFunctionRegInfo> imfList = new ArrayList<>();
+        for (IntentManagementFunctionRegInfo imfr : imfRegInfoList) {
+            boolean containsArea = false;
+            boolean containsInterface = false;
+            for (SupportArea area : imfr.getSupportArea()) {
+                if (StringUtils.containsIgnoreCase(intentName, area.name())) {
+                    containsArea = true;
+                    break;
+                }
+            }
+            for (SupportInterface supInterface : imfr.getSupportInterfaces()) {
+                if (StringUtils.containsIgnoreCase(supInterface.name(), intentGoalType.name())) {
+                    containsInterface = true;
+                    break;
+                }
+            }
+            if (containsArea && containsInterface) {
+                imfList.add(imfr);
+            }
+        }
         if (!Optional.ofNullable(imfList).isPresent()) {
             log.info("The intent name is %s not find the corresponding IntentManagementFunction", intentName);
         }
         //TODO call probe  interface  if fail  intentFulfilmentInfo throw exception
-
         return imfList.get(0);
     }
-
 }
