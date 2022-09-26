@@ -5,19 +5,16 @@
 
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IMFRegInfoMapper">
 
-    <resultMap id="mapIMFRInfo" type="org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo">
-        <result column="support_area" property="supportArea" typeHandler="org.onap.usecaseui.intentanalysis.util.ListArrayTypeHandler" jdbcType="ARRAY" javaType="java.util.List"/>
-        <result column="support_interfaces" property="supportInterfaces" typeHandler="org.onap.usecaseui.intentanalysis.util.ListArrayTypeHandler" jdbcType="ARRAY" javaType="java.util.List"/>
-    </resultMap>
-
     <insert id="insertIMFRegInfoRegInfo">
         insert into intent_management_function_reg_info(imfr_info_id,imfr_info_description,support_area,support_model,support_interfaces,handle_name,intent_function_type)
         values
             (#{imfregInfo.id}, #{imfregInfo.description},#{imfregInfo.supportArea} , #{imfregInfo.supportModel},#{imfregInfo.supportInterfaces},#{imfregInfo.handleName},#{imfregInfo.intentFunctionType})
     </insert>
 
-    <select id="getImfRegInfoList" resultMap="mapIMFRInfo">
-        select * from intent_management_function_reg_info
+    <select id="getImfRegInfoList" resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo">
+        select imfr_info_id id,imfr_info_description description,support_area supportArea, support_model supportModel,
+               support_interfaces supportInterfaces,handle_name handleName,intent_function_type intentFunctionType
+        from intent_management_function_reg_info
     </select>
 
 </mapper>

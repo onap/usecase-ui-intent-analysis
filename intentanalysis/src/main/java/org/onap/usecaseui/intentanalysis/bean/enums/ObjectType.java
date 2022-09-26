@@ -20,8 +20,8 @@ import lombok.Setter;
 
 @Getter
 public enum ObjectType {
-    OBJECT1(0, "objectType1"),
-    OBJECT2(1, "objectType2");
+    SLICING(0, "objectType1"),
+    CCVPN(1, "objectType2");
 
     private int index;
 

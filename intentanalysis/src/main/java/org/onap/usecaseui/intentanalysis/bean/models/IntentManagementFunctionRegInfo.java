@@ -26,9 +26,9 @@ import java.util.List;
 public class IntentManagementFunctionRegInfo {
     private String id;
     private String description;
-    private List<SupportArea> supportArea;
+    private String supportArea;//Separate multiple values with commas
     private String supportModel;
-    private List<SupportInterface> supportInterfaces;
+    private String supportInterfaces;//Separate multiple values with commas
     private String handleName;
     //distinguish internal or external function
     private IntentFunctionType intentFunctionType;

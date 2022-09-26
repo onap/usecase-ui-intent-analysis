@@ -79,7 +79,7 @@ public class IntentProcessServiceTest {
         delivery.setExpectationName("deliveryExpectation");
         delivery.setExpectationType(ExpectationType.DELIVERY);
         ExpectationObject expectationObject = new ExpectationObject();
-        expectationObject.setObjectType(ObjectType.OBJECT1);
+        expectationObject.setObjectType(ObjectType.SLICING);
         //expetationTarget  Context  FulfilmentInfo is empty
         delivery.setExpectationObject(expectationObject);
         expectationList.add(delivery);
@@ -89,7 +89,7 @@ public class IntentProcessServiceTest {
         assurance.setExpectationName("assuranceExpectation");
         assurance.setExpectationType(ExpectationType.ASSURANCE);
         ExpectationObject expectationObject1 = new ExpectationObject();
-        expectationObject1.setObjectType(ObjectType.OBJECT2);
+        expectationObject1.setObjectType(ObjectType.CCVPN);
         //expetationTarget  Context  FulfilmentInfo  is empty
         assurance.setExpectationObject(expectationObject1);
         expectationList.add(assurance);

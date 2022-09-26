@@ -40,7 +40,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         // if intentName contain cll  return
         if (intentGoalBean.getIntent().getIntentName().toLowerCase(Locale.ROOT).contains("cll")) {
-        return (IntentManagementFunction) applicationContext.getBean(CLLBusinessIntentManagementFunction.class.getSimpleName());
+            return (IntentManagementFunction) applicationContext.getBean(CLLBusinessIntentManagementFunction.class.getSimpleName());
         }
         return null;
     }
@@ -63,7 +63,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         boolean needDecompostion = needDecompostion(intentGoalBean);
         if (needDecompostion) {
             intentDecomposition(intentGoalBean);
-        }else{
+        } else {
             intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
         }
         return intentMap;

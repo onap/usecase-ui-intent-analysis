@@ -32,7 +32,7 @@ class ExpectationObjectServiceTest extends AbstractJUnit4SpringContextTests {
 
     public ExpectationObject createTestObject(String testName) {
         ExpectationObject expectationObject = new ExpectationObject();
-        expectationObject.setObjectType(ObjectType.OBJECT1);
+        expectationObject.setObjectType(ObjectType.SLICING);
         expectationObject.setObjectInstance("true");
 
         List<Context> contextList = new ArrayList<>();
@@ -99,7 +99,7 @@ class ExpectationObjectServiceTest extends AbstractJUnit4SpringContextTests {
     @Test
     void testUpdateExpectationObjectToNullSuccess() {
         ExpectationObject expectationObject = new ExpectationObject();
-        expectationObject.setObjectType(ObjectType.OBJECT2);
+        expectationObject.setObjectType(ObjectType.CCVPN);
 
         try {
             expectationObjectService.updateExpectationObject(expectationObject, TEST_EXPECTATION_ID_2);

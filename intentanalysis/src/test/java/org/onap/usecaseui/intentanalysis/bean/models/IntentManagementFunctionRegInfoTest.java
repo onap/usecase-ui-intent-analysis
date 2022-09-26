@@ -50,9 +50,9 @@ public class IntentManagementFunctionRegInfoTest {
         IntentManagementFunctionRegInfo test = new IntentManagementFunctionRegInfo();
         test.setId("");
         test.setDescription("");
-        test.setSupportArea(new ArrayList<SupportArea>());
+        test.setSupportArea("");
         test.setSupportModel("");
-        test.setSupportInterfaces(new ArrayList<>());
+        test.setSupportInterfaces("");
         test.setHandleName("");
         test.setIntentFunctionType(IntentFunctionType.INTERNALFUNCTION);
     }

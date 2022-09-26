@@ -27,13 +27,13 @@
     </insert>
     <!--    这里的查询有问题-->
     <select id="selectConditionList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Condition">
-        select condition_id conditionId, condition_name conditionName, operator_type operator, condition_value conditionValue
+        select condition_id conditionId, condition_name conditionName, operator_type "operator", condition_value conditionValue
         from condition
         where parent_id = #{parentId}
     </select>
 
     <select id="selectCondition" resultType="org.onap.usecaseui.intentanalysis.bean.models.Condition">
-        select condition_id conditionId, condition_name conditionName, operator_type operator, condition_value conditionValue
+        select condition_id conditionId, condition_name conditionName, operator_type "operator", condition_value conditionValue
         from condition
         where condition_id = #{conditionId}
     </select>

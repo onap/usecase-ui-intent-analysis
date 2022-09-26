@@ -73,13 +73,9 @@ public class ImfRegInfoServiceImplTest {
     public void itCanGetImfRegInfoListWithIntentGoalBean() {
         List<IntentManagementFunctionRegInfo> list = new ArrayList<>();
         IntentManagementFunctionRegInfo info = new IntentManagementFunctionRegInfo();
-        List<SupportArea> areas = new ArrayList<>();
-        areas.add(SupportArea.CLLBUSINESS);
-        info.setSupportArea(areas);
+        info.setSupportArea("CLLBUSINESS");
 
-        List<SupportInterface> interList = new ArrayList<>();
-        interList.add(SupportInterface.CREATE);
-        info.setSupportInterfaces(interList);
+        info.setSupportInterfaces("CREATE");
 
         list.add(info);
 

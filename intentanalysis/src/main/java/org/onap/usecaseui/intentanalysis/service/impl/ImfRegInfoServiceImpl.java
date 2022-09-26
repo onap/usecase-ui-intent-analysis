@@ -16,6 +16,7 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
@@ -58,14 +59,15 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
         for (IntentManagementFunctionRegInfo imfr : imfRegInfoList) {
             boolean containsArea = false;
             boolean containsInterface = false;
-            for (SupportArea area : imfr.getSupportArea()) {
-                if (StringUtils.containsIgnoreCase(intentName, area.name())) {
+            for (String area : imfr.getSupportArea().split(",")) {
+                if (StringUtils.containsIgnoreCase(intentName, area)) {
                     containsArea = true;
                     break;
                 }
             }
-            for (SupportInterface supInterface : imfr.getSupportInterfaces()) {
-                if (StringUtils.containsIgnoreCase(supInterface.name(), intentGoalType.name())) {
+            if (!containsArea) break;
+            for (String supInterface : imfr.getSupportInterfaces().split(",")) {
+                if (StringUtils.containsIgnoreCase(supInterface, intentGoalType.name())) {
                     containsInterface = true;
                     break;
                 }
@@ -74,7 +76,7 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
                 imfList.add(imfr);
             }
         }
-        if (!Optional.ofNullable(imfList).isPresent()) {
+        if (CollectionUtils.isEmpty(imfList)) {
             log.info("The intent name is %s not find the corresponding IntentManagementFunction", intentName);
         }
         //TODO call probe  interface  if fail  intentFulfilmentInfo throw exception

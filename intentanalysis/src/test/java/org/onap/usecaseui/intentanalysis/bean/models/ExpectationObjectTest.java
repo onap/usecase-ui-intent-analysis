@@ -42,7 +42,7 @@ public class ExpectationObjectTest {
     @Test
     public void testSetExpectationObjectTest() {
         ExpectationObject test = new ExpectationObject();
-        test.setObjectType(ObjectType.OBJECT1);
+        test.setObjectType(ObjectType.SLICING);
         test.setObjectInstance("");
         test.setObjectContexts(new ArrayList<>());
     }
