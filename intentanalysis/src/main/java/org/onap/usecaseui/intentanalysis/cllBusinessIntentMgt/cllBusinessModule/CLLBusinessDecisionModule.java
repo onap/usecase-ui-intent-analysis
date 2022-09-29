@@ -136,9 +136,8 @@ public class CLLBusinessDecisionModule extends DecisionModule {
             List<IntentGoalBean> subIntentGoalList = intentDecomposition(intentGoalBean);
             List<IntentGoalBean> sortList = intentOrchestration(subIntentGoalList);
             for (IntentGoalBean subIntentGoal : sortList) {
-                Map<IntentGoalBean, IntentManagementFunction> map = new HashMap<>();
                 IntentManagementFunction imf = exploreIntentHandlers(subIntentGoal);
-                map.put(subIntentGoal, imf);
+                intentMap.put(subIntentGoal, imf);
             }
         } else {
             intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));

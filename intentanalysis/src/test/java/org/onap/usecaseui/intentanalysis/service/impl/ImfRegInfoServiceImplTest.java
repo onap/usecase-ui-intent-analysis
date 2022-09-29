@@ -23,8 +23,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportInterface;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;

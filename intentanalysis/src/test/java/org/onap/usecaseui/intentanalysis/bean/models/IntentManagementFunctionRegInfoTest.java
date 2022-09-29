@@ -19,9 +19,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentFunctionType;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
-
-import java.util.ArrayList;
 
 public class IntentManagementFunctionRegInfoTest {
     @Before

@@ -29,11 +29,6 @@ import java.util.List;
 
 @Service("intentFunctionManageService")
 public class IMFRegInfoServiceImpl implements IMFRegInfoService {
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    private IMFRegInfoMapper imfRegInfoMapper;
     @Override
     public int createFunctionManage(IntentManagementFunctionRegInfo intentManage)  {
         return 0;
@@ -53,20 +48,4 @@ public class IMFRegInfoServiceImpl implements IMFRegInfoService {
     public List<IntentManagementFunctionRegInfo> getIntentManage() {
         return null;
     }
-
-    public List<IntentManagementFunction> filterHandleFunction(IntentManagementFunctionRegInfo managementRegInfo) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        String managetFunctionRegName =managementRegInfo.getHandleName();
-
-        IntentManagementFunction function =
-                (IntentManagementFunction)applicationContext.getBean(managetFunctionRegName);
-
-        ActuationModule actuationModule = function.getActuationModule();
-        actuationModule.directOperation();
-        IntentManagementFunction intentManagementFunction =
-                (IntentManagementFunction) Class.forName(managetFunctionRegName)
-                        .getDeclaredConstructor().newInstance();
-        ActuationModule actuationModule1 = intentManagementFunction.getActuationModule();
-        return null;
-    }
-
 }

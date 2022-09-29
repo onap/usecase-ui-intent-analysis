@@ -45,11 +45,11 @@ values ('expectation without affiliate 2', 'CLL Assurance Expectation', 'ASSURAN
 -- Records of expectation_object
 -- ----------------------------
 MERGE INTO expectation_object (object_id, object_type, object_instance, expectation_id) KEY (object_id)
-values ('b1bc45a6-f396-4b65-857d-6d2312bfb352', 'OBJECT1', '', 'expectationId1');
+values ('b1bc45a6-f396-4b65-857d-6d2312bfb352', 'SLICING', '', 'expectationId1');
 MERGE INTO expectation_object (object_id, object_type, object_instance, expectation_id) KEY (object_id)
-values ('931a8690-fa61-4c2b-a387-9e0fa6152136', 'OBJECT2', '', 'expectationId2');
+values ('931a8690-fa61-4c2b-a387-9e0fa6152136', 'CCVPN', '', 'expectationId2');
 MERGE INTO expectation_object (object_id, object_type, object_instance, expectation_id) KEY (object_id)
-values ('3f36bf22-3416-4150-8005-cdc406a43310', 'OBJECT2', '', 'expectationId3');
+values ('3f36bf22-3416-4150-8005-cdc406a43310', 'CCVPN', '', 'expectationId3');
 
 -- ----------------------------
 -- Records of expectation_target

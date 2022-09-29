@@ -17,18 +17,14 @@ package org.onap.usecaseui.intentanalysis.bean.models;
 
 import lombok.Data;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentFunctionType;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportInterface;
-
-import java.util.List;
 
 @Data
 public class IntentManagementFunctionRegInfo {
     private String id;
     private String description;
-    private String supportArea;//Separate multiple values with commas
+    private String supportArea;//Separate multiple values with commas:SLICING,CLLBUSINESS,DELIVERY,ASSURANCE
     private String supportModel;
-    private String supportInterfaces;//Separate multiple values with commas
+    private String supportInterfaces;//Separate multiple values with commas:CREATE,DELETE,UPDATE,SEARCH
     private String handleName;
     //distinguish internal or external function
     private IntentFunctionType intentFunctionType;

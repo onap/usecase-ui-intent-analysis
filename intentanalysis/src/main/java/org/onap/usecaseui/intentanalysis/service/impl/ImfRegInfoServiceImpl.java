@@ -19,8 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
-import org.onap.usecaseui.intentanalysis.bean.enums.SupportInterface;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.mapper.IMFRegInfoMapper;
@@ -30,8 +28,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -65,7 +61,7 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
                     break;
                 }
             }
-            if (!containsArea) break;
+            if (!containsArea) continue;
             for (String supInterface : imfr.getSupportInterfaces().split(",")) {
                 if (StringUtils.containsIgnoreCase(supInterface, intentGoalType.name())) {
                     containsInterface = true;
