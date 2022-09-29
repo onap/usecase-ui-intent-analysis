@@ -19,10 +19,12 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
+import org.onap.usecaseui.intentanalysis.bean.enums.SupportArea;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @MappedJdbcTypes({ JdbcType.ARRAY })
@@ -43,24 +45,36 @@ public class ListArrayTypeHandler extends BaseTypeHandler<List<?>> {
 
     @Override
     public List<?> getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        return extractArray(rs.getArray(columnName));
+        return extractArray(rs.getArray(columnName),columnName);
+
     }
 
     @Override
     public List<?> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        return extractArray(rs.getArray(columnIndex));
+        return extractArray(rs.getArray(columnIndex),null);
     }
 
     @Override
     public List<?> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return extractArray(cs.getArray(columnIndex));
+        return extractArray(cs.getArray(columnIndex),null);
     }
 
-    protected List<?> extractArray(Array array) throws SQLException {
+    protected List<?> extractArray(Array array,String columnName) throws SQLException {
         if (array == null) {
             return null;
         }
         Object javaArray = array.getArray();
+        if(columnName != null){
+            if(columnName.equals("support_area")){
+                HashMap<String, SupportArea> supportAreaHashMap = new HashMap<>();
+                for(int i = 0;i < SupportArea.values().length;i++) {
+                    supportAreaHashMap.put(SupportArea.values()[i].getDesc(),SupportArea.values()[i]);
+                }
+                ResultSet resultSet = array.getResultSet();
+                System.out.println(resultSet);
+
+            }
+        }
         array.free();
         return new ArrayList<>(Arrays.asList((Object[])javaArray));
     }
