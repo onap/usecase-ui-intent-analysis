@@ -17,14 +17,12 @@ package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule
 
 
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
@@ -56,9 +54,6 @@ public class CLLBusinessDecisionModule extends DecisionModule {
         return (IntentManagementFunction) applicationContext.getBean(imfRegInfo.getHandleName());
     }
 
-    @Override
-    public void intentDefinition() {
-    }
 
     @Override
     public void decideSuitableAction() {
@@ -97,9 +92,10 @@ public class CLLBusinessDecisionModule extends DecisionModule {
             for (Map.Entry<ObjectType, List<Expectation>> objEntry : objTypeMap.entrySet()) {
                 IntentGoalBean subIntentGoalBean = new IntentGoalBean();
                 Intent subIntent = new Intent();
-                subIntent.setIntentId(CommonUtil.getUUid());
                 subIntent.setIntentName(objEntry.getValue().get(0).getExpectationName().replace("Expectation", "Intent"));
                 subIntent.setIntentExpectations(objEntry.getValue());
+                //List<Expectation> newExpectationList = getNewExpectationList(objEntry.getValue());
+                //subIntent.setIntentExpectations(newExpectationList);
                 //TODO      intentFulfilmentInfo intentContexts
                 subIntentGoalBean.setIntentGoalType(intentGoalType);
                 subIntentGoalBean.setIntent(subIntent);
@@ -117,7 +113,7 @@ public class CLLBusinessDecisionModule extends DecisionModule {
                 StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "assurance")).collect(Collectors.toList());
         List<IntentGoalBean> otherGoalList = subIntentGoalList.stream().filter(x ->
                 !StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "delivery")
-                && !StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "assurance")).collect(Collectors.toList());
+                        && !StringUtils.containsIgnoreCase(x.getIntent().getIntentName(), "assurance")).collect(Collectors.toList());
         sortList.addAll(deliveryGoalList);
         sortList.addAll(assuranceGoalList);
         sortList.addAll(otherGoalList);
@@ -144,5 +140,6 @@ public class CLLBusinessDecisionModule extends DecisionModule {
         }
         return intentMap;
     }
+
 
 }

@@ -76,7 +76,7 @@ public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
         target1.setTargetConditions(targetConditionList);
         List<ExpectationTarget> expectationTargetList = new ArrayList<>();
         expectationTargetList.add(target1);
-        object1.setObjectType(ObjectType.valueOf("OBJECT1"));
+        object1.setObjectType(ObjectType.valueOf("SLICING"));
         object1.setObjectInstance("objectInstance");
         expectation1.setExpectationId("expectationId");
         expectation1.setExpectationName("expectationName");

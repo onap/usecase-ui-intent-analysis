@@ -47,7 +47,7 @@ class ExpectationServiceTest extends AbstractJUnit4SpringContextTests {
         Expectation expectation = new Expectation();
 
         ExpectationObject object = new ExpectationObject();
-        object.setObjectType(ObjectType.valueOf("OBJECT1"));
+        object.setObjectType(ObjectType.valueOf("SLICING"));
         object.setObjectInstance("objectInstance");
 
         Condition targetCondition = new Condition();

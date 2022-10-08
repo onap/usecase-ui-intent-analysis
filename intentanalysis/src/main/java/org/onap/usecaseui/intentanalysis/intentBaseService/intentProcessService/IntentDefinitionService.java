@@ -23,7 +23,6 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Actuatio
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -44,7 +43,7 @@ public class IntentDefinitionService {
     public void definitionPorcess(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
         ActuationModule intentActuationModule = intentOwner.getActuationModule();
-        intentDecisionModule.intentDefinition();
-        intentActuationModule.saveIntentToDb(entry.getKey().getIntent());//id  type
+        Intent newIdIntent = intentDecisionModule.intentDefinition(entry.getKey().getIntent());
+        intentActuationModule.saveIntentToDb(newIdIntent);//id  type
     }
 }

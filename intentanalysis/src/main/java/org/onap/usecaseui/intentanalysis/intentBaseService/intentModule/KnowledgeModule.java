@@ -28,11 +28,15 @@ import java.util.stream.Collectors;
 public abstract class KnowledgeModule {
     @Autowired
     private IntentService intentService;
+
     //Parse, decompose, orchestrate the original intent
-   public  abstract IntentGoalBean intentCognition(Intent intent);
+    public abstract IntentGoalBean intentCognition(Intent intent);
+
     // in distribution, ask permission from imf
     public abstract boolean recieveCreateIntent();
+
     public abstract boolean recieveUpdateIntent();
+
     public abstract boolean recieveDeleteIntent();
 
     public List<String> intentResolution(Intent intent) {
@@ -46,7 +50,7 @@ public abstract class KnowledgeModule {
             for (Intent dbIntent : filterIntentList) {
                 String intentId = dbIntent.getIntentId();
                 int count = 0;
-                for (Expectation expectation : expectationList) {//original expectations
+                for (Expectation expectation : expectationList) { //original expectations
                     //Determine if there is the same ObjectType
                     List<Expectation> sameObjTypeList = dbIntent.getIntentExpectations().stream()
                             .filter(x -> x.getExpectationObject().getObjectType().equals(expectation.getExpectationObject().getObjectType()))
@@ -76,9 +80,16 @@ public abstract class KnowledgeModule {
     }
 
     public List<Intent> filterIntent(List<Intent> list) {
-        //// condition   ownerName = foramtIntentInput
         List<Intent> fiterList = new ArrayList<>();
         for (Intent intent : list) {
+            //filter the intent which save first time  in controller
+            List<Context> ownerIdContextList = intent.getIntentContexts().stream().filter(x ->
+                    StringUtils.equalsIgnoreCase(x.getContextName(), "ownerId")).collect(Collectors.toList());
+            if (CollectionUtils.isEmpty(ownerIdContextList)) {
+                fiterList.add(intent);
+                continue;
+            }
+            // condition   ownerName = foramtIntentInput
             List<Context> ownerInfo = intent.getIntentContexts().stream().filter(x ->
                     StringUtils.equalsIgnoreCase(x.getContextName(), "ownerInfo")).collect(Collectors.toList());
             if (CollectionUtils.isNotEmpty(ownerInfo)) {
@@ -88,13 +99,13 @@ public abstract class KnowledgeModule {
                     for (Condition condition : contextConditions) {
                         String conditionstr = "ownerName equal to formatIntentInputManagementFunction";
                         String concatStr = condition.getConditionName() + condition.getOperator().name() + condition.getConditionValue();
-                        if (StringUtils.equalsIgnoreCase(concatStr.trim(), conditionstr.replaceAll(" ",""))) {
+                        if (StringUtils.equalsIgnoreCase(concatStr.trim(), conditionstr.replaceAll(" ", ""))) {
                             fiterList.add(intent);
                             equals = true;
                             break;
                         }
                     }
-                    if (equals==true) {
+                    if (equals == true) {
                         break;
                     }
                 }

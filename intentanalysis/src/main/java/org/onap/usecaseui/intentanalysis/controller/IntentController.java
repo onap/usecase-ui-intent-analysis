@@ -17,16 +17,16 @@
 package org.onap.usecaseui.intentanalysis.controller;
 
 
-import java.util.List;
-
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.service.IntentService;
+
+import java.util.List;
 
 
 @RestController
@@ -71,9 +71,11 @@ public class IntentController {
         intentService.deleteIntent(intentId);
     }
 
-    @PostMapping(value="/handleIntent",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/handleIntent", produces = MediaType.APPLICATION_JSON_VALUE)
     public void handleIntent(@RequestBody Intent intent) {
         processService.setIntentRole(formatIntentInputManagementFunction, null);
+        //save original intent
+        intentService.createIntent(intent);
         processService.intentProcess(intent);
     }
 }

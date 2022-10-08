@@ -16,6 +16,10 @@
 package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
 
+import org.apache.commons.collections.CollectionUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
+import org.onap.usecaseui.intentanalysis.bean.models.Condition;
+import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -23,8 +27,12 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Actuatio
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CLLBusinessActuationModule extends ActuationModule {
@@ -55,5 +63,30 @@ public class CLLBusinessActuationModule extends ActuationModule {
     @Override
     public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
         toNextIntentHandler(intentGoalBean.getIntent(),intentHandler);
+    }
+	
+    @Override
+    public void saveIntentToDb(Intent intent){  //ownerid   parent intent id
+        List<Context> intentContexts = intent.getIntentContexts();
+        if (CollectionUtils.isEmpty(intentContexts)) {
+            intentContexts = new ArrayList<>();
+        }
+        //ownerId  intentId=""  show relatioship beteween  intent
+        Context ownerIdContext = new Context();
+        ownerIdContext.setContextId(CommonUtil.getUUid());
+        ownerIdContext.setContextName("ownerId");
+        List<Condition> idConditionList = new ArrayList<>();
+        Condition idCondition = new Condition();
+        idCondition.setConditionValue(intent.getIntentId());
+        idCondition.setOperator(OperatorType.EQUALTO);
+        idCondition.setConditionName("intentId");
+        idCondition.setConditionId(CommonUtil.getUUid());
+
+        idConditionList.add(idCondition);
+        ownerIdContext.setContextConditions(idConditionList);
+
+        intentContexts.add(ownerIdContext);
+        intent.setIntentContexts(intentContexts);
+        intentService.createIntent(intent);
     }
 }

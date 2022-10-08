@@ -16,12 +16,11 @@
 package org.onap.usecaseui.intentanalysis.bean.enums;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum ObjectType {
-    SLICING(0, "objectType1"),
-    CCVPN(1, "objectType2");
+    SLICING(0, "slicing"),
+    CCVPN(1, "ccvpn");
 
     private int index;
 

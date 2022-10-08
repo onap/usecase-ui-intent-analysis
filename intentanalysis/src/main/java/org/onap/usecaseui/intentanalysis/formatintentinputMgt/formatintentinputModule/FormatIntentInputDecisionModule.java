@@ -25,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 @Component
 public class FormatIntentInputDecisionModule extends DecisionModule {
@@ -45,9 +47,6 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         return null;
     }
 
-    @Override
-    public void intentDefinition() {
-    }
 
     @Override
     public void decideSuitableAction() {

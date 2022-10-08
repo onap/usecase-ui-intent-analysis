@@ -17,7 +17,6 @@ package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinput
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections.CollectionUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
@@ -76,6 +75,20 @@ public class FormatIntentInputActuationModule extends ActuationModule {
         conditionList.add(condition);
         ownerInfoCon.setContextConditions(conditionList);
         intentContexts.add(ownerInfoCon);
+        //ownerId  intentId=parent intent id
+        Context ownerIdContext = new Context();
+        ownerIdContext.setContextId(CommonUtil.getUUid());
+        ownerIdContext.setContextName("ownerId");
+        List<Condition> idConditionList = new ArrayList<>();
+        Condition idCondition = new Condition();
+        idCondition.setConditionId(CommonUtil.getUUid());
+        idCondition.setConditionName("intentId");
+        idCondition.setOperator(OperatorType.EQUALTO);
+        idCondition.setConditionValue(intent.getIntentId());
+        idConditionList.add(idCondition);
+        ownerIdContext.setContextConditions(idConditionList);
+        intentContexts.add(ownerIdContext);
+
         intent.setIntentContexts(intentContexts);
         intentService.createIntent(intent);
     }

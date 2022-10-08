@@ -33,10 +33,6 @@ public class CLLDeliveryDecisionModule extends DecisionModule {
         return null;
     }
 
-    @Override
-    public void intentDefinition() {
-
-    }
 
     @Override
     public void decideSuitableAction() {
