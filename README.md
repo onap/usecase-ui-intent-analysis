@@ -21,3 +21,13 @@ limitations under the License.
 # Intent Analysis Server
 
 This source repository contains the ONAP UUI intent ayalysis server code.
+
+
+### Api Instructions
+
+In order to better help developers understand and call the API, we provide visualized documents at URL: 
+**host_url:port/context_path/swagger-ui.html**
+
+note: 
+1. **host_url** - Catalog service URL or a service URL
+2. **context_path** - Path defined in [application.yaml](./intentanalysis/src/main/resources/application.yaml)

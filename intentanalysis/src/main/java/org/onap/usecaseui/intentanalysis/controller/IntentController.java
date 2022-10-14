@@ -16,7 +16,7 @@
 
 package org.onap.usecaseui.intentanalysis.controller;
 
-
+import io.swagger.annotations.Api;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
@@ -30,6 +30,7 @@ import java.util.List;
 
 
 @RestController
+@Api
 @RequestMapping("/intents")
 public class IntentController {
 

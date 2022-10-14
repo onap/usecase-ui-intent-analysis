@@ -18,6 +18,7 @@
 
 package org.onap.usecaseui.intentanalysis.controller;
 
+import io.swagger.annotations.Api;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IMFRegInfoService;
 import org.springframework.http.MediaType;
@@ -28,6 +29,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
+@Api
 @RequestMapping(value = "/intentFunctionManage")
 public class IMFRegInfoController {
     @Resource(name = "intentFunctionManageService")
