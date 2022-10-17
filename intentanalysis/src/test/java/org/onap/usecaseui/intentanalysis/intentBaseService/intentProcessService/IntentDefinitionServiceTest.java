@@ -89,7 +89,7 @@ public class IntentDefinitionServiceTest {
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> map = new LinkedHashMap<>();
         IntentGoalBean gb = new IntentGoalBean(intent, IntentGoalType.CREATE);
         map.put(gb, new IntentManagementFunction());
-        intentDefinitionService.definitionPorcess(map.entrySet().iterator().next());
+        intentDefinitionService.definitionPorcess(intent, map.entrySet().iterator().next());
         Assert.assertTrue(true);
     }
 }

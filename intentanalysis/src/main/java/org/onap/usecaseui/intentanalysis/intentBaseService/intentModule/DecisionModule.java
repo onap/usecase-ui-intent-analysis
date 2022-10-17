@@ -32,17 +32,22 @@ public abstract class DecisionModule {
     // find intentManageFunction
     public abstract IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
 
-    public Intent intentDefinition(Intent intent) {
+    public Intent intentDefinition(Intent originIntent, Intent intent) {
         intent.setIntentId(CommonUtil.getUUid());
         List<Expectation> originalExpectationList = intent.getIntentExpectations();
         List<Expectation> newExpectationList = getNewExpectationList(originalExpectationList);
         intent.setIntentExpectations(newExpectationList);
+        updateIntentWithOriginIntent(originIntent, intent);
         return intent;
     }
+
+    public abstract void updateIntentWithOriginIntent(Intent originIntent, Intent intent);
 
     public abstract void decideSuitableAction();
 
     public abstract void interactWithTemplateDb();
+
+    public abstract void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean);
 
 
     public abstract LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean);

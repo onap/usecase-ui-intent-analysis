@@ -17,6 +17,7 @@ package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinput
 
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -86,5 +87,16 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     public List<IntentGoalBean> intentDecomposition(IntentGoalBean intentGoalBean) {
         //todo
         return null;
+    }
+
+
+    @Override
+    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
+
+    }
+
+    @Override
+    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
+
     }
 }

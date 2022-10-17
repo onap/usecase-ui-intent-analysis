@@ -67,14 +67,14 @@ public class IntentProcessService {
             Map.Entry<IntentGoalBean, IntentManagementFunction> next = iterator.next();
             //definition process  save subintent
             intentDefinitionService.setIntentRole(intentOwner, intentHandler);
-            intentDefinitionService.definitionPorcess(next);
+            intentDefinitionService.definitionPorcess(intent, next);
 
             //distribution process
             intentDistributionService.setIntentRole(intentOwner, intentHandler);
             intentDistributionService.distributionProcess(next);
 
             intentOperationService.setIntentRole(intentOwner, next.getValue());
-            intentOperationService.operationProcess(next.getKey());
+            intentOperationService.operationProcess(intent, next.getKey());
         }
     }
 

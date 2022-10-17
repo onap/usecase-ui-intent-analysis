@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt.clldeliverymodule;
 
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
@@ -47,5 +48,15 @@ public class CLLDeliveryDecisionModule extends DecisionModule {
     @Override
     public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
         return null;
+    }
+
+    @Override
+    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
+
+    }
+
+    @Override
+    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
+
     }
 }

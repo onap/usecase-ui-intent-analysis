@@ -26,6 +26,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -41,6 +42,9 @@ public class CLLBusinessDecisionModule extends DecisionModule {
     private ImfRegInfoService imfRegInfoService;
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    IntentService intentService;
 
     @Override
     public void determineUltimateGoal() {
@@ -139,6 +143,28 @@ public class CLLBusinessDecisionModule extends DecisionModule {
             intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
         }
         return intentMap;
+    }
+
+    @Override
+    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
+
+        Intent subIntent = intentGoalBean.getIntent();
+        if (subIntent.getIntentName().contains("delivery")){
+            List<Expectation> deliveryIntentExpectationList = intentGoalBean.getIntent().getIntentExpectations();
+            List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
+            ExpectationObject deliveryExpectationObject = deliveryIntentExpectationList.get(0).getExpectationObject();
+            String objectInstance = deliveryExpectationObject.getObjectInstance();
+
+            for (Expectation originExpectation : originIntentExpectationList) {
+                ExpectationObject originExpectationObject = originExpectation.getExpectationObject();
+                originExpectationObject.setObjectInstance(objectInstance);
+            }
+        }
+    }
+
+    @Override
+    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
+
     }
 
 

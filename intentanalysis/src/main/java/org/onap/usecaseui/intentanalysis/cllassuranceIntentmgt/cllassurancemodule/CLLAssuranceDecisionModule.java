@@ -15,6 +15,9 @@
  */
 package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt.cllassurancemodule;
 
+import java.util.List;
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
@@ -25,6 +28,11 @@ import java.util.LinkedHashMap;
 public class CLLAssuranceDecisionModule extends DecisionModule {
     @Override
     public void determineUltimateGoal() {
+
+    }
+
+    @Override
+    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
 
     }
 
@@ -47,5 +55,22 @@ public class CLLAssuranceDecisionModule extends DecisionModule {
     @Override
     public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
         return null;
+    }
+
+    @Override
+    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
+        List<Expectation> originIntentExpectationList =  originIntent.getIntentExpectations();
+
+        String instanceId = "";
+        for (Expectation expectation : originIntentExpectationList) {
+            if (expectation.getExpectationName().contains("assurance")){
+                instanceId = expectation.getExpectationObject().getObjectInstance();
+                break;
+            }
+        }
+
+        for (Expectation expectation : intent.getIntentExpectations()) {
+            expectation.getExpectationObject().setObjectInstance(instanceId);
+        }
     }
 }
