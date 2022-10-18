@@ -39,9 +39,9 @@ public interface PolicyAPICall {
         "Accept: application/json",
         "Content-Type: application/json"
     })
-    @POST("/policy/api/v1/policytypes/{policyType}/versions/{policyTypeVersion}/policies")
+    @POST("/policy/api/v1/policytypes/{policyType}/versions/{policyVersion}/policies")
     Call<ResponseBody> createPolicy(@Path("policyType") String policyType,
-        @Path("policyTypeVersion") String policyTypeVersion, @Body RequestBody body);
+        @Path("policyVersion") String policyVersion, @Body RequestBody body);
 
     @Headers({
         "Accept: application/json",

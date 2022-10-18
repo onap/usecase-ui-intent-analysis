@@ -25,15 +25,16 @@ public interface SOAPICall {
             "Accept: application/json",
             "Content-Type: application/json"
     })
-    @POST("/so/infra/serviceIntent/v1/create")
+    //@POST("/so/infra/serviceIntent/v1/create")
+    @POST("/api/usecaseui-server/v1/intent/createIntentInstance")
     Call<JSONObject> createIntentInstance(@Body RequestBody body);
 
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json"
     })
-    @HTTP(method="DELETE", path="/so/infra/serviceIntent/v1/delete", hasBody = true)
-    Call<JSONObject> deleteIntentInstance(@Body RequestBody body);
+    @HTTP(method="DELETE", path="/api/usecaseui-server/v1/intent/deleteIntentInstance")
+    Call<JSONObject> deleteIntentInstance(@Query("instanceId") String instanceId);
 
 
 

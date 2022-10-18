@@ -101,35 +101,35 @@ public class PolicyServiceTest {
     @Test
     public void testUpdateIntentConfigPolicySuccess() throws IOException {
         mockUpPolicyApiCall(0);
-        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", true);
+        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", "true");
         Assert.assertTrue(result);
     }
 
     @Test
     public void testUpdateIntentConfigPolicySuccessPolicyNotExist(){
         mockUpPolicyApiCall(QUERY_POLICY_NOT_EXIST);
-        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", true);
+        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", "true");
         Assert.assertTrue(result);
     }
 
     @Test
     public void testUpdateIntentConfigPolicyFailedCreatePolicyTypeFailed(){
         mockUpPolicyApiCall(CREATE_POLICY_TYPE_FAILED);
-        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", true);
+        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", "true");
         Assert.assertFalse(result);
     }
 
     @Test
     public void testUpdateIntentConfigPolicyFailedCreatePolicyFailed(){
         mockUpPolicyApiCall(CREATE_POLICY_FAILED);
-        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", true);
+        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", "true");
         Assert.assertFalse(result);
     }
 
     @Test
     public void testUpdateIntentConfigPolicyFailedDeployPolicyFailed(){
         mockUpPolicyApiCall(DEPLOY_POLICY_FAILED);
-        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", true);
+        boolean result = policyService.updateIntentConfigPolicy("testCLLID", "1000", "true");
         Assert.assertFalse(result);
     }
 

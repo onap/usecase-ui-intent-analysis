@@ -20,7 +20,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAuthConfig;
-import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAuthConfig;
@@ -108,14 +107,27 @@ public class SOServiceImpl implements SOService {
     }
 
     @Override
-    public int deleteIntentInstance(String serviceInstanceId) {
+    public int deleteIntentInstance(String instanceId) {
         try {
-            deleteInstanceToSO(serviceInstanceId);
+            Response<JSONObject> response = getSoApiCall().deleteIntentInstance(instanceId.substring(4)).execute();
+            return 1;
         }catch (Exception e) {
             logger.error("delete instance to SO error :" + e);
             return 0;
         }
-        return 1;
+    }
+
+
+    @Override
+    public int createIntentInstance(Map<String, Object> params) {
+        try {
+            okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), JSON.toJSONString(params));
+            Response<JSONObject> response = getSoApiCall().createIntentInstance(requestBody).execute();
+            return 1;
+        } catch (IOException e) {
+            logger.error("Details:" + e.getMessage());
+            return 0;
+        }
     }
 
     public String createIntentInstanceToSO(CCVPNInstance ccvpnInstance) throws IOException {
@@ -140,7 +152,7 @@ public class SOServiceImpl implements SOService {
         additionalProperties.put("enableSdnc", "true");
         params.put("additionalProperties", additionalProperties);
         okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), JSON.toJSONString(params));
-        getSoApiCall().deleteIntentInstance(requestBody).execute();
+        //getSoApiCall().deleteIntentInstance(requestBody).execute();
     }
 
     private int getCreateStatus(CCVPNInstance ccvpnInstance) throws IOException {
@@ -161,7 +173,7 @@ public class SOServiceImpl implements SOService {
 
     /**
      * parameter set up for ccpvpn instance creation
-      * @param ccvpnInstance
+     * @param ccvpnInstance
      * @return
      */
     private Map<String, Object> paramsSetUp(CCVPNInstance ccvpnInstance) {
