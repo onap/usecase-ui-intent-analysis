@@ -11,6 +11,7 @@ spring:
   sql:
     init:
       schema-locations: classpath*:intent-analysis-init.sql
+      data-locations: classpath*:intent-analysis-data.sql
       mode: always
 mybatis:
   configuration:

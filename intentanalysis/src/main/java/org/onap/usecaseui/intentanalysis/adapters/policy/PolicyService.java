@@ -37,6 +37,6 @@ public interface PolicyService {
      * @param closedLoopStatus  True: start  monitor, False: stop monitor
      * @return
      */
-    boolean updateIntentConfigPolicy(String cllId, String originalBW, boolean closedLoopStatus);
+    boolean updateIntentConfigPolicy(String cllId, String originalBW, String closedLoopStatus);
 
 }
