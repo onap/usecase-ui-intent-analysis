@@ -46,17 +46,17 @@ public class CLLDeliveryDecisionModule extends DecisionModule {
     }
 
     @Override
-    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean) {
         return null;
     }
 
     @Override
-    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
-
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationUpdateProcess(IntentGoalBean intentGoalBean) {
+        return null;
     }
 
     @Override
-    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
-
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationDeleteProcess(IntentGoalBean intentGoalBean) {
+        return null;
     }
 }

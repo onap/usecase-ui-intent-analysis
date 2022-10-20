@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CLLAssuranceActuationModule extends ActuationModule {
     @Override
-    public void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
+    public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
 
     }
 
@@ -41,5 +41,9 @@ public class CLLAssuranceActuationModule extends ActuationModule {
     @Override
     public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
         directOperation();
+    }
+
+    public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
+
     }
 }

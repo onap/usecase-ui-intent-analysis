@@ -24,6 +24,7 @@ import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
@@ -45,6 +46,9 @@ public class CLLBusinessDecisionModule extends DecisionModule {
 
     @Autowired
     IntentService intentService;
+
+    @Autowired
+    IntentContextService intentContextService;
 
     @Override
     public void determineUltimateGoal() {
@@ -129,7 +133,7 @@ public class CLLBusinessDecisionModule extends DecisionModule {
     }
 
     @Override
-    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean) {
         boolean needDecompostion = needDecompostion(intentGoalBean);
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
         if (needDecompostion) {
@@ -145,27 +149,47 @@ public class CLLBusinessDecisionModule extends DecisionModule {
         return intentMap;
     }
 
+
     @Override
-    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
+    //format is
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationUpdateProcess(IntentGoalBean intentGoalBean) {
+        //get cll-delivery cll-assurance intent
+        Intent originIntent = intentGoalBean.getIntent();
+        List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
 
-        Intent subIntent = intentGoalBean.getIntent();
-        if (subIntent.getIntentName().contains("delivery")){
-            List<Expectation> deliveryIntentExpectationList = intentGoalBean.getIntent().getIntentExpectations();
-            List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
-            ExpectationObject deliveryExpectationObject = deliveryIntentExpectationList.get(0).getExpectationObject();
-            String objectInstance = deliveryExpectationObject.getObjectInstance();
-
+        LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
+        List<Intent> subIntentList = intentContextService.getSubIntentInfoFromContext(intentGoalBean.getIntent());
+        for (Intent intent : subIntentList) {
+            IntentManagementFunction intentHandlerInfo = intentContextService.getHandlerInfo(intent);
+            boolean bFindIntent = false;
             for (Expectation originExpectation : originIntentExpectationList) {
-                ExpectationObject originExpectationObject = originExpectation.getExpectationObject();
-                originExpectationObject.setObjectInstance(objectInstance);
+                if (intent.getIntentName().equals(originExpectation.getExpectationName())){
+                    bFindIntent = true;
+                }
+            }
+
+            if (false == bFindIntent){
+                intentContextService.deleteSubIntentContext(originIntent, intent.getIntentId());
+                IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
+                intentMap.put(subIntentGoalBean, intentHandlerInfo);
+            }else{
+                IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
+                intentMap.put(subIntentGoalBean, intentHandlerInfo);
             }
         }
+        return intentMap;
     }
 
     @Override
-    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
-
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationDeleteProcess(IntentGoalBean intentGoalBean) {
+        LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
+        List<Intent> subIntentList = intentContextService.getSubIntentInfoFromContext(intentGoalBean.getIntent());
+        for (Intent intent : subIntentList) {
+            IntentManagementFunction intentHandlerInfo = intentContextService.getHandlerInfo(intent);
+            IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
+            intentMap.put(subIntentGoalBean, intentHandlerInfo);
+        }
+        return intentMap;
     }
-
 
 }

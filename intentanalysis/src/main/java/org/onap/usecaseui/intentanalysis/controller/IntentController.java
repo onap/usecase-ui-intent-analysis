@@ -17,7 +17,10 @@
 package org.onap.usecaseui.intentanalysis.controller;
 
 
+import io.swagger.models.auth.In;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
@@ -56,26 +59,44 @@ public class IntentController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Intent> createIntent(@RequestBody Intent intent) {
-        return ResponseEntity.ok(intentService.createIntent(intent));
+
+        processService.setIntentRole(formatIntentInputManagementFunction, null);
+        //save original intent
+        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
+        IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
+        return ResponseEntity.ok(intentService.createIntent(newIntentGoalBean.getIntent()));
     }
 
     @PutMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Intent> updateIntentById(
             @PathVariable(INTENT_ID) String intentId,
             @RequestBody Intent intent) {
-        return ResponseEntity.ok(intentService.updateIntent(intent));
+
+        processService.setIntentRole(formatIntentInputManagementFunction, null);
+        //save original intent
+
+        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
+        IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
+        return ResponseEntity.ok(intentService.updateIntent(newIntentGoalBean.getIntent()));
     }
 
     @DeleteMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void removeIntentById(@PathVariable(INTENT_ID) String intentId) {
-        intentService.deleteIntent(intentId);
+
+        processService.setIntentRole(formatIntentInputManagementFunction, null);
+        //save original intent
+        Intent intent = intentService.getIntent(intentId);
+        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
+        processService.intentProcess(intentGoalBean);
     }
 
     @PostMapping(value = "/handleIntent", produces = MediaType.APPLICATION_JSON_VALUE)
     public void handleIntent(@RequestBody Intent intent) {
         processService.setIntentRole(formatIntentInputManagementFunction, null);
         //save original intent
-        intentService.createIntent(intent);
-        processService.intentProcess(intent);
+
+        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
+        IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
+        intentService.createIntent(newIntentGoalBean.getIntent());
     }
 }

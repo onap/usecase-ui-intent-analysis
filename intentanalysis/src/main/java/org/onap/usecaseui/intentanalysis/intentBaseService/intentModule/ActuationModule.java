@@ -33,7 +33,7 @@ public abstract class ActuationModule {
     IntentService intentService;
 
     //send to the next level intent handler
-    public abstract void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler);
+    public abstract void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler);
 
     //Direct operation
     public abstract void directOperation();
@@ -43,6 +43,16 @@ public abstract class ActuationModule {
     //Save intent information to the intent instance database
     public void saveIntentToDb(Intent intent) {
             intentService.createIntent(intent);
+    }
+
+    //Update intent information to the intent instance database
+    public void updateIntentToDb(Intent intent) {
+        intentService.updateIntent(intent);
+    }
+
+    //Delete intent information to the intent instance database
+    public void deleteIntentToDb(Intent intent) {
+        intentService.deleteIntent(intent.getIntentId());
     }
 
     public boolean distrubuteIntentToHandler(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
@@ -59,4 +69,6 @@ public abstract class ActuationModule {
 
     //determine if the intent is to be processed directly or sent to the next-level processor
     public abstract void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler);
+
+    public abstract void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean);
 }

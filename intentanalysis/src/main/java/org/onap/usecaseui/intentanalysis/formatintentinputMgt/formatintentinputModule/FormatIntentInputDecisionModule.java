@@ -15,13 +15,21 @@
  */
 package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
+import java.util.ArrayList;
 import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
+import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
+import org.onap.usecaseui.intentanalysis.bean.models.Condition;
+import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -34,6 +42,12 @@ import java.util.stream.Collectors;
 public class FormatIntentInputDecisionModule extends DecisionModule {
     @Autowired
     ApplicationContext applicationContext;
+
+    @Autowired
+    public IntentContextService intentContextService;
+
+    @Autowired
+    public IntentService intentService;
 
     @Override
     public void determineUltimateGoal() {
@@ -58,7 +72,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     }
 
     @Override
-    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean) {
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
         boolean needDecompostion = needDecompostion(intentGoalBean);
         if (needDecompostion) {
@@ -89,14 +103,56 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         return null;
     }
 
-
     @Override
-    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
+    //format is
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationUpdateProcess(IntentGoalBean intentGoalBean) {
+        //get format-cll intent
+        LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
+        List<Intent> subIntentList = intentContextService.getSubIntentInfoFromContext(intentGoalBean.getIntent());
+        for (Intent intent : subIntentList) {
+            IntentManagementFunction intentHandlerInfo = intentContextService.getHandlerInfo(intent);
+            UpdateIntentInfo(intentGoalBean.getIntent(), intent);
+            IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
+            intentMap.put(subIntentGoalBean, intentHandlerInfo);
+        }
+        return intentMap;
+    }
+
+    public void UpdateIntentInfo(Intent originIntent, Intent intent){
+
+        List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
+        List<Expectation> intentExpectationList = intent.getIntentExpectations();
+        int newIntentExpectationNum = originIntentExpectationList.size();
+        int oldIntentExpectationNum = intentExpectationList.size();
+
+        if (newIntentExpectationNum != oldIntentExpectationNum){
+            if (newIntentExpectationNum < oldIntentExpectationNum){
+                boolean bFindExpectation = false;
+                for (Expectation oldExpectation : intentExpectationList) {
+                    for (Expectation newExpectation : originIntentExpectationList) {
+                        if (oldExpectation.getExpectationName().equals(newExpectation.getExpectationName())){
+                            bFindExpectation = true;
+                        }
+                    }
+                    if (bFindExpectation == false){
+                        intentExpectationList.remove(oldExpectation);
+                    }
+                }
+            }
+        }
 
     }
 
     @Override
-    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
-
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationDeleteProcess(IntentGoalBean intentGoalBean) {
+        LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
+        List<Intent> subIntentList = intentContextService.getSubIntentInfoFromContext(intentGoalBean.getIntent());
+        for (Intent intent : subIntentList) {
+            IntentManagementFunction intentHandlerInfo = intentContextService.getHandlerInfo(intent);
+            IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
+            intentMap.put(subIntentGoalBean, intentHandlerInfo);
+        }
+        return intentMap;
     }
+
 }

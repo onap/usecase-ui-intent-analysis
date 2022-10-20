@@ -16,11 +16,14 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -30,6 +33,9 @@ public class IntentDefinitionService {
 
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
+
+    @Autowired
+    public IntentContextService intentContextService;
 
     public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler) {
         if (intentOwner != null) {
@@ -43,7 +49,23 @@ public class IntentDefinitionService {
     public void definitionPorcess(Intent originIntent, Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
         ActuationModule intentActuationModule = intentOwner.getActuationModule();
-        Intent newIdIntent = intentDecisionModule.intentDefinition(originIntent, entry.getKey().getIntent());
-        intentActuationModule.saveIntentToDb(newIdIntent);//id  type
+
+        IntentGoalBean newIntentGoalBean = entry.getKey();
+        if (newIntentGoalBean.getIntentGoalType() == IntentGoalType.CREATE){
+            Intent newIdIntent = intentDecisionModule.intentDefinition(originIntent, entry.getKey().getIntent());
+            intentContextService.updateIntentOwnerHandlerContext(newIdIntent, intentOwner, intentHandler);
+            intentContextService.updateParentIntentContext(originIntent, newIdIntent);
+            intentContextService.updateChindIntentContext(originIntent, newIdIntent);
+            intentActuationModule.saveIntentToDb(newIdIntent);//id  type
+        }
+
+        if (newIntentGoalBean.getIntentGoalType() == IntentGoalType.UPDATE){
+            intentActuationModule.updateIntentToDb(newIntentGoalBean.getIntent());
+        }
+
+        if (newIntentGoalBean.getIntentGoalType() == IntentGoalType.DELETE){
+            intentActuationModule.deleteIntentToDb(newIntentGoalBean.getIntent());
+        }
+
     }
 }

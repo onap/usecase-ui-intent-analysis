@@ -104,7 +104,8 @@ public class IntentProcessServiceTest {
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
         intentMap.put(intentGoalBean,cllBusinessIntentManagementFunction);
         when(intentInvestigationService.investigationProcess(any())).thenReturn(intentMap);
-        intentProcessService.intentProcess(intent);
+        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
+        intentProcessService.intentProcess(intentGoalBean);
         Assert.assertTrue(true);
     }
 }

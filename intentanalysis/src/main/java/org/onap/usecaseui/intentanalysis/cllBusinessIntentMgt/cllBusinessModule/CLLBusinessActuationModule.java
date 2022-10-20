@@ -20,6 +20,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
+import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -45,9 +47,9 @@ public class CLLBusinessActuationModule extends ActuationModule {
 
 
     @Override
-    public void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
+    public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
         processService.setIntentRole(IntentHandler, null);
-        processService.intentProcess(intent);
+        processService.intentProcess(intentGoalBean);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class CLLBusinessActuationModule extends ActuationModule {
 
     @Override
     public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
-        toNextIntentHandler(intentGoalBean.getIntent(),intentHandler);
+        toNextIntentHandler(intentGoalBean, intentHandler);
     }
 	
     @Override
@@ -88,5 +90,10 @@ public class CLLBusinessActuationModule extends ActuationModule {
         intentContexts.add(ownerIdContext);
         intent.setIntentContexts(intentContexts);
         intentService.createIntent(intent);
+    }
+
+    @Override
+    public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
+
     }
 }

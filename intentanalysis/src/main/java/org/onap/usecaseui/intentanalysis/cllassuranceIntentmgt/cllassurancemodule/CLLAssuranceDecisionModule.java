@@ -32,11 +32,6 @@ public class CLLAssuranceDecisionModule extends DecisionModule {
     }
 
     @Override
-    public void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean){
-
-    }
-
-    @Override
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         return null;
     }
@@ -53,24 +48,17 @@ public class CLLAssuranceDecisionModule extends DecisionModule {
     }
 
     @Override
-    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean) {
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean) {
         return null;
     }
 
     @Override
-    public void updateIntentWithOriginIntent(Intent originIntent, Intent intent){
-        List<Expectation> originIntentExpectationList =  originIntent.getIntentExpectations();
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationUpdateProcess(IntentGoalBean intentGoalBean) {
+        return null;
+    }
 
-        String instanceId = "";
-        for (Expectation expectation : originIntentExpectationList) {
-            if (expectation.getExpectationName().contains("assurance")){
-                instanceId = expectation.getExpectationObject().getObjectInstance();
-                break;
-            }
-        }
-
-        for (Expectation expectation : intent.getIntentExpectations()) {
-            expectation.getExpectationObject().setObjectInstance(instanceId);
-        }
+    @Override
+    public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationDeleteProcess(IntentGoalBean intentGoalBean) {
+        return null;
     }
 }

@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -36,9 +37,18 @@ public class IntentDetectionService {
         }
     }
 
-    public IntentGoalBean detectionProcess(Intent intent) {
+    public IntentGoalBean detectionProcess(IntentGoalBean originIntentGoalBean) {
         KnowledgeModule ownerKnowledgeModule = intentOwner.getKnowledgeModule();
 
-        return ownerKnowledgeModule.intentCognition(intent);
+        if (originIntentGoalBean.getIntentGoalType() == IntentGoalType.UPDATE){
+            return new IntentGoalBean(originIntentGoalBean.getIntent(), IntentGoalType.UPDATE);
+        }
+
+        if (originIntentGoalBean.getIntentGoalType() == IntentGoalType.DELETE){
+            return new IntentGoalBean(originIntentGoalBean.getIntent(), IntentGoalType.DELETE);
+        }
+
+        return ownerKnowledgeModule.intentCognition(originIntentGoalBean.getIntent());
+
     }
 }

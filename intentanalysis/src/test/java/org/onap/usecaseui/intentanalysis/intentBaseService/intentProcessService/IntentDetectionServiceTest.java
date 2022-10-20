@@ -25,10 +25,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -81,7 +83,8 @@ public class IntentDetectionServiceTest {
     @Test
     public void testDetectionProcess() {
         intentDetectionService.setIntentRole(intentOwner, null);
-        intentDetectionService.detectionProcess(intent);
+        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
+        intentDetectionService.detectionProcess(intentGoalBean);
         Assert.assertTrue(true);
 
     }

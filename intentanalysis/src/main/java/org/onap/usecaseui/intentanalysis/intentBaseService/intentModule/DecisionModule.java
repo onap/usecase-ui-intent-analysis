@@ -37,20 +37,18 @@ public abstract class DecisionModule {
         List<Expectation> originalExpectationList = intent.getIntentExpectations();
         List<Expectation> newExpectationList = getNewExpectationList(originalExpectationList);
         intent.setIntentExpectations(newExpectationList);
-        updateIntentWithOriginIntent(originIntent, intent);
         return intent;
     }
-
-    public abstract void updateIntentWithOriginIntent(Intent originIntent, Intent intent);
 
     public abstract void decideSuitableAction();
 
     public abstract void interactWithTemplateDb();
 
-    public abstract void updateIntentInfo(Intent originIntent, IntentGoalBean intentGoalBean);
+    public abstract LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean);
 
+    public abstract LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationUpdateProcess(IntentGoalBean intentGoalBean);
 
-    public abstract LinkedHashMap<IntentGoalBean, IntentManagementFunction> findHandler(IntentGoalBean intentGoalBean);
+    public abstract LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationDeleteProcess(IntentGoalBean intentGoalBean);
 
     /**
      * build new Intent with uuid
@@ -152,4 +150,6 @@ public abstract class DecisionModule {
         }
         return context;
     }
+
+
 }

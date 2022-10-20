@@ -15,30 +15,45 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class IntentInvestigationService {
+
+    @Autowired
+    IntentContextService intentContextService;
+
     private IntentManagementFunction intentHandler;
     private IntentManagementFunction intentOwner;
 
     public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
-        if (intentOwner!= null){
+        if (intentOwner != null){
             this.intentOwner = intentOwner;
         }
-        if (intentHandler!= null){
+        if (intentHandler != null){
             this.intentHandler= intentHandler;
         }
     }
 
-    public LinkedHashMap<IntentGoalBean,IntentManagementFunction>  investigationProcess(IntentGoalBean intentGoalBean) {
+    public LinkedHashMap<IntentGoalBean,IntentManagementFunction> investigationProcess(IntentGoalBean intentGoalBean) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
-       return intentDecisionModule.findHandler(intentGoalBean);
+
+        if (intentGoalBean.getIntentGoalType() == IntentGoalType.UPDATE){
+            return intentDecisionModule.investigationUpdateProcess(intentGoalBean);
+        }
+
+        if (intentGoalBean.getIntentGoalType() == IntentGoalType.DELETE){
+            return intentDecisionModule.investigationDeleteProcess(intentGoalBean);
+        }
+        return intentDecisionModule.investigationCreateProcess(intentGoalBean);
     }
 }

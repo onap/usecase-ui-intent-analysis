@@ -48,6 +48,6 @@ public class IntentOperationService {
         intentActuationModule.fulfillIntent(intentGoalBean, intentHandler);
 
         //update origin intent if need
-        intentDecisionModule.updateIntentInfo(originIntent, intentGoalBean);
+        intentActuationModule.updateIntentOperationInfo(originIntent, intentGoalBean);
     }
 }

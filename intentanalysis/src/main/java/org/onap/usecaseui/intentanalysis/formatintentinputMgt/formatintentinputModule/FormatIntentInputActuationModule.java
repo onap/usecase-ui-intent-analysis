@@ -41,8 +41,9 @@ public class FormatIntentInputActuationModule extends ActuationModule {
     IntentProcessService processService;
     @Autowired
     IntentService intentService;
+
     @Override
-    public void toNextIntentHandler(Intent intent, IntentManagementFunction IntentHandler) {
+    public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
         log.info("do nothing");
     }
 
@@ -56,7 +57,9 @@ public class FormatIntentInputActuationModule extends ActuationModule {
 
     @Override
     public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
+
     }
+
     @Override
     public void saveIntentToDb(Intent intent){
         List<Context> intentContexts = intent.getIntentContexts();
@@ -91,6 +94,10 @@ public class FormatIntentInputActuationModule extends ActuationModule {
 
         intent.setIntentContexts(intentContexts);
         intentService.createIntent(intent);
+    }
+
+    public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
+
     }
 
 }

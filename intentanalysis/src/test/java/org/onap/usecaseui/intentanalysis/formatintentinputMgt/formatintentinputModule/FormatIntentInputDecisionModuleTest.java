@@ -86,7 +86,7 @@ public class FormatIntentInputDecisionModuleTest {
     }
     @Test
     public void testFindHandler(){
-        formatIntentInputDecisionModule.findHandler(intentGoalBean);
+        formatIntentInputDecisionModule.investigationCreateProcess(intentGoalBean);
         Assert.assertTrue(true);
     }
 }

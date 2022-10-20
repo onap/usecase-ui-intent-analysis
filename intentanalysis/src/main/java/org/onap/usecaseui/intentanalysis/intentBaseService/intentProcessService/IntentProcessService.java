@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -53,29 +54,34 @@ public class IntentProcessService {
         }
     }
 
-    public void intentProcess(Intent intent) {
-        intentDetectionService.setIntentRole(intentOwner, intentHandler);
-        IntentGoalBean intentGoalBean = intentDetectionService.detectionProcess(intent);
+    public IntentGoalBean intentProcess(IntentGoalBean originIntentGoalBean) {
 
+        intentDetectionService.setIntentRole(intentOwner, intentHandler);
+        IntentGoalBean newIntentGoalBean = intentDetectionService.detectionProcess(originIntentGoalBean);
+
+        //如果是update，直接在investigationProcess获得intent中定义的handler的信息，然后一个update  或者两个update
         //investigation process
         intentInvestigationService.setIntentRole(intentOwner, intentHandler);
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap =
-                intentInvestigationService.investigationProcess(intentGoalBean);
+                intentInvestigationService.investigationProcess(newIntentGoalBean);
 
         Iterator<Map.Entry<IntentGoalBean, IntentManagementFunction>> iterator = intentMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<IntentGoalBean, IntentManagementFunction> next = iterator.next();
             //definition process  save subintent
             intentDefinitionService.setIntentRole(intentOwner, intentHandler);
-            intentDefinitionService.definitionPorcess(intent, next);
+            intentDefinitionService.definitionPorcess(originIntentGoalBean.getIntent(), next);
 
             //distribution process
             intentDistributionService.setIntentRole(intentOwner, intentHandler);
             intentDistributionService.distributionProcess(next);
 
             intentOperationService.setIntentRole(intentOwner, next.getValue());
-            intentOperationService.operationProcess(intent, next.getKey());
+            intentOperationService.operationProcess(originIntentGoalBean.getIntent(), next.getKey());
         }
+
+        return newIntentGoalBean;
     }
+
 
 }
