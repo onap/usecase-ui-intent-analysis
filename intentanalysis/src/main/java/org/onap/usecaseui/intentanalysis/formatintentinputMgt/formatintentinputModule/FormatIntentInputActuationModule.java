@@ -48,7 +48,7 @@ public class FormatIntentInputActuationModule extends ActuationModule {
     }
 
     @Override
-    public void directOperation() {
+    public void directOperation(IntentGoalBean intentGoalBean) {
     }
 
     @Override
