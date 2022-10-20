@@ -36,7 +36,7 @@ public abstract class ActuationModule {
     public abstract void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler);
 
     //Direct operation
-    public abstract void directOperation();
+    public abstract void directOperation(IntentGoalBean intentGoalBean);
 
     public abstract void interactWithIntentHandle();
 

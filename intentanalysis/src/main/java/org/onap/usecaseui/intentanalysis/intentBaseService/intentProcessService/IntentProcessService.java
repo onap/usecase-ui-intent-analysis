@@ -59,7 +59,6 @@ public class IntentProcessService {
         intentDetectionService.setIntentRole(intentOwner, intentHandler);
         IntentGoalBean newIntentGoalBean = intentDetectionService.detectionProcess(originIntentGoalBean);
 
-        //如果是update，直接在investigationProcess获得intent中定义的handler的信息，然后一个update  或者两个update
         //investigation process
         intentInvestigationService.setIntentRole(intentOwner, intentHandler);
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap =
