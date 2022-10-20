@@ -53,7 +53,7 @@ public class CLLBusinessActuationModule extends ActuationModule {
     }
 
     @Override
-    public void directOperation() {
+    public void directOperation(IntentGoalBean intentGoalBean) {
 
     }
 
