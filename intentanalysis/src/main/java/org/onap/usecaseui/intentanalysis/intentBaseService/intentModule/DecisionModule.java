@@ -20,6 +20,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.util.CommonUtil;
+import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,11 +34,20 @@ public abstract class DecisionModule {
     public abstract IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
 
     public Intent intentDefinition(Intent originIntent, Intent intent) {
-        intent.setIntentId(CommonUtil.getUUid());
+        Intent newIntent = new Intent();
+        newIntent.setIntentId(CommonUtil.getUUid());
+        newIntent.setIntentName(intent.getIntentName());
+
         List<Expectation> originalExpectationList = intent.getIntentExpectations();
-        List<Expectation> newExpectationList = getNewExpectationList(originalExpectationList);
-        intent.setIntentExpectations(newExpectationList);
-        return intent;
+        List<Expectation> newExpectationList = new ArrayList<>();
+        for (Expectation exp:originalExpectationList) {
+            Expectation expectation = new Expectation();
+            BeanUtils.copyProperties(exp,expectation);
+            newExpectationList.add(expectation);
+        }
+        List<Expectation> newIdExpectationList = getNewExpectationList(newExpectationList);
+        newIntent.setIntentExpectations(newIdExpectationList);
+        return newIntent;
     }
 
     public abstract void decideSuitableAction();
@@ -69,30 +79,39 @@ public abstract class DecisionModule {
             expectation.setExpectationObject(newExpectationObject);
             //ExpectationTarget
             List<ExpectationTarget> expectationTargets = expectation.getExpectationTargets();
+            List<ExpectationTarget> newExpTargetList = new ArrayList<>();
             if (CollectionUtils.isNotEmpty(expectationTargets)) {
                 for (ExpectationTarget expectationTarget : expectationTargets) {
-                    expectationTarget.setTargetId(CommonUtil.getUUid());
+                    ExpectationTarget expTarget =new ExpectationTarget();
+                    BeanUtils.copyProperties(expectationTarget,expTarget);
+                    expTarget.setTargetId(CommonUtil.getUUid());
                     //targetContexts
                     List<Context> targetContexts = expectationTarget.getTargetContexts();
                     if (CollectionUtils.isNotEmpty(targetContexts)) {
                         List<Context> newTargetContexts = new ArrayList<>();
                         for (Context context : targetContexts) {
-                            Context newContext = getNewContext(context);
+                            Context con=new Context();
+                            BeanUtils.copyProperties(context,con);
+                            Context newContext = getNewContext(con);
                             newTargetContexts.add(newContext);
                         }
-                        expectationTarget.setTargetContexts(newTargetContexts);
+                        expTarget.setTargetContexts(newTargetContexts);
                     }
                     //targetConditions
                     List<Condition> targetConditions = expectationTarget.getTargetConditions();
                     if (CollectionUtils.isNotEmpty(targetConditions)) {
                         List<Condition> newTargetConditions = new ArrayList<>();
                         for (Condition condition : targetConditions) {
-                            Condition newCondition = getNewCondition(condition);
+                            Condition con =new Condition();
+                            BeanUtils.copyProperties(condition,con);
+                            Condition newCondition = getNewCondition(con);
                             newTargetConditions.add(newCondition);
                         }
-                        expectationTarget.setTargetConditions(newTargetConditions);
+                        expTarget.setTargetConditions(newTargetConditions);
                     }
+                    newExpTargetList.add(expTarget);
                 }
+                expectation.setExpectationTargets(newExpTargetList);
             }
             //expectationContexts
             List<Context> expectationContexts = expectation.getExpectationContexts();
@@ -144,7 +163,9 @@ public abstract class DecisionModule {
         if (CollectionUtils.isNotEmpty(contextConditions)) {
             List<Condition> newConditionList = new ArrayList<>();
             for (Condition condition : contextConditions) {
-                newConditionList.add(getNewCondition(condition));
+                Condition con =new Condition();
+                BeanUtils.copyProperties(condition,con);
+                newConditionList.add(getNewCondition(con));
             }
             context.setContextConditions(newConditionList);
         }
