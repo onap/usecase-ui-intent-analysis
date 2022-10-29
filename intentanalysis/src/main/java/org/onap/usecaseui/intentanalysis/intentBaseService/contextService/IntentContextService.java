@@ -15,8 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.contextService;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
@@ -29,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class IntentContextService {
 
@@ -40,7 +42,9 @@ public class IntentContextService {
 
     public void updateChindIntentContext(Intent originIntent, Intent intent){
         List<Context> contextList = intent.getIntentContexts();
-
+        if (CollectionUtils.isEmpty(contextList)) {
+            contextList = new ArrayList<>();
+        }
         Condition condition1 = new Condition();
         condition1.setConditionId(CommonUtil.getUUid());
         condition1.setConditionName(originIntent.getIntentName() + "id");
@@ -54,10 +58,15 @@ public class IntentContextService {
         conditionList.add(condition1);
         context.setContextConditions(conditionList);
         contextList.add(context);
+        intent.setIntentContexts(contextList);
+
     }
 
     public void updateParentIntentContext(Intent originIntent, Intent intent){
         List<Context> contextList = originIntent.getIntentContexts();
+        if (CollectionUtils.isEmpty(contextList)) {
+            contextList = new ArrayList<>();
+        }
 
         Condition condition1 = new Condition();
         condition1.setConditionId(CommonUtil.getUUid());
@@ -69,7 +78,11 @@ public class IntentContextService {
         for (Context context : contextList) {
             if (context.getContextName().contains("subIntent info")){
                 List<Condition> conditionList = context.getContextConditions();
+                if (CollectionUtils.isEmpty(conditionList)) {
+                    conditionList = new ArrayList<>();
+                }
                 conditionList.add(condition1);
+                context.setContextConditions(conditionList);
                 isSubIntentInfoExist = true;
             }
         }
@@ -82,12 +95,15 @@ public class IntentContextService {
             conditionList.add(condition1);
             context.setContextConditions(conditionList);
             contextList.add(context);
-
+            originIntent.setIntentContexts(contextList);
         }
     }
 
     public void updateIntentOwnerHandlerContext(Intent intent, IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
         List<Context> contextList = intent.getIntentContexts();
+        if (CollectionUtils.isEmpty(contextList)){
+            contextList = new ArrayList<>();
+        }
 
         Condition condition1 = new Condition();
         condition1.setConditionId(CommonUtil.getUUid());
@@ -116,13 +132,16 @@ public class IntentContextService {
         conditionList2.add(condition2);
         context2.setContextConditions(conditionList2);
         contextList.add(context2);
+
+        intent.setIntentContexts(contextList);
     }
 
     public List<Intent> getSubIntentInfoFromContext(Intent originIntent){
-
         List<Intent> subIntentList = new ArrayList<>();
-        List<Context> contextList = originIntent.getIntentContexts();
-
+        //form db
+      //  List<Context> contextList = originIntent.getIntentContexts();
+        Intent dbIntent = intentService.getIntent(originIntent.getIntentId());
+        List<Context> contextList = dbIntent.getIntentContexts();
         for (Context context : contextList) {
             if (context.getContextName().contains("subIntent info")){
                 List<Condition> conditionList = context.getContextConditions();
@@ -133,7 +152,6 @@ public class IntentContextService {
                 }
             }
         }
-
         return subIntentList;
     }
 

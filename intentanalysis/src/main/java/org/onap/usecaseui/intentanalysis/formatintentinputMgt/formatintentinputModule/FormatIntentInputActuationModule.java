@@ -60,41 +60,7 @@ public class FormatIntentInputActuationModule extends ActuationModule {
 
     }
 
-    @Override
-    public void saveIntentToDb(Intent intent){
-        List<Context> intentContexts = intent.getIntentContexts();
-        if (CollectionUtils.isEmpty(intentContexts)) {
-            intentContexts = new ArrayList<>();
-        }
-        Context ownerInfoCon = new Context();
-        ownerInfoCon.setContextId(CommonUtil.getUUid());
-        ownerInfoCon.setContextName("ownerInfo");
-        List<Condition> conditionList = new ArrayList<>();
-        Condition condition = new Condition();
-        condition.setConditionId(CommonUtil.getUUid());
-        condition.setConditionName("ownerName");
-        condition.setOperator(OperatorType.EQUALTO);
-        condition.setConditionValue(FormatIntentInputManagementFunction.class.getSimpleName());
-        conditionList.add(condition);
-        ownerInfoCon.setContextConditions(conditionList);
-        intentContexts.add(ownerInfoCon);
-        //ownerId  intentId=parent intent id
-        Context ownerIdContext = new Context();
-        ownerIdContext.setContextId(CommonUtil.getUUid());
-        ownerIdContext.setContextName("ownerId");
-        List<Condition> idConditionList = new ArrayList<>();
-        Condition idCondition = new Condition();
-        idCondition.setConditionId(CommonUtil.getUUid());
-        idCondition.setConditionName("intentId");
-        idCondition.setOperator(OperatorType.EQUALTO);
-        idCondition.setConditionValue(intent.getIntentId());
-        idConditionList.add(idCondition);
-        ownerIdContext.setContextConditions(idConditionList);
-        intentContexts.add(ownerIdContext);
 
-        intent.setIntentContexts(intentContexts);
-        intentService.createIntent(intent);
-    }
 
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
 

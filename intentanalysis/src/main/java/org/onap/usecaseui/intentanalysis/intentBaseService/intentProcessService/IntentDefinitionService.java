@@ -23,6 +23,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunct
 import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,8 @@ public class IntentDefinitionService {
 
     @Autowired
     public IntentContextService intentContextService;
+    @Autowired
+    public IntentService intentService;
 
     public void setIntentRole(IntentManagementFunction intentOwner, IntentManagementFunction intentHandler) {
         if (intentOwner != null) {
@@ -46,7 +49,7 @@ public class IntentDefinitionService {
         }
     }
 
-    public void definitionPorcess(Intent originIntent, Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
+    public IntentGoalBean definitionPorcess(Intent originIntent, Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
         DecisionModule intentDecisionModule = intentOwner.getDecisionModule();
         ActuationModule intentActuationModule = intentOwner.getActuationModule();
 
@@ -57,15 +60,15 @@ public class IntentDefinitionService {
             intentContextService.updateParentIntentContext(originIntent, newIdIntent);
             intentContextService.updateChindIntentContext(originIntent, newIdIntent);
             intentActuationModule.saveIntentToDb(newIdIntent);//id  type
+            return new IntentGoalBean(newIdIntent,IntentGoalType.CREATE);
         }
 
         if (newIntentGoalBean.getIntentGoalType() == IntentGoalType.UPDATE){
             intentActuationModule.updateIntentToDb(newIntentGoalBean.getIntent());
         }
-
         if (newIntentGoalBean.getIntentGoalType() == IntentGoalType.DELETE){
             intentActuationModule.deleteIntentToDb(newIntentGoalBean.getIntent());
         }
-
+        return newIntentGoalBean;
     }
 }

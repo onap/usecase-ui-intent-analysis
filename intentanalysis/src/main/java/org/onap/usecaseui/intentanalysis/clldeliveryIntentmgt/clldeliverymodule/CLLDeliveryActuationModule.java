@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt.clldeliverymodule;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
@@ -31,6 +32,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class CLLDeliveryActuationModule extends ActuationModule {
 
     @Autowired
@@ -104,7 +106,7 @@ public class CLLDeliveryActuationModule extends ActuationModule {
 
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
         Intent subIntent = intentGoalBean.getIntent();
-        if (subIntent.getIntentName().contains("delivery")){
+          if (StringUtils.containsIgnoreCase(subIntent.getIntentName(),"delivery")) {
             List<Expectation> deliveryIntentExpectationList = intentGoalBean.getIntent().getIntentExpectations();
             List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
             ExpectationObject deliveryExpectationObject = deliveryIntentExpectationList.get(0).getExpectationObject();
@@ -113,11 +115,10 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             for (Expectation originExpectation : originIntentExpectationList) {
                 ExpectationObject originExpectationObject = originExpectation.getExpectationObject();
                 originExpectationObject.setObjectInstance(objectInstance);
+                expectationObjectService.updateExpectationObject(originExpectationObject,originExpectation.getExpectationId());
             }
         }
-        intentService.updateIntent(originIntent);
+
+
     }
-
-
-
 }

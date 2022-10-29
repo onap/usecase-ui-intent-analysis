@@ -140,7 +140,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
                 }
             }
         }
-
+        intent.setIntentExpectations(intentExpectationList);
     }
 
     @Override

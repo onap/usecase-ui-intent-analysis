@@ -59,7 +59,7 @@ public class IntentProcessService {
         intentDetectionService.setIntentRole(intentOwner, intentHandler);
         IntentGoalBean newIntentGoalBean = intentDetectionService.detectionProcess(originIntentGoalBean);
 
-        //investigation process
+        //investigation process Decomposition
         intentInvestigationService.setIntentRole(intentOwner, intentHandler);
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap =
                 intentInvestigationService.investigationProcess(newIntentGoalBean);
@@ -68,19 +68,17 @@ public class IntentProcessService {
         while (iterator.hasNext()) {
             Map.Entry<IntentGoalBean, IntentManagementFunction> next = iterator.next();
             //definition process  save subintent
-            intentDefinitionService.setIntentRole(intentOwner, intentHandler);
-            intentDefinitionService.definitionPorcess(originIntentGoalBean.getIntent(), next);
+            intentDefinitionService.setIntentRole(intentOwner, next.getValue());
+            //obtain newID IntentGoalBean               
+            IntentGoalBean newIdIntentGoalBean = intentDefinitionService.definitionPorcess(originIntentGoalBean.getIntent(), next);
 
             //distribution process
             intentDistributionService.setIntentRole(intentOwner, intentHandler);
             intentDistributionService.distributionProcess(next);
 
             intentOperationService.setIntentRole(intentOwner, next.getValue());
-            intentOperationService.operationProcess(originIntentGoalBean.getIntent(), next.getKey());
+            intentOperationService.operationProcess(originIntentGoalBean.getIntent(), newIdIntentGoalBean);
         }
-
         return newIntentGoalBean;
     }
-
-
 }
