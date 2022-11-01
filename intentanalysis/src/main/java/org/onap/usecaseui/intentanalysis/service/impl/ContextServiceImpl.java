@@ -123,6 +123,7 @@ public class ContextServiceImpl implements ContextService {
             }
             for (Context context : contextList) {
                 if (contextIdListFromDB.contains(context.getContextId())) {
+                    conditionService.updateConditionList(context.getContextConditions(), context.getContextId());
                     if (contextMapper.updateContext(context) < 1) {
                         String msg = "Failed to update context list to database.";
                         log.error(msg);
