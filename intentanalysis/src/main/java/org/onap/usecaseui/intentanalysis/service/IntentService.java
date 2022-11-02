@@ -33,4 +33,6 @@ public interface IntentService {
     void deleteIntent(String intentId);
 
     List<Intent> getIntentByName(String name);
+
+    List<String> getSubIntentList(Intent intent);
 }

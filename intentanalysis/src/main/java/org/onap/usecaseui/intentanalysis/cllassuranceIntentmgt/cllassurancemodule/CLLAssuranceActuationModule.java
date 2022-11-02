@@ -15,18 +15,20 @@
  */
 package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt.cllassurancemodule;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.adapters.policy.PolicyService;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Slf4j
 @Component
 public class CLLAssuranceActuationModule extends ActuationModule {
     @Autowired
@@ -34,6 +36,8 @@ public class CLLAssuranceActuationModule extends ActuationModule {
 
     @Autowired
     private PolicyService policyService;
+    @Autowired
+    private ContextService contextService;
 
     @Override
     public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
@@ -67,7 +71,8 @@ public class CLLAssuranceActuationModule extends ActuationModule {
 
     @Override
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
-
+        log.info("cllDeliveryActuationModule begin to update originIntent subIntentInfo");
+        contextService.updateContextList(originIntent.getIntentContexts(), originIntent.getIntentId());
     }
 
     private String getBandwidth(String cllId) {

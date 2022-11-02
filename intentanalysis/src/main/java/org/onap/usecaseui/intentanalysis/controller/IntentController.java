@@ -84,19 +84,9 @@ public class IntentController {
     public void removeIntentById(@PathVariable(INTENT_ID) String intentId) {
 
         processService.setIntentRole(formatIntentInputManagementFunction, null);
-        //save original intent
         Intent intent = intentService.getIntent(intentId);
         IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
         processService.intentProcess(intentGoalBean);
     }
 
-    @PostMapping(value = "/handleIntent", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void handleIntent(@RequestBody Intent intent) {
-        processService.setIntentRole(formatIntentInputManagementFunction, null);
-        //save original intent
-
-        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
-        IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
-        intentService.createIntent(newIntentGoalBean.getIntent());
-    }
 }

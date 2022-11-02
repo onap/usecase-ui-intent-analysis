@@ -163,8 +163,10 @@ public class CLLBusinessDecisionModule extends DecisionModule {
             IntentManagementFunction intentHandlerInfo = intentContextService.getHandlerInfo(intent);
             boolean bFindIntent = false;
             for (Expectation originExpectation : originIntentExpectationList) {
-                if (intent.getIntentName().equals(originExpectation.getExpectationName())){
+                if (intent.getIntentName().replace("Intent","")
+                        .equals(originExpectation.getExpectationName().replace("Expectation",""))){
                     bFindIntent = true;
+                    break;
                 }
             }
 

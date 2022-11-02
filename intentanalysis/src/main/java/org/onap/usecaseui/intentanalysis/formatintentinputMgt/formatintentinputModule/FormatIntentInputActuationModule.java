@@ -15,26 +15,17 @@
  */
 package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
-import lombok.extern.log4j.Log4j2;
-import org.apache.commons.collections.CollectionUtils;
-import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
-import org.onap.usecaseui.intentanalysis.bean.models.Condition;
-import org.onap.usecaseui.intentanalysis.bean.models.Context;
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
-import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Log4j2
+@Slf4j
 @Component
 public class FormatIntentInputActuationModule extends ActuationModule {
     @Autowired

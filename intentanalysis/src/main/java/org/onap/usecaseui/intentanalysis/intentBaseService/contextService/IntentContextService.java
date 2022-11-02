@@ -15,12 +15,13 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.contextService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.onap.usecaseui.intentanalysis.util.CommonUtil;
@@ -30,7 +31,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
 public class IntentContextService {
 
@@ -95,8 +96,8 @@ public class IntentContextService {
             conditionList.add(condition1);
             context.setContextConditions(conditionList);
             contextList.add(context);
-            originIntent.setIntentContexts(contextList);
         }
+        originIntent.setIntentContexts(contextList);
     }
 
     public void updateIntentOwnerHandlerContext(Intent intent, IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
@@ -163,8 +164,9 @@ public class IntentContextService {
             if (context.getContextName().contains("handler info")) {
                 List<Condition> conditionList = context.getContextConditions();
                 String handlerClassName = conditionList.get(0).getConditionValue();
+                String handleName = StringUtils.substringAfterLast(handlerClassName,".");
                 handler = (IntentManagementFunction) applicationContext
-                    .getBean(CLLBusinessIntentManagementFunction.class.getSimpleName());
+                    .getBean(handleName);
             }
         }
         return handler;
@@ -175,13 +177,16 @@ public class IntentContextService {
         for (Context context : contextList) {
             if (context.getContextName().contains("subIntent info")) {
                 List<Condition> conditionList = context.getContextConditions();
+                List<Condition> newConditionList = new ArrayList<>();
                 for (Condition condition : conditionList) {
-                    if (condition.getConditionValue() == deleteIntentId){
-                        conditionList.remove(condition);
+                    if (!StringUtils.equals(condition.getConditionValue(), deleteIntentId)){
+                        newConditionList.add(condition);
                     }
                 }
+                context.setContextConditions(newConditionList);
             }
         }
+        log.info("deleteSubIntentContext from intent finished");
     }
 
 }

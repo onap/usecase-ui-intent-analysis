@@ -17,10 +17,15 @@
 package org.onap.usecaseui.intentanalysis.service.impl;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.models.Condition;
+import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,5 +155,23 @@ public class IntentServiceImpl implements IntentService {
             log.info(String.format("Intent list is null, intentName = %s", intentName));
         }
         return intentList;
+    }
+
+    @Override
+    public List<String> getSubIntentList(Intent intent){
+        List<Context> intentContexts = intent.getIntentContexts();
+        List<String> subIntentIds= new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(intentContexts)) {
+            List<Context> subIntentInfoList = intentContexts.stream().filter(x -> StringUtils.equals(x.getContextName(), "subIntent info")).collect(Collectors.toList());
+            if (CollectionUtils.isNotEmpty(subIntentInfoList)) {
+                List<Condition> contextConditions = subIntentInfoList.get(0).getContextConditions();
+                if (CollectionUtils.isNotEmpty(contextConditions)) {
+                    for (Condition con:contextConditions) {
+                        subIntentIds.add(con.getConditionValue());
+                    }
+                }
+            }
+        }
+        return subIntentIds;
     }
 }

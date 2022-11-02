@@ -67,7 +67,7 @@ public class IntentDefinitionService {
             intentActuationModule.updateIntentToDb(newIntentGoalBean.getIntent());
         }
         if (newIntentGoalBean.getIntentGoalType() == IntentGoalType.DELETE){
-            intentActuationModule.deleteIntentToDb(newIntentGoalBean.getIntent());
+            intentActuationModule.deleteIntentToDb(entry.getKey().getIntent());
         }
         return newIntentGoalBean;
     }

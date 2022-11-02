@@ -49,7 +49,7 @@
     </update>
 
     <delete id="deleteCondition">
-        DELETE FROM condition WHERE condition_id = #{condition.conditionId}
+        DELETE FROM condition WHERE condition_id = #{conditionId}
     </delete>
 
     <delete id="deleteConditionList">

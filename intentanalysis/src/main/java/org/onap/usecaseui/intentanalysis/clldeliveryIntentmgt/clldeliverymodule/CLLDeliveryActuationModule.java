@@ -21,6 +21,7 @@ import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,8 @@ public class CLLDeliveryActuationModule extends ActuationModule {
 
     @Autowired
     private IntentService intentService;
+    @Autowired
+    private ContextService contextService;
 
     @Override
     public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
@@ -118,7 +121,7 @@ public class CLLDeliveryActuationModule extends ActuationModule {
                 expectationObjectService.updateExpectationObject(originExpectationObject,originExpectation.getExpectationId());
             }
         }
-
-
+       log.info("cllDeliveryActuationModule begin to update originIntent subIntentInfo");
+        contextService.updateContextList(originIntent.getIntentContexts(), originIntent.getIntentId());
     }
 }

@@ -108,6 +108,9 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationUpdateProcess(IntentGoalBean intentGoalBean) {
         //get format-cll intent
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
+        // update format-cll intentContext
+        Intent intent1 = intentService.getIntent(intentGoalBean.getIntent().getIntentId());
+        intentGoalBean.getIntent().setIntentContexts(intent1.getIntentContexts());
         List<Intent> subIntentList = intentContextService.getSubIntentInfoFromContext(intentGoalBean.getIntent());
         for (Intent intent : subIntentList) {
             IntentManagementFunction intentHandlerInfo = intentContextService.getHandlerInfo(intent);
@@ -125,22 +128,25 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         int newIntentExpectationNum = originIntentExpectationList.size();
         int oldIntentExpectationNum = intentExpectationList.size();
 
+        List<Expectation> changeList = new ArrayList<>();
         if (newIntentExpectationNum != oldIntentExpectationNum){
             if (newIntentExpectationNum < oldIntentExpectationNum){
-                boolean bFindExpectation = false;
-                for (Expectation oldExpectation : intentExpectationList) {
-                    for (Expectation newExpectation : originIntentExpectationList) {
+
+                for (Expectation oldExpectation : intentExpectationList) {//search
+                    boolean bFindExpectation = false;
+                    for (Expectation newExpectation : originIntentExpectationList) {//param
                         if (oldExpectation.getExpectationName().equals(newExpectation.getExpectationName())){
                             bFindExpectation = true;
+                            break;
                         }
                     }
-                    if (bFindExpectation == false){
-                        intentExpectationList.remove(oldExpectation);
+                    if (bFindExpectation){
+                        changeList.add(oldExpectation);
                     }
                 }
             }
         }
-        intent.setIntentExpectations(intentExpectationList);
+        intent.setIntentExpectations(changeList);
     }
 
     @Override

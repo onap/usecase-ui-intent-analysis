@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
@@ -24,6 +25,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservic
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class ActuationModule {
@@ -52,6 +54,11 @@ public abstract class ActuationModule {
 
     //Delete intent information to the intent instance database
     public void deleteIntentToDb(Intent intent) {
+        //judge if exist subIntent,exist->don't delete
+        List<String> subIntentList = intentService.getSubIntentList(intent);
+        if (CollectionUtils.isNotEmpty(subIntentList)) {
+            return;
+        }
         intentService.deleteIntent(intent.getIntentId());
     }
 

@@ -15,8 +15,8 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
+import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
@@ -78,6 +78,10 @@ public class IntentProcessService {
 
             intentOperationService.setIntentRole(intentOwner, next.getValue());
             intentOperationService.operationProcess(originIntentGoalBean.getIntent(), newIdIntentGoalBean);
+        }
+        //delete second intent
+        if (StringUtils.equals(originIntentGoalBean.getIntentGoalType().name(),IntentGoalType.DELETE.name())){
+                intentService.deleteIntent(originIntentGoalBean.getIntent().getIntentId());
         }
         return newIntentGoalBean;
     }
