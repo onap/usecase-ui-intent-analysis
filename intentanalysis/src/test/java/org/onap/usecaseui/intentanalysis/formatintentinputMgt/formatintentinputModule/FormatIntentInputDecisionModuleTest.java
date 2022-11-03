@@ -89,4 +89,26 @@ public class FormatIntentInputDecisionModuleTest {
         formatIntentInputDecisionModule.investigationCreateProcess(intentGoalBean);
         Assert.assertTrue(true);
     }
+    @Test
+    public void testUpdateIntentInfo(){
+        Intent originalIntent = new Intent();
+
+        originalIntent.setIntentName("cllIntent");
+        originalIntent.setIntentId("12345");
+        List<Expectation> expectationList = new ArrayList<>();
+
+        Expectation delivery = new Expectation();
+        delivery.setExpectationId("12345-delivery");
+        delivery.setExpectationName("deliveryExpectation");
+        delivery.setExpectationType(ExpectationType.DELIVERY);
+        ExpectationObject expectationObject = new ExpectationObject();
+        expectationObject.setObjectType(ObjectType.SLICING);
+        //expetationTarget  Context  FulfilmentInfo is empty
+        delivery.setExpectationObject(expectationObject);
+        expectationList.add(delivery);
+        originalIntent.setIntentExpectations(expectationList);
+
+        formatIntentInputDecisionModule.UpdateIntentInfo(originalIntent,intent);
+        Assert.assertTrue(true);
+    }
 }
