@@ -20,12 +20,12 @@
     <parent>
         <groupId>org.onap.usecase-ui.intent-analysis</groupId>
         <artifactId>usecase-ui-intent-analysis-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>5.2.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.onap.usecase-ui.intent-analysis</groupId>
     <artifactId>standalone</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>5.2.0-SNAPSHOT</version>
     <name>standalone</name>
     <description>Distribute Binary Files and Docker Image for Intent Analysis Server</description>
 
