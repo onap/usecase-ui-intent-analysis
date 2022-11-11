@@ -2,6 +2,11 @@ server:
   port: 8083
   servlet:
     context-path: /api/usecaseui-intent-analysis/v1
+  ssl:
+    protocol: TLS
+    key-store: classpath:keystore/uuiIntentAnalysis.jks
+    key-store-password: Aa123456
+    key-store-type: JKS
 spring:
   datasource:
     url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:intentdb}
