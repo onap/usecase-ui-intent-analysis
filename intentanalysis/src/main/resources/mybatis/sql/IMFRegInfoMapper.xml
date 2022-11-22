@@ -8,7 +8,7 @@
     <insert id="insertIMFRegInfoRegInfo">
         insert into intent_management_function_reg_info(imfr_info_id,imfr_info_description,support_area,support_model,support_interfaces,handle_name,intent_function_type)
         values
-            (#{imfregInfo.id}, #{imfregInfo.description},#{imfregInfo.supportArea} , #{imfregInfo.supportModel},#{imfregInfo.supportInterfaces},#{imfregInfo.handleName},#{imfregInfo.intentFunctionType})
+            (#{imf.id}, #{imf.description},#{imf.supportArea} , #{imf.supportModel},#{imf.supportInterfaces},#{imf.handleName},#{imf.intentFunctionType})
     </insert>
 
     <select id="getImfRegInfoList" resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo">
@@ -16,5 +16,24 @@
                support_interfaces supportInterfaces,handle_name handleName,intent_function_type intentFunctionType
         from intent_management_function_reg_info
     </select>
+
+    <delete id="deleteFunctionManageById">
+        delete from intent_management_function_reg_info
+        where imfr_info_id = #{id}
+    </delete>
+
+
+    <update id="updateIntentManageById" parameterType="org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo">
+        update intent_management_function_reg_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="imf.description != null">imfr_info_description = #{imf.description},</if>
+            <if test="imf.supportArea != null">support_area = #{imf.supportArea},</if>
+            <if test="imf.supportModel != null">support_model = #{imf.supportModel},</if>
+            <if test="imf.supportInterfaces != null">support_interfaces = #{imf.supportInterfaces},</if>
+            <if test="imf.handleName != null">handle_name = #{imf.handleName},</if>
+            <if test="imf.intentFunctionType!= null">intent_function_type = #{imf.intentFunctionType},</if>
+        </trim>
+        where imfr_info_id = #{imf.id}
+    </update>
 
 </mapper>

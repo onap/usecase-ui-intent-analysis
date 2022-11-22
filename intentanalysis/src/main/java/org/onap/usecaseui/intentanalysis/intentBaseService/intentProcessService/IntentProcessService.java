@@ -22,6 +22,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunct
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -54,6 +55,7 @@ public class IntentProcessService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public IntentGoalBean intentProcess(IntentGoalBean originIntentGoalBean) {
 
         intentDetectionService.setIntentRole(intentOwner, intentHandler);

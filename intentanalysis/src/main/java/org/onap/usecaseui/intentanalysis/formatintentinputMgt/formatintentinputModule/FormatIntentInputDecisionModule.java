@@ -15,29 +15,29 @@
  */
 package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
-import java.util.ArrayList;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
-import org.onap.usecaseui.intentanalysis.bean.models.Condition;
-import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.IntentInputException;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
-import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+@Slf4j
 @Component
 public class FormatIntentInputDecisionModule extends DecisionModule {
     @Autowired
@@ -58,8 +58,11 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         // if intentName contain cll  return
         if (intentGoalBean.getIntent().getIntentName().toLowerCase(Locale.ROOT).contains("cll")) {
             return (IntentManagementFunction) applicationContext.getBean(CLLBusinessIntentManagementFunction.class.getSimpleName());
+        }else{
+            String msg = String.format("intentName is: %s can't find corresponding IntentManagementFunction,please check Intent Name",intentGoalBean.getIntent().getIntentName());
+            log.error(msg);
+            throw new IntentInputException(msg, ResponseConsts.RET_FIND_CORRESPONDING_FAIL);
         }
-        return null;
     }
 
 
@@ -73,13 +76,16 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
 
     @Override
     public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean) {
+       log.info("FormatIntentInputMgt investigation create process start");
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
         boolean needDecompostion = needDecompostion(intentGoalBean);
+        log.debug("FormatIntentInputMgt need decompose :"+ needDecompostion);
         if (needDecompostion) {
             intentDecomposition(intentGoalBean);
         } else {
             intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
         }
+        log.info("FormatIntentInputMgt investigation create process finished");
         return intentMap;
     }
 
@@ -106,6 +112,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     @Override
     //format is
     public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationUpdateProcess(IntentGoalBean intentGoalBean) {
+        log.info("FormatIntentInputMgt investigation update process start");
         //get format-cll intent
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
         // update format-cll intentContext
@@ -118,6 +125,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
             IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
             intentMap.put(subIntentGoalBean, intentHandlerInfo);
         }
+        log.info("FormatIntentInputMgt investigation update process finished");
         return intentMap;
     }
 

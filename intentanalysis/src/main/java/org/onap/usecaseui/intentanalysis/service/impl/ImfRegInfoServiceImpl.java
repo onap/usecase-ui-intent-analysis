@@ -21,6 +21,9 @@ import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
+import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
+import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
+import org.onap.usecaseui.intentanalysis.exception.IntentInputException;
 import org.onap.usecaseui.intentanalysis.mapper.IMFRegInfoMapper;
 import org.onap.usecaseui.intentanalysis.service.ImfRegInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +53,11 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
         String intentName = intentGoalBean.getIntent().getIntentName();
         IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
         List<IntentManagementFunctionRegInfo> imfRegInfoList = imfRegInfoMapper.getImfRegInfoList();
-
+        if (CollectionUtils.isEmpty(imfRegInfoList)){
+            String msg = "query IntentManagementFunctionRegInfo from  database is empty,Please contact the corresponding person in charge to check the basic configuration";
+            log.error(msg);
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
         List<IntentManagementFunctionRegInfo> imfList = new ArrayList<>();
         for (IntentManagementFunctionRegInfo imfr : imfRegInfoList) {
             boolean containsArea = false;
@@ -73,7 +80,9 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
             }
         }
         if (CollectionUtils.isEmpty(imfList)) {
-            log.info("The intent name is %s not find the corresponding IntentManagementFunction", intentName);
+            String msg = String.format("subIntent Name : %s Failed to find the corresponding IntentManagementFunction ",intentName);
+            log.error(msg,intentName);
+            throw new IntentInputException(msg, ResponseConsts.RET_FIND_CORRESPONDING_FAIL);
         }
         //TODO call probe  interface  if fail  intentFulfilmentInfo throw exception
         return imfList.get(0);

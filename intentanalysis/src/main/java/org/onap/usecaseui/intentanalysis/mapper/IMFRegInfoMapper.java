@@ -16,12 +16,18 @@
 package org.onap.usecaseui.intentanalysis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
 
 import java.util.List;
 @Mapper
 public interface IMFRegInfoMapper {
-    int insertIMFRegInfoRegInfo(IntentManagementFunctionRegInfo info);
+    int insertIMFRegInfoRegInfo(@Param(value = "imf")IntentManagementFunctionRegInfo imf);
 
     List<IntentManagementFunctionRegInfo> getImfRegInfoList();
+
+    int deleteFunctionManageById(String id);
+
+    int updateIntentManageById(@Param(value = "id") String id,
+                           @Param(value = "imf") IntentManagementFunctionRegInfo imf);
 }

@@ -13,28 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.onap.usecaseui.intentanalysis.bean.enums;
 
-package org.onap.usecaseui.intentanalysis.bean.models;
+import lombok.Getter;
 
+@Getter
+public enum IntentGenerateType {
+    USERINPUT(0, "userInput"),
+    SYSTEMGENARATE(1, "systemGenerate");
+    private int type;
+    private String generateType;
 
-import java.util.List;
-import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
-
-
-@Data
-
-public class Intent {
-    private String intentId;
-
-    private String intentName;
-
-    private List<Expectation> intentExpectations;
-
-    private List<Context> intentContexts;
-
-    private FulfilmentInfo intentFulfilmentInfo;
-
-    private IntentGenerateType intentGenerateType;
-
+    IntentGenerateType(int type, String generateType) {
+        this.type = type;
+        this.generateType = generateType;
+    }
 }

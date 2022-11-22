@@ -16,7 +16,9 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.util.CommonUtil;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
-
+@Slf4j
 public abstract class DecisionModule {
     public abstract void determineUltimateGoal();
 
@@ -34,9 +36,11 @@ public abstract class DecisionModule {
     public abstract IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
 
     public Intent intentDefinition(Intent originIntent, Intent intent) {
+        log.debug("definition create process start to define intent:" + intent.getIntentName());
         Intent newIntent = new Intent();
         newIntent.setIntentId(CommonUtil.getUUid());
         newIntent.setIntentName(intent.getIntentName());
+        newIntent.setIntentGenerateType(IntentGenerateType.SYSTEMGENARATE);
 
         List<Expectation> originalExpectationList = intent.getIntentExpectations();
         List<Expectation> newExpectationList = new ArrayList<>();

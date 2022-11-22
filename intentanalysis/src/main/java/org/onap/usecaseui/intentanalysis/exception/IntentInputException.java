@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
+ * Copyright 2022 CMCC Technologies Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.onap.usecaseui.intentanalysis.exception;
 
-package org.onap.usecaseui.intentanalysis.bean.models;
-
-
-import java.util.List;
 import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
+import lombok.Getter;
+import lombok.Setter;
 
+public class IntentInputException extends CommonException {
 
-@Data
+    public IntentInputException(String message, int ret) {
 
-public class Intent {
-    private String intentId;
+        super(message, ret);
+    }
 
-    private String intentName;
-
-    private List<Expectation> intentExpectations;
-
-    private List<Context> intentContexts;
-
-    private FulfilmentInfo intentFulfilmentInfo;
-
-    private IntentGenerateType intentGenerateType;
 
 }

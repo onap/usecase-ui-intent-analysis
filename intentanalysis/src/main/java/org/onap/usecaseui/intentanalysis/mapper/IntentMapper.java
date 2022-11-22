@@ -38,4 +38,6 @@ public interface IntentMapper {
     int deleteIntent(@Param(value = "intentId") String intentId);
 
     List<Intent> getIntentByName(@Param(value = "intentName") String name);
+
+    List<Intent> getIntentListByIntentGenerateType(@Param(value="intentGenerateType")String intentGenerateType);
 }

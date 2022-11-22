@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.onap.usecaseui.intentanalysis.bean.models;
 
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
-import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
+@Getter
+@Setter
+public class ServiceResult {
 
+    private ResultHeader result_header;
+    private Object result_body;
 
-@Data
+    public ServiceResult() {
+    }
 
-public class Intent {
-    private String intentId;
+    public ServiceResult(ResultHeader result_header, Object result_body) {
+        this.result_header = result_header;
+        this.result_body = result_body;
+    }
 
-    private String intentName;
-
-    private List<Expectation> intentExpectations;
-
-    private List<Context> intentContexts;
-
-    private FulfilmentInfo intentFulfilmentInfo;
-
-    private IntentGenerateType intentGenerateType;
-
+    public ServiceResult(ResultHeader result_header) {
+        this.result_header = result_header;
+    }
 }

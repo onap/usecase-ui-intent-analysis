@@ -19,6 +19,7 @@
 package org.onap.usecaseui.intentanalysis.controller;
 
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService.IMFRegInfoService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,15 +39,15 @@ public class IMFRegInfoController {
         return ResponseEntity.ok(IMFRegInfoService.createFunctionManage(intentManage));
     }
 
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteIntentManage(@PathVariable(value = "id") String id) {
-        return ResponseEntity.ok(IMFRegInfoService.deleteFunctionManage(id));
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResult deleteIntentManage(@PathVariable(value = "id") String id) {
+        return IMFRegInfoService.deleteFunctionManage(id);
     }
 
-    @PutMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateIntentManageById(
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ServiceResult updateIntentManageById(
             @PathVariable(value = "id") String id, @RequestBody IntentManagementFunctionRegInfo intentManage) {
-        return ResponseEntity.ok(IMFRegInfoService.updateIntentManageById(id, intentManage));
+        return IMFRegInfoService.updateIntentManageById(id, intentManage);
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)

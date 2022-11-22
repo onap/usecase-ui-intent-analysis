@@ -39,4 +39,18 @@ public final class ResponseConsts {
      * delete data from database failed.
      */
     public static final int RET_DELETE_DATA_FAIL = 10004;
+
+    /**
+     * obtain the corresponding IntentManagementFunction failed
+     */
+    public static final int RET_FIND_CORRESPONDING_FAIL  = 10005;
+    /**
+     * response success
+     */
+    public static  final int RSEPONSE_SUCCESS = 200;
+
+    /**
+     * response error
+     */
+    public static  final int RESPONSE_ERROR = 500;
 }

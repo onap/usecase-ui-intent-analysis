@@ -174,4 +174,16 @@ public class IntentServiceImpl implements IntentService {
         }
         return subIntentIds;
     }
+
+    @Override
+    public List<Intent> getIntentListByUserInput(String intentGenerateType) {
+        List<Intent> intentList = intentMapper.getIntentListByIntentGenerateType(intentGenerateType);
+        if (CollectionUtils.isEmpty(intentList)) {
+            log.info("Intent list is null");
+        }
+        for (Intent intent : intentList) {
+            intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
+        }
+        return intentList;
+    }
 }

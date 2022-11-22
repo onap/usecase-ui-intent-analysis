@@ -5,17 +5,17 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentMapper">
 
     <select id="selectIntent" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName from intent
+        select intent_id intentId, intent_name intentName,intent_generateType intentGenerateType from intent
         where intent_id = #{intentId}
     </select>
 
     <select id="selectIntentList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName from intent
+        select intent_id intentId, intent_name intentName intent_generateType intentGenerateType from intent
     </select>
 
     <insert id="insertIntent">
-        insert into Intent(intent_id, intent_name)
-        values(#{intent.intentId}, #{intent.intentName})
+        insert into Intent(intent_id, intent_name,intent_generateType)
+        values(#{intent.intentId}, #{intent.intentName},#{intent.intentGenerateType})
     </insert>
 
     <update id="updateIntent" parameterType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
@@ -33,8 +33,13 @@
     </delete>
 
     <select id="getIntentByName" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName from intent
+        select intent_id intentId, intent_name intentName, intent_generateType intentGenerateType from intent
         where intent_name like  #{intentName}
+    </select>
+
+    <select id="getIntentListByIntentGenerateType" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
+        select intent_id intentId, intent_name intentName,intent_generateType intentGenerateType from intent
+        where intent_generateType =  #{intentGenerateType}
     </select>
 
 </mapper>

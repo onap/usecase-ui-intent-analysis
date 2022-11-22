@@ -35,4 +35,6 @@ public interface IntentService {
     List<Intent> getIntentByName(String name);
 
     List<String> getSubIntentList(Intent intent);
+
+    List<Intent> getIntentListByUserInput(String intentGenerateType);
 }

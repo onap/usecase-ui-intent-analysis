@@ -16,15 +16,16 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentFunctionManageService;
 
 import org.onap.usecaseui.intentanalysis.bean.models.IntentManagementFunctionRegInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
 
 import java.util.List;
 
 public interface IMFRegInfoService {
-    int createFunctionManage(IntentManagementFunctionRegInfo intentManage) ;
+    ServiceResult createFunctionManage(IntentManagementFunctionRegInfo intentManage) ;
 
-    int deleteFunctionManage(String id);
+    ServiceResult deleteFunctionManage(String id);
 
-    int updateIntentManageById(String id, IntentManagementFunctionRegInfo intentManage);
+    ServiceResult updateIntentManageById(String id, IntentManagementFunctionRegInfo intentManage);
 
     List<IntentManagementFunctionRegInfo> getIntentManage();
 

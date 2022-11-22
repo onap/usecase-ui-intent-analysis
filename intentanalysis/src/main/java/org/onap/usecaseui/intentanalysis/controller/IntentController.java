@@ -17,10 +17,14 @@
 package org.onap.usecaseui.intentanalysis.controller;
 
 
-import io.swagger.models.auth.In;
+import lombok.extern.log4j.Log4j2;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.ResultHeader;
+import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
+import org.onap.usecaseui.intentanalysis.exception.CommonException;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
@@ -31,7 +35,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.onap.usecaseui.intentanalysis.common.ResponseConsts.RESPONSE_ERROR;
+import static org.onap.usecaseui.intentanalysis.common.ResponseConsts.RSEPONSE_SUCCESS;
 
+@Log4j2
 @RestController
 @RequestMapping("/intents")
 public class IntentController {
@@ -52,41 +59,85 @@ public class IntentController {
     }
 
     @GetMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Intent> getIntentById(
-            @PathVariable(INTENT_ID) String intentId) {
-        return ResponseEntity.ok(intentService.getIntent(intentId));
+    public ServiceResult getIntentById(
+    @PathVariable(INTENT_ID) String intentId) {
+        return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "get Intent success"),
+        intentService.getIntent(intentId));
+
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Intent> createIntent(@RequestBody Intent intent) {
+    public ServiceResult createIntent(@RequestBody Intent intent) {
+        ResultHeader resultHeader = new ResultHeader();
+        Intent returnIntent = new Intent();
+        log.info("Execute create intent %s start",intent.getIntentName());
+        try {
+            processService.setIntentRole(formatIntentInputManagementFunction, null);
+            IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
+            IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
 
-        processService.setIntentRole(formatIntentInputManagementFunction, null);
-        //save original intent
-        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
-        IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
-        return ResponseEntity.ok(intentService.createIntent(newIntentGoalBean.getIntent()));
+            newIntentGoalBean.getIntent().setIntentGenerateType(IntentGenerateType.USERINPUT);
+            returnIntent = intentService.createIntent(newIntentGoalBean.getIntent());
+            resultHeader.setResult_code(RSEPONSE_SUCCESS);
+            resultHeader.setResult_message("create intent success");
+            log.info("Execute create intent finished");
+        } catch (CommonException exception) {
+            log.error("Execute create intent Exception:", exception);
+            resultHeader.setResult_code(exception.getRetCode());
+            resultHeader.setResult_message(exception.getMessage());
+        } catch (Exception exception) {
+            log.error("Execute create intent Exception:", exception);
+            resultHeader.setResult_code(RESPONSE_ERROR);
+            resultHeader.setResult_message(exception.getMessage());
+        }
+        return new ServiceResult(resultHeader, returnIntent);
     }
 
     @PutMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Intent> updateIntentById(
-            @PathVariable(INTENT_ID) String intentId,
-            @RequestBody Intent intent) {
-
-        processService.setIntentRole(formatIntentInputManagementFunction, null);
-        //save original intent
-
-        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
-        IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
-        return ResponseEntity.ok(intentService.updateIntent(newIntentGoalBean.getIntent()));
+    public ServiceResult updateIntentById(@PathVariable(INTENT_ID) String intentId,
+                                          @RequestBody Intent intent) {
+        log.info("Execute update intent start");
+        try {
+            processService.setIntentRole(formatIntentInputManagementFunction, null);
+            IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
+            IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
+            Intent reIntent = intentService.updateIntent(newIntentGoalBean.getIntent());
+            log.info("Execute update intent finished");
+            return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "update intent success"), reIntent);
+        } catch (CommonException exception) {
+            log.error("Execute update intent Exception:", exception);
+            return new ServiceResult(new ResultHeader(exception.getRetCode(), exception.getMessage()));
+        } catch (Exception exception) {
+            log.error("Execute update intent Exception:", exception);
+            return new ServiceResult(new ResultHeader(RESPONSE_ERROR, exception.getMessage()));
+        }
     }
 
     @DeleteMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void removeIntentById(@PathVariable(INTENT_ID) String intentId) {
+    public ServiceResult removeIntentById(@PathVariable(INTENT_ID) String intentId) {
+        log.info("Execute delete intent start");
+        try {
+            processService.setIntentRole(formatIntentInputManagementFunction, null);
+            Intent intent = intentService.getIntent(intentId);
+            IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
+            processService.intentProcess(intentGoalBean);
+            log.info("Execute delete intent finished");
+            return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "delete intent success"));
+        } catch (CommonException exception) {
+            log.error("Execute delete intent Exception:", exception);
+            return new ServiceResult(new ResultHeader(exception.getRetCode(), exception.getMessage()));
+        }
+    }
 
-        processService.setIntentRole(formatIntentInputManagementFunction, null);
-        Intent intent = intentService.getIntent(intentId);
-        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
-        processService.intentProcess(intentGoalBean);
+    @GetMapping(value = {"/intentGenerateType/{intentGenerateType}"}, produces = "application/json")
+    public ServiceResult getIntentListByIntentGenerateType(
+            @PathVariable(value = "intentGenerateType") String intentGenerateType) {
+        try {
+            List<Intent> list = intentService.getIntentListByUserInput(intentGenerateType);
+            return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "query success"), list);
+        } catch (CommonException exception) {
+            return new ServiceResult(new ResultHeader(exception.getRetCode(), exception.getMessage()));
+        }
     }
 
 }

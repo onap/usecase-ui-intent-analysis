@@ -16,6 +16,7 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
@@ -28,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-
+@Slf4j
 @Service
 public class IntentDefinitionService {
 
@@ -59,7 +60,8 @@ public class IntentDefinitionService {
             intentContextService.updateIntentOwnerHandlerContext(newIdIntent, intentOwner, intentHandler);
             intentContextService.updateParentIntentContext(originIntent, newIdIntent);
             intentContextService.updateChindIntentContext(originIntent, newIdIntent);
-            intentActuationModule.saveIntentToDb(newIdIntent);//id  type
+            log.debug(newIdIntent.toString());
+            intentActuationModule.saveIntentToDb(newIdIntent);
             return new IntentGoalBean(newIdIntent,IntentGoalType.CREATE);
         }
 

@@ -23,4 +23,7 @@ public class CommonException extends RuntimeException{
         super(message);
         errMsg = new ErrorMessage(ret, null);
     }
+    public int getRetCode(){
+        return this.errMsg.getRetCode();
+    }
 }
