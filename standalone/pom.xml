@@ -30,7 +30,7 @@
     <description>Distribute Binary Files and Docker Image for Intent Analysis Server</description>
 
     <properties>
-        <intent.version>0.0.1</intent.version>
+        <intent.version>5.2.0</intent.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -43,7 +43,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.onap.usecase-ui.intent-analysis</groupId>
-                <artifactId>server</artifactId>
+                <artifactId>usecase-ui.intent-analysis</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
@@ -116,7 +116,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.onap.usecase-ui.intent-analysis</groupId>
-                                    <artifactId>server</artifactId>
+                                    <artifactId>usecase-ui.intent-analysis</artifactId>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${linux64outputdir}</outputDirectory>
