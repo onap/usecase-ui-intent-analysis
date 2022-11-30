@@ -10,7 +10,7 @@
     </select>
 
     <select id="selectIntentList" resultType="org.onap.usecaseui.intentanalysis.bean.models.Intent">
-        select intent_id intentId, intent_name intentName intent_generateType intentGenerateType from intent
+        select intent_id intentId, intent_name intentName, intent_generateType intentGenerateType from intent
     </select>
 
     <insert id="insertIntent">
