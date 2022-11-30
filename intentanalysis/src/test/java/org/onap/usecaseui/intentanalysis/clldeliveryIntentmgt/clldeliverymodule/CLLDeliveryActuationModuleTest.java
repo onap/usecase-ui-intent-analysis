@@ -16,17 +16,16 @@
  */
 package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt.clldeliverymodule;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
+import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
-import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,7 +46,8 @@ public class CLLDeliveryActuationModuleTest {
     private ExpectationObjectService expectationObjectService;
     @Mock
     private ContextService contextService;
-
+    @Mock
+    private SOService soService;
     Intent originalIntent = new Intent();
     IntentGoalBean intentGoalBean = new IntentGoalBean();
 
@@ -79,6 +79,39 @@ public class CLLDeliveryActuationModuleTest {
         Mockito.doNothing().when(expectationObjectService).updateExpectationObject(any(), any());
         Mockito.doNothing().when(contextService).updateContextList(any(), any());
         cllDeliveryActuationModulel.updateIntentOperationInfo(originalIntent,intentGoalBean);
+    }
+
+    @Test
+    public void testGetInstanceId(){
+        cllDeliveryActuationModulel.getInstanceId();
+        Assert.assertTrue(true);
+    }
+    @Test
+    public void testDirectOperation (){
+        intentGoalBean.setIntentGoalType(IntentGoalType.CREATE);
+        Intent intent = new Intent();
+        List<Expectation> expectationList = new ArrayList<>();
+        Expectation expectation = new Expectation();
+        expectation.setExpectationId("1234");
+        List<ExpectationTarget> targetList = new ArrayList<>();
+        ExpectationTarget target = new ExpectationTarget();
+
+        List<Condition> conditionList = new ArrayList<>();
+        Condition con = new Condition();
+        con.setConditionName("source");
+        conditionList.add(con);
+        target.setTargetConditions(conditionList);
+        targetList.add(target);
+        expectation.setExpectationTargets(targetList);
+        expectationList.add(expectation);
+        intent.setIntentExpectations(expectationList);
+        intentGoalBean.setIntent(intent);
+
+        //Mockito.doNothing().when(soService).createIntentInstance(any());
+        Mockito.when(expectationObjectService.getExpectationObject(any())).thenReturn(new ExpectationObject());
+        Mockito.doNothing().when(expectationObjectService).updateExpectationObject(any(),any());
+        cllDeliveryActuationModulel.fulfillIntent(intentGoalBean,null);
+        Assert.assertTrue(true);
     }
 
 }

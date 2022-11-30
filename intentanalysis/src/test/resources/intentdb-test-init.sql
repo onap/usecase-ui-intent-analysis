@@ -27,7 +27,8 @@ DROP TABLE IF EXISTS condition;
 create table if not exists intent
 (
     intent_id   varchar(255) primary key,
-    intent_name varchar(255)
+    intent_name varchar(255),
+    intent_generateType VARCHAR (225)
 );
 
 create table if not exists expectation

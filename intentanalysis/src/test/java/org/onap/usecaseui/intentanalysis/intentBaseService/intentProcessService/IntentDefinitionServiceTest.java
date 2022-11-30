@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
@@ -32,6 +33,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
+import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -51,6 +53,8 @@ public class IntentDefinitionServiceTest {
     private IntentManagementFunction intentOwner;
     @Resource(name = "CLLBusinessIntentManagementFunction")
     private CLLBusinessIntentManagementFunction cllBusinessIntentManagementFunction;
+    @Mock
+    IntentContextService intentContextService;
     Intent intent = new Intent();
 
     @Before
