@@ -16,7 +16,6 @@
 
 package org.onap.usecaseui.intentanalysis.util;
 
-import javax.annotation.Nullable;
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
 import okhttp3.MediaType;
@@ -27,6 +26,7 @@ import okhttp3.Response;
 import okhttp3.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
