@@ -21,10 +21,10 @@ import lombok.Getter;
 @Getter
 public enum OperatorType {
     OR(0,"or"),
-    GATHERTHAN(1,"gather than"),
+    GREATERTHAN(1,"greater than"),
     EQUALTO(2,"equal to"),
     LESSTHAN(3,"less than"),
-    NOTEQUALTO(4,"not euqal to"),
+    NOTEQUALTO(4,"not equal to"),
     ONEOF(5,"one of"),
     SOMEOF(6,"some of"),
     MAXIMUMVALUE(7,"maximum value"),
