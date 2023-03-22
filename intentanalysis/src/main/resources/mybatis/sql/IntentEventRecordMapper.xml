@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentEventRecordMapper">
+
+    <insert id="insertIntentRecord">
+        insert into intent_Event_Record(intentId, intentName, intentStatus, operateType)
+        values(#{intentEventRecord.intentId}, #{intentEventRecord.intentName},
+               #{intentEventRecord.intentStatus},#{intentEventRecord.operateType})
+    </insert>
+
+
+    <select id="getIntentEventRecordByntentId"  resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord">
+       select * from intent_Event_Record where intentId = #{intentId};
+    </select>
+</mapper>
