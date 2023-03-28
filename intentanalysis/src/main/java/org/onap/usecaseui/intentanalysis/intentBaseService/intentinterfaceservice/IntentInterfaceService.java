@@ -16,12 +16,17 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice;
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 
 public interface IntentInterfaceService {
-    public boolean createInterface(Intent intent, IntentManagementFunction imf);
+    public boolean createInterface(IntentGoalBean intentGoalBean, IntentManagementFunction imf);
+    public boolean createInterface(Intent originalIntent,IntentGoalBean intentGoalBean, IntentManagementFunction imf);
 
-    public boolean updateInterface(Intent intent, IntentManagementFunction imf);
+    public boolean updateInterface(IntentGoalBean intentGoalBean, IntentManagementFunction imf);
+    public boolean updateInterface(Intent originalIntent,IntentGoalBean intentGoalBean, IntentManagementFunction imf);
 
-    public boolean deleteInterface(Intent intent, IntentManagementFunction imf);
+    public boolean deleteInterface(IntentGoalBean intentGoalBean, IntentManagementFunction imf);
+    public boolean deleteInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction imf);
+
 }

@@ -16,13 +16,24 @@
 package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.onap.usecaseui.intentanalysis.Thread.CreateCallable;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.concurrent.FutureTask;
+
+@Slf4j
 @Data
 @Component("CLLAssuranceIntentManagementFunction")
 public class CLLAssuranceIntentManagementFunction extends IntentManagementFunction {
@@ -40,4 +51,29 @@ public class CLLAssuranceIntentManagementFunction extends IntentManagementFuncti
     public void setDecisionModule(DecisionModule decisionModule) {
         this.decisionModule = decisionModule;
     }
+
+    @Autowired
+    ApplicationContext applicationContext;
+    @Resource(name = "intentTaskExecutor")
+    ThreadPoolTaskExecutor executor;
+
+    @Override
+    public void receiveIntentAsOwner(IntentGoalBean intentGoalBean) {
+    }
+
+    @Override
+    public void receiveIntentAsHandler(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
+        //ask  knowledgeModole of handler imf for permision and operate
+        try {
+            log.debug("cllAssurance Intent {} begin time:{}", intentGoalBean.getIntentGoalType(), LocalDateTime.now());
+            log.debug(Thread.currentThread().getName());
+            CreateCallable createCallable = new CreateCallable(originalIntent, intentGoalBean, handler, applicationContext);
+            FutureTask<String> futureTask = new FutureTask<>(createCallable);
+            executor.submit(futureTask);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
 }

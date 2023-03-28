@@ -46,17 +46,17 @@ public class CLLBusinessKnowledgeModule extends KnowledgeModule {
 
     @Override
     public boolean recieveCreateIntent() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean recieveUpdateIntent() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean recieveDeleteIntent() {
-        return false;
+        return true;
     }
 
     void intentReportResolution() {

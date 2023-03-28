@@ -16,28 +16,58 @@
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.impl;
 
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class IntentInterfaceServiceImpl implements IntentInterfaceService {
     @Override
-    public boolean createInterface(Intent intent, IntentManagementFunction imf) {
+    public boolean createInterface(IntentGoalBean intentGoalBean, IntentManagementFunction imf) {
+        return false;
+    }
+
+    @Override
+    public boolean createInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
         //ask  knowledgeModole of handler imf for permision
-        imf.getKnowledgeModule().recieveCreateIntent();
+        boolean receive = handler.getKnowledgeModule().recieveCreateIntent();
+        LocalDateTime now = LocalDateTime.now();
+        if (receive) {
+                handler.receiveIntentAsHandler(originalIntent, intentGoalBean, handler);
+        }
+        return receive;
+
+    }
+
+    @Override
+    public boolean updateInterface(IntentGoalBean intentGoalBean, IntentManagementFunction imf) {
         return false;
     }
 
     @Override
-    public boolean updateInterface(Intent intent, IntentManagementFunction imf) {
-        imf.getKnowledgeModule().recieveUpdateIntent();
-        return false;
+    public boolean updateInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
+        boolean receive = handler.getKnowledgeModule().recieveUpdateIntent();
+        if (receive) {
+            handler.receiveIntentAsHandler(originalIntent, intentGoalBean, handler);
+        }
+        return true;
     }
 
     @Override
-    public boolean deleteInterface(Intent intent, IntentManagementFunction imf) {
-        imf.getKnowledgeModule().recieveDeleteIntent();
-        return false;
+    public boolean deleteInterface(IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
+        handler.getKnowledgeModule().recieveDeleteIntent();
+        return true;
+    }
+
+    @Override
+    public boolean deleteInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
+        boolean receive = handler.getKnowledgeModule().recieveDeleteIntent();
+        if (receive) {
+            handler.receiveIntentAsHandler(originalIntent, intentGoalBean, handler);
+        }
+        return true;
     }
 }

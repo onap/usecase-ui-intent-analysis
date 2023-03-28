@@ -56,7 +56,7 @@ public class IntentDefinitionService {
 
         IntentGoalBean newIntentGoalBean = entry.getKey();
         if (newIntentGoalBean.getIntentGoalType() == IntentGoalType.CREATE){
-            Intent newIdIntent = intentDecisionModule.intentDefinition(originIntent, entry.getKey().getIntent());
+            Intent newIdIntent = intentDecisionModule.intentObjectDefine(originIntent, entry.getKey().getIntent());
             intentContextService.updateIntentOwnerHandlerContext(newIdIntent, intentOwner, intentHandler);
             intentContextService.updateParentIntentContext(originIntent, newIdIntent);
             intentContextService.updateChindIntentContext(originIntent, newIdIntent);

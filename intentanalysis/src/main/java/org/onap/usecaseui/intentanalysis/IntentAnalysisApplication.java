@@ -19,11 +19,13 @@ package org.onap.usecaseui.intentanalysis;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @MapperScan("org.onap.usecaseui.intentanalysis.mapper")
 @SpringBootApplication
 @EnableTransactionManagement
+@EnableAsync
 public class IntentAnalysisApplication {
 
     public static void main(String[] args) {

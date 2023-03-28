@@ -17,6 +17,8 @@ package org.onap.usecaseui.intentanalysis.intentBaseService;
 
 
 import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.models.Intent;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
@@ -30,4 +32,7 @@ public class IntentManagementFunction {
     protected ActuationModule actuationModule;
     protected DecisionModule decisionModule;
     protected KnowledgeModule knowledgeModule;
+
+    public void receiveIntentAsOwner(IntentGoalBean intentGoalBean){};
+    public void receiveIntentAsHandler(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler){};
 }

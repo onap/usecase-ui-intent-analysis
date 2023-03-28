@@ -41,6 +41,12 @@ public class IntentContextService {
     @Autowired
     ApplicationContext applicationContext;
 
+    public void updateIntentContext(Intent newIdIntent,Intent originIntent,IntentManagementFunction intentOwner, IntentManagementFunction intentHandler){
+        updateIntentOwnerHandlerContext(newIdIntent, intentOwner, intentHandler);
+        updateParentIntentContext(originIntent, newIdIntent);
+        updateChindIntentContext(originIntent, newIdIntent);
+    }
+
     public void updateChindIntentContext(Intent originIntent, Intent intent){
         List<Context> contextList = intent.getIntentContexts();
         if (CollectionUtils.isEmpty(contextList)) {

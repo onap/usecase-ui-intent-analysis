@@ -35,7 +35,7 @@ public abstract class DecisionModule {
     // find intentManageFunction
     public abstract IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
 
-    public Intent intentDefinition(Intent originIntent, Intent intent) {
+    public Intent intentObjectDefine(Intent originIntent, Intent intent) {
         log.debug("definition create process start to define intent:" + intent.getIntentName());
         Intent newIntent = new Intent();
         newIntent.setIntentId(CommonUtil.getUUid());

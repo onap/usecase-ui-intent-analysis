@@ -65,11 +65,11 @@ public abstract class ActuationModule {
     public boolean distrubuteIntentToHandler(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
         IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
         if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
-            return intentInterfaceService.createInterface(entry.getKey().getIntent(), entry.getValue());
+            return intentInterfaceService.createInterface(entry.getKey(), entry.getValue());
         } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
-            return intentInterfaceService.updateInterface(entry.getKey().getIntent(), entry.getValue());
+            return intentInterfaceService.updateInterface(entry.getKey(), entry.getValue());
         } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
-            return intentInterfaceService.deleteInterface(entry.getKey().getIntent(), entry.getValue());
+            return intentInterfaceService.deleteInterface(entry.getKey(), entry.getValue());
         }
         return false;
     }

@@ -18,6 +18,7 @@ package org.onap.usecaseui.intentanalysis.Thread;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.eventAndPublish.event.IntentCreateEvent;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.springframework.context.ApplicationContext;
@@ -53,6 +54,10 @@ public class CreateCallable implements Callable<String> {
         actuationModule.fulfillIntent(intentGoalBean, handler);
         //update origin intent if need
         actuationModule.updateIntentOperationInfo(originalIntent, intentGoalBean);
+
+        String intentStatus = "success";
+        IntentCreateEvent intentCreateEvent = new IntentCreateEvent(this, originalIntent, intentGoalBean, handler, intentStatus);
+        applicationContext.publishEvent(intentCreateEvent);
         return  intentGoalBean.getIntent().getIntentName() +" Intent operate finished";
     }
 }

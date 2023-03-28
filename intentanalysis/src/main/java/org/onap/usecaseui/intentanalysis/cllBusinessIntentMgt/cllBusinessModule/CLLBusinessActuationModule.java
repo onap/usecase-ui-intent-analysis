@@ -64,7 +64,8 @@ public class CLLBusinessActuationModule extends ActuationModule {
 
     @Override
     public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
-        toNextIntentHandler(intentGoalBean, intentHandler);
+        //toNextIntentHandler(intentGoalBean, intentHandler);
+        intentHandler.receiveIntentAsOwner(intentGoalBean);
     }
 	
     @Override
