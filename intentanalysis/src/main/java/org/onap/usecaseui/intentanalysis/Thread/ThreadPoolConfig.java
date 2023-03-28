@@ -43,7 +43,7 @@ public class ThreadPoolConfig {
         executor.setWaitForTasksToCompleteOnShutdown(true);
         //rejectPolicy
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
-        //init pool
+        //init thread pool
         executor.initialize();
         return executor;
     }
