@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26bf9c85_a7ef2b6a",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/cllBusinessIntentMgt/CLLBusinessIntentManagementFunction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-03-30T01:29:48Z",
+      "side": 1,
+      "message": "Need this code",
+      "revId": "8755c589443ce1662e493c599813afc07d883d19",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fb9510_8eeb0e34",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/cllBusinessIntentMgt/CLLBusinessIntentManagementFunction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-03-30T01:29:48Z",
+      "side": 1,
+      "message": "endless loop",
+      "revId": "8755c589443ce1662e493c599813afc07d883d19",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45761a83_768f8ce5",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/cllBusinessIntentMgt/cllBusinessModule/CLLBusinessActuationModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-03-30T01:29:48Z",
+      "side": 1,
+      "message": "delete unuseful code",
+      "revId": "8755c589443ce1662e493c599813afc07d883d19",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc022be_5c403cd1",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/formatintentinputMgt/formatintentinputModule/FormatIntentInputDecisionModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-03-30T01:29:48Z",
+      "side": 1,
+      "message": "Delete useless code",
+      "revId": "8755c589443ce1662e493c599813afc07d883d19",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b383aa_f1bfaba5",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentinterfaceservice/IntentInterfaceService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-03-30T01:29:48Z",
+      "side": 1,
+      "message": "Only one interface with the same name needs to be reserved",
+      "revId": "8755c589443ce1662e493c599813afc07d883d19",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
