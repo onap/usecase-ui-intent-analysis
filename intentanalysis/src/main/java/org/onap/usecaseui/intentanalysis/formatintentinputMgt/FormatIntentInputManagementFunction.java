@@ -131,6 +131,8 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
                 //update userInput intent
                 intentService.updateIntent(originIntent);
             } else {
+                //deal with userInput intent
+                intentService.deleteIntent(originIntent.getIntentId());
                 // intent-Distribution-delete
                 boolean isAcceptDelete = intentInterfaceService.deleteInterface(originIntent, next.getKey(), next.getValue());
             }

@@ -49,8 +49,6 @@ public class IntentController {
     private IntentService intentService;
 
     @Autowired
-    private IntentProcessService processService;
-    @Autowired
     FormatIntentInputManagementFunction formatIntentInputManagementFunction;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,9 +58,9 @@ public class IntentController {
 
     @GetMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResult getIntentById(
-    @PathVariable(INTENT_ID) String intentId) {
+            @PathVariable(INTENT_ID) String intentId) {
         return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "get Intent success"),
-        intentService.getIntent(intentId));
+                intentService.getIntent(intentId));
 
     }
 
@@ -72,14 +70,10 @@ public class IntentController {
         Intent returnIntent = new Intent();
         log.info("Execute create intent %s start",intent.getIntentName());
         try {
-            processService.setIntentRole(formatIntentInputManagementFunction, null);
-            IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
-            IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
-
-            newIntentGoalBean.getIntent().setIntentGenerateType(IntentGenerateType.USERINPUT);
-            returnIntent = intentService.createIntent(newIntentGoalBean.getIntent());
+            formatIntentInputManagementFunction.receiveIntentAsOwner(new IntentGoalBean(intent,IntentGoalType.CREATE));
+            returnIntent = intentService.getIntent(intent.getIntentId());
             resultHeader.setResult_code(RSEPONSE_SUCCESS);
-            resultHeader.setResult_message("create intent success");
+            resultHeader.setResult_message("create intent finish,please waiting");
             log.info("Execute create intent finished");
         } catch (CommonException exception) {
             log.error("Execute create intent Exception:", exception);
@@ -98,10 +92,8 @@ public class IntentController {
                                           @RequestBody Intent intent) {
         log.info("Execute update intent start");
         try {
-            processService.setIntentRole(formatIntentInputManagementFunction, null);
-            IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
-            IntentGoalBean newIntentGoalBean = processService.intentProcess(intentGoalBean);
-            Intent reIntent = intentService.updateIntent(newIntentGoalBean.getIntent());
+            formatIntentInputManagementFunction.receiveIntentAsOwner(new IntentGoalBean(intent,IntentGoalType.UPDATE));
+            Intent reIntent = intentService.getIntent(intentId);
             log.info("Execute update intent finished");
             return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "update intent success"), reIntent);
         } catch (CommonException exception) {
@@ -117,10 +109,8 @@ public class IntentController {
     public ServiceResult removeIntentById(@PathVariable(INTENT_ID) String intentId) {
         log.info("Execute delete intent start");
         try {
-            processService.setIntentRole(formatIntentInputManagementFunction, null);
             Intent intent = intentService.getIntent(intentId);
-            IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
-            processService.intentProcess(intentGoalBean);
+            formatIntentInputManagementFunction.receiveIntentAsOwner(new IntentGoalBean(intent,IntentGoalType.DELETE));
             log.info("Execute delete intent finished");
             return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "delete intent success"));
         } catch (CommonException exception) {
@@ -139,5 +129,7 @@ public class IntentController {
             return new ServiceResult(new ResultHeader(exception.getRetCode(), exception.getMessage()));
         }
     }
+
+
 
 }

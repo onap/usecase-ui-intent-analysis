@@ -25,10 +25,6 @@ import java.time.LocalDateTime;
 
 @Service
 public class IntentInterfaceServiceImpl implements IntentInterfaceService {
-    @Override
-    public boolean createInterface(IntentGoalBean intentGoalBean, IntentManagementFunction imf) {
-        return false;
-    }
 
     @Override
     public boolean createInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
@@ -42,10 +38,6 @@ public class IntentInterfaceServiceImpl implements IntentInterfaceService {
 
     }
 
-    @Override
-    public boolean updateInterface(IntentGoalBean intentGoalBean, IntentManagementFunction imf) {
-        return false;
-    }
 
     @Override
     public boolean updateInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
@@ -56,11 +48,6 @@ public class IntentInterfaceServiceImpl implements IntentInterfaceService {
         return true;
     }
 
-    @Override
-    public boolean deleteInterface(IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
-        handler.getKnowledgeModule().recieveDeleteIntent();
-        return true;
-    }
 
     @Override
     public boolean deleteInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
