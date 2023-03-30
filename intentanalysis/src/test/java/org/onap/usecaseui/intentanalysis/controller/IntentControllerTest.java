@@ -69,10 +69,10 @@ public class IntentControllerTest {
         Intent intent = new Intent();
         intent.setIntentName("cllBussinessIntent");
         IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
-        Mockito.when(intentProcessService.intentProcess(any())).thenReturn(intentGoalBean);
+        //Mockito.when(intentProcessService.intentProcess(any())).thenReturn(intentGoalBean);
         intentController.createIntent(intent);
-        verify(intentProcessService, times(1)).intentProcess(any());
-        verify(intentService, times(1)).createIntent(any());
+        verify(formatIntentInputManagementFunction, times(1)).receiveIntentAsOwner(any());
+        //verify(intentService, times(1)).createIntent(any());
 
     }
 
@@ -82,19 +82,19 @@ public class IntentControllerTest {
         intent.setIntentName("cllBussinessIntent");
         IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
         //Mockito.when(intentProcessService.intentProcess(any())).thenReturn(intentGoalBean);
-        when(intentProcessService.intentProcess(any())).thenThrow(new CommonException("MSG", ResponseConsts.RET_UPDATE_DATA_FAIL));
+        //when(intentProcessService.intentProcess(any())).thenThrow(new CommonException("MSG", ResponseConsts.RET_UPDATE_DATA_FAIL));
         intentController.createIntent(intent);
         Assert.assertTrue(true);
     }
    @Test
     public void testUpdateIntentById(){
        Intent intent = new Intent();
+       intent.setIntentId("test");
        intent.setIntentName("cllBussinessIntent");
        IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
-
-       Mockito.when(intentProcessService.intentProcess(any())).thenReturn(intentGoalBean);
-       intentController.updateIntentById(any(),any());
-       verify(intentProcessService, times(1)).intentProcess(any());
+       //Mockito.when(intentProcessService.intentProcess(any())).thenReturn(intentGoalBean);
+       intentController.updateIntentById(intent.getIntentId(),intent);
+       verify(formatIntentInputManagementFunction, times(1)).receiveIntentAsOwner(any());
    }
     @Test
     public void testUpdateIntentByIdCommonException() {
@@ -114,10 +114,10 @@ public class IntentControllerTest {
         String id = "intentId";
         IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
 
-        Mockito.when(intentService.getIntent(any())).thenReturn(intent);
-        Mockito.when(intentProcessService.intentProcess(any())).thenReturn(intentGoalBean);
+//        Mockito.when(intentService.getIntent(any())).thenReturn(intent);
+//        Mockito.when(intentProcessService.intentProcess(any())).thenReturn(intentGoalBean);
         intentController.removeIntentById(id);
-        verify(intentProcessService, times(1)).intentProcess(any());
+        verify(formatIntentInputManagementFunction, times(1)).receiveIntentAsOwner(any());
     }
 
     @Test
