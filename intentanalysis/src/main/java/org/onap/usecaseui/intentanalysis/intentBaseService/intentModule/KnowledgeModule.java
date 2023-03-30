@@ -91,15 +91,17 @@ public abstract class KnowledgeModule {
             }
             // condition   ownerName = foramtIntentInput
             List<Context> ownerInfo = intent.getIntentContexts().stream().filter(x ->
-                    StringUtils.equalsIgnoreCase(x.getContextName(), "ownerInfo")).collect(Collectors.toList());
+                    StringUtils.equalsIgnoreCase(x.getContextName(), "owner Info")).collect(Collectors.toList());
             if (CollectionUtils.isNotEmpty(ownerInfo)) {
                 for (Context context : ownerInfo) {
                     List<Condition> contextConditions = context.getContextConditions();
                     boolean equals = false;
                     for (Condition condition : contextConditions) {
-                        String conditionstr = "ownerName equal to formatIntentInputManagementFunction";
-                        String concatStr = condition.getConditionName() + condition.getOperator().name() + condition.getConditionValue();
-                        if (StringUtils.equalsIgnoreCase(concatStr.trim(), conditionstr.replaceAll(" ", ""))) {
+                        String conditionstr = "owner class name equal to formatIntentInputManagementFunction";
+                        String conValue = condition.getConditionValue();
+                        String conditionValue = conValue.substring(conValue.lastIndexOf(".")+1);
+                        String concatStr = condition.getConditionName() + condition.getOperator().name() + conditionValue;
+                        if (StringUtils.equalsIgnoreCase(concatStr.replaceAll(" ",""), conditionstr.replaceAll(" ", ""))) {
                             fiterList.add(intent);
                             equals = true;
                             break;

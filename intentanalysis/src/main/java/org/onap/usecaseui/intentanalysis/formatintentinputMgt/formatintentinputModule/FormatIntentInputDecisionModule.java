@@ -121,7 +121,6 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         List<Intent> subIntentList = intentContextService.getSubIntentInfoFromContext(intentGoalBean.getIntent());
         for (Intent intent : subIntentList) {
             IntentManagementFunction intentHandlerInfo = intentContextService.getHandlerInfo(intent);
-           // UpdateIntentInfo(intentGoalBean.getIntent(), intent);//new process move  to defineProcess
             IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.UPDATE);
             intentMap.put(subIntentGoalBean, intentHandlerInfo);
         }

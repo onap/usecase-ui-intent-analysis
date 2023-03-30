@@ -25,6 +25,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.Context;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.exception.CommonException;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentEventRecord.IntentEventRecordService;
@@ -88,12 +89,7 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> linkedMap = investigation(originIntentGoalBean);
         implementIntent(intentGoalBean.getIntent(), linkedMap);
         if (intentGoalBean.getIntentGoalType() == IntentGoalType.DELETE) {
-            List<Context> parentInfo = intentGoalBean.getIntent().getIntentContexts().stream().filter(a ->
-                    StringUtils.equalsIgnoreCase(a.getContextName(), "parentIntent info")).collect(Collectors.toList());
-
-            String userInputId = parentInfo.get(0).getContextConditions().get(0).getConditionValue();
             intentService.deleteIntent(intentGoalBean.getIntent().getIntentId());
-            intentService.deleteIntent(userInputId);
         }
     }
 
@@ -118,8 +114,7 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
         Intent originIntent = intentGoalBean.getIntent();
         IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
         if (intentGoalType == IntentGoalType.CREATE) {
-            //return knowledgeModule.intentCognition(originIntent);
-            return intentGoalBean;
+            return knowledgeModule.intentCognition(originIntent);
         } else if (intentGoalType == IntentGoalType.UPDATE) {
             return new IntentGoalBean(intentGoalBean.getIntent(), IntentGoalType.UPDATE);
         } else {
@@ -160,9 +155,15 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
                 if (!isParallel) {
                     //Block and regularly query whether the event is published
                     boolean isPublish = false;
-                    while (isPublish) {
+                    int count = 1;
+                    while (!isPublish) {
                         Thread.sleep(1000);
                         IntentEventRecord record = intentEventRecordService.getIntentEventRecordByntentId(newIdIntent.getIntentId(), "create");
+                        count++;
+                        // it will take one hour to wait operation end
+                        if (count==3600){
+                            throw new CommonException("Operation took too long, failed",500);
+                        }
                         if (null != record) {
                             isPublish = true;
                         }
