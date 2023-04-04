@@ -5,13 +5,20 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentEventRecordMapper">
 
     <insert id="insertIntentRecord">
-        insert into intent_Event_Record(intentId, intentName, intentStatus, operateType)
+        insert into intent_Event_Record(intentId, intentName, intentStatus, operateType,parent_id)
         values(#{intentEventRecord.intentId}, #{intentEventRecord.intentName},
-               #{intentEventRecord.intentStatus},#{intentEventRecord.operateType})
+               #{intentEventRecord.intentStatus},#{intentEventRecord.operateType},
+               #{parentId})
     </insert>
 
 
-    <select id="getIntentEventRecordByntentId"  resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord">
-       select * from intent_Event_Record where intentId = #{intentId};
+    <select id="getIntentEventRecordByIntentId"  resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord">
+       select id,intentId,intentName,intentStatus,operateType,parent_id parentId
+       from intent_Event_Record where intentId = #{intentId};
+    </select>
+
+    <select id="getIntentEventRecordByPid"  resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord">
+        select id,intentId,intentName,intentStatus,operateType,parent_id
+        from intent_Event_Record where parent_id = #{parentId} and operateType=#{operateType};
     </select>
 </mapper>

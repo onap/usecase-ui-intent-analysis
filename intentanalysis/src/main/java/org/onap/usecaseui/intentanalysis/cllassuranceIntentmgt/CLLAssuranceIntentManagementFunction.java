@@ -67,8 +67,8 @@ public class CLLAssuranceIntentManagementFunction extends IntentManagementFuncti
         try {
             log.debug("cllAssurance Intent {} begin time:{}", intentGoalBean.getIntentGoalType(), LocalDateTime.now());
             log.debug(Thread.currentThread().getName());
-            CreateCallable createCallable = new CreateCallable(originalIntent, intentGoalBean, handler, applicationContext);
-            FutureTask<String> futureTask = new FutureTask<>(createCallable);
+            CreateCallable assuranceCallable = new CreateCallable(originalIntent, intentGoalBean, handler, applicationContext);
+            FutureTask<String> futureTask = new FutureTask<>(assuranceCallable);
             executor.submit(futureTask);
         } catch (Exception ex) {
             ex.printStackTrace();
