@@ -88,26 +88,36 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
         IntentGoalBean originIntentGoalBean = detection(intentGoalBean);
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> linkedMap = investigation(originIntentGoalBean);
         implementIntent(intentGoalBean.getIntent(), linkedMap);
-        if (intentGoalBean.getIntentGoalType() == IntentGoalType.DELETE) {
-            intentService.deleteIntent(intentGoalBean.getIntent().getIntentId());
-        }
     }
 
     @Override
     public void receiveIntentAsHandler(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
         ActuationModule actuationModule = handler.getActuationModule();
         IntentGoalType type = intentGoalBean.getIntentGoalType();
+        //before dataBase operate
+        handler.receiveIntentAsOwner(intentGoalBean);
+
         if (type == IntentGoalType.CREATE) {
             actuationModule.saveIntentToDb(intentGoalBean.getIntent());
         } else if (type == IntentGoalType.UPDATE) {
             actuationModule.updateIntentToDb(intentGoalBean.getIntent());
         } else if (type == IntentGoalType.DELETE) {
+            //before delete cllBusinessIntent check subintent deleted
+            boolean deleteFinished = false;
+            Intent cllIntent = intentGoalBean.getIntent();
+            //subIntent size and delete Intent size
+            List<Context> list = cllIntent.getIntentContexts().stream().filter(x ->
+                    StringUtils.equals(x.getContextName(), "subIntent info")).collect(Collectors.toList());
+            int subIntentSize = list.get(0).getContextConditions().size();
+            while (!deleteFinished) {
+                List<IntentEventRecord> deleteList = intentEventRecordService.getRecordByPid(cllIntent.getIntentId(),
+                        IntentGoalType.DELETE.name());
+                if (subIntentSize <= deleteList.size()) {
+                    deleteFinished = true;
+                }
+            }
             actuationModule.deleteIntentToDb(intentGoalBean.getIntent());
         }
-        //update origin intent if need
-        actuationModule.updateIntentOperationInfo(originalIntent, intentGoalBean);
-        handler.receiveIntentAsOwner(intentGoalBean);
-
     }
 
     public IntentGoalBean detection(IntentGoalBean intentGoalBean) {
@@ -146,7 +156,7 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
                 intentContextService.updateIntentOwnerHandlerContext(newIdIntent, this, next.getValue());
                 intentContextService.updateParentIntentContext(originIntent, newIdIntent);
                 intentContextService.updateChindIntentContext(originIntent, newIdIntent);
-                contextService.updateContextList(originIntent.getIntentContexts(), originIntent.getIntentId());
+                // contextService.updateContextList(originIntent.getIntentContexts(), originIntent.getIntentId());
                 //intent-Distribution-create
                 boolean isAcceptCreate = intentInterfaceService.createInterface(originIntent,
                         new IntentGoalBean(newIdIntent, IntentGoalType.CREATE), next.getValue());
@@ -158,11 +168,11 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
                     int count = 1;
                     while (!isPublish) {
                         Thread.sleep(1000);
-                        IntentEventRecord record = intentEventRecordService.getIntentEventRecordByntentId(newIdIntent.getIntentId(), "create");
+                        IntentEventRecord record = intentEventRecordService.getIntentEventRecordByIntentId(newIdIntent.getIntentId(), "create");
                         count++;
                         // it will take one hour to wait operation end
-                        if (count==3600){
-                            throw new CommonException("Operation took too long, failed",500);
+                        if (count == 3600) {
+                            throw new CommonException("Operation took too long, failed", 500);
                         }
                         if (null != record) {
                             isPublish = true;

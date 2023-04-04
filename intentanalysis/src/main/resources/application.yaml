@@ -9,9 +9,9 @@ server:
     key-store-type: JKS
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:intentdb}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:uui}
+    username: ${POSTGRES_USERNAME:uui}
+    password: ${POSTGRES_PASSWORD:uui}
     driver-class-name: org.postgresql.Driver
   sql:
     init:

@@ -35,22 +35,24 @@ public class IntentEventListener {
     private IntentEventRecordService intentEventRecordService;
 
     @EventListener
-    public void listenIntentCreateEvent(IntentCreateEvent intentCreateEvent){
-        String intentStatus = intentCreateEvent.getIntentStatus();//create status
-        IntentGoalBean intentGoalBean = intentCreateEvent.getIntentGoalBean();//current operate intent
-        Intent currentIntent = intentGoalBean.getIntent();
-        List<Context> owner_info = currentIntent.getIntentContexts().stream().filter(x ->
-                StringUtils.equals(x.getContextName(), "owner info")).collect(Collectors.toList());
-        List<Context> handler_info = currentIntent.getIntentContexts().stream().filter(x ->
-                StringUtils.equals(x.getContextName(), "handler info")).collect(Collectors.toList());
-        String owner = owner_info.get(0).getContextConditions().get(0).getConditionValue();
-        String handler = handler_info.get(0).getContextConditions().get(0).getConditionValue();
+    public void listenIntentCreateEvent(IntentCreateEvent intentCreateEvent) throws Exception{
+            String intentStatus = intentCreateEvent.getIntentStatus();//create status
+            IntentGoalBean intentGoalBean = intentCreateEvent.getIntentGoalBean();//current operate intent
+            Intent currentIntent = intentGoalBean.getIntent();
+            List<Context> owner_info = currentIntent.getIntentContexts().stream().filter(x ->
+                    StringUtils.equals(x.getContextName(), "owner info")).collect(Collectors.toList());
+            List<Context> handler_info = currentIntent.getIntentContexts().stream().filter(x ->
+                    StringUtils.equals(x.getContextName(), "handler info")).collect(Collectors.toList());
+            String owner = owner_info.get(0).getContextConditions().get(0).getConditionValue();
+            String handler = handler_info.get(0).getContextConditions().get(0).getConditionValue();
 
-        IntentEventRecord intentEventRecord = new IntentEventRecord();
-        intentEventRecord.setIntentId(currentIntent.getIntentId());
-        intentEventRecord.setIntentName(currentIntent.getIntentName());
-        intentEventRecord.setIntentStatus(intentStatus);
-        intentEventRecord.setOperateType(intentGoalBean.getIntentGoalType().name());
-        intentEventRecordService.createIntentEventRecord(intentEventRecord);
+            IntentEventRecord intentEventRecord = new IntentEventRecord();
+            intentEventRecord.setIntentId(currentIntent.getIntentId());
+            intentEventRecord.setIntentName(currentIntent.getIntentName());
+            intentEventRecord.setIntentStatus(intentStatus);
+            intentEventRecord.setOperateType(intentGoalBean.getIntentGoalType().name());
+            intentEventRecordService.createIntentEventRecord(intentEventRecord,
+                    intentCreateEvent.getOriginalIntent().getIntentId());
+
     }
 }

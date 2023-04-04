@@ -77,5 +77,6 @@ create table if not exists intent_Event_Record(
     intentId varchar(255),
     intentName varchar(255),
     intentStatus varchar (225),
-    operateType varchar (225)
+    operateType varchar (225),
+    parent_id varchar(255)
     );

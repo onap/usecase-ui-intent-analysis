@@ -20,19 +20,31 @@ import org.onap.usecaseui.intentanalysis.mapper.IntentEventRecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IntentEventRecordService {
     @Autowired
     IntentEventRecordMapper intentEventRecordMapper;
 
     // insert into record table
-    public void createIntentEventRecord(IntentEventRecord intentEventRecord){
-        intentEventRecordMapper.insertIntentRecord(intentEventRecord);
+    public void createIntentEventRecord(IntentEventRecord intentEventRecord,String parentId){
+        intentEventRecordMapper.insertIntentRecord(intentEventRecord,parentId);
 
     }
     // get record by intent nameid， status
-    public IntentEventRecord getIntentEventRecordByntentId(String intentId,String operateType){
-       return intentEventRecordMapper.getIntentEventRecordByntentId(intentId,operateType);
+    public IntentEventRecord getIntentEventRecordByIntentId(String intentId,String operateType){
+       return intentEventRecordMapper.getIntentEventRecordByIntentId(intentId,operateType);
+    }
+
+    /**
+     * get intentEventRecord by parentId and operateType
+     * @param parentId parentId
+     * @param operateType operateTypr
+     * @return List<IntentEventRecord>
+     */
+    public List<IntentEventRecord> getRecordByPid(String parentId,String operateType){
+        return intentEventRecordMapper.getRecordByPid(parentId,operateType);
     }
 }
 
