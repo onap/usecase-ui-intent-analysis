@@ -18,9 +18,15 @@ package org.onap.usecaseui.intentanalysis.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord;
 
-public interface IntentEventRecordMapper {
-    int insertIntentRecord(@Param(value = "intentEventRecord") IntentEventRecord intentEventRecord);
+import java.util.List;
 
-    IntentEventRecord getIntentEventRecordByntentId(@Param(value = "intentId") String intentId,
+public interface IntentEventRecordMapper {
+    int insertIntentRecord(@Param(value = "intentEventRecord") IntentEventRecord intentEventRecord,
+                           @Param(value="parentId")String parentId);
+
+    IntentEventRecord getIntentEventRecordByIntentId(@Param(value = "intentId") String intentId,
                                                     @Param(value = "operateType") String operateType);
+
+    List<IntentEventRecord> getRecordByPid(@Param(value="parentId")String parentId,
+                                           @Param(value = "operateType")String operateType);
 }

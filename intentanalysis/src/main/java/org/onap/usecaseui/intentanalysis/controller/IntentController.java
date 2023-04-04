@@ -18,7 +18,6 @@ package org.onap.usecaseui.intentanalysis.controller;
 
 
 import lombok.extern.log4j.Log4j2;
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
@@ -26,7 +25,6 @@ import org.onap.usecaseui.intentanalysis.bean.models.ResultHeader;
 import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
 import org.onap.usecaseui.intentanalysis.exception.CommonException;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -129,7 +127,4 @@ public class IntentController {
             return new ServiceResult(new ResultHeader(exception.getRetCode(), exception.getMessage()));
         }
     }
-
-
-
 }

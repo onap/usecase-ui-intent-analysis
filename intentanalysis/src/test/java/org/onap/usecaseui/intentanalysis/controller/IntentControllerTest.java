@@ -21,21 +21,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.CommonException;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = IntentAnalysisApplicationTests.class)
@@ -46,8 +42,6 @@ public class IntentControllerTest {
     IntentController intentController;
     @Mock
     IntentService intentService;
-    @Mock
-    IntentProcessService intentProcessService;
     @Mock
     FormatIntentInputManagementFunction formatIntentInputManagementFunction;
 
@@ -81,26 +75,27 @@ public class IntentControllerTest {
         intentController.createIntent(intent);
         Assert.assertTrue(true);
     }
+
     @Test
-    public void testUpdateIntentById(){
+    public void testUpdateIntentById() {
         Intent intent = new Intent();
         intent.setIntentId("test");
         intent.setIntentName("cllBussinessIntent");
         IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
-        intentController.updateIntentById(intent.getIntentId(),intent);
+        intentController.updateIntentById(intent.getIntentId(), intent);
         verify(formatIntentInputManagementFunction, times(1)).receiveIntentAsOwner(any());
     }
+
     @Test
     public void testUpdateIntentByIdCommonException() {
         Intent intent = new Intent();
         intent.setIntentName("cllBussinessIntent");
-        when(intentProcessService.intentProcess(any())).thenThrow(new CommonException("MSG", ResponseConsts.RET_UPDATE_DATA_FAIL));
-        intentController.updateIntentById(any(),any());
+        intentController.updateIntentById(any(), any());
         Assert.assertTrue(true);
     }
 
     @Test
-    public void testRemoveIntentById(){
+    public void testRemoveIntentById() {
         Intent intent = new Intent();
         intent.setIntentName("cllBussinessIntent");
         String id = "intentId";
@@ -114,18 +109,18 @@ public class IntentControllerTest {
         Intent intent = new Intent();
         intent.setIntentName("cllBussinessIntent");
         IntentGoalBean intentGoalBean = new IntentGoalBean(intent, IntentGoalType.CREATE);
-        when(intentProcessService.intentProcess(any())).thenThrow(new CommonException("MSG", ResponseConsts.RET_UPDATE_DATA_FAIL));
         intentController.removeIntentById("intentId");
         Assert.assertTrue(true);
     }
 
     @Test
-    public void testGetIntentListByIntentGenerateType(){
+    public void testGetIntentListByIntentGenerateType() {
         intentController.getIntentListByIntentGenerateType(anyString());
         verify(intentService, times(1)).getIntentListByUserInput(anyString());
     }
+
     @Test
-    public void  testGetIntentListByIntentGenerateTypeCommoExcption(){
+    public void testGetIntentListByIntentGenerateTypeCommoExcption() {
         when(intentService.getIntentListByUserInput(any())).thenThrow(new CommonException("MSG", ResponseConsts.RET_UPDATE_DATA_FAIL));
         intentController.getIntentListByIntentGenerateType(anyString());
         Assert.assertTrue(true);

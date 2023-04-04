@@ -19,7 +19,6 @@ import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentDetectionService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +33,6 @@ public class CLLBusinessKnowledgeModule extends KnowledgeModule {
 
     @Autowired
     IntentService intentService;
-    @Autowired
-    IntentDetectionService intentDetectionService;
 
     @Override
     public IntentGoalBean intentCognition(Intent intent) {
