@@ -66,8 +66,8 @@ public class CLLDeliveryIntentManagementFunction extends IntentManagementFunctio
         //ask  knowledgeModole of handler imf for permision and operate
         try {
             log.debug("cllDelivery Intent create begin time:" + LocalDateTime.now());
-            CreateCallable createCallable = new CreateCallable(originalIntent, intentGoalBean, handler, applicationContext);
-            FutureTask<String> futureTask = new FutureTask<>(createCallable);
+            CreateCallable deliveryCallable = new CreateCallable(originalIntent, intentGoalBean, handler, applicationContext);
+            FutureTask<String> futureTask = new FutureTask<>(deliveryCallable);
             executor.submit(futureTask);
         } catch (Exception ex) {
             ex.printStackTrace();

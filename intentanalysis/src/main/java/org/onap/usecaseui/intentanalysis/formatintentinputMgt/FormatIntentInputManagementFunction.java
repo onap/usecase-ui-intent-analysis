@@ -32,6 +32,7 @@ import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -67,6 +68,7 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
     @Autowired
     IntentService intentService;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void receiveIntentAsOwner(IntentGoalBean intentGoalBean) {
 
@@ -125,11 +127,11 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
                 //update cllBusinessIntent's expectation
                 Intent subIntent = newIntentGoalBean.getIntent();
                 updateIntentInfo(originIntent, subIntent);
+                //update userInput intent
+                intentService.updateIntent(originIntent);
                 // intent-Distribution and operate  |update cllBusiness intent
                 boolean isAcceptUpdate = intentInterfaceService.updateInterface(originIntent,
                         new IntentGoalBean(subIntent, IntentGoalType.UPDATE), next.getValue());
-                //update userInput intent
-                intentService.updateIntent(originIntent);
             } else {
                 //deal with userInput intent
                 intentService.deleteIntent(originIntent.getIntentId());

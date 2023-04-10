@@ -20,7 +20,6 @@ import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentProcessService.IntentProcessService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,8 +27,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class FormatIntentInputActuationModule extends ActuationModule {
-    @Autowired
-    IntentProcessService processService;
     @Autowired
     IntentService intentService;
 

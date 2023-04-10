@@ -71,8 +71,6 @@ public class CLLAssuranceActuationModule extends ActuationModule {
 
     @Override
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
-        log.info("cllDeliveryActuationModule begin to update originIntent subIntentInfo");
-        contextService.updateContextList(originIntent.getIntentContexts(), originIntent.getIntentId());
     }
 
     private String getBandwidth(String cllId) {

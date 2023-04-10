@@ -118,10 +118,8 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             for (Expectation originExpectation : originIntentExpectationList) {
                 ExpectationObject originExpectationObject = originExpectation.getExpectationObject();
                 originExpectationObject.setObjectInstance(objectInstance);
-                expectationObjectService.updateExpectationObject(originExpectationObject,originExpectation.getExpectationId());
             }
         }
        log.info("cllDeliveryActuationModule begin to update originIntent subIntentInfo");
-        contextService.updateContextList(originIntent.getIntentContexts(), originIntent.getIntentId());
     }
 }
