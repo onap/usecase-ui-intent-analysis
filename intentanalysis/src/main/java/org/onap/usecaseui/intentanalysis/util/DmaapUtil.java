@@ -46,14 +46,14 @@ public class DmaapUtil {
         return cut;
     }
 
-    public static MessageRouterSubscribeRequest buildSubscriberRequest(String name, String topicUrl){
+    public static MessageRouterSubscribeRequest buildSubscriberRequest(String name, String topicUrl, String consumerGroup, String consumerId){
         MessageRouterSource sourceDefinition = ImmutableMessageRouterSource.builder()
             .name(name)
             .topicUrl(topicUrl)
             .build();
         MessageRouterSubscribeRequest request = ImmutableMessageRouterSubscribeRequest.builder()
-            .consumerGroup("1")
-            .consumerId("1")
+            .consumerGroup(consumerGroup)
+            .consumerId(consumerId)
             .sourceDefinition(sourceDefinition)
             .build();
 
