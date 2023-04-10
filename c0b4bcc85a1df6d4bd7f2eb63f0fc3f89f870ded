@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d60449_0720e57f",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/clldeliveryIntentmgt/clldeliverymodule/CLLDeliveryActuationModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-04-10T08:27:23Z",
+      "side": 1,
+      "message": "Please delete useless code",
+      "revId": "c0b4bcc85a1df6d4bd7f2eb63f0fc3f89f870ded",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4248028_4b4575fd",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/clldeliveryIntentmgt/clldeliverymodule/CLLDeliveryActuationModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-04-10T08:27:23Z",
+      "side": 1,
+      "message": "Please delete useless code",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 105
+      },
+      "revId": "c0b4bcc85a1df6d4bd7f2eb63f0fc3f89f870ded",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965bc511_4b216e3a",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/intentBaseService/intentEventRecord/IntentEventRecordService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-04-10T08:27:23Z",
+      "side": 1,
+      "message": "The name of this function should be getIntentEventRecordByPid？？？",
+      "revId": "c0b4bcc85a1df6d4bd7f2eb63f0fc3f89f870ded",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3280d81c_21820df2",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/mapper/IntentEventRecordMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-04-10T08:27:23Z",
+      "side": 1,
+      "message": "getIntentEventRecordByPid？？？",
+      "revId": "c0b4bcc85a1df6d4bd7f2eb63f0fc3f89f870ded",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9b6aeb_a7cdca48",
+        "filename": "intentanalysis/src/main/resources/mybatis/sql/IntentEventRecordMapper.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-04-10T08:27:23Z",
+      "side": 1,
+      "message": "getIntentEventRecordByPid？？",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "c0b4bcc85a1df6d4bd7f2eb63f0fc3f89f870ded",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
