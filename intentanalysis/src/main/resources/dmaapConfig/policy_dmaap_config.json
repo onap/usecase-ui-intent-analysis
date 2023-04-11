@@ -10,7 +10,7 @@
     "fetch_timeout" : 15000,
     "fetch_limit" : 100,
     "dmaap_info": {
-      "topic_url":"http://message-router:3904/events/CCVPN-CL-POLICY-EVENT",
+      "topic_url":"http://message-router:3904/events/unauthenticated.CCVPN_CL_POLICY_EVENT",
       "client_role":"org.onap.uui.intentanalysisSub",
       "location":"onap",
       "client_id":"intent-analysis-1"
