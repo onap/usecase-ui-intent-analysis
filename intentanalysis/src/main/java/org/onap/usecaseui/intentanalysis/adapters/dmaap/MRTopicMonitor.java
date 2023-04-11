@@ -21,7 +21,6 @@
 
 package org.onap.usecaseui.intentanalysis.adapters.dmaap;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,7 +28,6 @@ import io.vavr.collection.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -53,30 +51,36 @@ import reactor.core.publisher.Mono;
  */
 public class MRTopicMonitor implements Runnable {
 
-    private final String name;
+    private final String configFileName;
+
     private volatile boolean running = false;
+
     private static Logger logger = LoggerFactory.getLogger(MRTopicMonitor.class);
+
     private static int DEFAULT_TIMEOUT_MS_FETCH = 15000;
+
     private MRConsumerWrapper consumerWrapper;
+
     private NotificationCallback callback;
 
     /**
      * Constructor
-     * @param name name of topic subscriber in config
+     *
+     * @param configFileName name of topic subscriber file
      * @param callback callbackfunction for received message
      */
-    public MRTopicMonitor(String name, NotificationCallback callback){
-        this.name = name;
+    public MRTopicMonitor(String configFileName, NotificationCallback callback) {
+        this.configFileName = configFileName;
         this.callback = callback;
     }
 
     /**
      * Start the monitoring thread
      */
-    public void start(){
+    public void start() {
         logger.info("Starting Dmaap Bus Monitor");
         try {
-            File configFile = Resources.getResourceAsFile("intentPolicy/modifycll.json");
+            File configFile = Resources.getResourceAsFile("dmaapConfig/" + configFileName);
             String configBody = FileUtils.readFileToString(configFile, StandardCharsets.UTF_8);
             JsonObject jsonObject = JsonParser.parseString(configBody).getAsJsonObject();
             consumerWrapper = buildConsumerWrapper(jsonObject);
@@ -93,17 +97,16 @@ public class MRTopicMonitor implements Runnable {
      * Main loop that keep fetching and processing
      */
     @Override
-    public void run(){
-        while (running){
+    public void run() {
+        while (running) {
             try {
-                logger.debug("Topic: {} getting new msg...", name);
+                logger.debug("Topic: {} getting new msg...", consumerWrapper.getTopicName());
                 List<JsonElement> dmaapMsgs = consumerWrapper.fetch();
-                for (JsonElement msg : dmaapMsgs){
-                    logger.debug("Received message: {}" +
-                            "\r\n and processing start", msg);
+                for (JsonElement msg : dmaapMsgs) {
+                    logger.debug("Received message: {}" + "\r\n and processing start", msg);
                     process(msg.toString());
                 }
-            } catch (IOException | RuntimeException e){
+            } catch (IOException | RuntimeException e) {
                 logger.error("fetchMessage encountered error: {}", e);
             }
         }
@@ -113,7 +116,7 @@ public class MRTopicMonitor implements Runnable {
     /**
      * Stop the monitor
      */
-    public void stop(){
+    public void stop() {
         logger.info("{}: exiting", this);
         running = false;
         this.consumerWrapper.close();
@@ -123,7 +126,7 @@ public class MRTopicMonitor implements Runnable {
     private void process(String msg) {
         try {
             callback.activateCallBack(msg);
-        } catch (Exception e){
+        } catch (Exception e) {
             logger.error("process message encountered error: {}", e);
         }
     }
@@ -132,8 +135,8 @@ public class MRTopicMonitor implements Runnable {
         return this.consumerWrapper.fetch();
     }
 
-    private MRConsumerWrapper buildConsumerWrapper(@NonNull JsonObject topicParamsJson )
-            throws IllegalArgumentException {
+    private MRConsumerWrapper buildConsumerWrapper(@NonNull JsonObject topicParamsJson)
+        throws IllegalArgumentException {
         MRTopicParams topicParams = MRTopicParams.builder().buildFromConfigJson(topicParamsJson).build();
         return new MRConsumerWrapper(topicParams);
     }
@@ -148,6 +151,7 @@ public class MRTopicMonitor implements Runnable {
          * Name of the "protocol" property.
          */
         protected static final String PROTOCOL_PROP = "Protocol";
+
         /**
          * Fetch timeout.
          */
@@ -160,11 +164,18 @@ public class MRTopicMonitor implements Runnable {
         private final int sleepTime;
 
         /**
+         * Topic Name to Subscribe
+         */
+        @Getter
+        private String topicName;
+
+        /**
          * Counted down when {@link #close()} is invoked.
          */
         private final CountDownLatch closeCondition = new CountDownLatch(1);
 
         protected MessageRouterSubscriber subscriber;
+
         protected MessageRouterSubscribeRequest request;
 
         /**
@@ -173,6 +184,7 @@ public class MRTopicMonitor implements Runnable {
          * @param MRTopicParams parameters for the bus topic
          */
         protected MRConsumerWrapper(MRTopicParams MRTopicParams) {
+            this.topicName = MRTopicParams.getTopicName();
             this.fetchTimeout = MRTopicParams.getFetchTimeout();
 
             if (this.fetchTimeout <= 0) {
@@ -190,9 +202,10 @@ public class MRTopicMonitor implements Runnable {
                 throw new IllegalArgumentException("Must provide at least one host for HTTP AAF");
             }
 
-            try{
+            try {
                 this.subscriber = DmaapUtil.buildSubscriber();
-                this.request = DmaapUtil.buildSubscriberRequest("aai_subscriber", MRTopicParams.getTopic());
+                this.request = DmaapUtil.buildSubscriberRequest(topicName + "-Subscriber", MRTopicParams.getTopic(),
+                    MRTopicParams.getConsumerGroup(), MRTopicParams.getConsumerInstance());
 
             } catch (Exception e) {
                 throw new IllegalArgumentException("Illegal MrConsumer parameters");
@@ -202,6 +215,7 @@ public class MRTopicMonitor implements Runnable {
 
         /**
          * Try fetch new message. But backoff for some sleepTime when connection fails.
+         *
          * @return
          * @throws IOException
          */

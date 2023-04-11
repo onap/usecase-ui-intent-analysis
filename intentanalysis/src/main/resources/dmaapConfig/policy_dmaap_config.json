@@ -1,20 +1,18 @@
 {
-    "policy_subscriber":{
-        "type":"message_router",
-        "aaf_username": null,
-        "aaf_password": null,
-        "api_key" : null,
-        "api_secret" : null,
-        "servers" : ["message-router:3904"],
-        "consumer_group" : "intent_analysis_policyevent",
-        "consumer_instance" : "intent_analysis_policyevent_1",
-        "fetch_timeout" : 15000,
-        "fetch_limit" : 100,
-        "dmaap_info":{
-          "topic_url":"http://message-router:3904/events/INTENT-EVENT",
-          "client_role":"org.onap.uui.intentanalysisSub",
-          "location":"onap",
-          "client_id":"intent-analysis-1"
-        }
-      }
+    "type":"message_router",
+    "aaf_username": null,
+    "aaf_password": null,
+    "api_key" : null,
+    "api_secret" : null,
+    "servers" : ["message-router:3904"],
+    "consumer_group" : "intent_analysis_policyevent",
+    "consumer_instance" : "intent_analysis_policyevent_1",
+    "fetch_timeout" : 15000,
+    "fetch_limit" : 100,
+    "dmaap_info": {
+      "topic_url":"http://message-router:3904/events/CCVPN-CL-POLICY-EVENT",
+      "client_role":"org.onap.uui.intentanalysisSub",
+      "location":"onap",
+      "client_id":"intent-analysis-1"
+    }
 }

@@ -176,6 +176,14 @@ public class MRTopicParams {
         return additionalProps != null;
     }
 
+    public String getTopicName(){
+        if(null == this.topic){
+            return "";
+        }
+        String[] pmTopicSplit = this.topic.split("\\/");
+        return pmTopicSplit[pmTopicSplit.length - 1];
+    }
+
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class TopicParamsBuilder {
 
@@ -326,8 +334,6 @@ public class MRTopicParams {
             if (topicUrl.startsWith("https")){
                 useHttps = true;
             }
-            String[] pmTopicSplit = topicUrl.split("\\/");
-            topic = pmTopicSplit[pmTopicSplit.length - 1];
 
             this.params.topic = topicUrl;
             this.params.servers = servers;
@@ -370,6 +376,5 @@ public class MRTopicParams {
             this.params.serializationProvider = serializationProvider;
             return this;
         }
-
     }
 }
