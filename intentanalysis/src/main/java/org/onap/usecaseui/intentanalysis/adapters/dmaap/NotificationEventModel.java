@@ -21,7 +21,7 @@ public class NotificationEventModel {
 
     private String source;
 
-    private Date timestamp;
+    private String timestamp;
 
     private NotificationEventEntity entity;
 }

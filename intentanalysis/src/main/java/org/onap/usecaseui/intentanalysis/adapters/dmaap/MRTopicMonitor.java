@@ -100,10 +100,9 @@ public class MRTopicMonitor implements Runnable {
     public void run() {
         while (running) {
             try {
-                logger.debug("Topic: {} getting new msg...", consumerWrapper.getTopicName());
                 List<JsonElement> dmaapMsgs = consumerWrapper.fetch();
                 for (JsonElement msg : dmaapMsgs) {
-                    logger.debug("Received message: {}" + "\r\n and processing start", msg);
+                    logger.debug("Event {} Received message: {}" + "\r\n and processing start", consumerWrapper.getTopicName(), msg);
                     process(msg.toString());
                 }
             } catch (IOException | RuntimeException e) {

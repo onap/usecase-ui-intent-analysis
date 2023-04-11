@@ -18,10 +18,16 @@ package org.onap.usecaseui.intentanalysis.adapters.policy.dmaap;
 import com.google.gson.Gson;
 import org.onap.usecaseui.intentanalysis.adapters.dmaap.NotificationCallback;
 import org.onap.usecaseui.intentanalysis.adapters.dmaap.NotificationEventModel;
+import org.onap.usecaseui.intentanalysis.adapters.policy.impl.PolicyServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PolicyNotificationCallback implements NotificationCallback {
+
+    private static final Logger logger = LoggerFactory.getLogger(PolicyNotificationCallback.class);
     @Override
     public void activateCallBack(String msg) {
+        logger.info("Received event from Policy: \n" + msg);
         NotificationEventModel event = (new Gson()).fromJson(msg, NotificationEventModel.class);
 
         //Todo analyze the event and Report to the Intent Flow;
