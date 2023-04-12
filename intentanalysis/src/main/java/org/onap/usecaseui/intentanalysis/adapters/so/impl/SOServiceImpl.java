@@ -24,6 +24,7 @@ import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAuthConfig;
 import org.onap.usecaseui.intentanalysis.bean.models.CCVPNInstance;
+import org.onap.usecaseui.intentanalysis.bean.models.ResultHeader;
 import org.onap.usecaseui.intentanalysis.util.RestfulServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,16 +120,30 @@ public class SOServiceImpl implements SOService {
 
 
     @Override
-    public int createIntentInstance(Map<String, Object> params) {
+    public Object createIntentInstance(Map<String, Object> params) {
+        ResultHeader resultHeader = new ResultHeader();
         try {
             okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("application/json"), JSON.toJSONString(params));
             Response<JSONObject> response = getSoApiCall().createIntentInstance(requestBody).execute();
-            return 1;
+            if (response.isSuccessful()) {
+                String msg = "Successfully sent create intent request, code: " + response.code() + ", msg: " + response.message()
+                logger.debug(msg);
+                resultHeader.setResult_code(1);
+                resultHeader.setResult_message(msg);
+            } else {
+                String msg = "Failed to send create intent request, code: " + response.code() + ", msg: " + response.message()
+                logger.error(msg);
+                resultHeader.setResult_code(0);
+                resultHeader.setResult_message(msg);
+            }
         } catch (IOException e) {
-            logger.error("Details:" + e.getMessage());
-            return 0;
+            logger.error("Failed to send create intent request. Details:" + e.getMessage());
+            resultHeader.setResult_code(0);
+            resultHeader.setResult_message(e.getMessage());
         }
+        return resultHeader;
     }
+
 
     public String createIntentInstanceToSO(CCVPNInstance ccvpnInstance) throws IOException {
         Map<String, Object> params = paramsSetUp(ccvpnInstance);

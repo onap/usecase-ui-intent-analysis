@@ -19,10 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
+import org.onap.usecaseui.intentanalysis.bean.enums.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
+import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -74,8 +76,28 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             params.put("instanceId", getInstanceId());
             params.put("name", "cll-" + params.get("instanceId"));
             params.put("protect", false);
-            soService.createIntentInstance(params);
+            ResultHeader resultHeader = soService.createIntentInstance(params);
+
+            // Get the expectationId of the first exception from intent which should be CLL_VPN DELIVERY
             String expectationId = intent.getIntentExpectations().get(0).getExpectationId();
+
+            // Get the fulfillmentInfo of the first exception which need to be updated with resultHeader returned
+            FulfilmentInfo fulfillmentInfo = expectationService.getIntentExpectation(expectationId).getExpectationFulfilmentInfo();
+
+            // Update fulfillmentInfo and write back to DB
+            // Originally set to be NOT_FULFILLED, and will change after requesting the SO operation status
+            fulfillmentInfo.setFulfilmentStatus(FulfilmentStatus.NOT_FULFILLED);
+            fulfillmentInfo.setNotFulfilledReason(resultHeader.getResult_message());
+
+            // If SO request accepted, means intent acknowledged, otherwise, means failed
+            if (resultHeader.getResult_code() == 1) {
+                fulfillmentInfo.setNotFulfilledState(NotFulfilledState.ACKNOWLEDGED);
+            } else {
+                fulfillmentInfo.setNotFulfilledState(NotFulfilledState.FULFILMENTFAILED);
+            }
+
+            FulfilmentInfoService.updateFulfilmentInfo(fulfilmentInfo, expectationId);
+
             ExpectationObject expectationObject = expectationObjectService.getExpectationObject(expectationId);
             expectationObject.setObjectInstance((String) params.get("name"));
             expectationObjectService.updateExpectationObject(expectationObject, expectationId);
