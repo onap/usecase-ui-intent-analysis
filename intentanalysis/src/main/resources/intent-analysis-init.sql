@@ -72,11 +72,11 @@ create table if not exists intent_management_function_reg_info(
     intent_function_type varchar(255)
     );
 
-create table if not exists intent_Event_Record(
+create table if not exists intent_event_record(
     id varchar(255) DEFAULT uuid_generate_v4 (),
-    intentId varchar(255),
-    intentName varchar(255),
-    intentStatus varchar (225),
-    operateType varchar (225),
+    intent_id varchar(255),
+    intent_name varchar(255),
+    intent_status varchar (225),
+    operate_type varchar (225),
     parent_id varchar(255)
     );
