@@ -167,16 +167,21 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
                     boolean isPublish = false;
                     int count = 1;
                     while (!isPublish) {
-                        Thread.sleep(1000);
-                        IntentEventRecord record = intentEventRecordService.getIntentEventRecordByIntentId(newIdIntent.getIntentId(), "create");
-                        count++;
-                        // it will take one hour to wait operation end
-                        if (count == 3600) {
-                            throw new CommonException("Operation took too long, failed", 500);
+                        // Set the timeout to be 60min
+                        if (count >= 3600) {
+                            throw new CommonException("Timed out for implementing intent", 500);
                         }
-                        if (null != record) {
+                        log.debug("Try to get record of intent CREATE event from DB.");
+                        IntentEventRecord record = intentEventRecordService.getIntentEventRecordByIntentId(
+                                                        newIdIntent.getIntentId(), intentGoalType.toString());
+                        if (record != null) {
                             isPublish = true;
+                            log.debug("Successfully got Intent Event Record from DB.");
+                        } else {
+                            log.debug("Index " + count + ": None Intent Event Record been got. Will try again.");
                         }
+                        count++;
+                        Thread.sleep(1000);
                     }
                 }
                 // return isAcceptCreate;

@@ -1,4 +1,5 @@
 target/
+intentanalysis/log/
 
 # IntelliJ files
 .idea/
