@@ -26,5 +26,5 @@ public interface SOService {
 
     int deleteIntentInstance(String instanceId);
 
-    int createIntentInstance(Map<String, Object> params);
+    ResultHeader createIntentInstance(Map<String, Object> params);
 }
