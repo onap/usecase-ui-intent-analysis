@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9de77a8_298761a1",
+        "filename": "intentanalysis/src/main/java/org/onap/usecaseui/intentanalysis/service/impl/IntentNotificationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-04-17T07:21:20Z",
+      "side": 1,
+      "message": "Suggest changing the name to componentNotification",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "fae82f05ee9bcaf859fca7427d7f9f3449b740dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
