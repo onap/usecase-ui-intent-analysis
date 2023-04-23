@@ -23,11 +23,14 @@ import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 @Data
 
 public class FulfilmentInfo {
+    private String fulfillmentId;
 
-    private FulfilmentStatus fulfilmentStatus;
+    private FulfilmentStatus fulfillmentStatus;
 
     private NotFulfilledState notFulfilledState;
 
     private String notFulfilledReason;
+
+    private String achieveValue;
 
 }

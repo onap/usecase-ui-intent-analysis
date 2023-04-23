@@ -89,7 +89,7 @@ public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
         intentContext.setContextName("intentContextName");
         List<Context> intentContextList = new ArrayList<>();
         intentContextList.add(intentContext);
-        intentFulfilmentInfo.setFulfilmentStatus(FulfilmentStatus.valueOf("NOT_FULFILLED"));
+        intentFulfilmentInfo.setFulfillmentStatus(FulfilmentStatus.valueOf("NOT_FULFILLED"));
         intentFulfilmentInfo.setNotFulfilledReason("NotFulfilledReason");
         intentFulfilmentInfo.setNotFulfilledState(NotFulfilledState.valueOf("COMPLIANT"));
         intent.setIntentId("testIntentId");
