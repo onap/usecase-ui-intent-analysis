@@ -43,7 +43,7 @@ public class IntentReportController {
     @GetMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResult getIntentById(
             @PathVariable("intentId") String intentId) {
-        // test connection with ui,real log
+        // test connection with ui,real logic will replace it
         IntentReport report = new IntentReport();
         report.setIntentReportId("12345");
         report.setIntentReference("intentReort");
