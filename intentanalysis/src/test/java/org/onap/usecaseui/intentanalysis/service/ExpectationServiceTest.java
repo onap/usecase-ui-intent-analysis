@@ -84,7 +84,7 @@ class ExpectationServiceTest extends AbstractJUnit4SpringContextTests {
         expectationTargetList.add(target);
 
         FulfilmentInfo expectationFulfilmentInfo = new FulfilmentInfo();
-        expectationFulfilmentInfo.setFulfilmentStatus(FulfilmentStatus.valueOf("NOT_FULFILLED"));
+        expectationFulfilmentInfo.setFulfillmentStatus(FulfilmentStatus.valueOf("NOT_FULFILLED"));
         expectationFulfilmentInfo.setNotFulfilledReason("NotFulfilledReason");
         expectationFulfilmentInfo.setNotFulfilledState(NotFulfilledState.valueOf("COMPLIANT"));
 

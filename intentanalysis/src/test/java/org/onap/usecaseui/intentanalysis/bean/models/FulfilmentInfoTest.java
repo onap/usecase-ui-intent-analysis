@@ -33,7 +33,7 @@ public class FulfilmentInfoTest {
     @Test
     public void testGetFulfilmentInfoTest() {
         FulfilmentInfo test = new FulfilmentInfo();
-        test.getFulfilmentStatus();
+        test.getFulfillmentStatus();
         test.getNotFulfilledState();
         test.getNotFulfilledReason();
 
@@ -42,7 +42,7 @@ public class FulfilmentInfoTest {
     @Test
     public void testSetFulfilmentInfoTest() {
         FulfilmentInfo test = new FulfilmentInfo();
-        test.setFulfilmentStatus(FulfilmentStatus.FULFILLED);
+        test.setFulfillmentStatus(FulfilmentStatus.FULFILLED);
         test.setNotFulfilledState(NotFulfilledState.ACKNOWLEDGED);
         test.setNotFulfilledReason("");
 
