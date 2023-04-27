@@ -172,7 +172,7 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
                         count++;
                         // it will take one hour to wait operation end
                         if (count == 3600) {
-                            throw new CommonException("Operation took too long, failed", 500);
+                            throw new CommonException("Operation    took too long, failed", 500);
                         }
                         if (null != record) {
                             isPublish = true;
