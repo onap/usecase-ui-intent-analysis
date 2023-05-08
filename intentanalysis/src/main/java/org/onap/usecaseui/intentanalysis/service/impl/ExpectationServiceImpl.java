@@ -32,7 +32,7 @@ import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationTargetService;
-import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
+import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
 import org.springframework.util.CollectionUtils;
 
 
@@ -56,7 +56,7 @@ public class ExpectationServiceImpl implements ExpectationService {
     private ContextService contextService;
 
     @Autowired
-    private FulfilmentInfoService fulfilmentInfoService;
+    private FulfillmentInfoService fulfillmentInfoService;
 
     private ContextParentType contextParentType;
 
@@ -70,7 +70,7 @@ public class ExpectationServiceImpl implements ExpectationService {
                 expectationTargetService.createExpectationTargetList(expectation.getExpectationTargets(),
                         expectationId);
                 contextService.createContextList(expectation.getExpectationContexts(), expectationId);
-                fulfilmentInfoService.createFulfilmentInfo(expectation.getExpectationFulfilmentInfo(),
+                fulfillmentInfoService.createFulfillmentInfo(expectation.getExpectationFulfillmentInfo(),
                         expectationId);
             }
         }
@@ -90,7 +90,7 @@ public class ExpectationServiceImpl implements ExpectationService {
                 expectation.getExpectationId());
         contextService.createContextList(expectation.getExpectationContexts(),
                 expectation.getExpectationId());
-        fulfilmentInfoService.createFulfilmentInfo(expectation.getExpectationFulfilmentInfo(),
+        fulfillmentInfoService.createFulfillmentInfo(expectation.getExpectationFulfillmentInfo(),
                 expectation.getExpectationId());
 
         if (expectationMapper.insertIntentExpectation(expectation, intentId) < 1) {
@@ -110,7 +110,7 @@ public class ExpectationServiceImpl implements ExpectationService {
                 expectation.setExpectationObject(expectationObjectService.getExpectationObject(expectationId));
                 expectation.setExpectationTargets(expectationTargetService.getExpectationTargetList(expectationId));
                 expectation.setExpectationContexts(contextService.getContextList(expectationId));
-                expectation.setExpectationFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(expectationId));
+                expectation.setExpectationFulfillmentInfo(fulfillmentInfoService.getFulfillmentInfo(expectationId));
             }
         } else {
             log.info(String.format("Expectation list is null, intentId = %s", intentId));
@@ -125,7 +125,7 @@ public class ExpectationServiceImpl implements ExpectationService {
             expectation.setExpectationObject(expectationObjectService.getExpectationObject(expectationId));
             expectation.setExpectationTargets(expectationTargetService.getExpectationTargetList(expectationId));
             expectation.setExpectationContexts(contextService.getContextList(expectationId));
-            expectation.setExpectationFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(expectationId));
+            expectation.setExpectationFulfillmentInfo(fulfillmentInfoService.getFulfillmentInfo(expectationId));
         } else {
             log.info(String.format("Expectation is null, expectationId = %s", expectationId));
         }
@@ -150,7 +150,7 @@ public class ExpectationServiceImpl implements ExpectationService {
                     expectationObjectService.updateExpectationObject(expectation.getExpectationObject(), expectation.getExpectationId());
                     expectationTargetService.updateExpectationTargetList(expectation.getExpectationTargets(), expectation.getExpectationId());
                     contextService.updateContextList(expectation.getExpectationContexts(), expectation.getExpectationId());
-                    fulfilmentInfoService.updateFulfilmentInfo(expectation.getExpectationFulfilmentInfo(), expectation.getExpectationId());
+                    fulfillmentInfoService.updateFulfillmentInfo(expectation.getExpectationFulfillmentInfo(), expectation.getExpectationId());
                     if (expectationMapper.updateIntentExpectation(expectation) < 1) {
                         String msg = "Failed to update expectation to database.";
                         log.error(msg);
@@ -176,7 +176,7 @@ public class ExpectationServiceImpl implements ExpectationService {
             expectationObjectService.deleteExpectationObject(expectationId);
             expectationTargetService.deleteExpectationTargetList(expectationId);
             contextService.deleteContextList(expectationId);
-            fulfilmentInfoService.deleteFulfilmentInfo(expectationId);
+            fulfillmentInfoService.deleteFulfillmentInfo(expectationId);
             if (expectationMapper.deleteIntentExpectation(expectationId) < 1) {
                 String msg = "Failed to delete expectation to database.";
                 log.error(msg);
@@ -196,7 +196,7 @@ public class ExpectationServiceImpl implements ExpectationService {
                 expectationObjectService.deleteExpectationObject(expectationId);
                 expectationTargetService.deleteExpectationTargetList(expectationId);
                 contextService.deleteContextList(expectationId);
-                fulfilmentInfoService.deleteFulfilmentInfo(expectationId);
+                fulfillmentInfoService.deleteFulfillmentInfo(expectationId);
             }
             if (expectationMapper.deleteIntentExpectationList(intentId) < 1) {
                 String msg = "Failed to delete expectation list to database.";

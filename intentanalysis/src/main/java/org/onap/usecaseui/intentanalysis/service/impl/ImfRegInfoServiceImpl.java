@@ -84,7 +84,7 @@ public class ImfRegInfoServiceImpl implements ImfRegInfoService {
             log.error(msg,intentName);
             throw new IntentInputException(msg, ResponseConsts.RET_FIND_CORRESPONDING_FAIL);
         }
-        //TODO call probe  interface  if fail  intentFulfilmentInfo throw exception
+        //TODO call probe  interface  if fail  intentFulfillmentInfo throw exception
         return imfList.get(0);
     }
 }

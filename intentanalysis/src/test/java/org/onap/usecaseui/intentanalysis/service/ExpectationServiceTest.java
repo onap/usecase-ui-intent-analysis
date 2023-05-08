@@ -25,7 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
-import org.onap.usecaseui.intentanalysis.bean.enums.FulfilmentStatus;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfillmentStatus;
 import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
 import org.onap.usecaseui.intentanalysis.bean.enums.OperatorType;
@@ -33,7 +33,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
-import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.util.SpringContextUtil;
@@ -83,17 +83,17 @@ class ExpectationServiceTest extends AbstractJUnit4SpringContextTests {
         List<ExpectationTarget> expectationTargetList = new ArrayList<>();
         expectationTargetList.add(target);
 
-        FulfilmentInfo expectationFulfilmentInfo = new FulfilmentInfo();
-        expectationFulfilmentInfo.setFulfillmentStatus(FulfilmentStatus.valueOf("NOT_FULFILLED"));
-        expectationFulfilmentInfo.setNotFulfilledReason("NotFulfilledReason");
-        expectationFulfilmentInfo.setNotFulfilledState(NotFulfilledState.valueOf("COMPLIANT"));
+        FulfillmentInfo expectationFulfillmentInfo = new FulfillmentInfo();
+        expectationFulfillmentInfo.setFulfillmentStatus(FulfillmentStatus.valueOf("NOT_FULFILLED"));
+        expectationFulfillmentInfo.setNotFulfilledReason("NotFulfilledReason");
+        expectationFulfillmentInfo.setNotFulfilledState(NotFulfilledState.valueOf("COMPLIANT"));
 
         expectation.setExpectationId(testName + "-expectationId");
         expectation.setExpectationName(testName + "expectationName");
         expectation.setExpectationType(ExpectationType.valueOf("DELIVERY"));
         expectation.setExpectationObject(object);
         expectation.setExpectationTargets(expectationTargetList);
-        expectation.setExpectationFulfilmentInfo(expectationFulfilmentInfo);
+        expectation.setExpectationFulfillmentInfo(expectationFulfillmentInfo);
 
         return expectation;
     }

@@ -19,19 +19,19 @@ package org.onap.usecaseui.intentanalysis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 
 
 @Mapper
-public interface FulfilmentInfoMapper {
+public interface FulfillmentInfoMapper {
 
-    int insertFulfilmentInfo(@Param(value = "fulfilmentInfo") FulfilmentInfo fulfilmentInfo,
+    int insertFulfillmentInfo(@Param(value = "fulfillmentInfo") FulfillmentInfo fulfillmentInfo,
                               @Param(value = "parentId") String parentId);
 
-    FulfilmentInfo selectFulfilmentInfo(@Param(value = "parentId") String parentId);
+    FulfillmentInfo selectFulfillmentInfo(@Param(value = "parentId") String parentId);
 
-    int updateFulfilmentInfo(@Param(value = "fulfilmentInfo") FulfilmentInfo fulfilmentInfo,
+    int updateFulfillmentInfo(@Param(value = "fulfillmentInfo") FulfillmentInfo fulfillmentInfo,
                              @Param(value = "parentId") String parentId);
 
-    int deleteFulfilmentInfo(@Param(value = "parentId") String parentId);
+    int deleteFulfillmentInfo(@Param(value = "parentId") String parentId);
 }

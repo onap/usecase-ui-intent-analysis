@@ -40,5 +40,5 @@ public class Expectation {
 
     private List<Context> expectationContexts;
 
-    private FulfilmentInfo expectationFulfilmentInfo;
+    private FulfillmentInfo expectationFulfillmentInfo;
 }

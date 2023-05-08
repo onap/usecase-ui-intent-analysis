@@ -37,7 +37,7 @@ public class IntentTest {
         test.getIntentName();
         test.getIntentExpectations();
         test.getIntentContexts();
-        test.getIntentFulfilmentInfo();
+        test.getIntentFulfillmentInfo();
     }
 
     @Test
@@ -47,6 +47,6 @@ public class IntentTest {
         test.setIntentName("");
         test.setIntentExpectations(new ArrayList<Expectation>());
         test.setIntentContexts(new ArrayList<Context>());
-        test.setIntentFulfilmentInfo(new FulfilmentInfo());
+        test.setIntentFulfillmentInfo(new FulfillmentInfo());
     }
 }

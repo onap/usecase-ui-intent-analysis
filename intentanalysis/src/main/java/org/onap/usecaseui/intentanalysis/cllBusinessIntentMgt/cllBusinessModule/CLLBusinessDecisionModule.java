@@ -108,7 +108,7 @@ public class CLLBusinessDecisionModule extends DecisionModule {
                 subIntent.setIntentName(objEntry.getValue().get(0).getExpectationName().replace("Expectation", "Intent"));
                 subIntent.setIntentExpectations(objEntry.getValue());
                 subIntent.setIntentGenerateType(IntentGenerateType.SYSTEMGENARATE);
-                //TODO      intentFulfilmentInfo intentContexts
+                //TODO      intentFulfillmentInfo intentContexts
                 subIntentGoalBean.setIntentGoalType(intentGoalType);
                 subIntentGoalBean.setIntent(subIntent);
                 subIntentGoalList.add(subIntentGoalBean);

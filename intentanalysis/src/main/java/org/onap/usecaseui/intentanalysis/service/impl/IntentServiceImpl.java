@@ -36,7 +36,7 @@ import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.mapper.IntentMapper;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
-import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
+import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 
 
@@ -56,7 +56,7 @@ public class IntentServiceImpl implements IntentService {
     private ContextParentType contextParentType;
 
     @Autowired
-    private FulfilmentInfoService fulfilmentInfoService;
+    private FulfillmentInfoService fulfillmentInfoService;
 
     @Autowired
     private IntentService intentService;
@@ -71,7 +71,7 @@ public class IntentServiceImpl implements IntentService {
         }
         expectationService.createIntentExpectationList(intent.getIntentExpectations(), intent.getIntentId());
         contextService.createContextList(intent.getIntentContexts(), intent.getIntentId());
-        fulfilmentInfoService.createFulfilmentInfo(intent.getIntentFulfilmentInfo(), intent.getIntentId());
+        fulfillmentInfoService.createFulfillmentInfo(intent.getIntentFulfillmentInfo(), intent.getIntentId());
         log.info("Successfully created intent to database.");
         return intent;
     }
@@ -94,7 +94,7 @@ public class IntentServiceImpl implements IntentService {
         if (intent != null) {
             intent.setIntentExpectations(expectationService.getIntentExpectationList(intentId));
             intent.setIntentContexts(contextService.getContextList(intentId));
-            intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(intentId));
+            intent.setIntentFulfillmentInfo(fulfillmentInfoService.getFulfillmentInfo(intentId));
         } else {
             log.info(String.format("Intent is null, intentId = %s", intentId));
         }
@@ -112,7 +112,7 @@ public class IntentServiceImpl implements IntentService {
         }
         expectationService.updateIntentExpectationList(intent.getIntentExpectations(), intentId);
         contextService.updateContextList(intent.getIntentContexts(), intentId);
-        fulfilmentInfoService.updateFulfilmentInfo(intent.getIntentFulfilmentInfo(), intentId);
+        fulfillmentInfoService.updateFulfillmentInfo(intent.getIntentFulfillmentInfo(), intentId);
         if (intentMapper.updateIntent(intent) < 1) {
             String msg = "Failed to update intent to database.";
             log.error(msg);
@@ -130,7 +130,7 @@ public class IntentServiceImpl implements IntentService {
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
-        fulfilmentInfoService.deleteFulfilmentInfo(intentId);
+        fulfillmentInfoService.deleteFulfillmentInfo(intentId);
         contextService.deleteContextList(intentId);
         expectationService.deleteIntentExpectationList(intentId);
         if (intentMapper.deleteIntent(intentId) < 1) {
@@ -148,7 +148,7 @@ public class IntentServiceImpl implements IntentService {
             for (Intent intent : intentList) {
                 intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
                 intent.setIntentContexts(contextService.getContextList(intent.getIntentId()));
-                intent.setIntentFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(intent.getIntentId()));
+                intent.setIntentFulfillmentInfo(fulfillmentInfoService.getFulfillmentInfo(intent.getIntentId()));
             }
 
         } else {

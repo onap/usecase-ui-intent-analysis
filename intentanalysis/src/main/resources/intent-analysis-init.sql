@@ -39,9 +39,9 @@ create table if not exists context_mapping(
     parent_id varchar(255)
 );
 
-create table if not exists fulfilment_info(
-    fulfilment_info_id varchar(255) primary key,
-    fulfilment_info_status varchar(255),
+create table if not exists fulfillment_info(
+    fulfillment_info_id varchar(255) primary key,
+    fulfillment_info_status varchar(255),
     not_fulfilled_state varchar(255),
     not_fulfilled_reason varchar(255)
 );

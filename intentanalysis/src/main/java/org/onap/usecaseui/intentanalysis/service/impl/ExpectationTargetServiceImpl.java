@@ -32,7 +32,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.ExpectationTarget;
 import org.onap.usecaseui.intentanalysis.mapper.ExpectationTargetMapper;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationTargetService;
-import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
+import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
 import org.springframework.util.CollectionUtils;
 
 
@@ -51,7 +51,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
     private ExpectationTargetService expectationTargetService;
 
     @Autowired
-    private FulfilmentInfoService fulfilmentInfoService;
+    private FulfillmentInfoService fulfillmentInfoService;
 
     @Autowired
     private ContextService contextService;
@@ -63,7 +63,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
     public void createExpectationTarget(ExpectationTarget expectationTarget, String expectationId) {
         String expectationTargetId = expectationTarget.getTargetId();
         contextService.createContextList(expectationTarget.getTargetContexts(), expectationTargetId);
-        fulfilmentInfoService.createFulfilmentInfo(expectationTarget.getTargetFulfilmentInfo(),
+        fulfillmentInfoService.createFulfillmentInfo(expectationTarget.getTargetFulfillmentInfo(),
                 expectationTargetId);
         conditionService.createConditionList(expectationTarget.getTargetConditions(), expectationTargetId);
         if (expectationTargetMapper.insertExpectationTarget(expectationTarget, expectationId) < 1) {
@@ -81,7 +81,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
             for (ExpectationTarget expectationTarget : expectationTargetList) {
                 String expectationTargetId = expectationTarget.getTargetId();
                 contextService.createContextList(expectationTarget.getTargetContexts(), expectationTargetId);
-                fulfilmentInfoService.createFulfilmentInfo(expectationTarget.getTargetFulfilmentInfo(),
+                fulfillmentInfoService.createFulfillmentInfo(expectationTarget.getTargetFulfillmentInfo(),
                         expectationTargetId);
                 conditionService.createConditionList(expectationTarget.getTargetConditions(), expectationTargetId);
             }
@@ -103,7 +103,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
                 String expectationTargetId = expectationTarget.getTargetId();
                 expectationTarget.setTargetConditions(conditionService.getConditionList(expectationTargetId));
                 expectationTarget.setTargetContexts(contextService.getContextList(expectationTargetId));
-                expectationTarget.setTargetFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(expectationTargetId));
+                expectationTarget.setTargetFulfillmentInfo(fulfillmentInfoService.getFulfillmentInfo(expectationTargetId));
             }
         } else {
             log.info(String.format("Expectation target list is null, expectationId = %s", expectationId));
@@ -118,7 +118,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
         if (expectationTarget != null) {
             expectationTarget.setTargetConditions(conditionService.getConditionList(expectationTargetId));
             expectationTarget.setTargetContexts(contextService.getContextList(expectationTargetId));
-            expectationTarget.setTargetFulfilmentInfo(fulfilmentInfoService.getFulfilmentInfo(expectationTargetId));
+            expectationTarget.setTargetFulfillmentInfo(fulfillmentInfoService.getFulfillmentInfo(expectationTargetId));
         } else {
             log.info(String.format("Expectation target is null, expectationTargetId = %s", expectationTargetId));
         }
@@ -142,7 +142,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
                 String expectationTargetId = expectationTarget.getTargetId();
                 if (expectationTargetIdListFromDB.contains(expectationTargetId)) {
                     contextService.updateContextList(expectationTarget.getTargetContexts(), expectationTargetId);
-                    fulfilmentInfoService.updateFulfilmentInfo(expectationTarget.getTargetFulfilmentInfo(), expectationTargetId);
+                    fulfillmentInfoService.updateFulfillmentInfo(expectationTarget.getTargetFulfillmentInfo(), expectationTargetId);
                     conditionService.updateConditionList(expectationTarget.getTargetConditions(), expectationTargetId);
                     if (expectationTargetMapper.updateExpectationTarget(expectationTarget, expectationTargetId) < 1) {
                         String msg = "Failed to update expectation target list to database.";
@@ -167,7 +167,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
         ExpectationTarget expectationTarget = expectationTargetService.getExpectationTarget(expectationTargetId);
         if (expectationTarget != null) {
             contextService.deleteContextList(expectationTargetId);
-            fulfilmentInfoService.deleteFulfilmentInfo(expectationTargetId);
+            fulfillmentInfoService.deleteFulfillmentInfo(expectationTargetId);
             conditionService.deleteConditionList(expectationTargetId);
             if (expectationTargetMapper.deleteExpectationTarget(expectationTargetId) < 1) {
                 String msg = "Failed to delete expectation target to database.";
@@ -185,7 +185,7 @@ public class ExpectationTargetServiceImpl implements ExpectationTargetService {
             for (ExpectationTarget expectationTarget : expectationTargetList) {
                 String expectationTargetId = expectationTarget.getTargetId();
                 contextService.deleteContextList(expectationTargetId);
-                fulfilmentInfoService.deleteFulfilmentInfo(expectationTargetId);
+                fulfillmentInfoService.deleteFulfillmentInfo(expectationTargetId);
                 conditionService.deleteConditionList(expectationTargetId);
             }
             if (expectationTargetMapper.deleteExpectationTargetList(expectationId) < 1) {

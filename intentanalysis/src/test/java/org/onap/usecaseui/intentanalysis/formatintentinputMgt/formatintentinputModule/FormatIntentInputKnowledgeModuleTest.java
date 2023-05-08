@@ -62,7 +62,7 @@ public class FormatIntentInputKnowledgeModuleTest {
         delivery.setExpectationType(ExpectationType.DELIVERY);
         ExpectationObject expectationObject = new ExpectationObject();
         expectationObject.setObjectType(ObjectType.SLICING);
-        //expetationTarget  Context  FulfilmentInfo is empty
+        //expetationTarget  Context  FulfillmentInfo is empty
         delivery.setExpectationObject(expectationObject);
         List<ExpectationTarget> expectationTargets = new ArrayList<>();
         ExpectationTarget expectationTarget = new ExpectationTarget();
@@ -77,7 +77,7 @@ public class FormatIntentInputKnowledgeModuleTest {
         assurance.setExpectationType(ExpectationType.ASSURANCE);
         ExpectationObject expectationObject1 = new ExpectationObject();
         expectationObject1.setObjectType(ObjectType.CCVPN);
-        //expetationTarget  Context  FulfilmentInfo  is empty
+        //expetationTarget  Context  FulfillmentInfo  is empty
         assurance.setExpectationObject(expectationObject1);
 
         List<ExpectationTarget> expectationTarget2 = new ArrayList<>();

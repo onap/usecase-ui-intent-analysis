@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.bean.enums;
+package org.onap.usecaseui.intentanalysis.bean.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfillmentStatus;
+import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 
-@Getter
-public enum FulfilmentStatus {
-    FULFILLED(0, "fulfilled"),
-    NOT_FULFILLED(1, "not_fulfilled");
+@Data
 
-    private int index;
+public class FulfillmentInfo {
+    private String fulfillmentId;
 
-    private String desc;
+    private FulfillmentStatus fulfillmentStatus;
 
-    FulfilmentStatus(int index, String desc) {
-        this.index = index;
-        this.desc = desc;
-    }
+    private NotFulfilledState notFulfilledState;
+
+    private String notFulfilledReason;
+
+    private String achieveValue;
+
 }
