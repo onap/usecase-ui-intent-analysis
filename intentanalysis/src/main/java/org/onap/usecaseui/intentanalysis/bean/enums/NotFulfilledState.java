@@ -26,7 +26,7 @@ public enum NotFulfilledState {
     DEGRADED(2, "degraded"),
     SUSPENDED(3, "suspended"),
     TERMINATED(4, "terminated"),
-    FULFILMENTFAILED(5, "fulfilmentfailed");
+    FULFILMENTFAILED(5, "fulfillmentfailed");
 
     private int index;
 

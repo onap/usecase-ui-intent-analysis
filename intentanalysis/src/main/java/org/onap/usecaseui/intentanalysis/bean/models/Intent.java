@@ -33,7 +33,7 @@ public class Intent {
 
     private List<Context> intentContexts;
 
-    private FulfilmentInfo intentFulfilmentInfo;
+    private FulfillmentInfo intentFulfillmentInfo;
 
     private IntentGenerateType intentGenerateType;
 

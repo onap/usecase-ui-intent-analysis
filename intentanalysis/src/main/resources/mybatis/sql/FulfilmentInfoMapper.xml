@@ -2,33 +2,33 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.FulfilmentInfoMapper">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.FulfillmentInfoMapper">
 
 
-    <insert id="insertFulfilmentInfo">
-        insert into fulfilment_info(fulfilment_info_id, fulfilment_info_status, not_fulfilled_state, not_fulfilled_reason)
-        values (#{parentId}, #{fulfilmentInfo.fulfilmentStatus}, #{fulfilmentInfo.notFulfilledState}, #{fulfilmentInfo.notFulfilledReason})
+    <insert id="insertFulfillmentInfo">
+        insert into fulfillment_info(fulfillment_info_id, fulfillment_info_status, not_fulfilled_state, not_fulfilled_reason)
+        values (#{parentId}, #{fulfillmentInfo.fulfillmentStatus}, #{fulfillmentInfo.notFulfilledState}, #{fulfillmentInfo.notFulfilledReason})
     </insert>
 
-    <select id="selectFulfilmentInfo" resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo">
-        select fulfilment_info_status fulfilmentStatus, not_fulfilled_state notFulfilledState,
+    <select id="selectFulfillmentInfo" resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo">
+        select fulfillment_info_status fulfillmentStatus, not_fulfilled_state notFulfilledState,
                not_fulfilled_reason notFulfilledReason
-        from fulfilment_info
-        where fulfilment_info_id = #{parentId}
+        from fulfillment_info
+        where fulfillment_info_id = #{parentId}
     </select>
 
-    <update id="updateFulfilmentInfo">
-        update fulfilment_info
+    <update id="updateFulfillmentInfo">
+        update fulfillment_info
         <trim prefix="set" suffixOverrides=",">
-            <if test="fulfilmentInfo.fulfilmentStatus != null">fulfilment_info_status = #{fulfilmentInfo.fulfilmentStatus},</if>
-            <if test="fulfilmentInfo.notFulfilledState != null">not_fulfilled_state = #{fulfilmentInfo.notFulfilledState},</if>
-            <if test="fulfilmentInfo.notFulfilledReason != null">not_fulfilled_reason = #{fulfilmentInfo.notFulfilledReason},</if>
+            <if test="fulfillmentInfo.fulfillmentStatus != null">fulfillment_info_status = #{fulfillmentInfo.fulfillmentStatus},</if>
+            <if test="fulfillmentInfo.notFulfilledState != null">not_fulfilled_state = #{fulfillmentInfo.notFulfilledState},</if>
+            <if test="fulfillmentInfo.notFulfilledReason != null">not_fulfilled_reason = #{fulfillmentInfo.notFulfilledReason},</if>
         </trim>
-        where fulfilment_info_id = #{parentId}
+        where fulfillment_info_id = #{parentId}
     </update>
 
-    <delete id="deleteFulfilmentInfo" parameterType="string">
-        delete from fulfilment_info
-        where fulfilment_info_id = #{parentId}
+    <delete id="deleteFulfillmentInfo" parameterType="string">
+        delete from fulfillment_info
+        where fulfillment_info_id = #{parentId}
     </delete>
 </mapper>

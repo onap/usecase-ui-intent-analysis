@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-public enum FulfilmentStatus {
+public enum FulfillmentStatus {
     FULFILLED(0, "fulfilled"),
     NOT_FULFILLED(1, "not_fulfilled");
 
@@ -28,7 +28,7 @@ public enum FulfilmentStatus {
 
     private String desc;
 
-    FulfilmentStatus(int index, String desc) {
+    FulfillmentStatus(int index, String desc) {
         this.index = index;
         this.desc = desc;
     }

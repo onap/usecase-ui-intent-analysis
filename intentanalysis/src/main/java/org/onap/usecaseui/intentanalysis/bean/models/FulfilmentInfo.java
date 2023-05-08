@@ -17,15 +17,15 @@
 package org.onap.usecaseui.intentanalysis.bean.models;
 
 import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.FulfilmentStatus;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfillmentStatus;
 import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 
 @Data
 
-public class FulfilmentInfo {
+public class FulfillmentInfo {
     private String fulfillmentId;
 
-    private FulfilmentStatus fulfillmentStatus;
+    private FulfillmentStatus fulfillmentStatus;
 
     private NotFulfilledState notFulfilledState;
 

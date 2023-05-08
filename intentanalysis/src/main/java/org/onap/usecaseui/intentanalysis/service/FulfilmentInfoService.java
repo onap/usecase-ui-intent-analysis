@@ -16,15 +16,15 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 
-public interface FulfilmentInfoService {
+public interface FulfillmentInfoService {
 
-    void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
+    void createFulfillmentInfo(FulfillmentInfo fulfillmentInfo, String parentId);
 
-    void deleteFulfilmentInfo(String parentId);
+    void deleteFulfillmentInfo(String parentId);
 
-    void updateFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId);
+    void updateFulfillmentInfo(FulfillmentInfo fulfillmentInfo, String parentId);
 
-    FulfilmentInfo getFulfilmentInfo(String parentId);
+    FulfillmentInfo getFulfillmentInfo(String parentId);
 }

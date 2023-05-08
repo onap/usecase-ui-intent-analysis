@@ -94,11 +94,11 @@ MERGE INTO context (context_id, context_name, parent_id) KEY (context_id)
 values ('72f6c546-f234-4be5-a2fe-5740139e20cb', 'intentContextName', 'intentId2');
 
 -- ----------------------------
--- Records of fulfilment_info
+-- Records of fulfillment_info
 -- ----------------------------
-MERGE INTO fulfilment_info (fulfilment_info_id, fulfilment_info_status, not_fulfilled_state, not_fulfilled_reason) KEY (fulfilment_info_id)
+MERGE INTO fulfillment_info (fulfillment_info_id, fulfillment_info_status, not_fulfilled_state, not_fulfilled_reason) KEY (fulfillment_info_id)
 values ('intentId1', 'NOT_FULFILLED', 'COMPLIANT', 'NotFulfilledReason');
-MERGE INTO fulfilment_info (fulfilment_info_id, fulfilment_info_status, not_fulfilled_state, not_fulfilled_reason) KEY (fulfilment_info_id)
+MERGE INTO fulfillment_info (fulfillment_info_id, fulfillment_info_status, not_fulfilled_state, not_fulfilled_reason) KEY (fulfillment_info_id)
 values ('intentId2', 'NOT_FULFILLED', 'COMPLIANT', 'NotFulfilledReason');
 
 

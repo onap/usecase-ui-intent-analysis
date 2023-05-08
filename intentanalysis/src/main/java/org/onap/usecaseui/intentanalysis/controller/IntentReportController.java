@@ -16,7 +16,7 @@
 package org.onap.usecaseui.intentanalysis.controller;
 
 import lombok.extern.log4j.Log4j2;
-import org.onap.usecaseui.intentanalysis.bean.enums.FulfilmentStatus;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfillmentStatus;
 import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.springframework.http.MediaType;
@@ -51,15 +51,15 @@ public class IntentReportController {
         //report.setFulfillmentInfos();
         LocalDateTime now = LocalDateTime.now();
         report.setReportTime(Date.from( now.atZone( ZoneId.systemDefault()).toInstant()));
-        FulfilmentInfo fu1= new FulfilmentInfo();
-        fu1.setFulfillmentId("fulfilmentInfo1");
-        fu1.setFulfillmentStatus(FulfilmentStatus.FULFILLED);
-        FulfilmentInfo fu2= new FulfilmentInfo();
-        fu2.setFulfillmentId("fulfilmentInfo2");
-        fu2.setFulfillmentStatus(FulfilmentStatus.NOT_FULFILLED);
+        FulfillmentInfo fu1= new FulfillmentInfo();
+        fu1.setFulfillmentId("fulfillmentInfo1");
+        fu1.setFulfillmentStatus(FulfillmentStatus.FULFILLED);
+        FulfillmentInfo fu2= new FulfillmentInfo();
+        fu2.setFulfillmentId("fulfillmentInfo2");
+        fu2.setFulfillmentStatus(FulfillmentStatus.NOT_FULFILLED);
         fu2.setNotFulfilledState(NotFulfilledState.DEGRADED);
         fu2.setNotFulfilledReason("not fulfilled Reason");
-        List<FulfilmentInfo> list = new ArrayList<>();
+        List<FulfillmentInfo> list = new ArrayList<>();
         list.add(fu1);
         list.add(fu2);
         report.setFulfillmentInfos(list);

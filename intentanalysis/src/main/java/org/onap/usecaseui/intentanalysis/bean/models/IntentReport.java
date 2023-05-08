@@ -24,7 +24,7 @@ import java.util.List;
 public class IntentReport {
     private String intentReportId;
     private String intentReference;
-    private List<FulfilmentInfo> fulfillmentInfos;
+    private List<FulfillmentInfo> fulfillmentInfos;
     private List<String> objectInstance;
     private Date reportTime;
 }

@@ -18,10 +18,10 @@ package org.onap.usecaseui.intentanalysis.bean.models;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.onap.usecaseui.intentanalysis.bean.enums.FulfilmentStatus;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfillmentStatus;
 import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 
-public class FulfilmentInfoTest {
+public class FulfillmentInfoTest {
     @Before
     public void before() throws Exception {
     }
@@ -31,8 +31,8 @@ public class FulfilmentInfoTest {
     }
 
     @Test
-    public void testGetFulfilmentInfoTest() {
-        FulfilmentInfo test = new FulfilmentInfo();
+    public void testGetFulfillmentInfoTest() {
+        FulfillmentInfo test = new FulfillmentInfo();
         test.getFulfillmentStatus();
         test.getNotFulfilledState();
         test.getNotFulfilledReason();
@@ -40,9 +40,9 @@ public class FulfilmentInfoTest {
     }
 
     @Test
-    public void testSetFulfilmentInfoTest() {
-        FulfilmentInfo test = new FulfilmentInfo();
-        test.setFulfillmentStatus(FulfilmentStatus.FULFILLED);
+    public void testSetFulfillmentInfoTest() {
+        FulfillmentInfo test = new FulfillmentInfo();
+        test.setFulfillmentStatus(FulfillmentStatus.FULFILLED);
         test.setNotFulfilledState(NotFulfilledState.ACKNOWLEDGED);
         test.setNotFulfilledReason("");
 

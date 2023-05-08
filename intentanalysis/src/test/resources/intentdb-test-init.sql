@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS expectation;
 DROP TABLE IF EXISTS expectation_object;
 DROP TABLE IF EXISTS expectation_target;
 DROP TABLE IF EXISTS context;
-DROP TABLE IF EXISTS fulfilment_info;
+DROP TABLE IF EXISTS fulfillment_info;
 DROP TABLE IF EXISTS condition;
 
 create table if not exists intent
@@ -62,10 +62,10 @@ create table if not exists context
     parent_id    varchar(255)
 );
 
-create table if not exists fulfilment_info
+create table if not exists fulfillment_info
 (
-    fulfilment_info_id     varchar(255) primary key,
-    fulfilment_info_status varchar(255),
+    fulfillment_info_id     varchar(255) primary key,
+    fulfillment_info_status varchar(255),
     not_fulfilled_state    varchar(255),
     not_fulfilled_reason   varchar(255)
 );

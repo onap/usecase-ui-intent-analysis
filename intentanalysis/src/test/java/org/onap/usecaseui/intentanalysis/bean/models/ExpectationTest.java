@@ -38,7 +38,7 @@ public class ExpectationTest {
         test.getExpectationContexts();
         test.getExpectationName();
         test.getExpectationType();
-        test.getExpectationFulfilmentInfo();
+        test.getExpectationFulfillmentInfo();
         test.getExpectationObject();
         test.getExpectationTargets();
     }
@@ -51,7 +51,7 @@ public class ExpectationTest {
         test.setExpectationName("");
         test.setExpectationTargets(new ArrayList<ExpectationTarget>());
         test.setExpectationType(ExpectationType.ASSURANCE);
-        test.setExpectationFulfilmentInfo(new FulfilmentInfo());
+        test.setExpectationFulfillmentInfo(new FulfillmentInfo());
         test.setExpectationObject(new ExpectationObject());
     }
 }

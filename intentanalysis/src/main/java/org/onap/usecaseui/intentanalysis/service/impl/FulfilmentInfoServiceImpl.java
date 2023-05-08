@@ -23,70 +23,70 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.onap.usecaseui.intentanalysis.bean.models.FulfilmentInfo;
-import org.onap.usecaseui.intentanalysis.mapper.FulfilmentInfoMapper;
-import org.onap.usecaseui.intentanalysis.service.FulfilmentInfoService;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
+import org.onap.usecaseui.intentanalysis.mapper.FulfillmentInfoMapper;
+import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Service
 @Slf4j
-public class FulfilmentInfoServiceImpl implements FulfilmentInfoService {
+public class FulfillmentInfoServiceImpl implements FulfillmentInfoService {
 
     @Autowired
-    private FulfilmentInfoMapper fulfilmentInfoMapper;
+    private FulfillmentInfoMapper fulfillmentInfoMapper;
 
     @Autowired
-    private FulfilmentInfoService fulfilmentInfoService;
+    private FulfillmentInfoService fulfillmentInfoService;
 
     @Override
-    public void createFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId) {
-        if (fulfilmentInfo != null) {
-            if (fulfilmentInfoMapper.insertFulfilmentInfo(fulfilmentInfo, parentId) < 1) {
-                String msg = "Failed to create fulfilment info to database.";
+    public void createFulfillmentInfo(FulfillmentInfo fulfillmentInfo, String parentId) {
+        if (fulfillmentInfo != null) {
+            if (fulfillmentInfoMapper.insertFulfillmentInfo(fulfillmentInfo, parentId) < 1) {
+                String msg = "Failed to create fulfillment info to database.";
                 log.error(msg);
                 throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
             }
-            log.info("Successfully created fulfilment info to database.");
+            log.info("Successfully created fulfillment info to database.");
         }
     }
 
     @Override
-    public void deleteFulfilmentInfo(String parentId) {
-        if (fulfilmentInfoService.getFulfilmentInfo(parentId) != null) {
-            if (fulfilmentInfoMapper.deleteFulfilmentInfo(parentId) < 1) {
-                String msg = "Failed to delete fulfilment info to database.";
+    public void deleteFulfillmentInfo(String parentId) {
+        if (fulfillmentInfoService.getFulfillmentInfo(parentId) != null) {
+            if (fulfillmentInfoMapper.deleteFulfillmentInfo(parentId) < 1) {
+                String msg = "Failed to delete fulfillment info to database.";
                 log.error(msg);
                 throw new DataBaseException(msg, ResponseConsts.RET_DELETE_DATA_FAIL);
             }
-            log.info("Successfully deleted fulfilment info to database.");
+            log.info("Successfully deleted fulfillment info to database.");
         }
     }
 
     @Override
-    public void updateFulfilmentInfo(FulfilmentInfo fulfilmentInfo, String parentId) {
+    public void updateFulfillmentInfo(FulfillmentInfo fulfillmentInfo, String parentId) {
 
-        FulfilmentInfo fulfillmentInfoDB = fulfilmentInfoService.getFulfilmentInfo(parentId);
-        if (fulfillmentInfoDB == null && fulfilmentInfo != null) {
-            fulfilmentInfoService.createFulfilmentInfo(fulfilmentInfo, parentId);
-        } else if (fulfillmentInfoDB != null && fulfilmentInfo == null) {
-            fulfilmentInfoService.deleteFulfilmentInfo(parentId);
+        FulfillmentInfo fulfillmentInfoDB = fulfillmentInfoService.getFulfillmentInfo(parentId);
+        if (fulfillmentInfoDB == null && fulfillmentInfo != null) {
+            fulfillmentInfoService.createFulfillmentInfo(fulfillmentInfo, parentId);
+        } else if (fulfillmentInfoDB != null && fulfillmentInfo == null) {
+            fulfillmentInfoService.deleteFulfillmentInfo(parentId);
         } else if (fulfillmentInfoDB != null) {
-            if (fulfilmentInfoMapper.updateFulfilmentInfo(fulfilmentInfo, parentId) < 1) {
-                String msg = "Failed to update fulfilment info to database.";
+            if (fulfillmentInfoMapper.updateFulfillmentInfo(fulfillmentInfo, parentId) < 1) {
+                String msg = "Failed to update fulfillment info to database.";
                 log.error(msg);
                 throw new DataBaseException(msg, ResponseConsts.RET_UPDATE_DATA_FAIL);
             }
-            log.info("Successfully updated fulfilment info to database.");
+            log.info("Successfully updated fulfillment info to database.");
         }
     }
 
     @Override
-    public FulfilmentInfo getFulfilmentInfo(String parentId) {
-        FulfilmentInfo fulfilmentInfo = fulfilmentInfoMapper.selectFulfilmentInfo(parentId);
-        if (fulfilmentInfo == null) {
-            log.info(String.format("FulfilmentInfo is null, parentId = %s", parentId));
+    public FulfillmentInfo getFulfillmentInfo(String parentId) {
+        FulfillmentInfo fulfillmentInfo = fulfillmentInfoMapper.selectFulfillmentInfo(parentId);
+        if (fulfillmentInfo == null) {
+            log.info(String.format("FulfillmentInfo is null, parentId = %s", parentId));
         }
-        return fulfilmentInfo;
+        return fulfillmentInfo;
     }
 }

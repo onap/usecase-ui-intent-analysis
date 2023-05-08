@@ -72,7 +72,7 @@ public class CLLBusinessDecisionModuleTest {
         delivery.setExpectationType(ExpectationType.DELIVERY);
         ExpectationObject expectationObject = new ExpectationObject();
         expectationObject.setObjectType(ObjectType.SLICING);
-        //expetationTarget  Context  FulfilmentInfo is empty
+        //expetationTarget  Context  FulfillmentInfo is empty
         delivery.setExpectationObject(expectationObject);
         expectationList.add(delivery);
 
@@ -82,7 +82,7 @@ public class CLLBusinessDecisionModuleTest {
         assurance.setExpectationType(ExpectationType.ASSURANCE);
         ExpectationObject expectationObject1 = new ExpectationObject();
         expectationObject1.setObjectType(ObjectType.CCVPN);
-        //expetationTarget  Context  FulfilmentInfo  is empty
+        //expetationTarget  Context  FulfillmentInfo  is empty
         assurance.setExpectationObject(expectationObject1);
         expectationList.add(assurance);
 

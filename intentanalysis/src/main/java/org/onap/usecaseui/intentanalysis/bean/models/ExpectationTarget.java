@@ -33,5 +33,5 @@ public class ExpectationTarget {
 
     private List<Context> targetContexts;
 
-    private FulfilmentInfo targetFulfilmentInfo;
+    private FulfillmentInfo targetFulfillmentInfo;
 }
