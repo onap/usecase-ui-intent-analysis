@@ -49,27 +49,21 @@ public class RestfulServices {
 
     public static <T> T create(String baseUrl, Class<T> clazz) {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
-            .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(JacksonConverterFactory.create()).build();
         return retrofit.create(clazz);
     }
 
     public static <T> T create(Class<T> clazz, final String userName, final String passWord) {
         //Set the interface response time
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().authenticator(new Authenticator() {
-                @Nullable
-                @Override
-                public Request authenticate(@Nullable Route route, Response response) throws IOException {
-                    String authStr = Credentials.basic(userName, passWord);
-                    return response.request().newBuilder().addHeader("Authorization", authStr).build();
-                }
-            }).connectTimeout(300, TimeUnit.SECONDS).readTimeout(300, TimeUnit.SECONDS)
-            .sslSocketFactory(getSSLSocketFactory(), new CustomTrustManager()).hostnameVerifier(getHostnameVerifier())
-            .build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(300, TimeUnit.SECONDS)
+                .readTimeout(300, TimeUnit.SECONDS)
+                .build();
 
         String msbUrl = getMSBIAGAddress();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://" + msbUrl + "/").client(okHttpClient)
-            .addConverterFactory(JacksonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://" + msbUrl + "/").client(okHttpClient)
+                .addConverterFactory(JacksonConverterFactory.create()).build();
 
         return retrofit.create(clazz);
     }
