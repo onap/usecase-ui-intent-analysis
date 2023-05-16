@@ -20,6 +20,8 @@ import lombok.Data;
 import org.onap.usecaseui.intentanalysis.bean.enums.FulfillmentStatus;
 import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
 
+import java.util.List;
+
 @Data
 
 public class FulfillmentInfo {
@@ -33,4 +35,5 @@ public class FulfillmentInfo {
 
     private String achieveValue;
 
+    private List<String> objectInstances;
 }

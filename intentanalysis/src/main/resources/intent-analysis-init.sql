@@ -43,7 +43,8 @@ create table if not exists fulfillment_info(
     fulfillment_info_id varchar(255) primary key,
     fulfillment_info_status varchar(255),
     not_fulfilled_state varchar(255),
-    not_fulfilled_reason varchar(255)
+    not_fulfilled_reason varchar(255),
+    achieve_value varchar(255)
 );
 
 create table if not exists state(
@@ -79,4 +80,24 @@ create table if not exists intent_event_record(
     intent_status varchar (225),
     operate_type varchar (225),
     parent_id varchar(255)
+    );
+
+create table if not exists intent_report(
+    intent_report_id varchar(255) primary key,
+    intent_reference varchar(255),
+    report_time timestamptz
+    );
+
+create table if not exists intent_report_fulfillment_info(
+    parent_id varchar(255),
+    fulfillment_info_id varchar(255),
+    fulfillment_info_status varchar(255),
+    not_fulfilled_state varchar(255),
+    not_fulfilled_reason varchar(255),
+    achieve_value varchar(255)
+    );
+
+create table if not exists object_instance(
+    parent_id varchar(255),
+    object_instance varchar(255)
     );

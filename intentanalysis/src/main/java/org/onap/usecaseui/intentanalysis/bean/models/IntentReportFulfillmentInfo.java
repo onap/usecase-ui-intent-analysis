@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.onap.usecaseui.intentanalysis.bean.models;
 
 import lombok.Data;
 
-import java.util.Date;
-import java.util.List;
-
 @Data
-public class IntentReport {
+public class IntentReportFulfillmentInfo extends FulfillmentInfo{
+    // This id is the intentReportId of the associated intentReport
     private String intentReportId;
-    private String intentReference;
-    private List<FulfillmentInfo> fulfillmentInfos;
-    private String reportTime;
 }

@@ -15,8 +15,8 @@
  */
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.adapters.dmaap.NotificationEventModel;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentOperation;
 
 public interface ComponentNotificationService {
-    void callBack(NotificationEventModel eventModel);
+    void callBack(FulfillmentOperation eventModel);
 }
