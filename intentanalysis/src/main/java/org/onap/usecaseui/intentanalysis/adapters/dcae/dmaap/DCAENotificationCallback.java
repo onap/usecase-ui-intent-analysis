@@ -13,21 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.onap.usecaseui.intentanalysis.adapters.dcae.dmaap;
 
 import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.List;
 import org.onap.usecaseui.intentanalysis.adapters.dmaap.NotificationCallback;
 import org.onap.usecaseui.intentanalysis.adapters.dmaap.NotificationEventModel;
-import org.onap.usecaseui.intentanalysis.adapters.policy.dmaap.PolicyNotificationCallback;
+import org.onap.usecaseui.intentanalysis.bean.enums.FulfillmentStatus;
+import org.onap.usecaseui.intentanalysis.bean.enums.NotFulfilledState;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentOperation;
+import org.onap.usecaseui.intentanalysis.service.ComponentNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class DCAENotificationCallback implements NotificationCallback {
     private static final Logger logger = LoggerFactory.getLogger(DCAENotificationCallback.class);
+
+    @Autowired
+    ComponentNotificationService componentNotificationService;
+
     @Override
     public void activateCallBack(String msg) {
         logger.info("Received event from DCAE: \n" + msg);
         NotificationEventModel event = (new Gson()).fromJson(msg, NotificationEventModel.class);
-        //Todo analyze the event and Report to the Intent Flow;
+        FulfillmentOperation info = new FulfillmentOperation();
+        info.setOperation(event.getEntity().getOperation());
+        info.setFulfillmentStatus(FulfillmentStatus.NOT_FULFILLED);
+        List<String> instances = new ArrayList<>();
+        instances.add(event.getEntity().getId());
+        info.setObjectInstances(instances);
+        info.setNotFulfilledState(NotFulfilledState.FULFILMENTFAILED);
+        info.setNotFulfilledReason(event.getEntity().getReason());
+        componentNotificationService.callBack(info);
     }
 }

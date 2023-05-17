@@ -15,6 +15,9 @@
  */
 package org.onap.usecaseui.intentanalysis.adapters.dmaap;
 
+import lombok.Data;
+
+@Data
 public class NotificationEventEntity {
     //The entity id , currently in CLL User Case, it is CLL id
     private String id;

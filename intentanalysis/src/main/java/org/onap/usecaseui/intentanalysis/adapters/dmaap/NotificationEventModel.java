@@ -15,8 +15,9 @@
  */
 package org.onap.usecaseui.intentanalysis.adapters.dmaap;
 
-import java.util.Date;
+import lombok.Data;
 
+@Data
 public class NotificationEventModel {
 
     private String source;
