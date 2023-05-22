@@ -53,4 +53,10 @@
         where expectation_id = #{expectationId}
     </delete>
 
+    <select id="getIntentIdByExpectationId" resultType="java.lang.String">
+        select intent_id
+        from expectation
+        where expectation_id = #{expectationId}
+          and expectation_type = #{expectationType}
+    </select>
 </mapper>

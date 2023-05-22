@@ -53,4 +53,9 @@ public final class ResponseConsts {
      * response error
      */
     public static  final int RESPONSE_ERROR = 500;
+
+    /**
+     * empty param
+     */
+    public static final int EMPTY_PARAM = 10006;
 }

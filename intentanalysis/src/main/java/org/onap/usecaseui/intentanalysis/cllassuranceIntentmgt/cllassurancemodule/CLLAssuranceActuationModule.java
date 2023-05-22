@@ -26,8 +26,10 @@ import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class CLLAssuranceActuationModule extends ActuationModule {
@@ -75,22 +77,44 @@ public class CLLAssuranceActuationModule extends ActuationModule {
 
     private String getBandwidth(String cllId) {
         List<Intent> deliveryIntentList = intentService.getIntentByName("CLL Delivery Intent");
+        if (CollectionUtils.isEmpty(deliveryIntentList)) {
+            log.info("get CLL Delivery Intent from the database is empty");
+            return null;
+        }
         for (Intent deliveryIntent : deliveryIntentList) {
             List<Expectation> deliveryExpectationList = deliveryIntent.getIntentExpectations();
+            if (CollectionUtils.isEmpty(deliveryExpectationList)) {
+                log.info("expectation is empty,intentId is {}", deliveryIntent.getIntentId());
+                continue;
+            }
             for (Expectation deliveryExpectation : deliveryExpectationList) {
-                if (StringUtils.equalsIgnoreCase(cllId, deliveryExpectation.getExpectationObject().getObjectInstance())) {
-                    List<ExpectationTarget> deliveryTargetList = deliveryExpectation.getExpectationTargets();
-                    for (ExpectationTarget deliveryTarget : deliveryTargetList) {
-                        if (StringUtils.equalsIgnoreCase("bandwidth", deliveryTarget.getTargetName())) {
-                            List<Condition> deliveryConditionList = deliveryTarget.getTargetConditions();
-                            for (Condition deliveryCondition : deliveryConditionList) {
-                                if (StringUtils.equalsIgnoreCase("condition of the cll service bandwidth", deliveryCondition.getConditionName())) {
-                                    return deliveryCondition.getConditionValue();
-                                }
-                            }
-                        }
-                    }
+                ExpectationObject expectationObject = deliveryExpectation.getExpectationObject();
+                if (expectationObject == null) {
+                    log.info("expectationObject is empty,expectationId is {}", deliveryExpectation.getExpectationId());
+                    continue;
                 }
+                String objectInstance = expectationObject.getObjectInstance();
+                if (!StringUtils.equalsIgnoreCase(cllId, objectInstance)) {
+                    log.info("cllId and objectInstance are not equal,cllId is {},objectInstance is {}", cllId, objectInstance);
+                    continue;
+                }
+                List<ExpectationTarget> deliveryTargetList = deliveryExpectation.getExpectationTargets();
+                List<ExpectationTarget> bandwidth = deliveryTargetList.stream()
+                        .filter(target -> StringUtils.equalsIgnoreCase("bandwidth", target.getTargetName()))
+                        .collect(Collectors.toList());
+                if (CollectionUtils.isEmpty(bandwidth)) {
+                    log.info("bandwidth target is empty,expectation is {}", deliveryExpectation.getExpectationId());
+                    continue;
+                }
+                List<Condition> deliveryConditionList = bandwidth.get(0).getTargetConditions();
+                List<Condition> collect = deliveryConditionList.stream()
+                        .filter(condition -> StringUtils.equalsIgnoreCase("condition of the cll service bandwidth", condition.getConditionName()))
+                        .collect(Collectors.toList());
+                if (CollectionUtils.isEmpty(collect)) {
+                    log.info("condition of the cll service bandwidth is empty,targetId is {}", bandwidth.get(0).getTargetId());
+                    continue;
+                }
+                return collect.get(0).getConditionValue();
             }
         }
         return null;

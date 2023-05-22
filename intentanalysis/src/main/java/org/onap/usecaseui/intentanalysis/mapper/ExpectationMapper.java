@@ -20,6 +20,7 @@ package org.onap.usecaseui.intentanalysis.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
 
 
@@ -41,4 +42,7 @@ public interface ExpectationMapper {
     List<Expectation> selectIntentExpectationList(@Param(value = "intentId") String intentId);
 
     Expectation selectIntentExpectation(@Param(value = "expectationId") String expectationId);
+
+    String getIntentIdByExpectationId(@Param(value = "expectationId") String expectationId,
+                                      @Param(value = "expectationType") ExpectationType expectationType);
 }

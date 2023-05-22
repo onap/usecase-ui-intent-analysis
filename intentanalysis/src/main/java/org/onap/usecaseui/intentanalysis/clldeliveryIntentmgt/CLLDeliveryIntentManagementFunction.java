@@ -69,8 +69,9 @@ public class CLLDeliveryIntentManagementFunction extends IntentManagementFunctio
             CreateCallable deliveryCallable = new CreateCallable(originalIntent, intentGoalBean, handler, applicationContext);
             FutureTask<String> futureTask = new FutureTask<>(deliveryCallable);
             executor.submit(futureTask);
+            log.info(futureTask.get());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("exception is {}", ex.getMessage());
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
+ * Copyright (C) 2023 CMCC, Inc. and others. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
+package org.onap.usecaseui.intentanalysis.service;
 
-public class CommonUtil {
-    public static String getUUid() {
-        return UUID.randomUUID().toString().trim().replaceAll("-", "");
-    }
+import org.onap.usecaseui.intentanalysis.bean.models.IntentReport;
 
-    public static String getTime() {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
-        String format = dateFormat.format(date);
-        return format;
-    }
+public interface IntentReportService {
+    IntentReport getIntentReportByIntentId(String intentId);
 }

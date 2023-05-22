@@ -38,4 +38,15 @@
         delete from expectation_object
         where expectation_id = #{expectationId}
     </delete>
+
+    <select id="getExpectationIdByObjectInstance" resultType="java.lang.String">
+        select expectation_id
+        from expectation_object
+        where object_instance = #{objectInstance}
+    </select>
+
+    <select id="getAllObjectInstances" resultType="java.lang.String">
+        select object_instance
+        from expectation_object
+    </select>
 </mapper>

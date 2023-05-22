@@ -112,6 +112,9 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             ExpectationObject expectationObject = expectationObjectService.getExpectationObject(expectationId);
             expectationObject.setObjectInstance((String) params.get("name"));
             expectationObjectService.updateExpectationObject(expectationObject, expectationId);
+        } else if (StringUtils.equalsIgnoreCase("delete", intentGoalBean.getIntentGoalType().name())) {
+            String instanceId = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance();
+            soService.deleteIntentInstance(instanceId);
         } else {
             String instanceId = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance();
             soService.deleteIntentInstance(instanceId);

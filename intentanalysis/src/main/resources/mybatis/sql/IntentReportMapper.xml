@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentReportMapper">
+
+    <insert id="insertIntentReport">
+        insert into intent_report(intent_report_id, intent_reference,report_time)
+        values (#{intentReport.intentReportId},#{intentReport.intentReference},to_timestamp(#{intentReport.reportTime},'yyyy-MM-dd HH24:mi:ss'))
+    </insert>
+</mapper>
