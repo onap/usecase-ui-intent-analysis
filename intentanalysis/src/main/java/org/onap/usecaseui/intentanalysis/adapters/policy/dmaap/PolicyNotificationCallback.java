@@ -32,6 +32,8 @@ public class PolicyNotificationCallback implements NotificationCallback {
 
     private static final Logger logger = LoggerFactory.getLogger(PolicyNotificationCallback.class);
 
+    //only Assurance support . Delivery will be supported next release.
+    private static final String IntentOperation = "Assurance";
     @Autowired
     ComponentNotificationService componentNotificationService;
 
@@ -40,7 +42,7 @@ public class PolicyNotificationCallback implements NotificationCallback {
         logger.info("Received event from Policy: \n" + msg);
         NotificationEventModel event = (new Gson()).fromJson(msg, NotificationEventModel.class);
         FulfillmentOperation info = new FulfillmentOperation();
-        info.setOperation(event.getEntity().getOperation());
+        info.setOperation(IntentOperation);
         info.setFulfillmentStatus(FulfillmentStatus.NOT_FULFILLED);
         List<String> instances = new ArrayList<>();
         instances.add(event.getEntity().getId());
