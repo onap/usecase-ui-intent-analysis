@@ -17,26 +17,32 @@ package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinput
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.IntentInputException;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
+import org.onap.usecaseui.intentanalysis.service.IntentReportService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Component
 public class FormatIntentInputDecisionModule extends DecisionModule {
@@ -49,6 +55,12 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     @Autowired
     public IntentService intentService;
 
+    @Autowired
+    private IntentReportService intentReportService;
+
+    @Resource(name = "intentReportExecutor")
+    private ScheduledThreadPoolExecutor executor;
+
     @Override
     public void determineUltimateGoal() {
     }
@@ -58,8 +70,8 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         // if intentName contain cll  return
         if (intentGoalBean.getIntent().getIntentName().toLowerCase(Locale.ROOT).contains("cll")) {
             return (IntentManagementFunction) applicationContext.getBean(CLLBusinessIntentManagementFunction.class.getSimpleName());
-        }else{
-            String msg = String.format("intentName is: %s can't find corresponding IntentManagementFunction,please check Intent Name",intentGoalBean.getIntent().getIntentName());
+        } else {
+            String msg = String.format("intentName is: %s can't find corresponding IntentManagementFunction,please check Intent Name", intentGoalBean.getIntent().getIntentName());
             log.error(msg);
             throw new IntentInputException(msg, ResponseConsts.RET_FIND_CORRESPONDING_FAIL);
         }
@@ -76,14 +88,17 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
 
     @Override
     public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean) {
-       log.info("FormatIntentInputMgt investigation create process start");
+        log.info("FormatIntentInputMgt investigation create process start");
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
-        boolean needDecompostion = needDecompostion(intentGoalBean);
-        log.debug("FormatIntentInputMgt need decompose :"+ needDecompostion);
+
+        IntentGoalBean newIntentGoalBean = removeReportExpectation(intentGoalBean);
+
+        boolean needDecompostion = needDecompostion(newIntentGoalBean);
+        log.debug("FormatIntentInputMgt need decompose :" + needDecompostion);
         if (needDecompostion) {
-            intentDecomposition(intentGoalBean);
+            intentDecomposition(newIntentGoalBean);
         } else {
-            intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
+            intentMap.put(newIntentGoalBean, exploreIntentHandlers(newIntentGoalBean));
         }
         log.info("FormatIntentInputMgt investigation create process finished");
         return intentMap;
@@ -128,7 +143,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         return intentMap;
     }
 
-    public void UpdateIntentInfo(Intent originIntent, Intent intent){
+    public void UpdateIntentInfo(Intent originIntent, Intent intent) {
 
         List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
         List<Expectation> intentExpectationList = intent.getIntentExpectations();
@@ -136,18 +151,18 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         int oldIntentExpectationNum = intentExpectationList.size();
 
         List<Expectation> changeList = new ArrayList<>();
-        if (newIntentExpectationNum != oldIntentExpectationNum){
-            if (newIntentExpectationNum < oldIntentExpectationNum){
+        if (newIntentExpectationNum != oldIntentExpectationNum) {
+            if (newIntentExpectationNum < oldIntentExpectationNum) {
 
                 for (Expectation oldExpectation : intentExpectationList) {//search
                     boolean bFindExpectation = false;
                     for (Expectation newExpectation : originIntentExpectationList) {//param
-                        if (oldExpectation.getExpectationName().equals(newExpectation.getExpectationName())){
+                        if (oldExpectation.getExpectationName().equals(newExpectation.getExpectationName())) {
                             bFindExpectation = true;
                             break;
                         }
                     }
-                    if (bFindExpectation){
+                    if (bFindExpectation) {
                         changeList.add(oldExpectation);
                     }
                 }
@@ -168,4 +183,45 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         return intentMap;
     }
 
+    private IntentGoalBean removeReportExpectation(IntentGoalBean intentGoalBean) {
+        Intent intent = intentGoalBean.getIntent();
+        List<Expectation> intentExpectations = intent.getIntentExpectations();
+        List<Expectation> report = intentExpectations.stream()
+                .filter(expectation -> ExpectationType.REPORT.equals(expectation.getExpectationType()))
+                .collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(report)) {
+            log.info("No expectation of type report is entered");
+            return intentGoalBean;
+        }
+        generationIntentReport(report.get(0), intent.getIntentId());
+        Intent newIntent = new Intent();
+        BeanUtils.copyProperties(intent, newIntent);
+        List<Expectation> notReport = intentExpectations.stream()
+                .filter(expectation -> !ExpectationType.REPORT.equals(expectation.getExpectationType()))
+                .collect(Collectors.toList());
+        newIntent.setIntentExpectations(notReport);
+        return new IntentGoalBean(newIntent, intentGoalBean.getIntentGoalType());
+    }
+
+    private void generationIntentReport(Expectation expectation, String intentId) {
+        List<ExpectationTarget> expectationTargets = expectation.getExpectationTargets();
+        if (CollectionUtils.isEmpty(expectationTargets)) {
+            log.error("The expectation target is empty,expectationId is {}", expectation.getExpectationId());
+            return;
+        }
+        ExpectationTarget expectationTarget = expectationTargets.get(0);
+        List<Condition> targetConditions = expectationTarget.getTargetConditions();
+        if (CollectionUtils.isEmpty(targetConditions)) {
+            log.error("The target condition is empty,expectationId is {}", expectation.getExpectationId());
+            return;
+        }
+        Condition condition = targetConditions.get(0);
+        try {
+            int conditionValue = Integer.parseInt(condition.getConditionValue());
+            log.info("Start executing scheduled intent report generation task ");
+            executor.scheduleAtFixedRate(() -> intentReportService.saveIntentReportByIntentId(intentId), 2, conditionValue, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.error("The exception is {}", e.getMessage());
+        }
+    }
 }

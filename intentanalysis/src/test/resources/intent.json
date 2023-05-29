@@ -1,0 +1,104 @@
+{
+	"intentId":"testIntentId111",
+	"intentName":"CLLBusiness intent",
+	"intentExpectations":[
+		{
+			"expectationId":"expectationId111",
+			"expectationName":"CLL Delivery Expectation",
+			"expectationType":"DELIVERY",
+			"expectationObject":{
+				"objectType":"CCVPN",
+				"objectInstance":""
+			},
+			"expectationTargets":[
+				{
+					"targetId":"target111-1",
+					"targetName":"source",
+					"targetConditions":[
+						{
+							"conditionId":"condition111-1",
+							"conditionName":"condition of the cll service source",
+							"operator":"EQUALTO",
+							"conditionValue":"tranportEp_src_ID_111_1(onu-1(companyA))",
+							"conditionList":null
+						}
+					]
+				},
+				{
+					"targetId":"target111-2",
+					"targetName":"destination",
+					"targetConditions":[
+						{
+							"conditionId":"condition111-2",
+							"conditionName":"condition of the cll service destination",
+							"operator":"EQUALTO",
+							"conditionValue":"tranportEp_dst_ID_212_1(cloud-pop-1(cloud 1))",
+							"conditionList":null
+						}
+					]
+				},
+				{
+					"targetId":"target111-3",
+					"targetName":"bandwidth",
+					"targetConditions":[
+						{
+							"conditionId":"condition111-3",
+							"conditionName":"condition of the cll service bandwidth",
+							"operator":"EQUALTO",
+							"conditionValue":"1000",
+							"conditionList":null
+						}
+					]
+				}
+			]
+		},
+		{
+			"expectationId":"expectationId222",
+			"expectationName":"CLL Assurance Expectation",
+			"expectationType":"ASSURANCE",
+			"expectationObject":{
+				"objectType":"CCVPN",
+				"objectInstance":""
+			},
+			"expectationTargets":[
+				{
+					"targetId":"target222-1",
+					"targetName":"bandwidthAssurance",
+					"targetConditions":[
+						{
+							"conditionId":"condition222-1",
+							"conditionName":"condition of the cll service bandwidth assurance",
+							"operator":"EQUALTO",
+							"conditionValue":"true",
+							"conditionList":null
+						}
+					]
+				}
+			]
+		},
+		{
+			"expectationId":"expectationId333",
+			"expectationName":"CLL Report Expectation",
+			"expectationType":"REPORT",
+			"expectationObject":{
+				"objectType":"CCVPN",
+				"objectInstance":""
+			},
+			"expectationTargets":[
+				{
+					"targetId":"target333-1",
+					"targetName":"bandwidthAssurance",
+					"targetConditions":[
+						{
+							"conditionId":"condition333-1",
+							"conditionName":"condition of the cll service bandwidth assurance",
+							"operator":"EQUALTO",
+							"conditionValue":"10",
+							"conditionList":null
+						}
+					]
+				}
+			]
+		}
+	]
+}

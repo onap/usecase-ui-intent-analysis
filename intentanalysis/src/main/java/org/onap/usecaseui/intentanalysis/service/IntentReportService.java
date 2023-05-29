@@ -20,4 +20,6 @@ import org.onap.usecaseui.intentanalysis.bean.models.IntentReport;
 
 public interface IntentReportService {
     IntentReport getIntentReportByIntentId(String intentId);
+
+    void saveIntentReportByIntentId(String intentId);
 }

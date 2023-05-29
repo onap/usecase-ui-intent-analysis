@@ -19,8 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
 
 @Configuration
 //@EnableAsync
@@ -45,6 +44,12 @@ public class ThreadPoolConfig {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         //init pool
         executor.initialize();
+        return executor;
+    }
+
+    @Bean("intentReportExecutor")
+    public Executor getScheduledThreadPoolExecutor(){
+        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
         return executor;
     }
 }

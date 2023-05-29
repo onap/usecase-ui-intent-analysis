@@ -89,10 +89,13 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             String expectationId = intent.getIntentExpectations().get(0).getExpectationId();
 
             // Get the fulfillmentInfo of the first exception which need to be updated with resultHeader returned
-            FulfillmentInfo fulfillmentInfo = expectationService.getIntentExpectation(expectationId).getExpectationFulfillmentInfo();
-
-            if (fulfillmentInfo == null) {
-                fulfillmentInfo = new FulfillmentInfo();
+            FulfillmentInfo fulfillmentInfo = new FulfillmentInfo();
+            Expectation intentExpectation = expectationService.getIntentExpectation(expectationId);
+            if (intentExpectation != null) {
+                FulfillmentInfo expectationFulfillmentInfo = intentExpectation.getExpectationFulfillmentInfo();
+                if (expectationFulfillmentInfo != null) {
+                    fulfillmentInfo = expectationFulfillmentInfo;
+                }
             }
 
             // Update fulfillmentInfo and write back to DB

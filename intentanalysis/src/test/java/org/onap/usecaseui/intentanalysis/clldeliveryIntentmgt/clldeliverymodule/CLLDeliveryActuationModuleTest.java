@@ -28,6 +28,8 @@ import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
+import org.onap.usecaseui.intentanalysis.service.ExpectationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -40,8 +42,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = IntentAnalysisApplicationTests.class)
 @RunWith(SpringRunner.class)
 public class CLLDeliveryActuationModuleTest {
-    @InjectMocks
+    @Autowired
     CLLDeliveryActuationModule cllDeliveryActuationModulel;
+
+    @Autowired
+    private ExpectationService expectationService;
     @Mock
     private ExpectationObjectService expectationObjectService;
     @Mock
@@ -92,7 +97,7 @@ public class CLLDeliveryActuationModuleTest {
         Intent intent = new Intent();
         List<Expectation> expectationList = new ArrayList<>();
         Expectation expectation = new Expectation();
-        expectation.setExpectationId("1234");
+        expectation.setExpectationId("expectationId1");
         List<ExpectationTarget> targetList = new ArrayList<>();
         ExpectationTarget target = new ExpectationTarget();
 

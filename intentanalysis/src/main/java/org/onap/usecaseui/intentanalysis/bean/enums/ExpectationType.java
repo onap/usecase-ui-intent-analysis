@@ -21,7 +21,8 @@ import lombok.Getter;
 @Getter
 public enum ExpectationType {
     DELIVERY(0, "delivery"),
-    ASSURANCE(1, "assurance");
+    ASSURANCE(1, "assurance"),
+    REPORT(2, "report");
 
     private int index;
 

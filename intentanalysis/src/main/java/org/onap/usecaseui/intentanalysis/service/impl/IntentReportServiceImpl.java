@@ -29,6 +29,7 @@ import org.onap.usecaseui.intentanalysis.service.IntentReportService;
 import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
@@ -51,41 +52,68 @@ public class IntentReportServiceImpl implements IntentReportService {
     private IntentReportMapper intentReportMapper;
 
     @Override
+    @Transactional(rollbackFor = DataBaseException.class)
     public IntentReport getIntentReportByIntentId(String intentId) {
+        FulfillmentInfo fulfillmentInfo = getFulfillmentInfo(intentId);
+        fulfillmentInfo.setObjectInstances(getInstances(intentId));
+        IntentReport intentReport = new IntentReport();
+        intentReport.setIntentReportId(CommonUtil.getUUid());
+        intentReport.setIntentReference("intentReference");
+        intentReport.setFulfillmentInfos(Collections.singletonList(fulfillmentInfo));
+        intentReport.setReportTime(CommonUtil.getTime());
+
+        saveIntentReport(intentReport, fulfillmentInfo);
+        return intentReport;
+    }
+
+    @Override
+    @Transactional(rollbackFor = DataBaseException.class)
+    public void saveIntentReportByIntentId(String intentId) {
         FulfillmentInfo fulfillmentInfo = fulfillmentInfoService.getFulfillmentInfo(intentId);
-        System.out.println(fulfillmentInfo);
+        if (fulfillmentInfo == null) {
+            log.error("The fulfillmentInfo is null");
+            return;
+        }
+        IntentReport intentReport = new IntentReport();
+        intentReport.setIntentReportId(CommonUtil.getUUid());
+        intentReport.setIntentReference("intentReference");
+        intentReport.setReportTime(CommonUtil.getTime());
+        saveIntentReport(intentReport, fulfillmentInfo);
+    }
+
+    private FulfillmentInfo getFulfillmentInfo(String intentId) {
+        FulfillmentInfo fulfillmentInfo = fulfillmentInfoService.getFulfillmentInfo(intentId);
+        log.info("fulfillmentInfo is {}", fulfillmentInfo);
         if (fulfillmentInfo == null) {
             log.error("get fulfillmentInfo is failed,intentId is {}", intentId);
-            String msg = "get fulfillmentInfo is failed";
+            String msg = "get fulfillmentInfo is empty, please enter the right intentId";
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
-        fulfillmentInfo.setFulfillmentId(intentId);
+        return fulfillmentInfo;
+    }
+
+    private List<String> getInstances(String intentId) {
         List<String> objectInstances = objectInstanceMapper.getObjectInstances(intentId);
         if (CollectionUtils.isEmpty(objectInstances)) {
             log.error("get objectInstance is failed,intentId is {}", intentId);
             String msg = "get objectInstance is failed";
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
-        String uUid = CommonUtil.getUUid();
-        fulfillmentInfo.setObjectInstances(objectInstances);
-        IntentReport intentReport = new IntentReport();
-        intentReport.setIntentReportId(uUid);
-        intentReport.setIntentReference("intentReference");
-        intentReport.setFulfillmentInfos(Collections.singletonList(fulfillmentInfo));
-        intentReport.setReportTime(CommonUtil.getTime());
+        return objectInstances;
+    }
 
+    private void saveIntentReport(IntentReport intentReport, FulfillmentInfo fulfillmentInfo) {
         int num = intentReportMapper.insertIntentReport(intentReport);
         if (num < 1) {
             String msg = "Failed to insert intent report to database.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
-        int fulfillmentNum = intentReportFulfillmentInfoMapper.insertIntentReportFulfillment(fulfillmentInfo, uUid);
+        int fulfillmentNum = intentReportFulfillmentInfoMapper.insertIntentReportFulfillment(fulfillmentInfo, intentReport.getIntentReportId());
         if (fulfillmentNum < 1) {
             String msg = "Failed to insert fulfillmentInfo to database.";
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
-        return intentReport;
     }
 }

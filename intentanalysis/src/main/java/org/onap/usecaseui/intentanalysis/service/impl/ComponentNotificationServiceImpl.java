@@ -27,6 +27,7 @@ import org.onap.usecaseui.intentanalysis.service.ComponentNotificationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -61,6 +62,7 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
      * @param eventModel param
      */
     @Override
+    @Transactional(rollbackFor = DataBaseException.class)
     public void callBack(FulfillmentOperation eventModel) {
         if (eventModel == null) {
             String msg = "The obtained fulfillmentInfo is null";
@@ -82,14 +84,12 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
         log.info("ExpectationId is {}", expectationIds);
         String intentId = null;
         for (String expectationId : expectationIds) {
-            // TODO
             ExpectationType expectationType = getExpectationType(operation);
             intentId = expectationMapper.getIntentIdByExpectationId(expectationId, expectationType);
             if (StringUtils.isNotEmpty(intentId)) {
                 break;
             }
         }
-        log.error("The intentId is {}", intentId);
 
         if (StringUtils.isEmpty(intentId)) {
             String msg = "Get intentId is null from database";
@@ -111,7 +111,6 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
         FulfillmentInfo newInfo = new FulfillmentInfo();
         BeanUtils.copyProperties(eventModel, newInfo);
         int num = fulfillmentInfoMapper.insertFulfillmentInfo(newInfo, intentId);
-        FulfillmentInfo fulfillmentInfo1 = fulfillmentInfoMapper.selectFulfillmentInfo(intentId);
         if (num < 1) {
             String msg = "Failed to insert fulfillmentInfo to database.";
             log.error(msg);
@@ -143,7 +142,6 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
         Context context = collect.get(0);
         List<Condition> conditions = conditionMapper.selectConditionList(context.getContextId());
         if (CollectionUtils.isEmpty(conditions) || StringUtils.isEmpty(conditions.get(0).getConditionValue())) {
-            log.error("");
             String msg = "Get conditions is empty from database";
             throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
