@@ -22,8 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import static org.onap.usecaseui.intentanalysis.common.ResponseConsts.RSEPONSE_SUCCESS;
-
 @Log4j2
 @RestController
 @RequestMapping("/intentReport")
@@ -34,8 +32,6 @@ public class IntentReportController {
     @GetMapping(value = "/{intentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ServiceResult getIntentById(
             @PathVariable("intentId") String intentId) {
-        IntentReport report = intentReportService.getIntentReportByIntentId(intentId);
-        return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "get report success"),
-                report);
+        return intentReportService.getIntentReportByIntentId(intentId);
     }
 }

@@ -26,6 +26,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
+import org.onap.usecaseui.intentanalysis.mapper.ObjectInstanceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,9 @@ public class IntentServiceImpl implements IntentService {
 
     @Autowired
     private IntentService intentService;
+
+    @Autowired
+    private ObjectInstanceMapper objectInstanceMapper;
 
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
@@ -133,6 +137,7 @@ public class IntentServiceImpl implements IntentService {
         fulfillmentInfoService.deleteFulfillmentInfo(intentId);
         contextService.deleteContextList(intentId);
         expectationService.deleteIntentExpectationList(intentId);
+        objectInstanceMapper.deleteObjectInstances(intentId);
         if (intentMapper.deleteIntent(intentId) < 1) {
             String msg = "Failed to delete intent to database.";
             log.error(msg);

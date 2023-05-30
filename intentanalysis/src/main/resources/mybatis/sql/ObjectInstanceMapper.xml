@@ -13,6 +13,11 @@
     </insert>
 
     <select id="getObjectInstances" resultType="java.lang.String">
-        select object_instance from object_instance where parent_id = #{parentId}
+        select object_instance  from object_instance where parent_id = #{parentId}
     </select>
+
+    <delete id="deleteObjectInstances">
+        delete from object_instance where parent_id = #{parentId}
+    </delete>
+
 </mapper>

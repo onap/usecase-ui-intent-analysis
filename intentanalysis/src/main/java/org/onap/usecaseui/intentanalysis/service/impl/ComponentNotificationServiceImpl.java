@@ -116,7 +116,16 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
             log.error(msg);
             throw new DataBaseException(msg, ResponseConsts.RET_INSERT_DATA_FAIL);
         }
-        int objectInstanceNum = objectInstanceMapper.insertObjectInstanceList(eventModel.getObjectInstances(), intentId);
+        List<String> instances = eventModel.getObjectInstances();
+        List<String> objectInstancesDb = objectInstanceMapper.getObjectInstances(intentId);
+        if (!CollectionUtils.isEmpty(objectInstancesDb)) {
+            instances.removeAll(objectInstancesDb);
+            if (CollectionUtils.isEmpty(instances)) {
+                log.info("The objectInstances already exist in the database");
+                return;
+            }
+        }
+        int objectInstanceNum = objectInstanceMapper.insertObjectInstanceList(instances, intentId);
         if (objectInstanceNum < 1) {
             String msg = "Failed to insert objectInstances to database.";
             log.error(msg);

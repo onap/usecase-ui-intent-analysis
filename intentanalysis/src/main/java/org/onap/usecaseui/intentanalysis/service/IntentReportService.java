@@ -16,10 +16,10 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.models.IntentReport;
+import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
 
 public interface IntentReportService {
-    IntentReport getIntentReportByIntentId(String intentId);
+    ServiceResult getIntentReportByIntentId(String intentId);
 
     void saveIntentReportByIntentId(String intentId);
 }

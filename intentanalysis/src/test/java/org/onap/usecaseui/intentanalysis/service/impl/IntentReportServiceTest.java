@@ -56,7 +56,7 @@ public class IntentReportServiceTest {
         fulfillmentOperation.setObjectInstances(Collections.singletonList(cll.get(0)));
         fulfillmentOperation.setOperation("delivery");
         componentNotificationService.callBack(fulfillmentOperation);
-        IntentReport report = intentReportService.getIntentReportByIntentId("testIntentId111");
+        ServiceResult report = intentReportService.getIntentReportByIntentId("testIntentId111");
         Assert.assertNotNull(report);
     }
 }

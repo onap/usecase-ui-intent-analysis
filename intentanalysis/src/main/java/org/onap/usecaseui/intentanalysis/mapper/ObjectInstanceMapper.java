@@ -26,4 +26,6 @@ public interface ObjectInstanceMapper {
                                  @Param(value = "parentId") String parentId);
 
     List<String> getObjectInstances(@Param(value = "parentId") String parentId);
+
+    int deleteObjectInstances(@Param(value = "parentId") String parentId);
 }

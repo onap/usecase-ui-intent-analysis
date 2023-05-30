@@ -19,6 +19,8 @@ package org.onap.usecaseui.intentanalysis.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentReport;
+import org.onap.usecaseui.intentanalysis.bean.models.ResultHeader;
+import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.mapper.IntentReportFulfillmentInfoMapper;
@@ -34,6 +36,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.onap.usecaseui.intentanalysis.common.ResponseConsts.RSEPONSE_SUCCESS;
 
 @Service
 @Slf4j
@@ -53,8 +58,13 @@ public class IntentReportServiceImpl implements IntentReportService {
 
     @Override
     @Transactional(rollbackFor = DataBaseException.class)
-    public IntentReport getIntentReportByIntentId(String intentId) {
+    public ServiceResult getIntentReportByIntentId(String intentId) {
         FulfillmentInfo fulfillmentInfo = getFulfillmentInfo(intentId);
+
+        if (fulfillmentInfo == null) {
+            return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "The intent has not fulfillmentInfo"),
+                    new IntentReport());
+        }
         fulfillmentInfo.setObjectInstances(getInstances(intentId));
         IntentReport intentReport = new IntentReport();
         intentReport.setIntentReportId(CommonUtil.getUUid());
@@ -63,7 +73,8 @@ public class IntentReportServiceImpl implements IntentReportService {
         intentReport.setReportTime(CommonUtil.getTime());
 
         saveIntentReport(intentReport, fulfillmentInfo);
-        return intentReport;
+        return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "Get report success"),
+                intentReport);
     }
 
     @Override
@@ -86,8 +97,6 @@ public class IntentReportServiceImpl implements IntentReportService {
         log.info("fulfillmentInfo is {}", fulfillmentInfo);
         if (fulfillmentInfo == null) {
             log.error("get fulfillmentInfo is failed,intentId is {}", intentId);
-            String msg = "get fulfillmentInfo is empty, please enter the right intentId";
-            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
         return fulfillmentInfo;
     }
@@ -96,10 +105,8 @@ public class IntentReportServiceImpl implements IntentReportService {
         List<String> objectInstances = objectInstanceMapper.getObjectInstances(intentId);
         if (CollectionUtils.isEmpty(objectInstances)) {
             log.error("get objectInstance is failed,intentId is {}", intentId);
-            String msg = "get objectInstance is failed";
-            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
         }
-        return objectInstances;
+        return objectInstances.stream().distinct().collect(Collectors.toList());
     }
 
     private void saveIntentReport(IntentReport intentReport, FulfillmentInfo fulfillmentInfo) {
