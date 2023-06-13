@@ -15,6 +15,9 @@
  */
 package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt.clldeliverymodule;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
@@ -27,9 +30,11 @@ import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.onap.usecaseui.intentanalysis.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +43,9 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class CLLDeliveryActuationModule extends ActuationModule {
+    public final static String NLP_HOST = "http://uui-nlp";
+    public final static String NLP_ONLINE_URL_BASE = NLP_HOST + ":43011";
+    public final static String PREDICT_URL = NLP_ONLINE_URL_BASE + "/api/online/predict";
 
     @Autowired
     private SOService soService;
@@ -71,12 +79,13 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             for (ExpectationTarget target : targetList) {
                 String conditionName = target.getTargetConditions().get(0).getConditionName();
                 String conditionValue = target.getTargetConditions().get(0).getConditionValue();
+                String value = getPredictValue(conditionName, conditionValue);
                 if (StringUtils.containsIgnoreCase(conditionName, "source")) {
-                    accessPointOne.put("name", conditionValue);
+                    accessPointOne.put("name", value);
                 } else if (StringUtils.containsIgnoreCase(conditionName, "destination")) {
-                    params.put("cloudPointName", conditionValue);
+                    params.put("cloudPointName", value);
                 } else if (StringUtils.containsIgnoreCase(conditionName, "bandwidth")) {
-                    accessPointOne.put("bandwidth", conditionValue);
+                    accessPointOne.put("bandwidth", value);
                 }
             }
             params.put("accessPointOne", accessPointOne);
@@ -134,6 +143,21 @@ public class CLLDeliveryActuationModule extends ActuationModule {
     @Override
     public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
         this.directOperation(intentGoalBean);
+    }
+
+    private String getPredictValue(String name, String value) {
+        String text = "expectationName is cloud leased line Delivery Expectation, " +
+                "firstName is " + name + ",firstValue is " + value;
+        String[] questions = {"expectationName", "Name", "Value"};
+        String bodyStr = "{\"title\": \"predict\", \"text\": \"" + text
+                + "\", \"questions\":" + new JSONArray().toJSONString(Arrays.asList(questions)) + "}";
+        HashMap<String, String> headers = new HashMap<>();
+        String result = HttpUtil.sendPostRequestByJson(PREDICT_URL, headers, bodyStr);
+        if("failed".equals(result)){
+            return value;
+        }
+        JSONObject jsonObject = JSON.parseObject(result);
+        return jsonObject.getString("Value");
     }
 	
 	public String getInstanceId() {

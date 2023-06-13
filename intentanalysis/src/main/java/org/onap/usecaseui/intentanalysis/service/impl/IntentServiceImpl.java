@@ -26,6 +26,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
+import org.onap.usecaseui.intentanalysis.mapper.ConditionMapper;
+import org.onap.usecaseui.intentanalysis.mapper.ContextMapper;
 import org.onap.usecaseui.intentanalysis.mapper.ObjectInstanceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +66,12 @@ public class IntentServiceImpl implements IntentService {
 
     @Autowired
     private ObjectInstanceMapper objectInstanceMapper;
+
+    @Autowired
+    private ContextMapper contextMapper;
+
+    @Autowired
+    private ConditionMapper conditionMapper;
 
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
@@ -190,5 +198,30 @@ public class IntentServiceImpl implements IntentService {
             intent.setIntentExpectations(expectationService.getIntentExpectationList(intent.getIntentId()));
         }
         return intentList;
+    }
+
+    @Override
+    public String findParentByIntentId(String intentId) {
+        List<Context> contexts = contextMapper.selectContextList(intentId);
+        if (org.springframework.util.CollectionUtils.isEmpty(contexts)) {
+            log.error("Get context is empty,intentId is {}", intentId);
+            String msg = "Get Contexts is empty from database";
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        List<Context> collect = contexts.stream()
+                .filter(context -> "parentIntent info".equalsIgnoreCase(context.getContextName()))
+                .collect(Collectors.toList());
+        if (org.springframework.util.CollectionUtils.isEmpty(collect) || collect.size() != 1) {
+            log.error("This intent has not parent intent,intentId is {}", intentId);
+            String msg = "Get Context is empty from database";
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        Context context = collect.get(0);
+        List<Condition> conditions = conditionMapper.selectConditionList(context.getContextId());
+        if (org.springframework.util.CollectionUtils.isEmpty(conditions) || StringUtils.isEmpty(conditions.get(0).getConditionValue())) {
+            String msg = "Get conditions is empty from database";
+            throw new DataBaseException(msg, ResponseConsts.RET_QUERY_DATA_EMPTY);
+        }
+        return conditions.get(0).getConditionValue();
     }
 }

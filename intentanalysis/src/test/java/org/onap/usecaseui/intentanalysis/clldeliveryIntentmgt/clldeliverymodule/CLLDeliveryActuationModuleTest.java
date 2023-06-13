@@ -19,8 +19,8 @@ package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt.clldeliverymodule
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
@@ -29,6 +29,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
+import org.onap.usecaseui.intentanalysis.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = IntentAnalysisApplicationTests.class)
 @RunWith(SpringRunner.class)
@@ -98,6 +98,7 @@ public class CLLDeliveryActuationModuleTest {
         List<Expectation> expectationList = new ArrayList<>();
         Expectation expectation = new Expectation();
         expectation.setExpectationId("expectationId1");
+        expectation.setExpectationObject(new ExpectationObject());
         List<ExpectationTarget> targetList = new ArrayList<>();
         ExpectationTarget target = new ExpectationTarget();
 

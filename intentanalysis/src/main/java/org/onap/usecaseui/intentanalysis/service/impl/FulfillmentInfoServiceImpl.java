@@ -16,18 +16,14 @@
 
 package org.onap.usecaseui.intentanalysis.service.impl;
 
-
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.mapper.FulfillmentInfoMapper;
 import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Service
 @Slf4j
@@ -88,5 +84,14 @@ public class FulfillmentInfoServiceImpl implements FulfillmentInfoService {
             log.info(String.format("FulfillmentInfo is null, parentId = %s", parentId));
         }
         return fulfillmentInfo;
+    }
+
+    @Override
+    public void saveFulfillmentInfo(String intentId, FulfillmentInfo eventModel) {
+        FulfillmentInfo fulfillmentInfo = fulfillmentInfoService.getFulfillmentInfo(intentId);
+        if (fulfillmentInfo != null) {
+            fulfillmentInfoService.deleteFulfillmentInfo(intentId);
+        }
+        fulfillmentInfoService.createFulfillmentInfo(eventModel, intentId);
     }
 }
