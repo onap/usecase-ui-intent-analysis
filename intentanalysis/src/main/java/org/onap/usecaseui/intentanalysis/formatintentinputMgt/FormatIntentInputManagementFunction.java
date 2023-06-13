@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -79,6 +80,11 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
 
     @Override
     public void receiveIntentAsHandler(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler) {
+    }
+
+    @Override
+    public void createReport(String intentId, FulfillmentInfo fulfillmentInfo) {
+        saveFulfillmentAndObjectInstance(intentId, fulfillmentInfo);
     }
 
     public IntentGoalBean detection(IntentGoalBean intentGoalBean) {

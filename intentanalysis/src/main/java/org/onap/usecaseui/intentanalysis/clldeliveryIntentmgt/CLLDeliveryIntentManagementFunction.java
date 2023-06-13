@@ -16,14 +16,19 @@
 package org.onap.usecaseui.intentanalysis.clldeliveryIntentmgt;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.Thread.CreateCallable;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.CLLBusinessIntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
+import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -57,6 +62,15 @@ public class CLLDeliveryIntentManagementFunction extends IntentManagementFunctio
     @Resource(name = "intentTaskExecutor")
     ThreadPoolTaskExecutor executor;
 
+    @Autowired
+    private CLLBusinessIntentManagementFunction cllBusinessIntentManagementFunction;
+
+    @Autowired
+    private IntentInterfaceService intentInterfaceService;
+
+    @Autowired
+    private IntentService intentService;
+
     @Override
     public void receiveIntentAsOwner(IntentGoalBean intentGoalBean) {
     }
@@ -73,5 +87,13 @@ public class CLLDeliveryIntentManagementFunction extends IntentManagementFunctio
         } catch (Exception ex) {
             log.error("exception is {}", ex.getMessage());
         }
+    }
+
+    @Override
+    public void createReport(String intentId, FulfillmentInfo fulfillmentInfo) {
+        String parentIntentId = intentService.findParentByIntentId(intentId);
+        intentInterfaceService.reportInterface(cllBusinessIntentManagementFunction, parentIntentId, fulfillmentInfo);
+
+        saveFulfillmentAndObjectInstance(intentId, fulfillmentInfo);
     }
 }

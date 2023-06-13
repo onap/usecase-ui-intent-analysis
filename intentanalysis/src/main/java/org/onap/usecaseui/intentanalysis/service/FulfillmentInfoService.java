@@ -27,4 +27,6 @@ public interface FulfillmentInfoService {
     void updateFulfillmentInfo(FulfillmentInfo fulfillmentInfo, String parentId);
 
     FulfillmentInfo getFulfillmentInfo(String parentId);
+
+    void saveFulfillmentInfo(String intentId, FulfillmentInfo eventModel);
 }

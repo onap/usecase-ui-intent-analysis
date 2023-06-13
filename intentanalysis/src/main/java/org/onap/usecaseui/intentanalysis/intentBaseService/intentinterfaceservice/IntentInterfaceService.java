@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice;
 
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -26,4 +27,5 @@ public interface IntentInterfaceService {
 
     public boolean deleteInterface(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction imf);
 
+    public boolean reportInterface(IntentManagementFunction imf, String intentId, FulfillmentInfo fulfillmentInfo);
 }

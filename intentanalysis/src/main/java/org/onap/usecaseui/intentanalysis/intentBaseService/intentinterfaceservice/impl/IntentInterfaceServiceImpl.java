@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.impl;
 
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -55,6 +56,12 @@ public class IntentInterfaceServiceImpl implements IntentInterfaceService {
         if (receive) {
             handler.receiveIntentAsHandler(originalIntent, intentGoalBean, handler);
         }
+        return true;
+    }
+
+    @Override
+    public boolean reportInterface(IntentManagementFunction imf, String intentId, FulfillmentInfo fulfillmentInfo) {
+        imf.createReport(intentId, fulfillmentInfo);
         return true;
     }
 }

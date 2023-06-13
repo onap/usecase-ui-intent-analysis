@@ -15,17 +15,18 @@
  */
 package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt;
 
-
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.exception.CommonException;
+import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentEventRecord.IntentEventRecordService;
@@ -80,6 +81,9 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
     @Autowired
     IntentEventRecordService intentEventRecordService;
 
+    @Autowired
+    private FormatIntentInputManagementFunction formatIntentInputManagementFunction;
+
     @Resource(name = "intentTaskExecutor")
     ThreadPoolTaskExecutor executor;
 
@@ -118,6 +122,14 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
             }
             actuationModule.deleteIntentToDb(intentGoalBean.getIntent());
         }
+    }
+
+    @Override
+    public void createReport(String intentId, FulfillmentInfo fulfillmentInfo) {
+        String parentIntentId = intentService.findParentByIntentId(intentId);
+        intentInterfaceService.reportInterface(formatIntentInputManagementFunction, parentIntentId, fulfillmentInfo);
+
+        saveFulfillmentAndObjectInstance(intentId, fulfillmentInfo);
     }
 
     public IntentGoalBean detection(IntentGoalBean intentGoalBean) {

@@ -5,11 +5,13 @@
 <mapper namespace="org.onap.usecaseui.intentanalysis.mapper.ObjectInstanceMapper">
 
     <insert id="insertObjectInstanceList">
-        insert into object_instance(parent_id, object_instance)
-        values
-        <foreach collection="objectInstances" index="index" item="item" separator=",">
-            (#{parentId}, #{item})
-        </foreach>
+        <if test="objectInstances != null and objectInstances.size>0">
+          insert into object_instance(parent_id, object_instance)
+          values
+            <foreach collection="objectInstances" index="index" item="item" separator=",">
+                  (#{parentId}, #{item})
+            </foreach>
+        </if>
     </insert>
 
     <select id="getObjectInstances" resultType="java.lang.String">

@@ -17,11 +17,15 @@ package org.onap.usecaseui.intentanalysis.intentBaseService;
 
 
 import lombok.Data;
+import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.DecisionModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
+import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
+import org.onap.usecaseui.intentanalysis.service.ObjectInstanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +37,19 @@ public class IntentManagementFunction {
     protected DecisionModule decisionModule;
     protected KnowledgeModule knowledgeModule;
 
+    @Autowired
+    private FulfillmentInfoService fulfillmentInfoService;
+
+    @Autowired
+    private ObjectInstanceService objectInstanceService;
+
     public void receiveIntentAsOwner(IntentGoalBean intentGoalBean){};
     public void receiveIntentAsHandler(Intent originalIntent, IntentGoalBean intentGoalBean, IntentManagementFunction handler){};
+    public void createReport(String intentId, FulfillmentInfo fulfillmentInfo){};
+
+    protected void saveFulfillmentAndObjectInstance(String intentId, FulfillmentInfo fulfillmentInfo) {
+        // save fulfillmentInfo and objectInstance
+        fulfillmentInfoService.saveFulfillmentInfo(intentId, fulfillmentInfo);
+        objectInstanceService.saveObjectInstances(intentId, fulfillmentInfo);
+    }
 }

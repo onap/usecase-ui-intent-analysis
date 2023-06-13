@@ -58,4 +58,9 @@ public final class ResponseConsts {
      * empty param
      */
     public static final int EMPTY_PARAM = 10006;
+
+    /**
+     * utf-8
+     */
+    public static final String ENCODING_UTF8="utf-8";
 }
