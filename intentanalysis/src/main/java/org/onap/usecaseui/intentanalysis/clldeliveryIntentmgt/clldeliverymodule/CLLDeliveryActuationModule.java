@@ -44,7 +44,7 @@ import java.util.UUID;
 @Slf4j
 public class CLLDeliveryActuationModule extends ActuationModule {
     public final static String NLP_HOST = "http://uui-nlp";
-    public final static String NLP_ONLINE_URL_BASE = NLP_HOST + ":43011";
+    public final static String NLP_ONLINE_URL_BASE = NLP_HOST + ":33011";
     public final static String PREDICT_URL = NLP_ONLINE_URL_BASE + "/api/online/predict";
 
     @Autowired
