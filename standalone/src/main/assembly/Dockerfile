@@ -9,6 +9,7 @@ ADD usecase-ui-intent-analysis-*-linux64.tar.gz /home/uui/
 WORKDIR /home/uui
 
 EXPOSE 8083
-
+USER uui
+WORKDIR /home/uui
 ENTRYPOINT ["sh", "-c"]
 CMD ["exec java -jar usecase-ui-intent-analysis.jar"]
