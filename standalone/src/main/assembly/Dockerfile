@@ -10,5 +10,9 @@ WORKDIR /home/uui
 
 EXPOSE 8083
 
+RUN addgroup -S uui && adduser -S uui -G uui && chown -R uui:uui /home/uui
+
+USER UUI
+WORKDIR /home/uui
 ENTRYPOINT ["sh", "-c"]
 CMD ["exec java -jar usecase-ui-intent-analysis.jar"]
