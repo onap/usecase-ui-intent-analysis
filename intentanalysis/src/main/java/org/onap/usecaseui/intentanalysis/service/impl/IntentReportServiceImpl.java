@@ -72,6 +72,7 @@ public class IntentReportServiceImpl implements IntentReportService {
         intentReport.setFulfillmentInfos(Collections.singletonList(fulfillmentInfo));
         intentReport.setReportTime(CommonUtil.getTime());
 
+        // save intent report
         saveIntentReport(intentReport, fulfillmentInfo);
         return new ServiceResult(new ResultHeader(RSEPONSE_SUCCESS, "Get report success"),
                 intentReport);
