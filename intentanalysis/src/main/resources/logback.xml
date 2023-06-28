@@ -27,7 +27,7 @@
             <level>ERROR</level>
         </filter>
 
-        <file>/var/log/usecaseui/intent-analysis/ERROR.log</file>
+        <file>logs/usecaseui/intent-analysis/ERROR.log</file>
         <append>true</append>
         <!-- set immediateFlush to false for much higher logging throughput -->
         <immediateFlush>true</immediateFlush>
@@ -43,7 +43,7 @@
         </filter>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/var/log/usecaseui/intent-analysis/%d{yyyy-MM}-DEBUG.log</fileNamePattern>
+            <fileNamePattern>logs/%d{yyyy-MM}-DEBUG.log</fileNamePattern>
             <maxHistory>90</maxHistory>
             <totalSizeCap>3GB</totalSizeCap>
         </rollingPolicy>
