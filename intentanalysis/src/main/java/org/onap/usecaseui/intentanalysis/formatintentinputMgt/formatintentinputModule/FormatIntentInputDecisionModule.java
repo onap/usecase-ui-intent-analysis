@@ -55,12 +55,6 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     @Autowired
     public IntentService intentService;
 
-    @Autowired
-    private IntentReportService intentReportService;
-
-    @Resource(name = "intentReportExecutor")
-    private ScheduledThreadPoolExecutor executor;
-
     @Override
     public void determineUltimateGoal() {
     }
@@ -91,14 +85,12 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         log.info("FormatIntentInputMgt investigation create process start");
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> intentMap = new LinkedHashMap<>();
 
-        IntentGoalBean newIntentGoalBean = removeReportExpectation(intentGoalBean);
-
-        boolean needDecompostion = needDecompostion(newIntentGoalBean);
+        boolean needDecompostion = needDecompostion(intentGoalBean);
         log.debug("FormatIntentInputMgt need decompose :" + needDecompostion);
         if (needDecompostion) {
-            intentDecomposition(newIntentGoalBean);
+            intentDecomposition(intentGoalBean);
         } else {
-            intentMap.put(newIntentGoalBean, exploreIntentHandlers(newIntentGoalBean));
+            intentMap.put(intentGoalBean, exploreIntentHandlers(intentGoalBean));
         }
         log.info("FormatIntentInputMgt investigation create process finished");
         return intentMap;
@@ -181,47 +173,5 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
             intentMap.put(subIntentGoalBean, intentHandlerInfo);
         }
         return intentMap;
-    }
-
-    private IntentGoalBean removeReportExpectation(IntentGoalBean intentGoalBean) {
-        Intent intent = intentGoalBean.getIntent();
-        List<Expectation> intentExpectations = intent.getIntentExpectations();
-        List<Expectation> report = intentExpectations.stream()
-                .filter(expectation -> ExpectationType.REPORT.equals(expectation.getExpectationType()))
-                .collect(Collectors.toList());
-        if (CollectionUtils.isEmpty(report)) {
-            log.info("No expectation of type report is entered");
-            return intentGoalBean;
-        }
-        generationIntentReport(report.get(0), intent.getIntentId());
-        Intent newIntent = new Intent();
-        BeanUtils.copyProperties(intent, newIntent);
-        List<Expectation> notReport = intentExpectations.stream()
-                .filter(expectation -> !ExpectationType.REPORT.equals(expectation.getExpectationType()))
-                .collect(Collectors.toList());
-        newIntent.setIntentExpectations(notReport);
-        return new IntentGoalBean(newIntent, intentGoalBean.getIntentGoalType());
-    }
-
-    private void generationIntentReport(Expectation expectation, String intentId) {
-        List<ExpectationTarget> expectationTargets = expectation.getExpectationTargets();
-        if (CollectionUtils.isEmpty(expectationTargets)) {
-            log.error("The expectation target is empty,expectationId is {}", expectation.getExpectationId());
-            return;
-        }
-        ExpectationTarget expectationTarget = expectationTargets.get(0);
-        List<Condition> targetConditions = expectationTarget.getTargetConditions();
-        if (CollectionUtils.isEmpty(targetConditions)) {
-            log.error("The target condition is empty,expectationId is {}", expectation.getExpectationId());
-            return;
-        }
-        Condition condition = targetConditions.get(0);
-        try {
-            int conditionValue = Integer.parseInt(condition.getConditionValue());
-            log.info("Start executing scheduled intent report generation task ");
-            executor.scheduleAtFixedRate(() -> intentReportService.saveIntentReportByIntentId(intentId), 2, conditionValue, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            log.error("The exception is {}", e.getMessage());
-        }
     }
 }

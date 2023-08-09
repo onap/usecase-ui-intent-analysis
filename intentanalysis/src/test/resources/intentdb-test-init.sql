@@ -44,7 +44,6 @@ create table if not exists expectation_object
     object_id       varchar(255) DEFAULT random_uuid(),
     primary key (object_id),
     object_type     varchar(255),
-    object_instance varchar(255),
     expectation_id  varchar(255)
 );
 
@@ -117,4 +116,9 @@ create table if not exists intent_report_fulfillment_info(
 create table if not exists object_instance(
     parent_id varchar(255),
     object_instance varchar(255)
+    );
+
+create table if not exists intent_instance(
+    intent_instance_id varchar(255) primary key,
+    intent_id varchar(255)
     );

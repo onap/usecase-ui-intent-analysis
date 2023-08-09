@@ -34,6 +34,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -61,7 +62,7 @@ public class CLLAssuranceActuationModuleTest {
         deliveryExpectation.setExpectationName("CLL Delivery Expectation");
         deliveryExpectation.setExpectationType(ExpectationType.DELIVERY);
         ExpectationObject expectationObject = new ExpectationObject();
-        expectationObject.setObjectInstance("");
+        expectationObject.setObjectInstance(Collections.singletonList(""));
         deliveryExpectation.setExpectationObject(expectationObject);
 
         List<ExpectationTarget> targetList = new ArrayList<>();
@@ -85,7 +86,7 @@ public class CLLAssuranceActuationModuleTest {
         Expectation assuranceExceptation = new Expectation();
         assuranceExceptation.setExpectationType(ExpectationType.ASSURANCE);
         ExpectationObject expectationObject2 = new ExpectationObject();
-        expectationObject2.setObjectInstance("");
+        expectationObject2.setObjectInstance(Collections.singletonList(""));
         assuranceExceptation.setExpectationObject(expectationObject2);
         expectationList.add(assuranceExceptation);
         intent.setIntentExpectations(expectationList);

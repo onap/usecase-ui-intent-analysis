@@ -18,6 +18,7 @@ package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt.cllassurancemodu
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.adapters.policy.PolicyService;
+import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -82,7 +83,8 @@ public class CLLAssuranceActuationModule extends ActuationModule {
             return null;
         }
         for (Intent deliveryIntent : deliveryIntentList) {
-            List<Expectation> deliveryExpectationList = deliveryIntent.getIntentExpectations();
+            List<Expectation> deliveryExpectationList = deliveryIntent.getIntentExpectations().stream()
+                    .filter(expectation -> ExpectationType.DELIVERY.equals(expectation.getExpectationType())).collect(Collectors.toList());
             if (CollectionUtils.isEmpty(deliveryExpectationList)) {
                 log.info("expectation is empty,intentId is {}", deliveryIntent.getIntentId());
                 continue;
@@ -93,7 +95,11 @@ public class CLLAssuranceActuationModule extends ActuationModule {
                     log.info("expectationObject is empty,expectationId is {}", deliveryExpectation.getExpectationId());
                     continue;
                 }
-                String objectInstance = expectationObject.getObjectInstance();
+                String objectInstance = "";
+                if (!CollectionUtils.isEmpty(expectationObject.getObjectInstance())) {
+                    objectInstance = expectationObject.getObjectInstance().get(0);
+                }
+
                 if (!StringUtils.equalsIgnoreCase(cllId, objectInstance)) {
                     log.info("cllId and objectInstance are not equal,cllId is {},objectInstance is {}", cllId, objectInstance);
                     continue;
@@ -124,7 +130,7 @@ public class CLLAssuranceActuationModule extends ActuationModule {
         List<Expectation> expectationList = intent.getIntentExpectations();
         for (Expectation expectation : expectationList) {
             if (StringUtils.equalsIgnoreCase("assurance", expectation.getExpectationType().name())) {
-                return expectation.getExpectationObject().getObjectInstance();
+                return expectation.getExpectationObject().getObjectInstance().get(0);
             }
         }
         return null;

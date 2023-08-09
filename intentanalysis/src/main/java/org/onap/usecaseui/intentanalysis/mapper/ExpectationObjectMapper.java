@@ -37,8 +37,4 @@ public interface ExpectationObjectMapper {
                                 @Param(value = "expectationId") String expectationId);
 
     int deleteExpectationObject(@Param(value = "expectationId") String expectationId);
-
-    List<String> getExpectationIdByObjectInstance(@Param(value = "objectInstance") String objectInstance);
-
-    List<String> getAllObjectInstances();
 }

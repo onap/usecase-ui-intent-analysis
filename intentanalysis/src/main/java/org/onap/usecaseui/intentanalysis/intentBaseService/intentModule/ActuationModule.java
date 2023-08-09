@@ -18,8 +18,10 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentInstance;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
+import org.onap.usecaseui.intentanalysis.service.IntentInstanceService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +32,9 @@ public abstract class ActuationModule {
     IntentInterfaceService intentInterfaceService;
     @Autowired
     IntentService intentService;
+
+    @Autowired
+    IntentInstanceService intentInstanceService;
 
     //send to the next level intent handler
     public abstract void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler);
@@ -52,6 +57,10 @@ public abstract class ActuationModule {
     //Delete intent information to the intent instance database
     public void deleteIntentToDb(Intent intent) {
         intentService.deleteIntent(intent.getIntentId());
+    }
+
+    public void saveIntentInstanceToDb(IntentInstance intentInstance){
+        intentInstanceService.createIntentInstance(intentInstance);
     }
 
     public boolean distrubuteIntentToHandler(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {

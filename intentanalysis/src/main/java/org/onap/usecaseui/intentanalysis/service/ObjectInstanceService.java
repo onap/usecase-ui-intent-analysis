@@ -16,8 +16,8 @@
 
 package org.onap.usecaseui.intentanalysis.service;
 
-import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
+import java.util.List;
 
 public interface ObjectInstanceService {
-    void saveObjectInstances(String intentId, FulfillmentInfo eventModel);
+    void saveObjectInstances(String parentId, List<String> objectInstance);
 }

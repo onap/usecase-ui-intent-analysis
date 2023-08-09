@@ -15,16 +15,20 @@
  */
 package org.onap.usecaseui.intentanalysis.Thread;
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentInstance;
 import org.onap.usecaseui.intentanalysis.eventAndPublish.event.IntentCreateEvent;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.context.ApplicationContext;
 
 import java.util.concurrent.Callable;
 
+@Slf4j
 public class CreateCallable implements Callable<String> {
     private Intent originalIntent;
     private IntentGoalBean intentGoalBean;
@@ -46,9 +50,10 @@ public class CreateCallable implements Callable<String> {
         IntentGoalType type = intentGoalBean.getIntentGoalType();
         if (type == IntentGoalType.CREATE) {
             actuationModule.saveIntentToDb(intentGoalBean.getIntent());
-        }else if (type==IntentGoalType.UPDATE){
+            actuationModule.saveIntentInstanceToDb(new IntentInstance(CommonUtil.getUUid(), intentGoalBean.getIntent().getIntentId()));
+        } else if (type == IntentGoalType.UPDATE) {
             actuationModule.updateIntentToDb(intentGoalBean.getIntent());
-        }else if (type == IntentGoalType.DELETE) {
+        } else if (type == IntentGoalType.DELETE) {
             actuationModule.deleteIntentToDb(intentGoalBean.getIntent());
         }
         actuationModule.fulfillIntent(intentGoalBean, handler);
@@ -58,6 +63,7 @@ public class CreateCallable implements Callable<String> {
         String intentStatus = "success";
         IntentCreateEvent intentCreateEvent = new IntentCreateEvent(this, originalIntent, intentGoalBean, handler, intentStatus);
         applicationContext.publishEvent(intentCreateEvent);
-        return  intentGoalBean.getIntent().getIntentName() +" Intent operate finished";
+        log.info(intentGoalBean.getIntent().getIntentName() + " Intent operate finished");
+        return intentGoalBean.getIntent().getIntentName() +" Intent operate finished";
     }
 }

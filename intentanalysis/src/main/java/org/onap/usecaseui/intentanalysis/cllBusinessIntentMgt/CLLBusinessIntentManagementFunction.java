@@ -25,6 +25,7 @@ import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentEventRecord;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentInstance;
 import org.onap.usecaseui.intentanalysis.exception.CommonException;
 import org.onap.usecaseui.intentanalysis.formatintentinputMgt.FormatIntentInputManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -36,6 +37,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Knowledg
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -103,6 +105,7 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
 
         if (type == IntentGoalType.CREATE) {
             actuationModule.saveIntentToDb(intentGoalBean.getIntent());
+            actuationModule.saveIntentInstanceToDb(new IntentInstance(CommonUtil.getUUid(), intentGoalBean.getIntent().getIntentId()));
         } else if (type == IntentGoalType.UPDATE) {
             actuationModule.updateIntentToDb(intentGoalBean.getIntent());
         } else if (type == IntentGoalType.DELETE) {

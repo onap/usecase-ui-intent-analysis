@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.onap.usecaseui.intentanalysis.mapper.IntentInstanceMapper">
+    <insert id="insertIntentInstance">
+        insert into  intent_instance(intent_instance_id,intent_id)
+        values (#{intentInstance.intentInstanceId},#{intentInstance.intentId});
+    </insert>
+
+    <select id="selectIntentInstanceByIntentId" resultType="java.lang.String">
+        select intent_instance_id from intent_instance
+        where intent_id = #{intentId}
+    </select>
+
+    <delete id="deleteIntentInstances">
+        delete from intent_instance where intent_id = #{intentId}
+    </delete>
+</mapper>

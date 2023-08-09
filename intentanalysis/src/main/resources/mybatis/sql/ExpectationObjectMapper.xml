@@ -7,14 +7,14 @@
 
     <insert id="insertExpectationObject">
         <if test="expectationObject != null">
-            insert into expectation_object(object_type, object_instance, expectation_id)
+            insert into expectation_object(object_type, expectation_id)
             values
-            (#{expectationObject.objectType}, #{expectationObject.objectInstance}, #{expectationId})
+            (#{expectationObject.objectType}, #{expectationId})
         </if>
     </insert>
 
     <select id="selectExpectationObject" resultType="org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject">
-        select object_type objectType, object_instance objectInstance
+        select object_type objectType
         from expectation_object
         where expectation_id = #{expectationId}
     </select>
@@ -29,7 +29,6 @@
         update expectation_object
         <trim prefix="set" suffixOverrides=",">
             <if test="expectationObject.objectType != null">object_type = #{expectationObject.objectType},</if>
-            <if test="expectationObject.objectInstance != null">object_instance = #{expectationObject.objectInstance},</if>
         </trim>
         where expectation_id = #{expectationId}
     </update>
@@ -38,15 +37,4 @@
         delete from expectation_object
         where expectation_id = #{expectationId}
     </delete>
-
-    <select id="getExpectationIdByObjectInstance" resultType="java.lang.String">
-        select expectation_id
-        from expectation_object
-        where object_instance = #{objectInstance}
-    </select>
-
-    <select id="getAllObjectInstances" resultType="java.lang.String">
-        select object_instance
-        from expectation_object
-    </select>
 </mapper>
