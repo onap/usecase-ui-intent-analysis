@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 CMCC, Inc. and others. All rights reserved.
+ * Copyright (C) 2023 CMCC, Inc. and others. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.bean.models;
+package org.onap.usecaseui.intentanalysis.service;
 
+import org.onap.usecaseui.intentanalysis.bean.models.IntentInstance;
 
-import java.util.List;
-import lombok.Data;
-import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
+public interface IntentInstanceService {
+    void createIntentInstance(IntentInstance intentInstance);
 
-
-@Data
-
-public class ExpectationObject {
-
-    private ObjectType objectType;
-
-    private List<String> objectInstance;
-
-    private List<Context> objectContexts;
+    String queryIntentInstanceId(String intentId);
 }

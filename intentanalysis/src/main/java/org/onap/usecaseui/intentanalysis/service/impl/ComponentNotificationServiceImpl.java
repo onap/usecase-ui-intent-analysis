@@ -25,7 +25,6 @@ import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.CommonException;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
-import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.onap.usecaseui.intentanalysis.mapper.*;
 import org.onap.usecaseui.intentanalysis.service.ComponentNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +38,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class ComponentNotificationServiceImpl implements ComponentNotificationService {
-
-    @Autowired
-    private ExpectationObjectMapper expectationObjectMapper;
-
     @Autowired
     private ExpectationMapper expectationMapper;
 
@@ -50,7 +45,7 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
     private ApplicationContext applicationContext;
 
     @Autowired
-    private IntentInterfaceService intentInterfaceService;
+    private ObjectInstanceMapper objectInstanceMapper;
 
     /**
      * Generate a new FulfillmentInfo based on third-party FulfillmentOperation
@@ -72,7 +67,8 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
             throw new CommonException(msg, ResponseConsts.EMPTY_PARAM);
         }
         log.info("Get objectInstances is {}", objectInstances);
-        List<String> expectationIds = expectationObjectMapper.getExpectationIdByObjectInstance(objectInstances.get(0));
+        List<String> expectationIds = objectInstanceMapper.getParentIdByInstance(objectInstances.get(0));
+
         if (CollectionUtils.isEmpty(expectationIds)) {
             String msg = "Get expectationId is null from database";
             log.error(msg);
@@ -100,7 +96,7 @@ public class ComponentNotificationServiceImpl implements ComponentNotificationSe
         } else {
             function = (IntentManagementFunction) applicationContext.getBean(CLLDeliveryIntentManagementFunction.class.getSimpleName());
         }
-        intentInterfaceService.reportInterface(function, intentId, eventModel);
+        function.createReport(intentId, eventModel);
     }
 
     private ExpectationType getExpectationType(String operation) {

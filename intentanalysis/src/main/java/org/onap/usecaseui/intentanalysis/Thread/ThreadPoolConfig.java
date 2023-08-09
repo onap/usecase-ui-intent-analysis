@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.Thread;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -49,7 +50,8 @@ public class ThreadPoolConfig {
 
     @Bean("intentReportExecutor")
     public Executor getScheduledThreadPoolExecutor(){
-        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
+        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(3);
+        executor.setThreadFactory(new ThreadFactoryBuilder().setNameFormat("Report-task-%d").build());
         return executor;
     }
 }

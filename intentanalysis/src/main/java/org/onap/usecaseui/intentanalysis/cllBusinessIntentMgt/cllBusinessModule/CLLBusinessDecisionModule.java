@@ -78,7 +78,8 @@ public class CLLBusinessDecisionModule extends DecisionModule {
         if (intentGoalBean.getIntentGoalType().equals(IntentGoalType.CREATE)) {
             List<Expectation> intentExpectations = intentGoalBean.getIntent().getIntentExpectations();
             List<ExpectationType> expectationTypeList = intentExpectations.stream()
-                    .map(Expectation::getExpectationType).distinct().collect(Collectors.toList());
+                    .map(Expectation::getExpectationType)
+                    .filter(expectationType -> !ExpectationType.REPORT.equals(expectationType)).distinct().collect(Collectors.toList());
             if (expectationTypeList.size() > 1) {
                 return true;
             } else {
@@ -93,9 +94,14 @@ public class CLLBusinessDecisionModule extends DecisionModule {
     }
 
     public List<IntentGoalBean> intentDecomposition(IntentGoalBean intentGoalBean) {
+        List<Expectation> intentExpectations = intentGoalBean.getIntent().getIntentExpectations();
+        List<Expectation> report = intentExpectations.stream()
+                .filter(expectation -> ExpectationType.REPORT.equals(expectation.getExpectationType()))
+                .collect(Collectors.toList());
         //ExpectationType   expectation.ExpectationObject.objtype
-        Map<ExpectationType, List<Expectation>> expectationTypeListMap = intentGoalBean.getIntent().getIntentExpectations()
-                .stream().collect(Collectors.groupingBy(x -> x.getExpectationType()));
+        Map<ExpectationType, List<Expectation>> expectationTypeListMap = intentExpectations.stream()
+                .filter(expectation -> !ExpectationType.REPORT.equals(expectation.getExpectationType()))
+                .collect(Collectors.groupingBy(Expectation::getExpectationType));
         List<IntentGoalBean> subIntentGoalList = new ArrayList<>();
         IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
         for (Map.Entry<ExpectationType, List<Expectation>> entry : expectationTypeListMap.entrySet()) {
@@ -106,7 +112,9 @@ public class CLLBusinessDecisionModule extends DecisionModule {
                 IntentGoalBean subIntentGoalBean = new IntentGoalBean();
                 Intent subIntent = new Intent();
                 subIntent.setIntentName(objEntry.getValue().get(0).getExpectationName().replace("Expectation", "Intent"));
-                subIntent.setIntentExpectations(objEntry.getValue());
+                List<Expectation> value = objEntry.getValue();
+                value.addAll(report);
+                subIntent.setIntentExpectations(value);
                 subIntent.setIntentGenerateType(IntentGenerateType.SYSTEMGENARATE);
                 //TODO      intentFulfillmentInfo intentContexts
                 subIntentGoalBean.setIntentGoalType(intentGoalType);

@@ -31,6 +31,6 @@ public class DCAENotificationService {
 
     private void init(){
         MRTopicMonitor monitor = new MRTopicMonitor(MONITOR_CONFIG_FILE, new DCAENotificationCallback());
-        monitor.start();
+       // monitor.start();
     }
 }

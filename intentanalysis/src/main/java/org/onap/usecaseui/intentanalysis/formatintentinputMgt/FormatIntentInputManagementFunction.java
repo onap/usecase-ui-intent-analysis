@@ -19,10 +19,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
-import org.onap.usecaseui.intentanalysis.bean.models.Expectation;
-import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
-import org.onap.usecaseui.intentanalysis.bean.models.Intent;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
+import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.contextService.IntentContextService;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
@@ -30,6 +27,7 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Decision
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservice.IntentInterfaceService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -76,6 +74,7 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
         IntentGoalBean originIntentGoalBean = detection(intentGoalBean);
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> linkedMap = investigation(originIntentGoalBean);
         implementIntent(intentGoalBean.getIntent(), linkedMap);
+        generationIntentReport(intentGoalBean);
     }
 
     @Override
@@ -126,7 +125,8 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
                         new IntentGoalBean(newIdIntent, IntentGoalType.CREATE), next.getValue());
                 originIntent.setIntentGenerateType(IntentGenerateType.USERINPUT);
                 //save user input intent
-                intentService.createIntent(originIntent);
+                actuationModule.saveIntentToDb(originIntent);
+                actuationModule.saveIntentInstanceToDb(new IntentInstance(CommonUtil.getUUid(),originIntent.getIntentId()));
                 return isAcceptCreate;
             } else if (intentGoalType == IntentGoalType.UPDATE) {
                 log.info("formatIntentInputIMF UPDATE");

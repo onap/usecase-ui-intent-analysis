@@ -22,4 +22,13 @@
         delete from object_instance where parent_id = #{parentId}
     </delete>
 
+    <select id="queryAllObjectInstances" resultType="java.lang.String">
+        select object_instance
+        from object_instance
+    </select>
+
+    <select id="getParentIdByInstance" resultType="java.lang.String">
+        select parent_id from object_instance where object_instance = #{objectInstance}
+    </select>
+
 </mapper>

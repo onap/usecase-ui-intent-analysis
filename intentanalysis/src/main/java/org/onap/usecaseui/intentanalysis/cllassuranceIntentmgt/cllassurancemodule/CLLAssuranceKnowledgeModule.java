@@ -78,7 +78,7 @@ public class CLLAssuranceKnowledgeModule extends KnowledgeModule {
             if (CollectionUtils.isEmpty(intent.getIntentExpectations())) {
                 return -1;
             }
-            String objectInstance = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance();
+            String objectInstance = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance().get(0);
             if (StringUtils.isEmpty(objectInstance)){
                 return -1;
             }

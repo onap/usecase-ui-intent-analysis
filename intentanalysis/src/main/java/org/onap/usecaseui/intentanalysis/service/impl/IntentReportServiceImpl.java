@@ -27,6 +27,7 @@ import org.onap.usecaseui.intentanalysis.mapper.IntentReportFulfillmentInfoMappe
 import org.onap.usecaseui.intentanalysis.mapper.IntentReportMapper;
 import org.onap.usecaseui.intentanalysis.mapper.ObjectInstanceMapper;
 import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
+import org.onap.usecaseui.intentanalysis.service.IntentInstanceService;
 import org.onap.usecaseui.intentanalysis.service.IntentReportService;
 import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,9 @@ public class IntentReportServiceImpl implements IntentReportService {
     @Autowired
     private IntentReportMapper intentReportMapper;
 
+    @Autowired
+    private IntentInstanceService intentInstanceService;
+
     @Override
     @Transactional(rollbackFor = DataBaseException.class)
     public ServiceResult getIntentReportByIntentId(String intentId) {
@@ -68,7 +72,7 @@ public class IntentReportServiceImpl implements IntentReportService {
         fulfillmentInfo.setObjectInstances(getInstances(intentId));
         IntentReport intentReport = new IntentReport();
         intentReport.setIntentReportId(CommonUtil.getUUid());
-        intentReport.setIntentReference("intentReference");
+        intentReport.setIntentReference(intentInstanceService.queryIntentInstanceId(intentId));
         intentReport.setFulfillmentInfos(Collections.singletonList(fulfillmentInfo));
         intentReport.setReportTime(CommonUtil.getTime());
 
@@ -87,7 +91,7 @@ public class IntentReportServiceImpl implements IntentReportService {
         }
         IntentReport intentReport = new IntentReport();
         intentReport.setIntentReportId(CommonUtil.getUUid());
-        intentReport.setIntentReference("intentReference");
+        intentReport.setIntentReference(intentInstanceService.queryIntentInstanceId(intentId));
         intentReport.setReportTime(CommonUtil.getTime());
         saveIntentReport(intentReport, fulfillmentInfo);
     }

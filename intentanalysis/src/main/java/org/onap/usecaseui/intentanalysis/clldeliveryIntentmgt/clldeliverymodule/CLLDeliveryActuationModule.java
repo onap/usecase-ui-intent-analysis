@@ -35,10 +35,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -72,10 +74,13 @@ public class CLLDeliveryActuationModule extends ActuationModule {
     @Override
     public void directOperation(IntentGoalBean intentGoalBean) {
         Intent intent = intentGoalBean.getIntent();
+        Expectation deliveryExpectation = intent.getIntentExpectations().stream()
+                .filter(expectation -> !ExpectationType.REPORT.equals(expectation.getExpectationType()))
+                .collect(Collectors.toList()).get(0);
         if (StringUtils.equalsIgnoreCase("create", intentGoalBean.getIntentGoalType().name())) {
             Map<String, Object> params = new HashMap<>();
             Map<String, String> accessPointOne = new HashMap<>();
-            List<ExpectationTarget> targetList = intent.getIntentExpectations().get(0).getExpectationTargets();
+            List<ExpectationTarget> targetList = deliveryExpectation.getExpectationTargets();
             for (ExpectationTarget target : targetList) {
                 String conditionName = target.getTargetConditions().get(0).getConditionName();
                 String conditionValue = target.getTargetConditions().get(0).getConditionValue();
@@ -95,7 +100,7 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             ResultHeader resultHeader = soService.createIntentInstance(params);
 
             // Get the expectationId of the first exception from intent which should be CLL_VPN DELIVERY
-            String expectationId = intent.getIntentExpectations().get(0).getExpectationId();
+            String expectationId = deliveryExpectation.getExpectationId();
 
             // Get the fulfillmentInfo of the first exception which need to be updated with resultHeader returned
             FulfillmentInfo fulfillmentInfo = new FulfillmentInfo();
@@ -122,14 +127,15 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             fulfillmentInfoService.updateFulfillmentInfo(fulfillmentInfo, expectationId);
 
             ExpectationObject expectationObject = expectationObjectService.getExpectationObject(expectationId);
-            expectationObject.setObjectInstance((String) params.get("name"));
-            intent.getIntentExpectations().get(0).getExpectationObject().setObjectInstance((String) params.get("name"));
+            List<String> objectInstanceList = Collections.singletonList((String) params.get("name"));
+            expectationObject.setObjectInstance(objectInstanceList);
+            deliveryExpectation.getExpectationObject().setObjectInstance(objectInstanceList);
             expectationObjectService.updateExpectationObject(expectationObject, expectationId);
         } else if (StringUtils.equalsIgnoreCase("delete", intentGoalBean.getIntentGoalType().name())) {
-            String instanceId = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance();
+            String instanceId = deliveryExpectation.getExpectationObject().getObjectInstance().get(0);
             soService.deleteIntentInstance(instanceId);
         } else {
-            String instanceId = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance();
+            String instanceId = deliveryExpectation.getExpectationObject().getObjectInstance().get(0);
             soService.deleteIntentInstance(instanceId);
             intentService.deleteIntent(intent.getIntentId());
         }
@@ -174,14 +180,16 @@ public class CLLDeliveryActuationModule extends ActuationModule {
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
         Intent subIntent = intentGoalBean.getIntent();
         if (StringUtils.containsIgnoreCase(subIntent.getIntentName(),"delivery")) {
-            List<Expectation> deliveryIntentExpectationList = intentGoalBean.getIntent().getIntentExpectations();
+            List<Expectation> deliveryIntentExpectationList = subIntent.getIntentExpectations();
             List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
-            ExpectationObject deliveryExpectationObject = deliveryIntentExpectationList.get(0).getExpectationObject();
-            String objectInstance = deliveryExpectationObject.getObjectInstance();
+            ExpectationObject deliveryExpectationObject = deliveryIntentExpectationList.stream()
+                    .filter(expectation -> ExpectationType.DELIVERY.equals(expectation.getExpectationType()))
+                    .collect(Collectors.toList()).get(0).getExpectationObject();
+            List<String> objectInstances = deliveryExpectationObject.getObjectInstance();
 
             for (Expectation originExpectation : originIntentExpectationList) {
                 ExpectationObject originExpectationObject = originExpectation.getExpectationObject();
-                originExpectationObject.setObjectInstance(objectInstance);
+                originExpectationObject.setObjectInstance(objectInstances);
             }
         }
         log.info("cllDeliveryActuationModule begin to update originIntent subIntentInfo");

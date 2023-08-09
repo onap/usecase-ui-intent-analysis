@@ -30,6 +30,6 @@ public class PolicyNotificationService {
 
     private void init(){
         MRTopicMonitor monitor = new MRTopicMonitor(MONITOR_CONFIG_FILE, new PolicyNotificationCallback());
-        monitor.start();
+       // monitor.start();
     }
 }
