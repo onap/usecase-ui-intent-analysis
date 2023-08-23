@@ -76,6 +76,7 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
         IntentGoalBean originIntentGoalBean = detection(intentGoalBean);
         LinkedHashMap<IntentGoalBean, IntentManagementFunction> linkedMap = investigation(originIntentGoalBean);
         implementIntent(intentGoalBean.getIntent(), linkedMap);
+        generationIntentReport(intentGoalBean);
     }
 
     @Override

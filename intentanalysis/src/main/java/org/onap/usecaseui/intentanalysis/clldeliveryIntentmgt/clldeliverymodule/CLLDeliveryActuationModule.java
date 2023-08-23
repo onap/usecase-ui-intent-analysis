@@ -25,7 +25,6 @@ import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.bean.enums.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
-import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
@@ -39,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -61,8 +61,6 @@ public class CLLDeliveryActuationModule extends ActuationModule {
 
     @Autowired
     private IntentService intentService;
-    @Autowired
-    private ContextService contextService;
 
     @Override
     public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
@@ -72,10 +70,13 @@ public class CLLDeliveryActuationModule extends ActuationModule {
     @Override
     public void directOperation(IntentGoalBean intentGoalBean) {
         Intent intent = intentGoalBean.getIntent();
+        Expectation deliveryExpectation = intent.getIntentExpectations().stream()
+                .filter(expectation -> !ExpectationType.REPORT.equals(expectation.getExpectationType()))
+                .collect(Collectors.toList()).get(0);
         if (StringUtils.equalsIgnoreCase("create", intentGoalBean.getIntentGoalType().name())) {
             Map<String, Object> params = new HashMap<>();
             Map<String, String> accessPointOne = new HashMap<>();
-            List<ExpectationTarget> targetList = intent.getIntentExpectations().get(0).getExpectationTargets();
+            List<ExpectationTarget> targetList = deliveryExpectation.getExpectationTargets();
             for (ExpectationTarget target : targetList) {
                 String conditionName = target.getTargetConditions().get(0).getConditionName();
                 String conditionValue = target.getTargetConditions().get(0).getConditionValue();
@@ -92,44 +93,22 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             params.put("instanceId", getInstanceId());
             params.put("name", "cll-" + params.get("instanceId"));
             params.put("protect", false);
-            ResultHeader resultHeader = soService.createIntentInstance(params);
 
-            // Get the expectationId of the first exception from intent which should be CLL_VPN DELIVERY
-            String expectationId = intent.getIntentExpectations().get(0).getExpectationId();
+            updateFulfillment(params, deliveryExpectation.getExpectationId());
 
-            // Get the fulfillmentInfo of the first exception which need to be updated with resultHeader returned
-            FulfillmentInfo fulfillmentInfo = new FulfillmentInfo();
-            Expectation intentExpectation = expectationService.getIntentExpectation(expectationId);
-            if (intentExpectation != null) {
-                FulfillmentInfo expectationFulfillmentInfo = intentExpectation.getExpectationFulfillmentInfo();
-                if (expectationFulfillmentInfo != null) {
-                    fulfillmentInfo = expectationFulfillmentInfo;
-                }
-            }
-
-            // Update fulfillmentInfo and write back to DB
-            // Originally set to be NOT_FULFILLED, and will change after requesting the SO operation status
-            fulfillmentInfo.setFulfillmentStatus(FulfillmentStatus.NOT_FULFILLED);
-            fulfillmentInfo.setNotFulfilledReason(resultHeader.getResult_message());
-
-            // If SO request accepted, means intent acknowledged, otherwise, means failed
-            if (resultHeader.getResult_code() == 1) {
-                fulfillmentInfo.setNotFulfilledState(NotFulfilledState.ACKNOWLEDGED);
-            } else {
-                fulfillmentInfo.setNotFulfilledState(NotFulfilledState.FULFILMENTFAILED);
-            }
-
-            fulfillmentInfoService.updateFulfillmentInfo(fulfillmentInfo, expectationId);
-
-            ExpectationObject expectationObject = expectationObjectService.getExpectationObject(expectationId);
-            expectationObject.setObjectInstance((String) params.get("name"));
-            intent.getIntentExpectations().get(0).getExpectationObject().setObjectInstance((String) params.get("name"));
-            expectationObjectService.updateExpectationObject(expectationObject, expectationId);
+            // fill and update the objectInstance of intent expectation(include delivery and report)
+            String objectInstance = (String) params.get("name");
+            intent.getIntentExpectations().forEach(expectation -> {
+                ExpectationObject expectationObject = expectationObjectService.getExpectationObject(expectation.getExpectationId());
+                expectationObject.setObjectInstance(objectInstance);
+                expectation.getExpectationObject().setObjectInstance(objectInstance);
+                expectationObjectService.updateExpectationObject(expectationObject, expectation.getExpectationId());
+            });
         } else if (StringUtils.equalsIgnoreCase("delete", intentGoalBean.getIntentGoalType().name())) {
-            String instanceId = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance();
+            String instanceId = deliveryExpectation.getExpectationObject().getObjectInstance();
             soService.deleteIntentInstance(instanceId);
         } else {
-            String instanceId = intent.getIntentExpectations().get(0).getExpectationObject().getObjectInstance();
+            String instanceId = deliveryExpectation.getExpectationObject().getObjectInstance();
             soService.deleteIntentInstance(instanceId);
             intentService.deleteIntent(intent.getIntentId());
         }
@@ -143,6 +122,31 @@ public class CLLDeliveryActuationModule extends ActuationModule {
     @Override
     public void fulfillIntent(IntentGoalBean intentGoalBean, IntentManagementFunction intentHandler) {
         this.directOperation(intentGoalBean);
+    }
+
+    private void updateFulfillment(Map<String, Object> params,String expectationId){
+        // Get the fulfillmentInfo of the first exception which need to be updated with resultHeader returned
+        FulfillmentInfo fulfillmentInfo = new FulfillmentInfo();
+        Expectation intentExpectation = expectationService.getIntentExpectation(expectationId);
+        if (intentExpectation != null) {
+            FulfillmentInfo expectationFulfillmentInfo = intentExpectation.getExpectationFulfillmentInfo();
+            if (expectationFulfillmentInfo != null) {
+                fulfillmentInfo = expectationFulfillmentInfo;
+            }
+        }
+        ResultHeader resultHeader = soService.createIntentInstance(params);
+        // Update fulfillmentInfo and write back to DB
+        // Originally set to be NOT_FULFILLED, and will change after requesting the SO operation status
+        fulfillmentInfo.setFulfillmentStatus(FulfillmentStatus.NOT_FULFILLED);
+        fulfillmentInfo.setNotFulfilledReason(resultHeader.getResult_message());
+
+        // If SO request accepted, means intent acknowledged, otherwise, means failed
+        if (resultHeader.getResult_code() == 1) {
+            fulfillmentInfo.setNotFulfilledState(NotFulfilledState.ACKNOWLEDGED);
+        } else {
+            fulfillmentInfo.setNotFulfilledState(NotFulfilledState.FULFILMENTFAILED);
+        }
+        fulfillmentInfoService.updateFulfillmentInfo(fulfillmentInfo, expectationId);
     }
 
     private String getPredictValue(String name, String value) {
@@ -171,19 +175,25 @@ public class CLLDeliveryActuationModule extends ActuationModule {
         return randomString + String.format("%015d", hashCode);
     }
 
+    /**
+     * update objectInstance of the previous layer’s intent
+     *
+     * @param originIntent intent of the previous layer
+     * @param intentGoalBean intent of this layer
+     */
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
         Intent subIntent = intentGoalBean.getIntent();
         if (StringUtils.containsIgnoreCase(subIntent.getIntentName(),"delivery")) {
-            List<Expectation> deliveryIntentExpectationList = intentGoalBean.getIntent().getIntentExpectations();
+            List<Expectation> deliveryIntentExpectationList = subIntent.getIntentExpectations().stream()
+                    .filter(expectation -> ExpectationType.DELIVERY.equals(expectation.getExpectationType()))
+                    .collect(Collectors.toList());
             List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
-            ExpectationObject deliveryExpectationObject = deliveryIntentExpectationList.get(0).getExpectationObject();
-            String objectInstance = deliveryExpectationObject.getObjectInstance();
-
+            String objectInstance = deliveryIntentExpectationList.get(0).getExpectationObject().getObjectInstance();
             for (Expectation originExpectation : originIntentExpectationList) {
                 ExpectationObject originExpectationObject = originExpectation.getExpectationObject();
                 originExpectationObject.setObjectInstance(objectInstance);
             }
         }
-        log.info("cllDeliveryActuationModule begin to update originIntent subIntentInfo");
+        log.info("cllDeliveryActuationModule end to update originIntent subIntentInfo");
     }
 }

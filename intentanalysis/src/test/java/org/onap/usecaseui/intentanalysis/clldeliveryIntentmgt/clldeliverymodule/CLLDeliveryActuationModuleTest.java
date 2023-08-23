@@ -20,16 +20,15 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.adapters.so.SOService;
+import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationObjectService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
-import org.onap.usecaseui.intentanalysis.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -73,6 +72,7 @@ public class CLLDeliveryActuationModuleTest {
         deliveryExpectationObject.setObjectInstance("deliveryObjectInstance");
 
         deliveryExpectation.setExpectationObject(deliveryExpectationObject);
+        deliveryExpectation.setExpectationType(ExpectationType.DELIVERY);
         gbExpectationList.add(deliveryExpectation);
         intentGoalBean.setIntentGoalType(IntentGoalType.CREATE);
         Intent intent =new Intent();

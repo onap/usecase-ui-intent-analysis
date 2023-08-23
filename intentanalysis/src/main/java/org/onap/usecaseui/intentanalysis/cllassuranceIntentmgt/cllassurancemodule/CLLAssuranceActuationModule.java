@@ -18,11 +18,11 @@ package org.onap.usecaseui.intentanalysis.cllassuranceIntentmgt.cllassurancemodu
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.adapters.policy.PolicyService;
+import org.onap.usecaseui.intentanalysis.bean.enums.ExpectationType;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.ActuationModule;
-import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,6 +30,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Component
 public class CLLAssuranceActuationModule extends ActuationModule {
@@ -38,8 +39,6 @@ public class CLLAssuranceActuationModule extends ActuationModule {
 
     @Autowired
     private PolicyService policyService;
-    @Autowired
-    private ContextService contextService;
 
     @Override
     public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
@@ -82,7 +81,9 @@ public class CLLAssuranceActuationModule extends ActuationModule {
             return null;
         }
         for (Intent deliveryIntent : deliveryIntentList) {
-            List<Expectation> deliveryExpectationList = deliveryIntent.getIntentExpectations();
+            List<Expectation> deliveryExpectationList = deliveryIntent.getIntentExpectations().stream()
+                    .filter(expectation -> ExpectationType.DELIVERY.equals(expectation.getExpectationType()))
+                    .collect(Collectors.toList());
             if (CollectionUtils.isEmpty(deliveryExpectationList)) {
                 log.info("expectation is empty,intentId is {}", deliveryIntent.getIntentId());
                 continue;
