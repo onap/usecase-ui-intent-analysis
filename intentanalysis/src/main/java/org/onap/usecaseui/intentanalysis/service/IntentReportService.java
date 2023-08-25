@@ -18,8 +18,12 @@ package org.onap.usecaseui.intentanalysis.service;
 
 import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
 
+import java.util.List;
+
 public interface IntentReportService {
     ServiceResult getIntentReportByIntentId(String intentId);
 
     void saveIntentReportByIntentId(String intentId);
+
+    List<String> getIntentReportIds(String intentReference);
 }

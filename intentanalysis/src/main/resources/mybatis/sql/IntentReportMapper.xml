@@ -8,4 +8,10 @@
         insert into intent_report(intent_report_id, intent_reference,report_time)
         values (#{intentReport.intentReportId},#{intentReport.intentReference},to_timestamp(#{intentReport.reportTime},'yyyy-MM-dd HH24:mi:ss'))
     </insert>
+
+    <select id="getIntentReportIds" resultType="java.lang.String">
+        select intent_report_id
+        from intent_report
+        where intent_reference = #{intentReference}
+    </select>
 </mapper>

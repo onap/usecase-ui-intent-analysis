@@ -16,7 +16,6 @@
 
 package org.onap.usecaseui.intentanalysis.service.impl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,13 +25,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.models.Condition;
 import org.onap.usecaseui.intentanalysis.bean.models.Context;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentInstance;
 import org.onap.usecaseui.intentanalysis.mapper.ConditionMapper;
 import org.onap.usecaseui.intentanalysis.mapper.ContextMapper;
 import org.onap.usecaseui.intentanalysis.mapper.ObjectInstanceMapper;
+import org.onap.usecaseui.intentanalysis.service.IntentInstanceService;
+import org.onap.usecaseui.intentanalysis.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.onap.usecaseui.intentanalysis.bean.enums.ContextParentType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.common.ResponseConsts;
 import org.onap.usecaseui.intentanalysis.exception.DataBaseException;
@@ -41,7 +42,6 @@ import org.onap.usecaseui.intentanalysis.service.ContextService;
 import org.onap.usecaseui.intentanalysis.service.ExpectationService;
 import org.onap.usecaseui.intentanalysis.service.FulfillmentInfoService;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
-
 
 @Service
 @Slf4j
@@ -55,8 +55,6 @@ public class IntentServiceImpl implements IntentService {
 
     @Autowired
     private ContextService contextService;
-
-    private ContextParentType contextParentType;
 
     @Autowired
     private FulfillmentInfoService fulfillmentInfoService;
@@ -73,6 +71,9 @@ public class IntentServiceImpl implements IntentService {
     @Autowired
     private ConditionMapper conditionMapper;
 
+    @Autowired
+    private IntentInstanceService intentInstanceService;
+
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public Intent createIntent(Intent intent) {
@@ -84,6 +85,7 @@ public class IntentServiceImpl implements IntentService {
         expectationService.createIntentExpectationList(intent.getIntentExpectations(), intent.getIntentId());
         contextService.createContextList(intent.getIntentContexts(), intent.getIntentId());
         fulfillmentInfoService.createFulfillmentInfo(intent.getIntentFulfillmentInfo(), intent.getIntentId());
+        intentInstanceService.createIntentInstance(new IntentInstance(CommonUtil.getUUid(), intent.getIntentId()));
         log.info("Successfully created intent to database.");
         return intent;
     }
@@ -146,6 +148,7 @@ public class IntentServiceImpl implements IntentService {
         contextService.deleteContextList(intentId);
         expectationService.deleteIntentExpectationList(intentId);
         objectInstanceMapper.deleteObjectInstances(intentId);
+        intentInstanceService.deleteIntentInstance(intentId);
         if (intentMapper.deleteIntent(intentId) < 1) {
             String msg = "Failed to delete intent to database.";
             log.error(msg);

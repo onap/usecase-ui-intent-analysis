@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.onap.usecaseui.intentanalysis.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.onap.usecaseui.intentanalysis.bean.models.IntentReport;
+package org.onap.usecaseui.intentanalysis.service;
 
-import java.util.List;
+import org.onap.usecaseui.intentanalysis.bean.models.IntentInstance;
 
-@Mapper
-public interface IntentReportMapper {
-    int insertIntentReport(@Param(value = "intentReport") IntentReport intentReport);
+public interface IntentInstanceService {
+    void createIntentInstance(IntentInstance intentInstance);
 
-    List<String> getIntentReportIds(@Param(value = "intentReference") String intentReference);
+    String queryIntentInstanceId(String intentId);
+
+    void deleteIntentInstance(String intentId);
+
+    IntentInstance getIntentInstance(String intentInstanceId);
 }
