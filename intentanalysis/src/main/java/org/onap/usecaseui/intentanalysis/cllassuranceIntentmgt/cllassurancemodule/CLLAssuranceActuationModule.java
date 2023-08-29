@@ -48,16 +48,18 @@ public class CLLAssuranceActuationModule extends ActuationModule {
     @Override
     public void directOperation(IntentGoalBean intentGoalBean) {
         Intent intent = intentGoalBean.getIntent();
-        String cllId = getCLLId(intent);
-        String bandwidth = getBandwidth(cllId);
-        IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
-        if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
-            policyService.updateIntentConfigPolicy(cllId, bandwidth, "true");
-        } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
-            policyService.updateIntentConfigPolicy(cllId, bandwidth, "false");
-        } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
-            policyService.updateIntentConfigPolicy(cllId, bandwidth, "false");
-        }
+        List<String> cllIds = getCLLId(intent);
+        cllIds.forEach(cllId -> {
+            String bandwidth = getBandwidth(cllId);
+            IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
+            if (StringUtils.equalsIgnoreCase("create", intentGoalType.name())) {
+                policyService.updateIntentConfigPolicy(cllId, bandwidth, "true");
+            } else if (StringUtils.equalsIgnoreCase("update", intentGoalType.name())) {
+                policyService.updateIntentConfigPolicy(cllId, bandwidth, "false");
+            } else if (StringUtils.equalsIgnoreCase("delete", intentGoalType.name())) {
+                policyService.updateIntentConfigPolicy(cllId, bandwidth, "false");
+            }
+        });
     }
 
     @Override
@@ -94,9 +96,16 @@ public class CLLAssuranceActuationModule extends ActuationModule {
                     log.info("expectationObject is empty,expectationId is {}", deliveryExpectation.getExpectationId());
                     continue;
                 }
-                String objectInstance = expectationObject.getObjectInstance();
-                if (!StringUtils.equalsIgnoreCase(cllId, objectInstance)) {
-                    log.info("cllId and objectInstance are not equal,cllId is {},objectInstance is {}", cllId, objectInstance);
+                List<String> objectInstances = expectationObject.getObjectInstance();
+                String object = "";
+                for (String objectInstance : objectInstances) {
+                    if (StringUtils.equalsIgnoreCase(cllId, objectInstance)) {
+                        object = objectInstance;
+                        break;
+                    }
+                }
+                if (StringUtils.isEmpty(object)) {
+                    log.info("no objectInstance is equal cllId {}", cllId);
                     continue;
                 }
                 List<ExpectationTarget> deliveryTargetList = deliveryExpectation.getExpectationTargets();
@@ -121,7 +130,7 @@ public class CLLAssuranceActuationModule extends ActuationModule {
         return null;
     }
 
-    public String getCLLId(Intent intent) {
+    private List<String> getCLLId(Intent intent) {
         List<Expectation> expectationList = intent.getIntentExpectations();
         for (Expectation expectation : expectationList) {
             if (StringUtils.equalsIgnoreCase("assurance", expectation.getExpectationType().name())) {

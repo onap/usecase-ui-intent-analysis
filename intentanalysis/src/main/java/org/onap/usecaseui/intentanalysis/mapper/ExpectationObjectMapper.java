@@ -16,12 +16,9 @@
 
 package org.onap.usecaseui.intentanalysis.mapper;
 
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.onap.usecaseui.intentanalysis.bean.models.ExpectationObject;
-
-import java.util.List;
 
 @Mapper
 public interface ExpectationObjectMapper {
@@ -37,8 +34,4 @@ public interface ExpectationObjectMapper {
                                 @Param(value = "expectationId") String expectationId);
 
     int deleteExpectationObject(@Param(value = "expectationId") String expectationId);
-
-    List<String> getExpectationIdByObjectInstance(@Param(value = "objectInstance") String objectInstance);
-
-    List<String> getAllObjectInstances();
 }
