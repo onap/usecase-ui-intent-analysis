@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,7 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             updateFulfillment(params, deliveryExpectation.getExpectationId());
 
             // fill and update the objectInstance of intent expectation(include delivery and report)
-            String objectInstance = (String) params.get("name");
+            List<String> objectInstance = Collections.singletonList((String) params.get("name"));
             intent.getIntentExpectations().forEach(expectation -> {
                 ExpectationObject expectationObject = expectationObjectService.getExpectationObject(expectation.getExpectationId());
                 expectationObject.setObjectInstance(objectInstance);
@@ -105,11 +106,11 @@ public class CLLDeliveryActuationModule extends ActuationModule {
                 expectationObjectService.updateExpectationObject(expectationObject, expectation.getExpectationId());
             });
         } else if (StringUtils.equalsIgnoreCase("delete", intentGoalBean.getIntentGoalType().name())) {
-            String instanceId = deliveryExpectation.getExpectationObject().getObjectInstance();
-            soService.deleteIntentInstance(instanceId);
+            List<String> objectInstance = deliveryExpectation.getExpectationObject().getObjectInstance();
+            objectInstance.forEach(instanceId->soService.deleteIntentInstance(instanceId));
         } else {
-            String instanceId = deliveryExpectation.getExpectationObject().getObjectInstance();
-            soService.deleteIntentInstance(instanceId);
+            List<String> objectInstance = deliveryExpectation.getExpectationObject().getObjectInstance();
+            objectInstance.forEach(instanceId->soService.deleteIntentInstance(instanceId));
             intentService.deleteIntent(intent.getIntentId());
         }
     }
@@ -188,7 +189,7 @@ public class CLLDeliveryActuationModule extends ActuationModule {
                     .filter(expectation -> ExpectationType.DELIVERY.equals(expectation.getExpectationType()))
                     .collect(Collectors.toList());
             List<Expectation> originIntentExpectationList = originIntent.getIntentExpectations();
-            String objectInstance = deliveryIntentExpectationList.get(0).getExpectationObject().getObjectInstance();
+            List<String> objectInstance = deliveryIntentExpectationList.get(0).getExpectationObject().getObjectInstance();
             for (Expectation originExpectation : originIntentExpectationList) {
                 ExpectationObject originExpectationObject = originExpectation.getExpectationObject();
                 originExpectationObject.setObjectInstance(objectInstance);

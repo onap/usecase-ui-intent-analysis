@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ExpectationObjectTest {
     @Before
@@ -43,7 +44,7 @@ public class ExpectationObjectTest {
     public void testSetExpectationObjectTest() {
         ExpectationObject test = new ExpectationObject();
         test.setObjectType(ObjectType.SLICING);
-        test.setObjectInstance("");
+        test.setObjectInstance(Collections.singletonList(""));
         test.setObjectContexts(new ArrayList<>());
     }
 }

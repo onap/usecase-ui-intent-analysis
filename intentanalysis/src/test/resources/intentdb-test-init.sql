@@ -44,7 +44,6 @@ create table if not exists expectation_object
     object_id       varchar(255) DEFAULT random_uuid(),
     primary key (object_id),
     object_type     varchar(255),
-    object_instance varchar(255),
     expectation_id  varchar(255)
 );
 

@@ -36,9 +36,9 @@ public class ObjectInstanceServiceImpl implements ObjectInstanceService {
     private ObjectInstanceMapper objectInstanceMapper;
 
     @Override
-    public void saveObjectInstances(String intentId, FulfillmentInfo eventModel) {
-        List<String> instances = new ArrayList<>(eventModel.getObjectInstances());
-        List<String> objectInstancesDb = objectInstanceMapper.getObjectInstances(intentId);
+    public void saveObjectInstances(String parentId, List<String> objectInstance) {
+        List<String> instances = new ArrayList<>(objectInstance);
+        List<String> objectInstancesDb = objectInstanceMapper.getObjectInstances(parentId);
         if (!CollectionUtils.isEmpty(objectInstancesDb)) {
             instances.removeAll(objectInstancesDb);
             if (CollectionUtils.isEmpty(instances)) {
@@ -46,7 +46,7 @@ public class ObjectInstanceServiceImpl implements ObjectInstanceService {
                 return;
             }
         }
-        int objectInstanceNum = objectInstanceMapper.insertObjectInstanceList(instances, intentId);
+        int objectInstanceNum = objectInstanceMapper.insertObjectInstanceList(instances, parentId);
         if (objectInstanceNum < 1) {
             String msg = "Failed to insert objectInstances to database.";
             log.error(msg);

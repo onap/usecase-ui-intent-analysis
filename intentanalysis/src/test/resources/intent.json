@@ -8,7 +8,7 @@
 			"expectationType":"DELIVERY",
 			"expectationObject":{
 				"objectType":"CCVPN",
-				"objectInstance":""
+				"objectInstance":[]
 			},
 			"expectationTargets":[
 				{
@@ -58,7 +58,7 @@
 			"expectationType":"ASSURANCE",
 			"expectationObject":{
 				"objectType":"CCVPN",
-				"objectInstance":""
+				"objectInstance":[]
 			},
 			"expectationTargets":[
 				{
@@ -82,7 +82,7 @@
 			"expectationType":"REPORT",
 			"expectationObject":{
 				"objectType":"CCVPN",
-				"objectInstance":""
+				"objectInstance":[]
 			},
 			"expectationTargets":[
 				{

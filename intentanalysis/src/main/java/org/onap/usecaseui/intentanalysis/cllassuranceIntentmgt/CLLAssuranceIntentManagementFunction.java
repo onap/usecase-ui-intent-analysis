@@ -84,7 +84,6 @@ public class CLLAssuranceIntentManagementFunction extends IntentManagementFuncti
             CreateCallable assuranceCallable = new CreateCallable(originalIntent, intentGoalBean, handler, applicationContext);
             FutureTask<String> futureTask = new FutureTask<>(assuranceCallable);
             executor.submit(futureTask);
-            log.info(futureTask.get());
         } catch (Exception ex) {
             log.error("exception is {}", ex.getMessage());
         }

@@ -16,19 +16,17 @@
 
 package org.onap.usecaseui.intentanalysis.bean.models;
 
-
 import java.util.List;
+
 import lombok.Data;
 import org.onap.usecaseui.intentanalysis.bean.enums.ObjectType;
 
-
 @Data
-
 public class ExpectationObject {
 
     private ObjectType objectType;
 
-    private String objectInstance;
+    private List<String> objectInstance;
 
     private List<Context> objectContexts;
 }

@@ -16,6 +16,7 @@ package org.onap.usecaseui.intentanalysis.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -77,7 +78,7 @@ public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
         List<ExpectationTarget> expectationTargetList = new ArrayList<>();
         expectationTargetList.add(target1);
         object1.setObjectType(ObjectType.valueOf("SLICING"));
-        object1.setObjectInstance("objectInstance");
+        object1.setObjectInstance(Collections.singletonList("objectInstance"));
         expectation1.setExpectationId("expectationId");
         expectation1.setExpectationName("expectationName");
         expectation1.setExpectationType(ExpectationType.valueOf("DELIVERY"));
@@ -137,7 +138,7 @@ public class IntentServiceTest extends AbstractJUnit4SpringContextTests {
         Expectation expectation = expectationList.get(0);
         expectation.setExpectationName("new expectation name");
         ExpectationObject expectationObject = expectation.getExpectationObject();
-        expectationObject.setObjectInstance("new object instance");
+        expectationObject.setObjectInstance(Collections.singletonList("new object instance"));
         expectation.setExpectationObject(expectationObject);
         List<ExpectationTarget> expectationTargetList = expectation.getExpectationTargets();
         ExpectationTarget expectationTarget = expectationTargetList.get(0);
