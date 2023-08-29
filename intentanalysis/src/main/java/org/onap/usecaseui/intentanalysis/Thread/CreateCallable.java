@@ -15,6 +15,7 @@
  */
 package org.onap.usecaseui.intentanalysis.Thread;
 
+import lombok.extern.slf4j.Slf4j;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
@@ -25,6 +26,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.util.concurrent.Callable;
 
+@Slf4j
 public class CreateCallable implements Callable<String> {
     private Intent originalIntent;
     private IntentGoalBean intentGoalBean;
@@ -58,6 +60,7 @@ public class CreateCallable implements Callable<String> {
         String intentStatus = "success";
         IntentCreateEvent intentCreateEvent = new IntentCreateEvent(this, originalIntent, intentGoalBean, handler, intentStatus);
         applicationContext.publishEvent(intentCreateEvent);
+        log.info(intentGoalBean.getIntent().getIntentName() + " Intent operate finished");
         return  intentGoalBean.getIntent().getIntentName() +" Intent operate finished";
     }
 }

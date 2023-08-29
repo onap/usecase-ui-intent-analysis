@@ -19,6 +19,7 @@
 package org.onap.usecaseui.intentanalysis.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +52,7 @@ class ExpectationObjectServiceTest extends AbstractJUnit4SpringContextTests {
     public ExpectationObject createTestObject(String testName) {
         ExpectationObject expectationObject = new ExpectationObject();
         expectationObject.setObjectType(ObjectType.SLICING);
-        expectationObject.setObjectInstance("true");
+        expectationObject.setObjectInstance(Collections.singletonList("true"));
 
         List<Context> contextList = new ArrayList<>();
         Context context = new Context();

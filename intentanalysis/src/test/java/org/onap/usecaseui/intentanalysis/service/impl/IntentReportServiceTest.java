@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
-import org.onap.usecaseui.intentanalysis.mapper.ExpectationObjectMapper;
+import org.onap.usecaseui.intentanalysis.mapper.ObjectInstanceMapper;
 import org.onap.usecaseui.intentanalysis.service.IntentReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,11 +41,11 @@ public class IntentReportServiceTest {
     ComponentNotificationServiceImpl componentNotificationService;
 
     @Autowired
-    private ExpectationObjectMapper expectationObjectMapper;
+    private ObjectInstanceMapper objectInstanceMapper;
 
     @Test
     public void getIntentReportByIntentIdTest() {
-        List<String> allObjectInstances = expectationObjectMapper.getAllObjectInstances();
+        List<String> allObjectInstances = objectInstanceMapper.queryAllObjectInstances();
         List<String> cll = new ArrayList<>();
         for (String target : allObjectInstances) {
             if (target != null && target.contains("cll")) {

@@ -71,7 +71,7 @@ public class IntentManagementFunction {
     protected void saveFulfillmentAndObjectInstance(String intentId, FulfillmentInfo fulfillmentInfo) {
         // save fulfillmentInfo and objectInstance
         fulfillmentInfoService.saveFulfillmentInfo(intentId, fulfillmentInfo);
-        objectInstanceService.saveObjectInstances(intentId, fulfillmentInfo);
+        objectInstanceService.saveObjectInstances(intentId, fulfillmentInfo.getObjectInstances());
     }
 
     protected void generationIntentReport(IntentGoalBean intentGoalBean) {
