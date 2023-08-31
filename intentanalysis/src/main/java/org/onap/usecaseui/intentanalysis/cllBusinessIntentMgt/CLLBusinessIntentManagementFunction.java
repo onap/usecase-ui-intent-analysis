@@ -157,21 +157,19 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
 
     @SneakyThrows
     public boolean implementIntent(Intent originIntent, LinkedHashMap<IntentGoalBean, IntentManagementFunction> linkedIntentMap) {
-        Iterator<Map.Entry<IntentGoalBean, IntentManagementFunction>> iterator = linkedIntentMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<IntentGoalBean, IntentManagementFunction> next = iterator.next();
+        for (Map.Entry<IntentGoalBean, IntentManagementFunction> next : linkedIntentMap.entrySet()) {
             IntentGoalBean newIntentGoalBean = next.getKey();
             IntentGoalType intentGoalType = newIntentGoalBean.getIntentGoalType();
             IntentManagementFunction handler = next.getValue();
             if (intentGoalType == IntentGoalType.CREATE) {
                 Intent newIdIntent = decisionModule.intentObjectDefine(originIntent, next.getKey().getIntent());
-                intentContextService.updateIntentOwnerHandlerContext(newIdIntent, this, next.getValue());
+                intentContextService.updateIntentOwnerHandlerContext(newIdIntent, this, handler);
                 intentContextService.updateParentIntentContext(originIntent, newIdIntent);
                 intentContextService.updateChindIntentContext(originIntent, newIdIntent);
                 // contextService.updateContextList(originIntent.getIntentContexts(), originIntent.getIntentId());
                 //intent-Distribution-create
                 boolean isAcceptCreate = intentInterfaceService.createInterface(originIntent,
-                        new IntentGoalBean(newIdIntent, IntentGoalType.CREATE), next.getValue());
+                        new IntentGoalBean(newIdIntent, IntentGoalType.CREATE), handler);
                 // TODO: 2023/3/27  isParallel status need deal before distribution
                 boolean isParallel = false;
                 if (!isParallel) {
@@ -185,7 +183,7 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
                         }
                         log.debug("Try to get record of intent CREATE event from DB.");
                         IntentEventRecord record = intentEventRecordService.getIntentEventRecordByIntentId(
-                                                        newIdIntent.getIntentId(), intentGoalType.toString());
+                                newIdIntent.getIntentId(), intentGoalType.toString());
                         if (record != null) {
                             isPublish = true;
                             log.debug("Successfully got Intent Event Record from DB.");
@@ -201,12 +199,12 @@ public class CLLBusinessIntentManagementFunction extends IntentManagementFunctio
                 //define process  just send probe interface
                 // intent-Distribution-update
                 boolean isAcceptupdate = intentInterfaceService.updateInterface(originIntent,
-                        next.getKey(), next.getValue());
+                        next.getKey(), handler);
             } else {
                 // actuationModule.deleteIntentToDb(next.getKey().getIntent());
                 // intent-Distribution-delete
                 boolean isAcceptDelete = intentInterfaceService.deleteInterface(originIntent,
-                        next.getKey(), next.getValue());
+                        next.getKey(), handler);
             }
         }
         return false;

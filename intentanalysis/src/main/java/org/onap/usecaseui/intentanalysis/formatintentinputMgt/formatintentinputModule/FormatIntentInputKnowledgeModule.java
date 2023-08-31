@@ -15,7 +15,6 @@
  */
 package org.onap.usecaseui.intentanalysis.formatintentinputMgt.formatintentinputModule;
 
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.KnowledgeModule;
@@ -33,7 +32,6 @@ public class FormatIntentInputKnowledgeModule extends KnowledgeModule {
     @Override
     public IntentGoalBean intentCognition(Intent intent) {
         List<String> intendIdList = intentResolution(intent);
-        getSystemStatus();
         return determineDetectionGoal(intent, intendIdList);
     }
 
@@ -50,17 +48,5 @@ public class FormatIntentInputKnowledgeModule extends KnowledgeModule {
     @Override
     public boolean recieveDeleteIntent() {
         return false;
-    }
-
-    public void getSystemStatus() {
-    }
-
-    public IntentGoalBean determineDetectionGoal(Intent intent, List<String> intentIdList) {
-        int size = intentIdList.size();
-        if (size == 0) {
-            return new IntentGoalBean(intent, IntentGoalType.CREATE);
-        } else {
-            return new IntentGoalBean(intent, IntentGoalType.UPDATE);
-        }
     }
 }

@@ -46,14 +46,6 @@ create table if not exists fulfillment_info(
     achieve_value varchar(255)
 );
 
-create table if not exists state(
-    state_id varchar(255) primary key,
-    state_name varchar(255),
-    is_satisfied boolean,
-    condition varchar(255),
-    expectation_id varchar(255)
-);
-
 create table if not exists condition(
     condition_id varchar(255) primary key,
     condition_name varchar(255),

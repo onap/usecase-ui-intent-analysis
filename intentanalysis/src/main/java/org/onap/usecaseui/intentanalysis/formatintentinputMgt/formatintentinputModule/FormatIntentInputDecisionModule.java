@@ -49,10 +49,6 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
     public IntentService intentService;
 
     @Override
-    public void determineUltimateGoal() {
-    }
-
-    @Override
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         // if intentName contain cll  return
         if (intentGoalBean.getIntent().getIntentName().toLowerCase(Locale.ROOT).contains("cll")) {
@@ -62,15 +58,6 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
             log.error(msg);
             throw new IntentInputException(msg, ResponseConsts.RET_FIND_CORRESPONDING_FAIL);
         }
-    }
-
-
-    @Override
-    public void decideSuitableAction() {
-    }
-
-    @Override
-    public void interactWithTemplateDb() {
     }
 
     @Override
@@ -97,9 +84,7 @@ public class FormatIntentInputDecisionModule extends DecisionModule {
         if (expectationNameList.size() > 1) {
             List<String> cllList = expectationNameList.stream().filter(x -> StringUtils.containsIgnoreCase(x, "cll")).collect(Collectors.toList());
             List<String> slicingList = expectationNameList.stream().filter(x -> StringUtils.containsIgnoreCase(x, "slicing")).collect(Collectors.toList());
-            if (cllList.size() > 0 && slicingList.size() > 0) {
-                return true;
-            }
+            return cllList.size() > 0 && slicingList.size() > 0;
         }
         return false;
     }

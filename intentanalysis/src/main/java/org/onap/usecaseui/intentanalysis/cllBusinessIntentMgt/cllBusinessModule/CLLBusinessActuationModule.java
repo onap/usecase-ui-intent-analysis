@@ -15,7 +15,6 @@
  */
 package org.onap.usecaseui.intentanalysis.cllBusinessIntentMgt.cllBusinessModule;
 
-
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -32,18 +31,8 @@ public class CLLBusinessActuationModule extends ActuationModule {
     @Autowired
     IntentInterfaceService intentInterfaceService;
 
-
-    @Override
-    public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
-    }
-
     @Override
     public void directOperation(IntentGoalBean intentGoalBean) {
-
-    }
-
-    @Override
-    public void interactWithIntentHandle() {
 
     }
 
@@ -52,7 +41,6 @@ public class CLLBusinessActuationModule extends ActuationModule {
         //toNextIntentHandler(intentGoalBean, intentHandler);
         intentHandler.receiveIntentAsOwner(intentGoalBean);
     }
-	
 
     @Override
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){

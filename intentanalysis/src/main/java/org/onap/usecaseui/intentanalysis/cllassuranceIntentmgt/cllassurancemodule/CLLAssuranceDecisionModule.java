@@ -21,27 +21,12 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentModule.Decision
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
+
 @Component
 public class CLLAssuranceDecisionModule extends DecisionModule {
     @Override
-    public void determineUltimateGoal() {
-
-    }
-
-    @Override
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         return null;
-    }
-
-
-    @Override
-    public void decideSuitableAction() {
-
-    }
-
-    @Override
-    public void interactWithTemplateDb() {
-
     }
 
     @Override

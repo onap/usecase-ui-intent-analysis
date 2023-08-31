@@ -17,6 +17,7 @@ package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public abstract class KnowledgeModule {
 
     public abstract boolean recieveDeleteIntent();
 
-    public List<String> intentResolution(Intent intent) {
+    protected List<String> intentResolution(Intent intent) {
         //db contain original intent
         List<Intent> sameNameIntentList = intentService.getIntentByName(intent.getIntentName());
         List<String> intentIdList = new ArrayList<>();
@@ -79,7 +80,19 @@ public abstract class KnowledgeModule {
         return intentIdList;
     }
 
-    public List<Intent> filterIntent(List<Intent> list) {
+    /**
+     * Determine add, delete, modify according to theobject,target and context of the expectation
+     */
+    protected IntentGoalBean determineDetectionGoal(Intent intent, List<String> intentIdList) {
+        int size = intentIdList.size();
+        if (size == 0) {
+            return new IntentGoalBean(intent, IntentGoalType.CREATE);
+        } else {
+            return new IntentGoalBean(intent, IntentGoalType.UPDATE);
+        }
+    }
+
+    private List<Intent> filterIntent(List<Intent> list) {
         List<Intent> fiterList = new ArrayList<>();
         for (Intent intent : list) {
             //filter the intent which save first time  in controller
@@ -107,7 +120,7 @@ public abstract class KnowledgeModule {
                             break;
                         }
                     }
-                    if (equals == true) {
+                    if (equals) {
                         break;
                     }
                 }

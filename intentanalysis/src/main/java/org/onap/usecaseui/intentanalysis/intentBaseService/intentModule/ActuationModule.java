@@ -15,7 +15,6 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
-import org.onap.usecaseui.intentanalysis.bean.enums.IntentGoalType;
 import org.onap.usecaseui.intentanalysis.bean.models.Intent;
 import org.onap.usecaseui.intentanalysis.bean.models.IntentGoalBean;
 import org.onap.usecaseui.intentanalysis.intentBaseService.IntentManagementFunction;
@@ -23,21 +22,14 @@ import org.onap.usecaseui.intentanalysis.intentBaseService.intentinterfaceservic
 import org.onap.usecaseui.intentanalysis.service.IntentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Map;
-
 public abstract class ActuationModule {
     @Autowired
     IntentInterfaceService intentInterfaceService;
     @Autowired
     IntentService intentService;
 
-    //send to the next level intent handler
-    public abstract void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler);
-
     //Direct operation
     public abstract void directOperation(IntentGoalBean intentGoalBean);
-
-    public abstract void interactWithIntentHandle();
 
     //Save intent information to the intent instance database
     public void saveIntentToDb(Intent intent) {
@@ -52,11 +44,6 @@ public abstract class ActuationModule {
     //Delete intent information to the intent instance database
     public void deleteIntentToDb(Intent intent) {
         intentService.deleteIntent(intent.getIntentId());
-    }
-
-    public boolean distrubuteIntentToHandler(Map.Entry<IntentGoalBean, IntentManagementFunction> entry) {
-        IntentGoalType intentGoalType = entry.getKey().getIntentGoalType();
-        return false;
     }
 
     //determine if the intent is to be processed directly or sent to the next-level processor

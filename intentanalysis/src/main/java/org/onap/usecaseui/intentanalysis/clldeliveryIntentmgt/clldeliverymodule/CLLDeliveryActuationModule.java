@@ -64,11 +64,6 @@ public class CLLDeliveryActuationModule extends ActuationModule {
     private IntentService intentService;
 
     @Override
-    public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
-
-    }
-
-    @Override
     public void directOperation(IntentGoalBean intentGoalBean) {
         Intent intent = intentGoalBean.getIntent();
         Expectation deliveryExpectation = intent.getIntentExpectations().stream()
@@ -113,11 +108,6 @@ public class CLLDeliveryActuationModule extends ActuationModule {
             objectInstance.forEach(instanceId->soService.deleteIntentInstance(instanceId));
             intentService.deleteIntent(intent.getIntentId());
         }
-    }
-
-    @Override
-    public void interactWithIntentHandle() {
-
     }
 
     @Override

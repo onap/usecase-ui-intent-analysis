@@ -15,7 +15,6 @@
  */
 package org.onap.usecaseui.intentanalysis.intentBaseService.intentModule;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.onap.usecaseui.intentanalysis.bean.enums.IntentGenerateType;
@@ -28,10 +27,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+
 @Slf4j
 public abstract class DecisionModule {
-    public abstract void determineUltimateGoal();
-
     // find intentManageFunction
     public abstract IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean);
 
@@ -53,10 +51,6 @@ public abstract class DecisionModule {
         newIntent.setIntentExpectations(newIdExpectationList);
         return newIntent;
     }
-
-    public abstract void decideSuitableAction();
-
-    public abstract void interactWithTemplateDb();
 
     public abstract LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean);
 
@@ -175,6 +169,4 @@ public abstract class DecisionModule {
         }
         return context;
     }
-
-
 }

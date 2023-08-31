@@ -55,22 +55,12 @@ public class CLLBusinessDecisionModule extends DecisionModule {
     IntentContextService intentContextService;
 
     @Override
-    public void determineUltimateGoal() {
-    }
-
-    @Override
     public IntentManagementFunction exploreIntentHandlers(IntentGoalBean intentGoalBean) {
         //  db  filter imf  supportArea;
         //SupportInterface> supportInterfaces;
         IntentManagementFunctionRegInfo imfRegInfo = imfRegInfoService.getImfRegInfo(intentGoalBean);
         return (IntentManagementFunction) applicationContext.getBean(imfRegInfo.getHandleName());
     }
-
-
-    @Override
-    public void decideSuitableAction() {
-    }
-
 
     public boolean needDecompostion(IntentGoalBean intentGoalBean) {
         //different expectationType need decompostion  ExpectationType>1 or objtype>1
@@ -138,10 +128,6 @@ public class CLLBusinessDecisionModule extends DecisionModule {
     }
 
     @Override
-    public void interactWithTemplateDb() {
-    }
-
-    @Override
     public LinkedHashMap<IntentGoalBean, IntentManagementFunction> investigationCreateProcess(IntentGoalBean intentGoalBean) {
         log.info("CLLBusinessIntentManagementFunction investigation create process start");
         boolean needDecompostion = needDecompostion(intentGoalBean);
@@ -186,7 +172,7 @@ public class CLLBusinessDecisionModule extends DecisionModule {
                 }
             }
 
-            if (false == bFindIntent) {
+            if (!bFindIntent) {
                 intentContextService.deleteSubIntentContext(originIntent, intent.getIntentId());
                 IntentGoalBean subIntentGoalBean = new IntentGoalBean(intent, IntentGoalType.DELETE);
                 intentMap.put(subIntentGoalBean, intentHandlerInfo);

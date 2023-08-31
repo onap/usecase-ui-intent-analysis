@@ -41,14 +41,13 @@ public class CLLAssuranceActuationModule extends ActuationModule {
     private PolicyService policyService;
 
     @Override
-    public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
-
-    }
-
-    @Override
     public void directOperation(IntentGoalBean intentGoalBean) {
         Intent intent = intentGoalBean.getIntent();
         List<String> cllIds = getCLLId(intent);
+        if (CollectionUtils.isEmpty(cllIds)) {
+            log.info("get cllId is empty");
+            return;
+        }
         cllIds.forEach(cllId -> {
             String bandwidth = getBandwidth(cllId);
             IntentGoalType intentGoalType = intentGoalBean.getIntentGoalType();
@@ -60,11 +59,6 @@ public class CLLAssuranceActuationModule extends ActuationModule {
                 policyService.updateIntentConfigPolicy(cllId, bandwidth, "false");
             }
         });
-    }
-
-    @Override
-    public void interactWithIntentHandle() {
-
     }
 
     @Override

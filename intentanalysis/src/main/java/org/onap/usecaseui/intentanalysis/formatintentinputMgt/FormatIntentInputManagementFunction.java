@@ -112,9 +112,7 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
     }
 
     public boolean implementIntent(Intent originIntent, LinkedHashMap<IntentGoalBean, IntentManagementFunction> linkedIntentMap) {
-        Iterator<Map.Entry<IntentGoalBean, IntentManagementFunction>> iterator = linkedIntentMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<IntentGoalBean, IntentManagementFunction> next = iterator.next();
+        for (Map.Entry<IntentGoalBean, IntentManagementFunction> next : linkedIntentMap.entrySet()) {
             IntentGoalBean newIntentGoalBean = next.getKey();
             IntentGoalType intentGoalType = newIntentGoalBean.getIntentGoalType();
             if (intentGoalType == IntentGoalType.CREATE) {
@@ -127,7 +125,7 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
                         new IntentGoalBean(newIdIntent, IntentGoalType.CREATE), next.getValue());
                 originIntent.setIntentGenerateType(IntentGenerateType.USERINPUT);
                 //save user input intent
-                intentService.createIntent(originIntent);
+                actuationModule.saveIntentToDb(originIntent);
                 return isAcceptCreate;
             } else if (intentGoalType == IntentGoalType.UPDATE) {
                 log.info("formatIntentInputIMF UPDATE");
@@ -135,13 +133,13 @@ public class FormatIntentInputManagementFunction extends IntentManagementFunctio
                 Intent subIntent = newIntentGoalBean.getIntent();
                 updateIntentInfo(originIntent, subIntent);
                 //update userInput intent
-                intentService.updateIntent(originIntent);
+                actuationModule.updateIntentToDb(originIntent);
                 // intent-Distribution and operate  |update cllBusiness intent
                 boolean isAcceptUpdate = intentInterfaceService.updateInterface(originIntent,
                         new IntentGoalBean(subIntent, IntentGoalType.UPDATE), next.getValue());
             } else {
                 //deal with userInput intent
-                intentService.deleteIntent(originIntent.getIntentId());
+                actuationModule.deleteIntentToDb(originIntent);
                 // intent-Distribution-delete
                 boolean isAcceptDelete = intentInterfaceService.deleteInterface(originIntent, next.getKey(), next.getValue());
             }

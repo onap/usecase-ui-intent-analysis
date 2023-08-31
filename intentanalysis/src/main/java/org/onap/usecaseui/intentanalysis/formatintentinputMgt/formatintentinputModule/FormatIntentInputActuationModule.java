@@ -31,16 +31,7 @@ public class FormatIntentInputActuationModule extends ActuationModule {
     IntentService intentService;
 
     @Override
-    public void toNextIntentHandler(IntentGoalBean intentGoalBean, IntentManagementFunction IntentHandler) {
-        log.info("do nothing");
-    }
-
-    @Override
     public void directOperation(IntentGoalBean intentGoalBean) {
-    }
-
-    @Override
-    public void interactWithIntentHandle() {
     }
 
     @Override
@@ -48,10 +39,7 @@ public class FormatIntentInputActuationModule extends ActuationModule {
 
     }
 
-
-
     public void updateIntentOperationInfo(Intent originIntent, IntentGoalBean intentGoalBean){
 
     }
-
 }
