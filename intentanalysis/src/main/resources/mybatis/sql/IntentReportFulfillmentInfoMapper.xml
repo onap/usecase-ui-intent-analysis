@@ -8,4 +8,14 @@
         insert into intent_report_fulfillment_info(parent_id,fulfillment_info_id, fulfillment_info_status, not_fulfilled_state, not_fulfilled_reason,achieve_value)
         values (#{parentId},#{fulfillmentInfo.fulfillmentId}, #{fulfillmentInfo.fulfillmentStatus}, #{fulfillmentInfo.notFulfilledState}, #{fulfillmentInfo.notFulfilledReason},#{fulfillmentInfo.achieveValue})
     </insert>
+    <select id="getFulfillmentInfosByParentId"
+            resultType="org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo">
+        select fulfillment_info_id fulfillmentId,
+               fulfillment_info_status fulfillmentStatus,
+               not_fulfilled_state notFulfilledState,
+               not_fulfilled_reason notFulfilledReason,
+               achieve_value achieveValue
+        from intent_report_fulfillment_info
+        where parent_id = #{parentId}
+    </select>
 </mapper>

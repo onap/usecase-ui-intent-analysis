@@ -14,4 +14,14 @@
         from intent_report
         where intent_reference = #{intentReference}
     </select>
+
+    <select id="getIntentReportsByTime" resultType="org.onap.usecaseui.intentanalysis.bean.models.IntentReport">
+        select intent_report_id intentReportId,
+               intent_reference intentReference,
+               to_char(report_time,'yyyy-mm-dd HH24:mi:ss') reportTime
+        from intent_report
+        where report_time &gt;= to_timestamp(#{startTime},'yyyy-MM-dd HH24:mi:ss')
+          and report_time &lt; to_timestamp(#{endTime},'yyyy-MM-dd HH24:mi:ss')
+          and intent_reference = #{intentInstanceId}
+    </select>
 </mapper>
