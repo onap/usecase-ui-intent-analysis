@@ -16,11 +16,15 @@
 package org.onap.usecaseui.intentanalysis.controller;
 
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.onap.usecaseui.intentanalysis.bean.models.*;
 import org.onap.usecaseui.intentanalysis.service.IntentReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.charset.StandardCharsets;
 
 @Log4j2
 @RestController
@@ -33,5 +37,13 @@ public class IntentReportController {
     public ServiceResult getIntentById(
             @PathVariable("intentId") String intentId) {
         return intentReportService.getIntentReportByIntentId(intentId);
+    }
+
+    @PostMapping(value = "/export")
+    public ResponseEntity<byte[]> exportIntentReportByTime(@RequestBody TimeParam param) {
+        String csvData = intentReportService.exportIntentReportByTime(param);
+        byte[] bytes = StringUtils.isEmpty(csvData) ? new byte[0] : csvData.getBytes(StandardCharsets.UTF_8);
+        return ResponseEntity.ok()
+                .body(bytes);
     }
 }

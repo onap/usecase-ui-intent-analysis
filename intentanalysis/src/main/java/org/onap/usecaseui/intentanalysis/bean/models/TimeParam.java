@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package org.onap.usecaseui.intentanalysis.service;
+package org.onap.usecaseui.intentanalysis.bean.models;
 
-import org.onap.usecaseui.intentanalysis.bean.models.ServiceResult;
-import org.onap.usecaseui.intentanalysis.bean.models.TimeParam;
+import lombok.Data;
+import lombok.ToString;
 
-import java.util.List;
-
-public interface IntentReportService {
-    ServiceResult getIntentReportByIntentId(String intentId);
-
-    void saveIntentReportByIntentId(String intentId);
-
-    List<String> getIntentReportIds(String intentReference);
-
-    String exportIntentReportByTime(TimeParam param);
+@Data
+@ToString
+public class TimeParam {
+    private String intentId;
+    private String startDate;
+    private String endData;
 }

@@ -20,7 +20,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.onap.usecaseui.intentanalysis.bean.models.FulfillmentInfo;
 
+import java.util.List;
+
 @Mapper
 public interface IntentReportFulfillmentInfoMapper {
-    int insertIntentReportFulfillment(@Param(value = "fulfillmentInfo") FulfillmentInfo fulfillmentInfo,@Param(value = "parentId") String parentId);
+    int insertIntentReportFulfillment(@Param(value = "fulfillmentInfo") FulfillmentInfo fulfillmentInfo, @Param(value = "parentId") String parentId);
+
+    List<FulfillmentInfo> getFulfillmentInfosByParentId(@Param(value = "parentId") String parentId);
 }

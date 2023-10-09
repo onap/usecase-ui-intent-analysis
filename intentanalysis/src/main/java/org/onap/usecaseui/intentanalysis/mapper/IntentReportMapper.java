@@ -26,4 +26,8 @@ public interface IntentReportMapper {
     int insertIntentReport(@Param(value = "intentReport") IntentReport intentReport);
 
     List<String> getIntentReportIds(@Param(value = "intentReference") String intentReference);
+
+    List<IntentReport> getIntentReportsByTime(@Param(value = "intentInstanceId") String intentInstanceId,
+                                              @Param(value = "startTime") String startTime,
+                                              @Param(value = "endTime") String endTime);
 }

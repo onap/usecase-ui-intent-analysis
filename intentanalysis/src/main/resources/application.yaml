@@ -4,7 +4,7 @@ server:
     context-path: /api/usecaseui-intent-analysis/v1
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:intentdb}
+    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME}
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
