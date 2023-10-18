@@ -16,6 +16,24 @@
       "message": "Passwords cannot be written as fixed",
       "revId": "b60aecbf18bead15339106b404477f11926bc4f6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a8707e5_b0f4546f",
+        "filename": "intentanalysis/src/main/resources/application.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6267
+      },
+      "writtenOn": "2023-10-18T09:12:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83a70c20_abcd42d1",
+      "revId": "b60aecbf18bead15339106b404477f11926bc4f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
