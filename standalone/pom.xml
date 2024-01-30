@@ -33,7 +33,7 @@
         <intent.version>13.0.0</intent.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss'Z'</maven.build.timestamp.format>
         <linux64outputdir>target/assembly/linux64</linux64outputdir>
         <dockeroutput>target/version/${intent.version}</dockeroutput>

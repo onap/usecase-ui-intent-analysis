@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /api/usecaseui-intent-analysis/v1
 spring:
+  main:
+    allow-circular-references: true
   datasource:
     url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME}
     username: ${POSTGRES_USERNAME}

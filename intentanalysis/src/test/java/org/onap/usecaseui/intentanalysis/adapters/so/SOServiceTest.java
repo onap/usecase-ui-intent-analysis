@@ -22,22 +22,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import mockit.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.onap.usecaseui.intentanalysis.IntentAnalysisApplicationTests;
 import org.onap.usecaseui.intentanalysis.adapters.aai.apicall.AAIAPICall;
-import org.onap.usecaseui.intentanalysis.adapters.policy.apicall.PolicyAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.so.apicall.SOAPICall;
 import org.onap.usecaseui.intentanalysis.adapters.so.impl.SOServiceImpl;
 import org.onap.usecaseui.intentanalysis.bean.models.CCVPNInstance;
@@ -45,8 +37,6 @@ import org.onap.usecaseui.intentanalysis.util.TestCall;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import retrofit2.Response;
-import org.mockito.MockitoAnnotations;
 
 @SpringBootTest(classes = IntentAnalysisApplicationTests.class)
 @RunWith(SpringRunner.class)

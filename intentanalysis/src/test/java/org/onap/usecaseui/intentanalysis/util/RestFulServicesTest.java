@@ -15,7 +15,7 @@
 package org.onap.usecaseui.intentanalysis.util;
 
 import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import okhttp3.RequestBody;
 import org.junit.Assert;

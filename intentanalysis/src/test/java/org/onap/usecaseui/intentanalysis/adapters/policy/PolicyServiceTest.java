@@ -21,7 +21,6 @@ import static org.mockito.Mockito.when;
 
 
 import java.io.IOException;
-import mockit.MockUp;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import org.junit.Assert;
@@ -59,8 +58,6 @@ public class PolicyServiceTest {
     private PolicyServiceImpl policyService;
 
     private PolicyAPICall policyAPICall;
-
-    private MockUp mockup;
 
     @Test
     public void testCreateAndDeployCLLPolicySuccess() throws IOException {
