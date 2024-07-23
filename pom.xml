@@ -39,4 +39,16 @@
         <siteNexusPath>content/sites/site/${project.groupId}/${project.artifactId}/${project.version}/</siteNexusPath>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>ecomp-releases</id>
+            <url>${nexusproxy}/${releaseNexusPath}</url>
+        </repository>
+        <snapshotRepository>
+            <id>ecomp-snapshots</id>
+            <url>${nexusproxy}/${snapshotNexusPath}</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
 </project>
