@@ -26,6 +26,7 @@
     <modules>
         <module>intentanalysis</module>
         <module>standalone</module>
+        <module>checkstyle</module>
     </modules>
 
     <properties>
