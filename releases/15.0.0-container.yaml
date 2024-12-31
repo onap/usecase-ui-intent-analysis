@@ -1,0 +1,10 @@
+distribution_type: 'container'
+container_release_tag: '15.0.0'
+project: 'usecase-ui-intent-analysis'
+container_pull_registry: nexus3.onap.org:10003
+container_push_registry: nexus3.onap.org:10002
+log_dir: 'usecase-ui-intent-analysis-maven-docker-stage-master/292'
+ref: '9a6c03c0641fc5f54c15e3e8610b3c3658b0cfc4'
+containers:
+    - name: 'usecase-ui-intent-analysis'
+      version: '15.0.0-STAGING-20241231T083448Z'
