@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /api/usecaseui-intent-analysis/v1
 spring:
+  application:
+    name: uui-intent-analysis
   main:
     allow-circular-references: true
   datasource:
@@ -19,6 +21,19 @@ mybatis:
   configuration:
     database-id: PostgreSQL
   mapper-locations: classpath*:mybatis/sql/*.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    enabled: false
+    sampling:
+      probability: 1.0 # sample every request
+  zipkin:
+    tracing:
+      endpoint: http://${COLLECTOR_HOST}:${COLLECTOR_PORT}/api/v2/spans
 
 rest:
   policy:
