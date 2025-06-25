@@ -20,12 +20,12 @@
     <parent>
         <groupId>org.onap.usecase-ui.intent-analysis</groupId>
         <artifactId>usecase-ui-intent-analysis-parent</artifactId>
-        <version>15.0.1-SNAPSHOT</version>
+        <version>16.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>org.onap.usecase-ui.intent-analysis</groupId>
     <artifactId>usecase-ui.intent-analysis</artifactId>
-    <version>15.0.1-SNAPSHOT</version>
+    <version>16.0.1-SNAPSHOT</version>
     <name>intent-analysis</name>
     <description>Source Code for Intent Analysis Server</description>
 
